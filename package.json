@@ -1,0 +1,22 @@
+{
+  "name": "create-reckless-tech-app",
+  "version": "0.0.1",
+  "description": "Creates the standard Reckless Tech app template.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+  },
+  "bin": {
+    "create-reckless-tech-app": "index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RecklessTechnology/create-reckless-tech-app.git"
+  },
+  "author": "Travis Bennett",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RecklessTechnology/create-reckless-tech-app/issues"
+  },
+  "homepage": "https://github.com/RecklessTechnology/create-reckless-tech-app#readme"
+}
