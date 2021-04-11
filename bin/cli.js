@@ -47,6 +47,11 @@ console.log(`Adding Docker files...`);
 const copyDockerFiles = runCommand(copyDockerFilesCommand);
 if (!copyDockerFiles) process.exitCode = -1;
 
+// Add github files
+console.log(`Adding Github Action files...`);
+const copyGithubFiles = runCommand(copyGithubFilesCommand);
+if (!copyGithubFiles) process.exitCode = -1;
+
 // Install dependencies
 console.log(`Installing dependencies for ${repoName}...`);
 const installDeps = runCommand(installDepsCommand);
