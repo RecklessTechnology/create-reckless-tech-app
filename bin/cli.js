@@ -8,7 +8,7 @@ const installCRACommand = `cd ${repoName}/ && npx create-react-app ${repoName}`;
 const removeFilesCommand = `cd ./${repoName}/${repoName}/src/ && rm App.css && rm App.js && rm Index.css && rm Index.js && rm logo.svg`;
 const copyReactFilesCommand = `cd ./${repoName}/assets/React && cp -r ./* ./../../${repoName}/src/`;
 const copyGithubFilesCommand = `cd ./${repoName}/assets/Github && cp -r ./.github/ ./../../`;
-const copyDockerFilesCommand = `cd ./${repoName}/assets/Docker && cp -r ./Dockerfile ./../../${repoName}/  && cp -r ./../../docker-compose.yml ./../`;
+const copyDockerFilesCommand = `cd ./${repoName}/assets/Docker && cp -r ./Dockerfile ./../../${repoName}/  && cp -r ./docker-compose.yml ./../../`;
 const installDepsCommand = `cd ./${repoName}/${repoName}/ && npm install && npm install @material-ui/core @material-ui/icons @material-ui/styles @react-spring/three react-redux react-three-fiber react-use-gesture redux redux-thunk three`;
 
 // Executes a command in bash
