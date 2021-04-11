@@ -1,6 +1,6 @@
 {
   "name": "@recklesstechnology/create-reckless-tech-app",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "description": "Creates a standard Reckless Tech app from the current template.",
   "main": "index.js",
   "scripts": {
