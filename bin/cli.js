@@ -30,7 +30,17 @@ console.log(`Starting with create-react-app...`);
 const installCRA = runCommand(installCRACommand);
 if (!installCRA) process.exitCode = -1;
 
-// // Install dependencies
+// Remove files from create-react-app
+console.log(`Removing CRA files...`);
+const removeFiles = runCommand(removeFilesCommand);
+if (!removeFiles) process.exitCode = -1;
+
+// Replace with filees from create-reckless-tech-app
+console.log(`Adding CRTA files...`);
+const copyFiles = runCommand(copyFilesCommand);
+if (!copyFiles) process.exitCode = -1;
+
+// Install dependencies
 console.log(`Installing dependencies for ${repoName}...`);
 const installDeps = runCommand(installDepsCommand);
 if (!installDeps) process.exitCode = -1;
