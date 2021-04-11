@@ -5,6 +5,8 @@ const repoName = process.argv[2];
 
 const gitCheckoutCommand = `git clone --depth 1 https://github.com/RecklessTechnology/create-reckless-tech-app ${repoName}`;
 const installCRACommand = `cd ${repoName}/ && npx create-react-app ${repoName}`;
+const removeFilesCommand = `cd ./${repoName}/${repoName}/src/ && rm App.css && rm App.js && rm Index.css && rm Index.js && rm logo.svg`;
+const copyFilesCommand = `cd ./${repoName}/assets/ && cp -r ./* ./../${repoName}/src/`;
 const installDepsCommand = `cd ./${repoName}/${repoName}/ && npm install`;
 
 // Executes a command in bash
@@ -29,10 +31,10 @@ const installCRA = runCommand(installCRACommand);
 if (!installCRA) process.exitCode = -1;
 
 // // Install dependencies
-// console.log(`Installing dependencies for ${repoName}...`);
-// const installDeps = runCommand(installDepsCommand);
-// if (!installDeps) process.exitCode = -1;
+console.log(`Installing dependencies for ${repoName}...`);
+const installDeps = runCommand(installDepsCommand);
+if (!installDeps) process.exitCode = -1;
 
-// // Install complete
-// console.log(`Installation ready. Use the following command to start.`);
-// console.log(`cd ${repoName} && npm start`);
+// Install complete
+console.log(`Installation ready. Use the following command to start.`);
+console.log(`cd ${repoName} && npm start`);
