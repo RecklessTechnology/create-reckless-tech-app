@@ -4,9 +4,8 @@ const { execSync } = require('child_process');
 const repoName = process.argv[2];
 
 const gitCheckoutCommand = `git clone --depth 1 https://github.com/RecklessTechnology/create-reckless-tech-app ${repoName}`;
-const enterRepoCommand = `cd ./${repoName}/`;
-const installCRACommand = `npm install create-react-app ${repoName}`;
-const installDepsCommand = `npm install`;
+const installCRACommand = `cd ./${repoName}/ npm install create-react-app ${repoName}`;
+const installDepsCommand = `cd ./${repoName}/${repoName}/ npm install`;
 
 // Executes a command in bash
 const runCommand = command => {
@@ -24,22 +23,10 @@ console.log(`Cloning as ${repoName}...`);
 const checkedOut = runCommand(gitCheckoutCommand);
 if (!checkedOut) process.exitCode = -1;
 
-// Enter repo folder
-console.log(`Entering ${repoName}...`);
-runCommand('ls -l')
-const enterRTRepo = runCommand(enterRepoCommand);
-if (!enterRTRepo) process.exitCode = -1;
-
 // Install create-react-app
 console.log(`Starting with create-react-app...`);
 const installCRA = runCommand(installCRACommand);
 if (!installCRA) process.exitCode = -1;
-
-// Enter repo folder
-console.log(`Entering ${repoName}...`);
-const enterCRARepo = runCommand(enterRepoCommand);
-runCommand('ls -l')
-if (!enterCRARepo) process.exitCode = -1;
 
 // Install dependencies
 console.log(`Installing dependencies for ${repoName}...`);
