@@ -26,8 +26,8 @@ if (!checkedOut) process.exitCode = -1;
 
 // Enter repo folder
 console.log(`Entering ${repoName}...`);
-const enterRepo = runCommand(enterRepoCommand);
-if (!enterRepo) process.exitCode = -1;
+const enterRTRepo = runCommand(enterRepoCommand);
+if (!enterRTRepo) process.exitCode = -1;
 
 // Install create-react-app
 console.log(`Starting with create-react-app...`);
@@ -36,8 +36,8 @@ if (!installCRA) process.exitCode = -1;
 
 // Enter repo folder
 console.log(`Entering ${repoName}...`);
-const enterRepo = runCommand(enterRepoCommand);
-if (!enterRepo) process.exitCode = -1;
+const enterCRARepo = runCommand(enterRepoCommand);
+if (!enterCRARepo) process.exitCode = -1;
 
 // Install dependencies
 console.log(`Installing dependencies for ${repoName}...`);
