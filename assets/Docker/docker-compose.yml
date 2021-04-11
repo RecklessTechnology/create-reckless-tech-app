@@ -1,0 +1,35 @@
+version: '3.3'
+
+services:
+  travis-tap:
+    image: node:travis-tap
+    container_name: travis-tap
+
+    # Set build context to submodule directory.
+    build:
+      context: ./travis-TAP
+      dockerfile: ./Dockerfile
+
+    # Join proxy network run by the Traefik router.
+    networks:
+      - traefik-proxy
+    
+    # Proxy app port to avoid to avoid port collisions.
+    ports:
+      - 12001:80
+
+    labels:
+      # User Traefix proxy routing with Let's Encrypt SSL certificates.
+      - "traefik.enable=true"
+      - "traefik.http.routers.travis-tap.tls.certresolver=letsEncrypt"
+      
+      # Create project path on the Reckless.Technology domain.
+      - "traefik.http.routers.travis-tap.rule=Host(`reckless.technology`) && PathPrefix(`/meterparts/travis-tap/`)"
+
+      # Strip url path from routing to allow relative paths to work inside of the container.
+      - "traefik.http.routers.travis-tap.middlewares=travis-tap-stripprefix"
+      - "traefik.http.middlewares.travis-tap-stripprefix.stripprefix.prefixes=/meterparts/travis-tap/"
+    restart: unless-stopped
+networks:
+  traefik-proxy:
+    external: true

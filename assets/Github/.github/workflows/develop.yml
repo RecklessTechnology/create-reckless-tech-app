@@ -1,0 +1,25 @@
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  build:
+    name: Build
+    runs-on: self-hosted
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.MeterParts_Submodule_Checkout }}
+        submodules: recursive
+        clean: true
+    - name: Build the docker-compose stack
+      run: docker-compose build --no-cache
+    - name: Deploy the docker-compose stack
+      run: docker-compose --verbose -f docker-compose.yml up -d
+    - name: Check running containers
+      run: docker ps -a
+    - name: Check logs
+      run: docker-compose logs

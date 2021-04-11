@@ -6,8 +6,10 @@ const repoName = process.argv[2];
 const gitCheckoutCommand = `git clone --depth 1 https://github.com/RecklessTechnology/create-reckless-tech-app ${repoName}`;
 const installCRACommand = `cd ${repoName}/ && npx create-react-app ${repoName}`;
 const removeFilesCommand = `cd ./${repoName}/${repoName}/src/ && rm App.css && rm App.js && rm Index.css && rm Index.js && rm logo.svg`;
-const copyFilesCommand = `cd ./${repoName}/assets/ && cp -r ./* ./../${repoName}/src/`;
-const installDepsCommand = `cd ./${repoName}/${repoName}/ && npm install`;
+const copyReactFilesCommand = `cd ./${repoName}/assets/React/ && cp -r ./* ./../${repoName}/src/`;
+const copyGithubFilesCommand = `cd ./${repoName}/assets/Github && cp -r ./.github/ ./../`;
+const copyDockerFilesCommand = `cd ./${repoName}/assets/Docker && cp -r ./Dockerfile ./../${repoName}/  && cp -r ./docker-compose.yml ./../`;
+const installDepsCommand = `cd ./${repoName}/${repoName}/ && npm install && npm install @material-ui/core @material-ui/icons @material-ui/styles @react-spring/three react-redux react-three-fiber react-use-gesture redux redux-thunk three`;
 
 // Executes a command in bash
 const runCommand = command => {
@@ -35,10 +37,15 @@ console.log(`Removing CRA files...`);
 const removeFiles = runCommand(removeFilesCommand);
 if (!removeFiles) process.exitCode = -1;
 
-// Replace with filees from create-reckless-tech-app
+// Replace with files from create-reckless-tech-app
 console.log(`Adding CRTA files...`);
-const copyFiles = runCommand(copyFilesCommand);
-if (!copyFiles) process.exitCode = -1;
+const copyReactFiles = runCommand(copyReactFilesCommand);
+if (!copyReactFiles) process.exitCode = -1;
+
+// Add docker files
+console.log(`Adding Docker files...`);
+const copyDockerFiles = runCommand(copyDockerFilesCommand);
+if (!copyDockerFiles) process.exitCode = -1;
 
 // Install dependencies
 console.log(`Installing dependencies for ${repoName}...`);
