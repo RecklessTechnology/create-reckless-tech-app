@@ -28,11 +28,11 @@ console.log(`Starting with create-react-app...`);
 const installCRA = runCommand(installCRACommand);
 if (!installCRA) process.exitCode = -1;
 
-// Install dependencies
-console.log(`Installing dependencies for ${repoName}...`);
-const installDeps = runCommand(installDepsCommand);
-if (!installDeps) process.exitCode = -1;
+// // Install dependencies
+// console.log(`Installing dependencies for ${repoName}...`);
+// const installDeps = runCommand(installDepsCommand);
+// if (!installDeps) process.exitCode = -1;
 
-// Install complete
-console.log(`Installation ready. Use the following command to start.`);
-console.log(`cd ${repoName} && npm start`);
+// // Install complete
+// console.log(`Installation ready. Use the following command to start.`);
+// console.log(`cd ${repoName} && npm start`);
