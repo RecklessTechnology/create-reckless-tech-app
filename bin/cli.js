@@ -9,7 +9,7 @@ const removeReactFilesCommand = `cd ./${repoName}/${repoName}/src/ && rm App.css
 const copyReactFilesCommand = `cd ./${repoName}/assets/React && cp -r ./* ./../../${repoName}/src/`;
 const copyDockerFilesCommand = `cd ./${repoName}/assets/Docker && cp -r ./Dockerfile ./../../${repoName}/`;
 const removeCRTAFilesCommand = `cd ./${repoName}/ && rm package.json && rm README.md && rm .gitignore`;
-const copyCRAFilesCommand = `cd ./${repoName}/${repoName}/ && cp -r ./* ./../`;
+const moveCRAFilesCommand = `cd ./${repoName}/${repoName}/ && mv -r ./* ./../`;
 const installDepsCommand = `cd ./${repoName}/ && npm install && npm install @material-ui/core @material-ui/icons @material-ui/styles @react-spring/three react-redux @react-three/fiber react-use-gesture redux redux-thunk three --save`;
 const cleanUpCommand = `cd ./${repoName}/ && rm -r ./assets`;
 
@@ -55,9 +55,9 @@ const removeCRTAFiles = runCommand(removeCRTAFilesCommand);
 if (!removeCRTAFiles) process.exitCode = -1;
 
 // Copy CRTA files to root
-console.log(`Copying CRTA files to root...`);
-const copyCRAFiles = runCommand(copyCRAFilesCommand);
-if (!copyCRAFiles) process.exitCode = -1;
+console.log(`Move CRTA files to root...`);
+const moveCRAFiles = runCommand(moveCRAFilesCommand);
+if (!moveCRAFilesCommand) process.exitCode = -1;
 
 // Install dependencies
 console.log(`Installing dependencies for ${repoName}...`);
