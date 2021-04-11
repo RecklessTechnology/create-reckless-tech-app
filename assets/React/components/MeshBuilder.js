@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-import { useLoader } from 'react-three-fiber'
+import { useLoader } from '@react-three/fiber'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import * as THREE from 'three'
 

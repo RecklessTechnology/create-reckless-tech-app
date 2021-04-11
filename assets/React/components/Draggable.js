@@ -1,7 +1,7 @@
 import React, { useRef, useMemo } from 'react'
 import * as THREE from 'three'
 
-import { useThree } from 'react-three-fiber'
+import { useThree } from '@react-three/fiber'
 import { a, useSpring } from '@react-spring/three'
 
 import { useDrag } from 'react-use-gesture'

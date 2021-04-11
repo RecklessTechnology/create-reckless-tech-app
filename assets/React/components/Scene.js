@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Canvas } from 'react-three-fiber'
+import { Canvas } from '@react-three/fiber'
 
 import Draggable from './Draggable';
 import MeshBuilder from './MeshBuilder';
