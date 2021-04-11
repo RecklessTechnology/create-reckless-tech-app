@@ -4,7 +4,7 @@ const { execSync } = require('child_process');
 const repoName = process.argv[2];
 
 const gitCheckoutCommand = `git clone --depth 1 https://github.com/RecklessTechnology/create-reckless-tech-app ${repoName}`;
-const enterRepoCommand = `cd ${repoName}`;
+const enterRepoCommand = `cd ./${repoName}/`;
 const installCRACommand = `npm install create-react-app ${repoName}`;
 const installDepsCommand = `npm install`;
 
