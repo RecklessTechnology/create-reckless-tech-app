@@ -52,7 +52,7 @@ function RTMenu(props) {
     },
     titleText: {
       textTransform: 'capitalize',
-    }
+    },
     rtText: {
       textAlign: 'right',
     }
