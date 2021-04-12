@@ -10,9 +10,9 @@ const moveReactFilesCommand = `cd ./${repoName}/assets/React && mv ./* ./../../$
 const moveModelFilesCommand = `cd ./${repoName}/assets/ && mv ./Models/ ./../../${repoName}/public/`;
 const moveDockerFilesCommand = `cd ./${repoName}/assets/Docker && mv ./Dockerfile ./../../${repoName}/`;
 const removeCRTAFilesCommand = `cd ./${repoName}/ && rm package.json && rm README.md && rm .gitignore`;
-const moveCRAFilesCommand = `cd ./${repoName}/${repoName}/ && mv ./* ./../`;
+const moveCRAFilesCommand = `cd ./${repoName}/${repoName}/ && mv ./* ./../ && mv ./.gitignore ./../.gitignore`;
 const installDepsCommand = `cd ./${repoName}/ && npm install && npm install @material-ui/core @material-ui/icons @material-ui/styles @react-spring/three react-redux @react-three/fiber react-use-gesture redux redux-thunk three --save`;
-const cleanUpCommand = `cd ./${repoName}/ && rm -r ./assets`;
+const cleanUpCommand = `cd ./${repoName}/ && rm -r ./assets && rm -r ./${repoName} && rm -r ./bin`;
 
 // Executes a command in bash
 const runCommand = command => {
