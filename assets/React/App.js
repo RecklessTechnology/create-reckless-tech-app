@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
@@ -66,7 +66,7 @@ const mapStateToProps = state => {
 }
 
 function isEqual(prevProps, nextProps) {
-  return JSON.stringify(prevProps.objects) === JSON.stringify(nextProps.objects);
+  return JSON.stringify(prevProps.isMenuActive) === JSON.stringify(nextProps.isMenuActive);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(React.memo(App, isEqual));
