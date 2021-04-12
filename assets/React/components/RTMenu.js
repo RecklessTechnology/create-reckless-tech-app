@@ -90,8 +90,10 @@ function RTMenu(props) {
           <Toolbar>
             <div className={classes.listRoot}>
               <List component="nav" aria-label="RTMenu">
-                <ListItem button component="a" target={"_blank"} href="">
+                <ListItem>
                   <ListItemText secondary={`built with`} className={classes.rtText}/>
+                </ListItem>
+                <ListItem button component="a" target={"_blank"} href="https://github.com/RecklessTechnology/create-reckless-tech-app">
                   <ListItemText primary={"Reckless Technology"} secondary={`v${rtPackageJson.version}`} className={classes.rtText}/>
                 </ListItem>
               </List>
