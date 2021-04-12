@@ -45,6 +45,11 @@ console.log(`Adding CRTA files...`);
 const moveReactFiles = runCommand(moveReactFilesCommand);
 if (!moveReactFiles) process.exitCode = -1;
 
+// Add 3d models
+console.log(`Adding model files...`);
+const moveModelFiles = runCommand(moveModelFilesCommand);
+if (!moveModelFiles) process.exitCode = -1;
+
 // Add docker files
 console.log(`Adding Docker files...`);
 const moveDockerFiles = runCommand(moveDockerFilesCommand);
