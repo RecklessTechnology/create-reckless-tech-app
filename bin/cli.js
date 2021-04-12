@@ -12,7 +12,7 @@ const moveDockerFilesCommand = `cd ./${repoName}/assets/Docker && mv ./Dockerfil
 const removeCRTAFilesCommand = `cd ./${repoName}/ && mv ./package.json ./${repoName}/src/rt_package.json && rm README.md && rm .gitignore`;
 const moveCRAFilesCommand = `cd ./${repoName}/${repoName}/ && mv ./* ./../ && mv ./.gitignore ./../.gitignore`;
 const installDepsCommand = `cd ./${repoName}/ && npm install && npm install redux-devtools-extension @material-ui/core @material-ui/icons @material-ui/styles @react-spring/three react-redux @react-three/fiber react-use-gesture redux redux-thunk three --save`;
-const cleanUpCommand = `cd ./${repoName}/ && rm -r ./assets && rm -r ./${repoName} && rm -r ./bin`;
+const cleanUpCommand = `cd ./${repoName}/ && rm -r ./assets && rm -r ./${repoName} && rm -r ./bin && rm -r ./git`;
 
 // Executes a command in bash
 const runCommand = command => {
