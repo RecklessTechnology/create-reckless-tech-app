@@ -31,7 +31,7 @@ const initialState = {
       responsiveness: 20,
     },
     {
-      url: '/Models/cube/scene.gltf',
+      url: '/models/cube/scene.gltf',
       active: false,
       hover: false,
       id: 'GLTF Cube',
@@ -41,7 +41,7 @@ const initialState = {
       responsiveness: 20,
     },
     {
-      url: '/Models/cone/scene.gltf',
+      url: '/models/cone/scene.gltf',
       active: false,
       hover: false,
       id: 'GLTF Cone',
