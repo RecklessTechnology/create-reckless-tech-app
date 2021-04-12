@@ -7,7 +7,7 @@ const gitCheckoutCommand = `git clone --depth 1 https://github.com/RecklessTechn
 const installCRACommand = `cd ${repoName}/ && npx create-react-app ${repoName}`;
 const removeReactFilesCommand = `cd ./${repoName}/${repoName}/src/ && rm App.css && rm App.js && rm Index.css && rm Index.js && rm logo.svg`;
 const moveReactFilesCommand = `cd ./${repoName}/assets/React && mv ./* ./../../${repoName}/src/`;
-const moveModelFilesCommand = `cd ./${repoName}/assets/Models && mv ./* ./../../${repoName}/public/`;
+const moveStaticFilesCommand = `cd ./${repoName}/assets/Static && mv ./* ./../../${repoName}/public/`;
 const moveDockerFilesCommand = `cd ./${repoName}/assets/Docker && mv ./Dockerfile ./../../${repoName}/`;
 const removeCRTAFilesCommand = `cd ./${repoName}/ && rm package.json && rm README.md && rm .gitignore`;
 const moveCRAFilesCommand = `cd ./${repoName}/${repoName}/ && mv ./* ./../ && mv ./.gitignore ./../.gitignore`;
@@ -46,9 +46,9 @@ const moveReactFiles = runCommand(moveReactFilesCommand);
 if (!moveReactFiles) process.exitCode = -1;
 
 // Add 3d models
-console.log(`Adding model files...`);
-const moveModelFiles = runCommand(moveModelFilesCommand);
-if (!moveModelFiles) process.exitCode = -1;
+console.log(`Adding static files...`);
+const moveStaticFiles = runCommand(moveStaticFilesCommand);
+if (!moveStaticFiles) process.exitCode = -1;
 
 // Add docker files
 console.log(`Adding Docker files...`);

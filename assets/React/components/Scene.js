@@ -1,4 +1,4 @@
-import React, { useState, } from 'react'
+import React, { } from 'react'
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
@@ -6,9 +6,6 @@ import { bindActionCreators } from "redux";
 import { makeStyles } from '@material-ui/core/styles';
 
 import { Canvas } from '@react-three/fiber'
-
-import Draggable from './Draggable';
-import MeshBuilder from './MeshBuilder';
 
 const Light = ({ brightness, color }) => {
   return (
@@ -72,10 +69,19 @@ const BackDrop = () => {
   );
 };
 
+const Sphere = () => {
+  return (
+    <mesh>
+      <sphereBufferGeometry args={[0.65, 32, 23]} />
+      <meshStandardMaterial color={'orange'} />
+    </mesh>
+  );
+};
+
 
 function Scene(props) {
   // Deconstruct props from Redux store
-  const { objs, clearActive, updateActive, updateHover, updateRotation, updatePosition } = props;
+  const { clearMenuActive, updateMenuActive } = props;
   
   // Create local classes
   const classes = makeStyles((theme) => ({
@@ -85,107 +91,15 @@ function Scene(props) {
     },
   }))();
 
-  const SphereParent = objs.filter((o) => (o.id === 'Sphere Parent'))[0];
-  const SphereChild = objs.filter((o) => (o.id === 'Sphere Child'))[0];
-  const SphereGrandchild = objs.filter((o) => (o.id === 'Sphere Grandchild'))[0];
-
   return (
     <Canvas className={classes.root} onClick={()=>{
       // Deselect object when clicking on background
-      if (objs.filter((o)=>{ return o.hover === true}).length === 0) {
-        clearActive();
-      }
+      clearMenuActive();
     }}>
       <Light />
       <FillLight />
       <RimLight />
-      {
-        objs.map((o)=>{
-          if (o.url !== 'sphere') {
-            return (
-              <Draggable
-                key={o.id}
-
-                name={o.id}
-                
-                active={o.active}
-                
-                updateActive={updateActive}
-                updateHover={updateHover}
-                updateRotation={updateRotation}
-                updatePosition={updatePosition}
-                
-                position={o.position}
-                rotation={o.rotation}
-                scale={o.scale}
-
-                responsiveness={o.responsiveness}
-              >
-                <MeshBuilder url={o.url} hover={o.hover} active={o.active} />
-              </Draggable>);
-          }
-        })
-      }
-      <Draggable
-        key={SphereParent.id}
-
-        name={SphereParent.id}
-        
-        active={SphereParent.active}
-        
-        updateActive={updateActive}
-        updateHover={updateHover}
-        updateRotation={updateRotation}
-        updatePosition={updatePosition}
-        
-        position={SphereParent.position}
-        rotation={SphereParent.rotation}
-        scale={SphereParent.scale}
-
-        responsiveness={SphereParent.responsiveness}
-      >
-        <MeshBuilder url={SphereParent.url} hover={SphereParent.hover} active={SphereParent.active} />
-        <Draggable
-          key={SphereChild.id}
-
-          name={SphereChild.id}
-          
-          active={SphereChild.active}
-          
-          updateActive={updateActive}
-          updateHover={updateHover}
-          updateRotation={updateRotation}
-          updatePosition={updatePosition}
-          
-          position={SphereChild.position}
-          rotation={SphereChild.rotation}
-          scale={SphereChild.scale}
-
-          responsiveness={SphereChild.responsiveness}
-        >
-          <MeshBuilder url={SphereChild.url} hover={SphereChild.hover} active={SphereChild.active} />
-          <Draggable
-            key={SphereGrandchild.id}
-
-            name={SphereGrandchild.id}
-            
-            active={SphereGrandchild.active}
-            
-            updateActive={updateActive}
-            updateHover={updateHover}
-            updateRotation={updateRotation}
-            updatePosition={updatePosition}
-            
-            position={SphereGrandchild.position}
-            rotation={SphereGrandchild.rotation}
-            scale={SphereGrandchild.scale}
-
-            responsiveness={SphereGrandchild.responsiveness}
-          >
-            <MeshBuilder url={SphereGrandchild.url} hover={SphereGrandchild.hover} active={SphereGrandchild.active} />
-          </Draggable>
-        </Draggable>
-      </Draggable>
+      <Sphere />
       <BackDrop />
       <GroundPlane />
     </Canvas>

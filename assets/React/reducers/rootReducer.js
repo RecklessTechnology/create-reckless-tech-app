@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import objects from './objects';
+import rt_menu from './rt_menu';
 export default combineReducers({
-  objects,
+  rt_menu,
 });

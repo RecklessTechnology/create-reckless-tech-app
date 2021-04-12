@@ -6,13 +6,13 @@ import { bindActionCreators } from "redux";
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from "@material-ui/core";
 
-import { clearActive, updateActive, updateHover, updatePosition, updateRotation, updateScale } from './actions/objects';
+import { clearMenuActive, updateMenuActive } from './actions/rt_menu';
 
 import Scene from './components/Scene';
-import Inspector from './components/Inspector';
+import RT_Menu from './components/RT_Menu';
 
 function App(props) {
-  const { clearActive, updateActive, updateHover, updatePosition, updateRotation, updateScale, objects } = props;
+  const { clearMenuActive, isMenuActive } = props;
 
   // Local classes
   const classes = makeStyles((theme) => ({
@@ -40,43 +40,28 @@ function App(props) {
       <Grid container direction="row" justify="flex-start" alignItems="flex-start" spacing={0} className={classes.grid}>
           <Grid item xl={12} lg={12} md={12} sm={12} xs={12} className={classes.item} >
             <Scene
-              updateActive={updateActive}
-              updateRotation={updateRotation}
-              updatePosition={updatePosition}
-              updateHover={updateHover}
-              clearActive={clearActive}
-              objs={objects}
+              clearMenuActive={clearMenuActive}
             />
           </Grid>
       </Grid>
-      { (objects.filter((o)=>{ return o.active === true}).length === 0) ? // only show inspector if an object is selected
-        null :
-        <Inspector
-          updatePosition={updatePosition}
-          updateRotation={updateRotation}
-          updateScale={updateScale}
-          clearActive={clearActive}
-          activeObject={objects.filter((o)=>{ return o.active === true})[0]}
-        />
-      }
+      <RT_Menu
+        isMenuActive={isMenuActive}
+        clearMenuActive={clearMenuActive}
+      />
     </div>
   );
 }
 
 const mapStateToProps = state => {
   return ({
-    objects: state.objects.objectList,
+    isMenuActive: state.rt_menu.active,
   })
 }
 
  const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    updateActive: updateActive,
-    updatePosition: updatePosition,
-    updateRotation: updateRotation,
-    updateScale: updateScale,
-    updateHover: updateHover,
-    clearActive: clearActive,
+    updateMenuActive: updateMenuActive,
+    clearMenuActive: clearMenuActive,
   }, dispatch);
 }
 
