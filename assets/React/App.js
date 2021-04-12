@@ -9,7 +9,7 @@ import { Grid } from "@material-ui/core";
 import { clearMenuActive, updateMenuActive } from './actions/rt_menu';
 
 import Scene from './components/Scene';
-import RT_Menu from './components/RT_Menu';
+import RTMenu from './components/RTMenu';
 
 function App(props) {
   const { clearMenuActive, isMenuActive } = props;
@@ -44,7 +44,7 @@ function App(props) {
             />
           </Grid>
       </Grid>
-      <RT_Menu
+      <RTMenu
         isMenuActive={isMenuActive}
         clearMenuActive={clearMenuActive}
       />

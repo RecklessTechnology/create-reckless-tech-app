@@ -5,7 +5,9 @@ import { bindActionCreators } from "redux";
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Canvas } from '@react-three/fiber'
+import { Canvas } from '@react-three/fiber';
+
+import { clearMenuActive } from './../actions/rt_menu';
 
 const Light = ({ brightness, color }) => {
   return (
@@ -81,7 +83,7 @@ const Sphere = () => {
 
 function Scene(props) {
   // Deconstruct props from Redux store
-  const { clearMenuActive, updateMenuActive } = props;
+  const { clearMenuActive } = props;
   
   // Create local classes
   const classes = makeStyles((theme) => ({
