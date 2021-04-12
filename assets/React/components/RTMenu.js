@@ -50,6 +50,9 @@ function RTMenu(props) {
     grow: {
       flexGrow: 1,
     },
+    titleText: {
+      textTransform: 'capitalize',
+    }
     rtText: {
       textAlign: 'right',
     }
@@ -77,7 +80,7 @@ function RTMenu(props) {
           <List>
               <ListItem key={'Close'} onClick={clearMenuActive}>
                 <ListItemIcon><CancelIcon /></ListItemIcon>
-                <ListItemText primary={`${packageJson.name.replace('_', ' ')}`} />
+                <ListItemText primary={`${packageJson.name.replace('_', ' ')}`} className={classes.titleText}/>
               </ListItem>
               <Divider />
           </List>
@@ -88,6 +91,7 @@ function RTMenu(props) {
             <div className={classes.listRoot}>
               <List component="nav" aria-label="RTMenu">
                 <ListItem button component="a" target={"_blank"} href="">
+                  <ListItemText secondary={`built with`} className={classes.rtText}/>
                   <ListItemText primary={"Reckless Technology"} secondary={`v${rtPackageJson.version}`} className={classes.rtText}/>
                 </ListItem>
               </List>

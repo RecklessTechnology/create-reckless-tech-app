@@ -75,7 +75,7 @@ const Sphere = () => {
   return (
     <mesh>
       <sphereBufferGeometry args={[0.65, 32, 23]} />
-      <meshStandardMaterial color={'orange'} />
+      <meshStandardMaterial color={'gray'} />
     </mesh>
   );
 };
