@@ -1,12 +1,43 @@
 {
   "name": "@recklesstechnology/create-reckless-tech-app",
-  "version": "0.0.51",
+  "version": "0.0.52",
   "description": "Creates a standard Reckless Tech app from the current template.",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "bin": "./bin/cli.js",
+  "dependencies": {
+    "@react-three/drei": "^4.1.8",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3",
+    "web-vitals": "^1.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RecklessTechnology/create-reckless-tech-app.git"
@@ -16,5 +47,5 @@
   "bugs": {
     "url": "https://github.com/RecklessTechnology/create-reckless-tech-app/issues"
   },
-  "homepage": "https://github.com/RecklessTechnology/create-reckless-tech-app#readme"
+  "homepage": "/"
 }

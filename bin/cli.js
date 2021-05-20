@@ -1,18 +1,8 @@
 #!/usr/bin/env node
 const { execSync } = require('child_process');
 
+// Passed project name
 const repoName = process.argv[2];
-
-const gitCheckoutCommand = `git clone --depth 1 https://github.com/RecklessTechnology/create-reckless-tech-app ${repoName}`;
-const installCRACommand = `cd ${repoName}/ && npx create-react-app ${repoName}`;
-const removeReactFilesCommand = `cd ./${repoName}/${repoName}/src/ && rm App.css && rm App.js && rm Index.css && rm Index.js && rm logo.svg`;
-const moveReactFilesCommand = `cd ./${repoName}/assets/React && mv ./* ./../../${repoName}/src/`;
-const moveStaticFilesCommand = `cd ./${repoName}/assets/Static && mv ./* ./../../${repoName}/public/`;
-const moveDockerFilesCommand = `cd ./${repoName}/assets/Docker && mv ./Dockerfile ./../../${repoName}/`;
-const removeCRTAFilesCommand = `cd ./${repoName}/ && mv ./package.json ./${repoName}/src/rt_package.json && rm README.md && rm .gitignore`;
-const moveCRAFilesCommand = `cd ./${repoName}/${repoName}/ && mv ./* ./../ && mv ./.gitignore ./../.gitignore`;
-const installDepsCommand = `cd ./${repoName}/ && npm install && npm install redux-devtools-extension @material-ui/core @material-ui/icons @material-ui/styles @react-spring/three react-redux @react-three/fiber react-use-gesture redux redux-thunk three --save`;
-const cleanUpCommand = `cd ./${repoName}/ && rm -r ./assets && rm -r ./${repoName} && rm -r ./bin && rm -rf ./.git`;
 
 // Executes a command in bash
 const runCommand = command => {
@@ -27,64 +17,68 @@ const runCommand = command => {
 
 // Checkout repo
 console.log(`Cloning as ${repoName}...`);
+const gitCheckoutCommand = `git clone --depth 1 https://github.com/RecklessTechnology/create-reckless-tech-app ${repoName}`;
 const checkedOut = runCommand(gitCheckoutCommand);
 if (!checkedOut) process.exitCode = -1;
 
 // Install create-react-app
 console.log(`Starting with create-react-app...`);
+const installCRACommand = `cd ${repoName}/ && npx create-react-app ${repoName}`;
 const installCRA = runCommand(installCRACommand);
 if (!installCRA) process.exitCode = -1;
 
 // Remove files from create-react-app
 console.log(`Removing CRA files...`);
-const removeReactFiles = runCommand(removeReactFilesCommand);
-if (!removeReactFiles) process.exitCode = -1;
+const removeCRAFilesCommand = `cd ./${repoName}/${repoName}/ && rm -r src/ && rm -r public/`;
+const removeCRAFiles = runCommand(removeCRAFilesCommand);
+if (!removeCRAFiles) process.exitCode = -1;
 
-// Replace with files from create-reckless-tech-app
+// // Replace with files from create-reckless-tech-app
 console.log(`Adding CRTA files...`);
-const moveReactFiles = runCommand(moveReactFilesCommand);
-if (!moveReactFiles) process.exitCode = -1;
+const moveCRTAFilesCommand = `cd ./${repoName}/ && mv ./src ./../../${repoName}/ && mv ./public ./../../${repoName}/ && ./Dockerfile ./../../${repoName}/ && && ./package.json ./../../${repoName}/rt_package.json`;
+const moveCRTAFiles = runCommand(moveCRTAFilesCommand);
+if (!moveCRTAFiles) process.exitCode = -1;
 
-// Add 3d models
-console.log(`Adding static files...`);
-const moveStaticFiles = runCommand(moveStaticFilesCommand);
-if (!moveStaticFiles) process.exitCode = -1;
+// // Add docker files
+// console.log(`Adding Docker files...`);
+// const moveDockerFilesCommand = `cd ./${repoName}/assets/Docker && mv ./Dockerfile ./../../${repoName}/`;
+// const moveDockerFiles = runCommand(moveDockerFilesCommand);
+// if (!moveDockerFiles) process.exitCode = -1;
 
-// Add docker files
-console.log(`Adding Docker files...`);
-const moveDockerFiles = runCommand(moveDockerFilesCommand);
-if (!moveDockerFiles) process.exitCode = -1;
+// // Remove CRTA files
+// console.log(`Removing CRTA files...`);
+// const removeCRTAFilesCommand = `cd ./${repoName}/ && mv ./package.json ./${repoName}/src/rt_package.json && rm README.md && rm .gitignore`;
+// const removeCRTAFiles = runCommand(removeCRTAFilesCommand);
+// if (!removeCRTAFiles) process.exitCode = -1;
 
-// Remove CRTA files
-console.log(`Removing CRTA files...`);
-const removeCRTAFiles = runCommand(removeCRTAFilesCommand);
-if (!removeCRTAFiles) process.exitCode = -1;
+// // Move CRTA files to root
+// console.log(`Move CRTA files to root...`);
+// const moveCRAFilesCommand = `cd ./${repoName}/${repoName}/ && mv ./* ./../ && mv ./.gitignore ./../.gitignore`;
+// const moveCRAFiles = runCommand(moveCRAFilesCommand);
+// if (!moveCRAFiles) process.exitCode = -1;
 
-// Move CRTA files to root
-console.log(`Move CRTA files to root...`);
-const moveCRAFiles = runCommand(moveCRAFilesCommand);
-if (!moveCRAFilesCommand) process.exitCode = -1;
+// // Install dependencies
+// console.log(`Installing dependencies for ${repoName}...`);
+// const installDepsCommand = `cd ./${repoName}/ && npm install && npm install redux-devtools-extension @material-ui/core @material-ui/icons @material-ui/styles @react-spring/three react-redux @react-three/fiber react-use-gesture redux redux-thunk three --save`;
+// const installDeps = runCommand(installDepsCommand);
+// if (!installDeps) process.exitCode = -1;
 
-// Install dependencies
-console.log(`Installing dependencies for ${repoName}...`);
-const installDeps = runCommand(installDepsCommand);
-if (!installDeps) process.exitCode = -1;
+// // Clean up CRTA files
+// console.log(`Cleaning up remaining template files...`);
+// const cleanUpCommand = `cd ./${repoName}/ && rm -r ./assets && rm -r ./${repoName} && rm -r ./bin && rm -rf ./.git`;
+// const cleanUp = runCommand(cleanUpCommand);
+// if (!cleanUp) process.exitCode = -1;
 
-// Clean up CRTA files
-console.log(`Cleaning up remaining template files...`);
-const cleanUp = runCommand(cleanUpCommand);
-if (!cleanUp) process.exitCode = -1;
+// // Install complete
+// console.log(`Installation ready. Use the following command to start.`);
+// console.log(`cd ${repoName} && npm start`);
 
-// Install complete
-console.log(`Installation ready. Use the following command to start.`);
-console.log(`cd ${repoName} && npm start`);
-
-// const packageJson = {
-//   name: appName,
-//   version: '0.1.0',
-//   private: true,
-// };
-// fs.writeFileSync(
-//   path.join(root, 'package.json'),
-//   JSON.stringify(packageJson, null, 2) + os.EOL
-// );
+// // const packageJson = {
+// //   name: appName,
+// //   version: '0.1.0',
+// //   private: true,
+// // };
+// // fs.writeFileSync(
+// //   path.join(root, 'package.json'),
+// //   JSON.stringify(packageJson, null, 2) + os.EOL
+// // );
