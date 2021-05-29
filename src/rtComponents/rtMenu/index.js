@@ -1,30 +1,29 @@
-import React, { useState } from 'react';
+import React, { createContext, useState, useMemo } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
 import packageJson from './../../../package.json';
 
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, AppBar, Toolbar, IconButton,
-Tabs, Tab, Box, Typography } from "@material-ui/core";
+Tabs, Tab } from "@material-ui/core";
 import clsx from 'clsx';
 
 import CancelIcon from '@material-ui/icons/Cancel';
 import MenuIcon from '@material-ui/icons/Menu';
 
-import useAppContext from '../../@RecklessCore/useAppContext';
+import PeersMenu from './PeersMenu';
+import SceneMenu from './SceneMenu';
 
-import RTObjectMenu from './RTObjectMenu'
+export const RTMenuContext = createContext(null);
 
 function RTMenu(props) {
-  const [RTMenuOpen, setRTMenuOpen] = useState();  
-  const { recklessObjectNamesArray } = useAppContext();
-
-  const [currentTab, setCurrentTab] = useState(0);
+  const [RTMenuOpen, setRTMenuOpen] = useState(false);
+  const [RTMenuTab, setRTMenuTab] = useState(0);
   
   // Create local classes
   const classes = makeStyles((theme) => ({
     list: {
-      width: 250,
+      width: 500,
     },
     fullList: {
       width: 'auto',
@@ -58,77 +57,74 @@ function RTMenu(props) {
       textAlign: 'right',
     }
   }))();
+
+  const contextValue = useMemo(()=>({
+    RTMenuOpen, setRTMenuOpen,
+    RTMenuTab, setRTMenuTab,
+  }), [RTMenuOpen, setRTMenuOpen, RTMenuTab, setRTMenuTab]);
+
+
   return (
-    <div>
-      <AppBar position="fixed" color="primary" className={classes.appBar}>
-        <Toolbar>
-          <div className={classes.grow} />
-          <IconButton onClick={()=> setRTMenuOpen(true)} edge="end" color="inherit">
-            <MenuIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        BackdropProps={{ invisible: true }}
-        anchor={'right'}
-        open={RTMenuOpen}
-      >
-        <div
-          className={clsx(classes.list)}
-          role="presentation"
-        >
-          <List>
-              <ListItem key={'Close'} onClick={() => { setRTMenuOpen(false) }}>
-                <ListItemIcon><CancelIcon /></ListItemIcon>
-                <ListItemText primary={`${packageJson.name.replace('_', ' ')}`} className={classes.titleText}/>
-              </ListItem>
-              <Divider />
-              <Tabs
-                value={currentTab}
-                indicatorColor="primary"
-                textColor="primary"
-                onChange={(event, newValue) => setCurrentTab(newValue)}
-                aria-label="disabled tabs example"
-                variant="fullWidth"
-              >
-                <Tab label="Me" />
-                <Tab label="Scene"/>
-              </Tabs>
-              <div
-                role="tabpanel"
-                hidden={currentTab !== 0}
-                id={`full-width-tabpanel-${0}`}
-                aria-labelledby={`full-width-tab-${0}`}
-              >
-                Item One
-              </div>
-              <div
-                role="tabpanel"
-                hidden={currentTab !== 1}
-                id={`full-width-tabpanel-${1}`}
-                aria-labelledby={`full-width-tab-${1}`}
-              >
-                {recklessObjectNamesArray().map((name)=>(<div key={name}><RTObjectMenu name={name}/><Divider /></div>))}
-              </div>
-          </List>
-        </div>
-        <AppBar position="fixed" className={classes.appBarFooter}>
-          <Divider />
+    <RTMenuContext.Provider value={contextValue}>
+      <div>
+        <AppBar position="fixed" color="primary" className={classes.appBar}>
           <Toolbar>
-            <div className={classes.listRoot}>
-              <List component="nav" aria-label="RTMenu">
-                <ListItem>
-                  <ListItemText secondary={`built with`} className={classes.rtText}/>
-                </ListItem>
-                <ListItem button component="a" target={"_blank"} href="https://github.com/RecklessTechnology/create-reckless-tech-app">
-                  <ListItemText primary={"Reckless Technology"} secondary={`v${packageJson.version}`} className={classes.rtText}/>
-                </ListItem>
-              </List>
-            </div>
+            <div className={classes.grow} />
+            <IconButton onClick={()=> setRTMenuOpen(true)} edge="end" color="inherit">
+              <MenuIcon />
+            </IconButton>
           </Toolbar>
         </AppBar>
-      </Drawer>
-    </div>
+        <Drawer
+          BackdropProps={{ invisible: true }}
+          anchor={'right'}
+          open={RTMenuOpen}
+        >
+          <div
+            className={clsx(classes.list)}
+            role="presentation"
+          >
+            <List>
+                <ListItem key={'Close'} onClick={() => { setRTMenuOpen(false) }}>
+                  <ListItemIcon><CancelIcon /></ListItemIcon>
+                </ListItem>
+                <Divider />
+                <Tabs
+                  value={RTMenuTab}
+                  indicatorColor="primary"
+                  textColor="primary"
+                  onChange={(event, newValue) => setRTMenuTab(newValue)}
+                  aria-label="disabled tabs example"
+                  variant="fullWidth"
+                >
+                  <Tab label="Peers" />
+                  <Tab label="Scene"/>
+                </Tabs>
+                {RTMenuTab === 0 ? <PeersMenu/> : null}
+                {RTMenuTab === 1 ? <SceneMenu/> : null}
+            </List>
+          </div>
+          <AppBar position="fixed" className={classes.appBarFooter}>
+            <Divider />
+            <Toolbar>
+              <div className={classes.listRoot}>
+                <List component="nav" aria-label="RTMenu">
+                  <ListItem>
+                    <ListItemText primary={`${packageJson.name.replace('_', ' ')}`} className={classes.titleText}/>
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText secondary={`built with`} className={classes.rtText}/>
+                  </ListItem>
+                  <ListItem button component="a" target={"_blank"} href="https://github.com/RecklessTechnology/create-reckless-tech-app">
+                    <ListItemText primary={"Reckless Technology"} secondary={`v${packageJson.version}`} className={classes.rtText}/>
+                  </ListItem>
+                </List>
+              </div>
+            </Toolbar>
+          </AppBar>
+        </Drawer>
+      </div>
+    </RTMenuContext.Provider>
   );
 }
 

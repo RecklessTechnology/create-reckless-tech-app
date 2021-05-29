@@ -4,11 +4,10 @@ import { useSpring } from '@react-spring/three';
 
 import useRecklessObject from '../@RecklessCore/useRecklessObject';
 
-import DrawCircle from '../shapes/drawCircle';
-import DrawEllipse from '../shapes/drawEllipse';
+import DrawSine from '../shapes/drawSine';
 
-export default function OrbitGenerator({
-  type = 'circle',
+export default function SinewaveGenerator({
+  type = 'sine',
   resolution = 64,
   radiusW = 0.25,
   radiusH = 0,
@@ -22,12 +21,10 @@ export default function OrbitGenerator({
   const points = useMemo(()=>{
     switch(type) {
       default:
-      case 'circle':
-        return DrawCircle(resolution, radiusW);
-      case 'ellipse':
-        return DrawEllipse(resolution, radiusW, radiusH);
+      case 'sine':
+        return DrawSine(resolution, radiusW);
     }
-  }, [type, resolution, radiusH, radiusW]);
+  }, [type, resolution, radiusW]);
 
   const fromPoint = useMemo(()=>{
     if (nodeRef.current !== null) {

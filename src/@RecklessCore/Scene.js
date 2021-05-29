@@ -24,7 +24,7 @@ export function useLevel() {
 }
 
 // max ms delay between scene init and ready events
-const sceneReadyTimeout = 1000;
+// const sceneReadyTimeout = 1000;
 
 export default function Scene({ id, children }) {
     const { publish, sceneJSON } = useAppContext();
@@ -40,15 +40,15 @@ export default function Scene({ id, children }) {
 
     const initEvents = useCallback(async () => {
         
-        await publish('scene-init', id);
-        // ensure everything is ready on next idle callback
-        idleCallback.current = window.requestIdleCallback(
-            () => {
-                // console.log('scene-ready', id);
-                publish('scene-ready', id);
-            },
-            { timeout: sceneReadyTimeout }
-        );
+        // await publish('scene-init', id);
+        // // ensure everything is ready on next idle callback
+        // idleCallback.current = window.requestIdleCallback(
+        //     () => {
+        //         // console.log('scene-ready', id);
+        //         publish('scene-ready', id);
+        //     },
+        //     { timeout: sceneReadyTimeout }
+        // );
     }, [publish, id]);
 
     const contextValue = useMemo(

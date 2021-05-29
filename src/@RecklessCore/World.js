@@ -1,19 +1,19 @@
 import React, { createElement } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { makeStyles } from '@material-ui/core';
-import * as THREE from 'three';
 import { OrbitControls } from '@react-three/drei';
 
 import { ThreeParamsToArgs } from './utils/threeParams';
 
-export const GameContext = React.createContext(null);
+export const WorldContext = React.createContext(null);
 
 export default function World({
     children,
-    sceneProps,
+    sceneJSON,
     ...props
 }) {
-    const { fog } = sceneProps;
+    const { object, camera } = sceneJSON;
+    const { fog } = object;
     const classes = makeStyles(() => ({
         root: {
             position: 'relative',
@@ -25,23 +25,20 @@ export default function World({
 
     const contextValue = {
     };
-
-    const cameraFov = 75;
-    const cameraPosition = new THREE.Vector3(0, 5, 5);
-
     return (
         <div className={classes.root}>
             <Canvas
+                // mode="concurrent"
                 shadows
-                camera={{ position: cameraPosition, fov: cameraFov }}
+                camera={camera}
                 dpr={window.devicePixelRatio}
                 {...props}
             >
-                <GameContext.Provider value={contextValue}>
+                <WorldContext.Provider value={contextValue}>
                     {/* FOG */}
                     {fog !== undefined ? createElement(fog.type, { type: fog.type, attach: "fog", args: ThreeParamsToArgs(fog) }, [] ) : null}
                     {children}
-                </GameContext.Provider>
+                </WorldContext.Provider>
                 <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
             </Canvas>
         </div>

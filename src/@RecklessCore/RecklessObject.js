@@ -7,11 +7,10 @@ import React, {
 } from 'react';
 import useForceUpdate from './useForceUpdate';
 import useAppContext from './useAppContext';
-import useStateFromProp from './useStateFromProp';
 import createPubSub from './utils/createPubSub';
 
-import GeneratorSwitch from '../generators/generatorSwitch';
-import InputSwitch from '../inputs/inputSwitch';
+import Generators from '../generators/Generators';
+import Inputs from '../inputs/Inputs';
 
 export const RecklessObjectContext = React.createContext(null);
 
@@ -30,18 +29,18 @@ export default function RecklessObject({
     const identifier = useRef(Symbol('RecklessObject'));
     const node = useRef(null);
     
+    const [uuid] = useState(props.uuid);
     const [registry] = useState(() => new Map());
     const [pubSub] = useState(() => createPubSub());
 
-    const [disabled, setDisabled] = useStateFromProp(props.disabled || false);
-    const [debug, setDebug] = useStateFromProp(props.debug || false);
+    const [disabled, setDisabled] = useState(props.disabled || false);
+    const [debug, setDebug] = useState(props.debug || false);
 
-    const [position, setPosition] = useStateFromProp(props.position || [0,0,0]);
-    const [rotation, setRotation] = useStateFromProp(props.rotation || [0,0,0]);
-    const [scale, setScale] = useStateFromProp(props.scale || 1);
+    const [position, setPosition] = useState(props.position || [0,0,0]);
+    const [rotation, setRotation] = useState(props.rotation || [0,0,0]);
+    const [scale, setScale] = useState(props.scale || 1);
     
-    const { registerRecklessObject, unregisterRecklessObject, sceneJSON } = useAppContext();
-    const { inputs, generators, connections } = sceneJSON;
+    const { registerRecklessObject, unregisterRecklessObject } = useAppContext();
     const forceUpdate = useForceUpdate();
 
     // Functions to register game object with application context
@@ -63,6 +62,7 @@ export default function RecklessObject({
     // Reference to object properties
     const recklessObjectRef = useMemo(
         () => ({
+            uuid: uuid,
             id: identifier.current,
             
             name, displayName, type,
@@ -78,6 +78,7 @@ export default function RecklessObject({
             subscribe: pubSub.subscribe,
         }),
         [
+            uuid,
             name, displayName, type,
             
             disabled, setDisabled,
@@ -100,7 +101,7 @@ export default function RecklessObject({
     // Callback to fetch properties of object
     const getRef = useCallback(() => recklessObjectRef, [recklessObjectRef]);
 
-    // On load, register object with app context
+    // // On load, register object with app context
     useLayoutEffect(() => {
         const id = identifier.current;
         registerRecklessObject(id, recklessObjectRef);
@@ -108,7 +109,8 @@ export default function RecklessObject({
     }, [registerRecklessObject, unregisterRecklessObject, recklessObjectRef]);
 
     // Final context for provider
-    const contextValue = {
+    const contextValue = useMemo(()=>({
+        uuid: uuid,
         id: identifier.current,
         name,
         nodeRef: node,
@@ -125,16 +127,27 @@ export default function RecklessObject({
         
         ...pubSub,
         ...registryUtils,
-    };
-
-    const gens = connections.filter((conn)=>conn.to===props.uuid).map((conn)=>generators.filter((gen)=>gen.uuid===conn.from)[0]).filter(x => x !== undefined);
-    const inps = connections.filter((conn)=>conn.to===props.uuid).map((conn)=>inputs.filter((inp)=>inp.uuid===conn.from)[0]).filter(x => x !== undefined);
+    }), [
+        uuid,
+        identifier,
+        name,
+        node,
+        getRef,
+        disabled, setDisabled,
+        debug, setDebug,
+        position, setPosition,
+        rotation, setRotation,
+        scale, setScale,
+        forceUpdate,
+        pubSub,
+        registryUtils,
+    ]);
 
     return (
         <RecklessObjectContext.Provider value={contextValue}>
             <group name={name} ref={node}>
-                {gens.map((gen)=><GeneratorSwitch key={gen.uuid} {...gen} />)}
-                {inps.map((inp)=><InputSwitch  key={inp.uuid} {...inp} />)}
+                <Generators />
+                <Inputs />
                 {!disabled ? children : null}
             </group>
         </RecklessObjectContext.Provider>
