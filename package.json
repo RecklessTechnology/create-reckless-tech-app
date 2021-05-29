@@ -5,6 +5,9 @@
   "main": "index.js",
   "bin": "./bin/cli.js",
   "dependencies": {
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/styles": "^4.11.4",
     "@react-three/drei": "^4.1.8",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -53,7 +56,7 @@
   "bugs": {
     "url": "https://github.com/RecklessTechnology/create-reckless-tech-app/issues"
   },
-  "homepage": "https://reckless.technology/demos/create-reckless-tech-app/",
+  "homepage": "/",
   "devDependencies": {
     "base58": "^2.0.1",
     "react-app-rewired": "^2.1.8"
