@@ -53,7 +53,7 @@
   "bugs": {
     "url": "https://github.com/RecklessTechnology/create-reckless-tech-app/issues"
   },
-  "homepage": "/",
+  "homepage": "https://reckless.technology/demos/create-reckless-tech-app/",
   "devDependencies": {
     "base58": "^2.0.1",
     "react-app-rewired": "^2.1.8"
