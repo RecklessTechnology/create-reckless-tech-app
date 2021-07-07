@@ -17,7 +17,6 @@ const ThreeUsedProps = (props) => {
 const ThreeParamsToArgs = (props) => {
   const filteredProps = ThreeUsedProps(props);
 
-
   const params = useMemo(()=>(new THREE[props.type]().parameters !== undefined ? new THREE[props.type]().parameters : filteredProps), [props, filteredProps]);
   const args = useMemo(()=>(params === undefined ? [] : Object.keys(params).map(param=>{
     if (param === 'color') return `#${new THREE.Color(props[param]).getHexString()}`

@@ -1,11 +1,11 @@
 import { useLayoutEffect } from 'react';
-import useRecklessObject from './useRecklessObject';
+import useThreeObjectContext from './contexts/useThreeObjectContext';
 
 export default function useComponentRegistry(
     name,
     api
 ) {
-    const { registerComponent, unregisterComponent } = useRecklessObject();
+    const { registerComponent, unregisterComponent } = useThreeObjectContext();
 
     useLayoutEffect(() => {
         registerComponent(name, api);

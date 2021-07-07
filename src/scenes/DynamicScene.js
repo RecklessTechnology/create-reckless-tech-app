@@ -1,40 +1,36 @@
-import React, { useMemo, useState } from 'react';
-import useAppContext from '../@RecklessCore/useAppContext';
+import React, { useMemo, useState, useCallback } from 'react';
 
-import RenderChild from './RenderChild';
+import RenderThreeChildren from '../@RecklessCore/components/@objects/RenderThreeChildren';
 
-export default function DynamicScene() {
-  const { sceneJSON, setSceneJSON, subscribe } = useAppContext();
+export default function DynamicScene({ sceneJSON, setSceneJSON, subscribe }) {
   const [sceneData, setSceneData] = useState();
   
-  subscribe('scene-changed', (data)=>{ //update data only when peer list is modified
+  const updateScene = useCallback((data) => { //update data only when peer list is modified
     setSceneJSON(data);
-  });
+  }, [setSceneJSON]);
+
+  subscribe('scene-changed', updateScene);
 
   useMemo(()=>{
-      setSceneData({
-        children: sceneJSON.object.children,
-        geometries: sceneJSON.geometries,
-        materials: sceneJSON.materials,
-        inputs: sceneJSON.inputs,
-        generators: sceneJSON.generators,
-        connections: sceneJSON.connections,
-      });
-    }, [sceneJSON]);
-    
-    if (!sceneData) { return null }
-    
-    return (<>
-      {sceneData.children.map((childProps)=>{
-        return (<RenderChild
-          key={childProps.uuid}
-          props={childProps}
-          geometries={sceneData.geometries}
-          materials={sceneData.materials}
-          inputs={sceneData.inputs}
-          generators={sceneData.generators}
-          connections={sceneData.connections}
-        />)
-      })}
-    </>)
+    setSceneData({
+      children: sceneJSON.object.children,
+      geometries: sceneJSON.geometries,
+      materials: sceneJSON.materials,
+      devices: sceneJSON.devices,
+      generators: sceneJSON.generators,
+      connections: sceneJSON.connections,
+    });
+  }, [sceneJSON]);
+
+  return (sceneData !== undefined ? sceneData.children.map((childProps)=>{
+    return (<RenderThreeChildren
+      key={childProps.uuid}
+      props={childProps}
+      geometries={sceneData.geometries}
+      materials={sceneData.materials}
+      devices={sceneData.devices}
+      generators={sceneData.generators}
+      connections={sceneData.connections}
+    />)
+  }) : null)
 }

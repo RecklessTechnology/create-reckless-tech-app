@@ -3,13 +3,12 @@ import React, {
     useContext,
     useEffect,
     useMemo,
-    useRef,
+    // useRef,
     useState,
     createContext,
 } from 'react';
 import { createPortal } from '@react-three/fiber';
-import useAppContext from './useAppContext';
-import useSceneManager from './useSceneManager';
+import useSceneManager from './contexts/useSceneManagerContext';
 
 const SceneContext = createContext(null);
 
@@ -26,8 +25,7 @@ export function useLevel() {
 // max ms delay between scene init and ready events
 // const sceneReadyTimeout = 1000;
 
-export default function Scene({ id, children }) {
-    const { publish, sceneJSON } = useAppContext();
+export default function Scene({ id, sceneJSON, children }) {
     const {
         currentScene,
         currentLevel,
@@ -36,7 +34,7 @@ export default function Scene({ id, children }) {
         setLevel,
     } = useSceneManager();
     const [instances, setInstances] = useState([]);
-    const idleCallback = useRef();
+    // const idleCallback = useRef();
 
     const initEvents = useCallback(async () => {
         
@@ -49,7 +47,7 @@ export default function Scene({ id, children }) {
         //     },
         //     { timeout: sceneReadyTimeout }
         // );
-    }, [publish, id]);
+    }, [/*publish, id*/]);
 
     const contextValue = useMemo(
         () => ({
@@ -91,6 +89,7 @@ export default function Scene({ id, children }) {
     );
 
     useEffect(() => {
+        // const cur = idleCallback.current;
         if (currentScene === id) {
             // entering scene
             initEvents();
@@ -98,7 +97,7 @@ export default function Scene({ id, children }) {
             // leaving scene
             setInstances([]);
         }
-        return () => window.cancelIdleCallback(idleCallback.current);
+        // return () => window.cancelIdleCallback(cur);
     }, [currentScene, id, initEvents]);
 
     // skip rendering scene content

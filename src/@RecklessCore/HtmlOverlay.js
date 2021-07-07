@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { Html } from '@react-three/drei';
 
 // import { HTML, HTMLProps } from 'drei';
-import useAppContext from './useAppContext';
+import useAppContext from './contexts/useAppContext';
 
 export default function HtmlOverlay({ children, ...props }) {
     const { paused } = useAppContext();
