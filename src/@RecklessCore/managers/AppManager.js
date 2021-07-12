@@ -23,7 +23,9 @@ export default function AppManager({
   
   const [events] = useState(() => EventsManager());
   
+  // Add, remove, and update objects from the scene json
   const sceneUtils = useMemo(() => ({
+    // Peers
     updatePeer(identifier, ref) {
       setSceneJSON({
         ...sceneJSON,
@@ -50,6 +52,7 @@ export default function AppManager({
     },
     removePeer(identifier, ref) {
     },
+    // Connections
     addConnection(edge) {
       setSceneJSON({
         ...sceneJSON,

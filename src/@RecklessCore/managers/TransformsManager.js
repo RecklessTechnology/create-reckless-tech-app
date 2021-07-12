@@ -1,4 +1,4 @@
-import { createContext, useMemo, useState } from 'react';
+import { createContext, useMemo, useState, useCallback } from 'react';
 
 import useAppContext from '../contexts/useAppContext';
 
@@ -9,38 +9,40 @@ const TransformsManager = ({
     children
 }) => {
   const { publish } = useAppContext();
-    // Input Connections
-  const [InputRegistry] = useState(() => new Map());
+    // Transform Connections
+  const [TransformRegistry] = useState(() => new Map());
   
-  const inputRegistryUtils = useMemo(
+  const findTransform = useCallback((id) => {
+    return TransformRegistry.get(id);
+  },[TransformRegistry]);
+
+  const transformRegistryUtils = useMemo(
     () => ({
-        findInputById(id) {
-          return InputRegistry.get(id);
-        },
-        registerInput(identifier, ref) {
+        findTransform,
+        registerTransform(identifier, ref) {
             // register by id
-            InputRegistry.set(identifier, ref);
+            TransformRegistry.set(identifier, ref);
             publish('transforms-list-changed', 'add');
 
         },
-        unregisterInput(identifier, ref) {
+        unregisterTransform(identifier, ref) {
             // unregister by id
-            InputRegistry.delete(identifier);
+            TransformRegistry.delete(identifier);
             publish('transforms-list-changed', 'remove');
         },
         getTransformsArray() {
-          return Array.from(InputRegistry.keys()).map((id)=>InputRegistry.get(id));
+          return Array.from(TransformRegistry.keys()).map((id)=>TransformRegistry.get(id));
         },
     }),
-    [InputRegistry, publish]
+    [TransformRegistry, publish, findTransform]
   );
 
   transformsContextValue = useMemo(() => ({
-    InputRegistry,
-    ...inputRegistryUtils,
+    TransformRegistry,
+    ...transformRegistryUtils,
   }), [
-    InputRegistry,
-    inputRegistryUtils,
+    TransformRegistry,
+    transformRegistryUtils,
   ]);
 
     return (<TransformsContext.Provider value={transformsContextValue}>{children}</TransformsContext.Provider>)

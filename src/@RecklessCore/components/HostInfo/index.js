@@ -55,10 +55,10 @@ const HostInfo = () => {
   }, [setHostName]);
 
   useEffect(() => {
-    if (host) {
+    if (host && host.name !== hostName) {
       setHostName(host.name);
     }
-  }, [host, setHostName]);
+  }, [host, setHostName, hostName]);
 
   const updateHostInfo = useCallback((id, type, val) => {
     switch (type) {

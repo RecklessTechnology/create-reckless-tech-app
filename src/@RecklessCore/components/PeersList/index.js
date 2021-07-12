@@ -38,8 +38,7 @@ const PeersList = (props) => {
     if (p !== undefined) {
       setPeers(p.filter((p)=>(!p.isMe && !p.isHost)));
     }
-  }, [getPeersArray, setPeers]);
-  
+  }, [getPeersArray, setPeers])
   useMemo(()=>subscribe('peer-modified', updatePeers), [subscribe, updatePeers]);
 
   if (peers.length === 0) { return null; }

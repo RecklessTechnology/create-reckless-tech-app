@@ -1,26 +1,14 @@
-import { useMemo } from 'react'
+import { memo } from 'react'
 
-import useAppContext from '../../contexts/useAppContext';
-import useThreeObjectContext from '../../contexts/useThreeObjectContext';
+import DevicesView from './view';
 
-
-const Devices = ({ children }) => {
-  const { uuid } = useThreeObjectContext();
-  const { sceneJSON } = useAppContext();
-  const { devices, connections } = sceneJSON;
-
-  const devs = useMemo(()=>{
-        return connections.filter((conn)=>conn.to===uuid).map((conn)=>devices.filter((gen)=>gen.uuid===conn.from)[0]).filter(x => x !== undefined);
-  },[connections, devices, uuid]);
+const Devices = ({devices}) => {
+  return devices.map((device)=>{
+    return (<DevicesView key={`rt_${device.type}_device_${device.uuid}`} {...{props: device}}/>);
+  })
   
-  return (<group>{devs.map((props)=>{
-    switch(props.type) {
-      default:
-        return null
-    }
-  })}
-  {children}
-  </group>);
 }
 
-export default Devices;
+Devices.whyDidYouRender = false;
+
+export default memo(Devices);

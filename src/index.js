@@ -18,6 +18,7 @@ import PeersManager from './@RecklessCore/managers/PeersManager';
 import ThreeObjectsManager from './@RecklessCore/managers/ThreeObjectsManager';
 import GeneratorsManager from './@RecklessCore/managers/GeneratorsManager';
 import DevicesManager from './@RecklessCore/managers/DevicesManager';
+import TransformsManager from './@RecklessCore/managers/TransformsManager';
 
 const theme = createMuiTheme({
   palette: {
@@ -39,6 +40,7 @@ ReactDOM.render(
             <ConnectionsManager>
               <DevicesManager>
                 <GeneratorsManager>
+                  <TransformsManager>
                   <EditorMenuManager>
                     <ToolsMenuManager>
                       <InspectorMenuManager>
@@ -46,6 +48,7 @@ ReactDOM.render(
                       </InspectorMenuManager>
                     </ToolsMenuManager>
                   </EditorMenuManager>
+                  </TransformsManager>
                 </GeneratorsManager>
               </DevicesManager>
             </ConnectionsManager>

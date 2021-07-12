@@ -3,17 +3,17 @@
 // and converts it for use in React Flow
 // https://reactflow.dev/docs/
 
-// const spacing = 50;
+// Default size of patches
 const width = 150;
 const height = 245;
 
-// limits depth of parent / child render
+// Limit depth of parent / child render
 const limit = 3;
 
 function typeLookup(props) {
-  // console.log(props.type);
   switch(props.type) {
     default:
+      console.log(`Patch type '${props.type}' unknown`);
       return 'threeObj';
     case 'Scene':
       return props.type
@@ -25,18 +25,20 @@ function typeLookup(props) {
   }
 }
 
-function flowProps(props, parent, hidden, hideChildren) {
+// Build object for React Flow
+function makeFlowProps(props, parent, hidden, hideChildren, type) {
   return ({
-    type: typeLookup(props),
+    type: type,
     id: `${props.uuid}`,
     data: { width, height, label: props.name, isChildHidden: hideChildren, ...props },
-    isHidden: hidden, //(level < limit),
+    isHidden: hidden,
     parentId: parent,
     children: []
   });
 }
 
-function flattenChildren(children, parentId, level) {
+// Recursive. Traverses 3d scene and makes a patch for each object.
+function sceneGraphToFlow(children, parentId, level) {
   const nextLevel = level + 1;
   if (children === undefined || children.length === 0) {
     return [];
@@ -44,16 +46,16 @@ function flattenChildren(children, parentId, level) {
     return children.map((c, idx)=> {
       return ([
         {
-          ...flowProps(c, parentId, (level > limit), (level + 1 > limit)),
-          children: flattenChildren(c.children, c.uuid, nextLevel)
+          ...makeFlowProps(c, parentId, (level > limit), (level + 1 > limit), typeLookup(c)),
+          children: sceneGraphToFlow(c.children, c.uuid, nextLevel)
         },
-        ...flattenChildren(c.children, c.uuid, nextLevel)
+        ...sceneGraphToFlow(c.children, c.uuid, nextLevel)
       ]);
     }).flat()
   }
 }
 
-function flattenConnections(children) { 
+function sceneConnectionsToFlow(children) { 
   return children.filter((c)=>(!c.isHidden && c.parentId !== 'App')).map((c, idx)=>{
     return {
       id: `${c.id}-parent-${c.parentId}-children`,
@@ -70,8 +72,8 @@ function flattenConnections(children) {
   });
 }
 
-function flattenGeneratorConnections(connections) { 
-  return connections.map((c, idx)=>{
+function connectionsToFlow(rtScene) { 
+  return rtScene.connections.map((c, idx)=>{
     return {
       id: `${c.uuid}`,
       // type: 'smoothstep',
@@ -87,32 +89,37 @@ function flattenGeneratorConnections(connections) {
   });
 }
 
-function parseGenerators(generators) {
-  return generators.map((props, idx) => flowProps(props, 'Scene', false, false));
+function generatorsToFlow(rtScene) {
+  return rtScene.generators.map((props, idx) => makeFlowProps(props, 'Scene', false, false, 'generator'));
 }
 
-function connectionsToFlow(threeScene) {
-  const generators = parseGenerators(threeScene.generators);
+function peersToFlow(rtScene) {
+  return rtScene.peers.map((props, idx) => makeFlowProps(props, 'Scene', false, false, 'peers'));
+}
+
+function devicesToFlow(rtScene) {
+  return rtScene.devices.map((props, idx) => makeFlowProps(props, 'Scene', false, false, 'devices'));
+}
+
+function transformsToFlow(rtScene) {
+  return rtScene.transforms.map((props, idx) => makeFlowProps(props, 'Scene', false, false, 'transform'));
+}
+
+function rtSceneToFlow(rtScene) {
   return [
-    ...generators,
-    ...flattenGeneratorConnections(threeScene.connections),
-  ];
-}
+    // regular three.js scene graph
+    ...sceneGraphToFlow([rtScene.object], 'App', 1),
+    ...sceneConnectionsToFlow(sceneGraphToFlow([rtScene.object], 'App', 1)),
 
-function peersToFlow(threeScene) {
-  return threeScene.peers.map((props, idx) => flowProps(props, 'Scene', false, false));
-}
+    ...generatorsToFlow(rtScene),
+    ...peersToFlow(rtScene),
+    ...devicesToFlow(rtScene),
+    ...transformsToFlow(rtScene),
 
-function threeToFlow(threeScene) {
-  const threeObjects = flattenChildren([threeScene.object], 'App', 1);
-  return [
-    ...threeObjects,
-    ...flattenConnections(threeObjects),
-    ...connectionsToFlow(threeScene),
-    ...peersToFlow(threeScene)
+    ...connectionsToFlow(rtScene),
   ];
 }
 
 export {
-  threeToFlow
+  rtSceneToFlow
 }

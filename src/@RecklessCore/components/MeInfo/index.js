@@ -51,10 +51,10 @@ const MeInfo = () => {
   }, [setMeName]);
 
   useEffect(() => {
-    if (me) {
+    if (me && me.name !== meName) {
       setMeName(me.name)
     }
-  }, [me, setMeName]);
+  }, [me, setMeName, meName]);
 
   const updateMeInfo = useCallback((id, type, val) => {
     switch (type) {

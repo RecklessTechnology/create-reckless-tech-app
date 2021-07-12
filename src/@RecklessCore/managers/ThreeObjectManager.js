@@ -9,14 +9,14 @@ import React, {
 import useForceUpdate from '../useForceUpdate';
 import EventsManager from '../managers/EventsManager';
 
-import Generators from '../inputs/generators/index';
-// import Devices from '../inputs/devices/index';
-import Peers from '../inputs/peers/index';
-
 import useThreeObjectsContext from '../contexts/useThreeObjectsContext';
 import useAppContext from '../contexts/useAppContext';
 
 import RenderThreeChildrenView from '../components/@objects/RenderThreeChildren/view';
+import useGeneratorsContext from '../contexts/useGeneratorsContext';
+import usePeersContext from '../contexts/usePeersContext';
+import useDevicesConext from '../contexts/useDevicesContext';
+import useTransformsConext from '../contexts/useTransformsContext';
 
 // import { throttle } from '../utils/throttle';
 
@@ -41,7 +41,12 @@ const ThreeObjectManager = ({
   const isMounted = useRef(false);
 
   const { sceneJSON } = useAppContext();
-  const { peers, generators, connections} = sceneJSON;
+  const { connections} = sceneJSON;
+
+  const { findGenerator } = useGeneratorsContext();
+  const { findPeer } = usePeersContext();
+  const { findDevice } = useDevicesConext();
+  const { findTransform } = useTransformsConext();
 
   const identifier = useRef(Symbol('ThreeObject'));
   const node = useRef(null);
@@ -56,6 +61,39 @@ const ThreeObjectManager = ({
   const [rotation, setRotation] = useState(props.rotation || [0,0,0]);
   const [scale, setScale] = useState(props.scale || 1);
   
+  // Inputs
+  const updateFromInput = (prop, val)=>{
+    switch(prop) {
+      default:
+        break;
+      case 'position':
+        setPosition(val);
+        break;
+      case 'rotation':
+        setRotation(val);
+        break;
+      case 'scale':
+        setScale(val);
+        break;
+    }
+  };
+  
+  useEffect(()=>{
+    connections.filter((c)=>(c.to===uuid)).forEach((c)=>{
+      const peer = findPeer(c.from);
+      if (peer) { peer.subscribe(`${c.fromProp}-updated`, (val)=>{updateFromInput(c.fromProp, val)}) }
+
+      const gen = findGenerator(c.from);
+      if (gen) { gen.subscribe(`${c.fromProp}-updated`, (val)=>{updateFromInput(c.fromProp, val)}) }
+
+      const device = findDevice(c.from);
+      if (device) { device.subscribe(`${c.fromProp}-updated`, (val)=>{updateFromInput(c.fromProp, val)}) }
+
+      const transform = findTransform(c.from);
+      if (transform) { transform.subscribe(`${c.fromProp}-updated`, (val)=>{updateFromInput(c.fromProp, val)}) }
+    })
+  }, [connections, uuid, findGenerator, findPeer, findDevice, findTransform])
+
   // Outputs
   
   // Limit publish events to once every...
@@ -205,8 +243,8 @@ const ThreeObjectManager = ({
 
   return (
     <ThreeObjectContext.Provider value={contextValue}>
-      <Generators {...{generators, connections}}></Generators>
-      <Peers {...{peers, connections}}></Peers>
+      {/* <Generators {...{generators, connections}}></Generators> */}
+      {/* <Peers {...{peers, connections}}></Peers> */}
       {/* <Devices {...{devices, connections}}></Devices> */}
       <ThreeObjectPositionContext.Provider value={positionContextValue}>
         <ThreeObjectRotationContext.Provider value={rotationContextValue}>

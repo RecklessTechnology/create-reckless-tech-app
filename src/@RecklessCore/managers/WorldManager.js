@@ -6,6 +6,7 @@ import { PeersContext, peersContextValue } from './PeersManager';
 import { ConnectionsContext, connectionsContextValue } from './ConnectionsManager';
 import { GeneratorsContext, generatorsContextValue } from './GeneratorsManager';
 import { DevicesContext, devicesContextValue } from './DevicesManager';
+import { TransformsContext, transformsContextValue } from './TransformsManager';
 
 export const WorldContext = createContext(null);
 
@@ -23,9 +24,11 @@ const WorldManager = ({
                     <ConnectionsContext.Provider value={connectionsContextValue}>
                         <GeneratorsContext.Provider value={generatorsContextValue}>
                             <DevicesContext.Provider value={devicesContextValue}>
+                              <TransformsContext.Provider value={transformsContextValue}>
                                 <WorldContext.Provider value={worldContextValue}>
                                     {children}
                                 </WorldContext.Provider>
+                              </TransformsContext.Provider>
                             </DevicesContext.Provider>
                         </GeneratorsContext.Provider>
                     </ConnectionsContext.Provider>

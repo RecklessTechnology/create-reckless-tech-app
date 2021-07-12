@@ -1,12 +1,10 @@
 import { memo } from 'react'
 
-import PeerProvider from './Peer/index';
-import PeerInputManager, { DefaultProps } from '../../managers/PeerInputManager';
+import PeerManager, { DefaultProps } from '../../managers/PeerManager';
 
-const PeersView = ({props, connection}) => {
-  return <PeerInputManager {...DefaultProps} type={props.type} {...props}>
-    <PeerProvider {...{ toProp: connection.toProp }}/>
-  </PeerInputManager>;
+const PeersView = ({props}) => {
+  return <PeerManager {...DefaultProps} type={props.type} {...props}>
+  </PeerManager>;
 }
 
 PeersView.whyDidYouRender = true;

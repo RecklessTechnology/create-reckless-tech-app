@@ -9,38 +9,38 @@ const DevicesManager = ({
     children
 }) => {
   const { publish } = useAppContext();
-    // Input Connections
-  const [InputRegistry] = useState(() => new Map());
+    // Device Connections
+  const [DeviceRegistry] = useState(() => new Map());
   
-  const inputRegistryUtils = useMemo(
+  const deviceRegistryUtils = useMemo(
     () => ({
-        findInputById(id) {
-          return InputRegistry.get(id);
+        findDevice(id) {
+          return DeviceRegistry.get(id);
         },
-        registerInput(identifier, ref) {
+        registerDevice(identifier, ref) {
             // register by id
-            InputRegistry.set(identifier, ref);
+            DeviceRegistry.set(identifier, ref);
             publish('devices-list-changed', 'add');
 
         },
-        unregisterInput(identifier, ref) {
+        unregisterDevice(identifier, ref) {
             // unregister by id
-            InputRegistry.delete(identifier);
+            DeviceRegistry.delete(identifier);
             publish('devices-list-changed', 'remove');
         },
         getDevicesArray() {
-          return Array.from(InputRegistry.keys()).map((id)=>InputRegistry.get(id));
+          return Array.from(DeviceRegistry.keys()).map((id)=>DeviceRegistry.get(id));
         },
     }),
-    [InputRegistry, publish]
+    [DeviceRegistry, publish]
   );
 
   devicesContextValue = useMemo(() => ({
-    InputRegistry,
-    ...inputRegistryUtils,
+    DeviceRegistry,
+    ...deviceRegistryUtils,
   }), [
-    InputRegistry,
-    inputRegistryUtils,
+    DeviceRegistry,
+    deviceRegistryUtils,
   ]);
 
     return (<DevicesContext.Provider value={devicesContextValue}>{children}</DevicesContext.Provider>)
