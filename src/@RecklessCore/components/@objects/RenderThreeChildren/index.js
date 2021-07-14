@@ -16,9 +16,10 @@ const RenderThreeChildren = ({
   generators,
   connections,
 }) => {
+  
   const childRef = useRef();
 
-  const ObjProps = useMemo(() => {
+  const objProps = useMemo(() => {
     const threeObj = new THREE[props.type]();
     const propKeys = Object.keys(props).filter(prop=>threeObj[prop] !== undefined);
     const filteredProps = propKeys
@@ -129,7 +130,7 @@ const RenderThreeChildren = ({
   return <ThreeObjectManager key={`rt_${props.uuid}`} {...DefaultProps} type={props.type} {...props}>
       {createElement(
         props.type,
-        ObjProps,
+        objProps,
         [
           ...matGeoChildren,
           props.children && props.children.length > 0 ? props.children.map((childProps)=>RenderThreeChildren(

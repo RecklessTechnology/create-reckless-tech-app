@@ -61,7 +61,8 @@ const PeersManager = ({
   },[PeerRegistry]);
 
   const registerPeer = useCallback((identifier, ref) => {
-      if (PeerRegistry.get(identifier)) { /*updatePeerInfo(identifier, ref);*/ return null; }
+      // No reregistering
+      if (PeerRegistry.get(identifier)) { return null; }
 
       let newRef = ref;
       if (ref.uuid) {

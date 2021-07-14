@@ -966,13 +966,6 @@
       "uuid": "conn-1-uuid",
       "from": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
       "fromProp": "position",
-      "to": "multiply_uuid",
-      "toProp": "value"
-    },
-		{
-      "uuid": "conn-2-uuid",
-      "from": "multiply_uuid",
-      "fromProp": "value",
       "to": "1F0AFF04-BE32-494A-A764-1137A90E3D4B",
       "toProp": "position"
     }

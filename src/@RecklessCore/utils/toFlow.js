@@ -13,7 +13,7 @@ const limit = 3;
 function typeLookup(props) {
   switch(props.type) {
     default:
-      console.log(`Patch type '${props.type}' unknown`);
+      // console.log(`Patch type '${props.type}' unknown`);
       return 'threeObj';
     case 'Scene':
       return props.type
@@ -26,19 +26,19 @@ function typeLookup(props) {
 }
 
 // Build object for React Flow
-function makeFlowProps(props, parent, hidden, hideChildren, type) {
+function makeFlowProps(props, parents, hidden, hideChildren, type) {
   return ({
     type: type,
     id: `${props.uuid}`,
-    data: { width, height, label: props.name, isChildHidden: hideChildren, ...props },
+    data: { parents, width, height, label: props.name, isChildHidden: hideChildren, ...props },
     isHidden: hidden,
-    parentId: parent,
+    parents: parents,
     children: []
   });
 }
 
 // Recursive. Traverses 3d scene and makes a patch for each object.
-function sceneGraphToFlow(children, parentId, level) {
+function sceneGraphToFlow(children, parents, level) {
   const nextLevel = level + 1;
   if (children === undefined || children.length === 0) {
     return [];
@@ -46,23 +46,23 @@ function sceneGraphToFlow(children, parentId, level) {
     return children.map((c, idx)=> {
       return ([
         {
-          ...makeFlowProps(c, parentId, (level > limit), (level + 1 > limit), typeLookup(c)),
+          ...makeFlowProps(c, parents, (level > limit), (level + 1 > limit), typeLookup(c)),
           children: sceneGraphToFlow(c.children, c.uuid, nextLevel)
         },
-        ...sceneGraphToFlow(c.children, c.uuid, nextLevel)
+        ...sceneGraphToFlow(c.children, [...parents, c.uuid], nextLevel)
       ]);
     }).flat()
   }
 }
 
 function sceneConnectionsToFlow(children) { 
-  return children.filter((c)=>(!c.isHidden && c.parentId !== 'App')).map((c, idx)=>{
+  return children.filter((c)=>(!c.isHidden && c.parents.length > 0)).map((c, idx)=>{
     return {
-      id: `${c.id}-parent-${c.parentId}-children`,
+      id: `${c.id}-parent-${c.parents[c.parents.length - 1]}-children`,
       // type: 'smoothstep',
       
-      source: `${c.parentId}`,
-      sourceHandle: `${c.parentId}-children`,
+      source: `${c.parents[c.parents.length - 1]}`,
+      sourceHandle: `${c.parents[c.parents.length - 1]}-children`,
 
       target: `${c.id}`,
       targetHandle: `${c.id}-parent`,
@@ -108,8 +108,8 @@ function transformsToFlow(rtScene) {
 function rtSceneToFlow(rtScene) {
   return [
     // regular three.js scene graph
-    ...sceneGraphToFlow([rtScene.object], 'App', 1),
-    ...sceneConnectionsToFlow(sceneGraphToFlow([rtScene.object], 'App', 1)),
+    ...sceneGraphToFlow([rtScene.object], [], 1),
+    ...sceneConnectionsToFlow(sceneGraphToFlow([rtScene.object], [], 1)),
 
     ...generatorsToFlow(rtScene),
     ...peersToFlow(rtScene),

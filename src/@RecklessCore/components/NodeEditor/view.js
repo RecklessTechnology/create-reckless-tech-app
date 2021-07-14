@@ -66,11 +66,15 @@ const NodeEditorView = ({ elements, nodeTypes, updateConnection, addConnection})
         nodeTypes={nodeTypes}
         onLoad={onLoad}
         snapToGrid
+        // nodesDraggable={false}
+        // onElementClick={()=>{console.log('node click');}}
         onEdgeUpdate={updateConnection}
         onConnect={addConnection}
         onElementsRemove={()=>{}}
-        onDrop={()=>{}}
-        onDragOver={()=>{}}
+        // onDrop={()=>{console.log('drop');}}
+        // onDragOver={()=>{console.log(' dragOver');}}
+        // onNodeDragStart={()=>{console.log('node drag');}}
+        // onNodeDragStop={()=>{console.log('node drop');}}
       >
         <Controls />
       </ReactFlow>

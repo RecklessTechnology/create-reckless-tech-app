@@ -6,7 +6,7 @@ export default function EditorMenuManager({
     children
 }) {
   const [editorMenuHeight, setEditorMenuHeight] = useState(500);
-  const [editorMenuOpen, setEditorMenuOpen] = useState(false);
+  const [editorMenuOpen, setEditorMenuOpen] = useState(true);
   const [editorMenuTab, setEditorMenuTab] = useState(0);
   
   const editorMenuContextValue = useMemo(() => ({

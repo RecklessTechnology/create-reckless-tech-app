@@ -8,6 +8,7 @@ import PropListItem from '../shared/PropListItem/index';
 import PatchValue from './PatchValue/index';
 import PatchDetails from '../shared/PatchDetails/index';
 import ParentChildProp from '../shared/ParentChildPro/index';
+import PatchToolbar from '../shared/PatchToolbar/index';
 
 const useStyles = makeStyles((theme)=>({
   root: {
@@ -45,11 +46,15 @@ const useStyles = makeStyles((theme)=>({
   handleRight: {
     float: 'right',
     right: '-25px'
+  },
+  toolbar: {
+    padding: 0
   }
 }));
 
 const ThreeObjectPatch = ({ data }) => {
-  const { uuid, label, type, width, height, children, isChildHidden } = data;
+  const { uuid, label, type, width, height, children, isChildHidden, parents } = data;
+  
   const classes = useStyles({ width, height });
 
   const props = [
@@ -68,6 +73,9 @@ const ThreeObjectPatch = ({ data }) => {
       <ParentChildProp {...{isChildHidden: isChildHidden, type: type, uuid:uuid, children: children}} />
     </ListItem>
     {props.map((p)=>(<PropListItem key={`${p.uuid}-${p.propName}-prop`} {...p}><PatchValue {...{ uuid: p.uuid, propName: p.propName }} /></PropListItem>))}
+    <ListItem className={classes.toolbar}>
+      <PatchToolbar parents={parents} uuid={uuid} />
+    </ListItem>
   </List>);
 }
 
