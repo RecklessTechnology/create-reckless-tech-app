@@ -7,7 +7,7 @@ export default function InspectorMenuManager({
 }) {
   const [inspectorMenuWidth, setInspectorMenuWidth] = useState(375);
   const [inspectorMenuOpen, setInspectorMenuOpen] = useState(false);
-  const [inspectorMenuTab, setInspectorMenuTab] = useState(1);
+  const [inspectorMenuTab, setInspectorMenuTab] = useState(0);
   
   const inspectorMenuContextValue = useMemo(() => ({
     inspectorMenuWidth, setInspectorMenuWidth,
