@@ -8,35 +8,35 @@ import useTransformContext from '../../../contexts/useTransformContext';
 const MultiplyTransform = ({ ...props }) => {
   const { uuid, setValue: setTransValue } = useTransformContext();
   const { sceneJSON } = useAppContext();
-  
-  const { connections} = sceneJSON;
+
+  const { connections } = sceneJSON;
 
   const { findGenerator } = useGeneratorsContext();
   const { findDevice } = useDevicesContext();
-  
+
   // Inputs
-  useEffect(()=>{
-    const updateFromInput = (prop, val)=>{
-      switch(prop) {
+  useEffect(() => {
+    const updateFromInput = (prop, val) => {
+      switch (prop) {
         default:
           break;
         case 'value':
-          setTransValue(val.map((v)=>(v*props.value)));
+          setTransValue(val.map((v) => (v * props.amount)));
           break;
       }
     };
 
-    connections.filter((c)=>(c.to===uuid)).forEach((c)=>{
+    connections.filter((c) => (c.to === uuid)).forEach((c) => {
       const gen = findGenerator(c.from);
-      if (gen) { gen.subscribe(`${c.fromProp}-updated`, (val)=>{updateFromInput(c.toProp, val)}) }
+      if (gen) { gen.subscribe(`${c.from}-${c.fromProp.toLowerCase()}-updated`, (val) => { updateFromInput(c.toProp.toLowerCase(), val); }); }
 
       const device = findDevice(c.from);
-      if (device) { device.subscribe(`${c.fromProp}-updated`, (val)=>{updateFromInput(c.toProp, val)}) }
-    })
-  }, [connections, uuid, findGenerator, findDevice, props, setTransValue])
-  
+      if (device) { device.subscribe(`${c.from}-${c.fromProp.toLowerCase()}-updated`, (val) => { updateFromInput(c.toProp.toLowerCase(), val); }); }
+    });
+  }, [connections, uuid, findGenerator, findDevice, props, setTransValue]);
+
   return null;
-}
+};
 
 MultiplyTransform.whyDidYouRender = false;
 

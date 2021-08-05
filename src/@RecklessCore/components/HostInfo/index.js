@@ -1,21 +1,24 @@
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+/* eslint-disable react/jsx-filename-extension */
+
+import React, {
+  memo, useCallback, useEffect, useRef, useState,
+} from 'react';
 
 import { makeStyles } from '@material-ui/styles';
 
-import { ListItem, Grid, List, Divider, Typography } from "@material-ui/core";
+import {
+  ListItem, Grid, List, Divider, Typography,
+} from '@material-ui/core';
 
 import PeerAvatar from '../PeerAvatar';
 import PeerName from '../PeerName';
 import PeerToolbar from '../PeerToolbar';
 
-// import PingEveryoneButton from '../PingEveryoneButton';
-// import ShareSceneEveryoneButton from '../ShareSceneEveryoneButton ';
 import EditPeerNameButton from '../EditPeerNameButton';
-// import useConnectionsContext from '../../contexts/useConnectionsContext';
 import useAppContext from '../../contexts/useAppContext';
-import usePeersContext from '../../contexts/usePeersContext';
+import useConnectionsContext from '../../contexts/useConnectionsContext';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   listItem: {
     padding: 0,
     overflow: 'hidden',
@@ -25,58 +28,68 @@ const useStyles = makeStyles((theme) => ({
   },
   sectionTitle: {
     marginTop: 10,
-  }
+  },
 }));
 
 const HostInfo = () => {
   const classes = useStyles();
 
-  const { updatePeerInfo, getHost } = usePeersContext();
+  const { updateConnectionInfo, getHost } = useConnectionsContext();
   const { subscribe } = useAppContext();
 
-  const [ hostName, setHostName ] = useState('');
-  const [ host, setHost ] = useState({});
+  const [hostName, setHostName] = useState(null);
+  const [host, setHost] = useState(null);
 
-  useEffect(()=>{
-    setHost(getHost());
-  }, [setHost, getHost]);
+  const isMounted = useRef(false);
 
-  const updateHost = useCallback((peer)=>{ //update data only when peer list is modified
+  useEffect(() => { // update data on load
     const h = getHost();
     if (h !== undefined) {
       setHost(h);
+      setHostName(h.name);
     }
   }, [getHost, setHost]);
 
-  useMemo(()=>subscribe('host-modified', updateHost), [subscribe, updateHost]);
-
-  const updateName = useCallback((e) => {
-    setHostName(e.currentTarget.value)
-  }, [setHostName]);
+  const updateHost = useCallback(() => { // update data again when peer list is modified
+    if (isMounted.current) {
+      const h = getHost();
+      if (h !== undefined) {
+        setHost(h);
+        setHostName(h.name);
+      }
+    }
+  }, [getHost, setHost]);
 
   useEffect(() => {
-    if (host && host.name !== hostName) {
-      setHostName(host.name);
+    if (getHost !== undefined) {
+      isMounted.current = true;
+      subscribe('host-modified', updateHost);
     }
-  }, [host, setHostName, hostName]);
+    return () => {
+      isMounted.current = false;
+    };
+  }, [subscribe, getHost, updateHost]);
+
+  const updateName = useCallback((e) => {
+    setHostName(e.currentTarget.value);
+  }, [setHostName]);
 
   const updateHostInfo = useCallback((id, type, val) => {
     switch (type) {
       default:
       case 'cancel':
-        updatePeerInfo(id, val);
+        updateConnectionInfo(id, val);
         break;
       case 'save':
-        updatePeerInfo(id, {
+        updateConnectionInfo(id, {
           ...val,
-          name: hostName
+          name: hostName,
         });
         break;
     }
-  }, [updatePeerInfo, hostName]);
+  }, [updateConnectionInfo, hostName]);
 
-
-  if (!host || !hostName) { return null; }
+  if (host === null || hostName === null) { return null; }
 
   return (
     <ListItem className={classes.listItem}>
@@ -87,13 +100,16 @@ const HostInfo = () => {
         <Grid item xs={12}>
           <List className={classes.list}>
             <ListItem className={classes.listItem} alignItems="flex-start">
-              <PeerAvatar {...{peerInfo: host}} />
-              <PeerName {...{peerInfo: { ...host, name: hostName }, onNameUpdate: updateName}} />
-              {(!host.isMe) ? null : <PeerToolbar>
-                <EditPeerNameButton {...{peerInfo: host, updatePeerInfo: updateHostInfo}} />
-                {/* <PingEveryoneButton />
-                <ShareSceneEveryoneButton /> */}
-              </PeerToolbar>}
+              <PeerAvatar {...{ peerInfo: host }} />
+              <PeerName {...{ peerInfo: { ...host, name: hostName }, onNameUpdate: updateName }} />
+              {(!host.isMe) ? null : (
+                <PeerToolbar>
+                  <EditPeerNameButton {...{
+                    peerInfo: host, updateConnectionInfo: updateHostInfo,
+                  }}
+                  />
+                </PeerToolbar>
+              )}
             </ListItem>
           </List>
         </Grid>
@@ -103,7 +119,7 @@ const HostInfo = () => {
       </Grid>
     </ListItem>
   );
-}
+};
 
 HostInfo.whyDidYouRender = true;
 

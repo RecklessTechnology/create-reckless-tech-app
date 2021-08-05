@@ -1,144 +1,158 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/jsx-filename-extension */
+
+import PropTypes from 'prop-types';
+
 import React, {
-    useCallback,
-    useLayoutEffect,
-    useMemo,
-    useRef,
-    useState,
-    useEffect,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+  useEffect,
+  createContext,
 } from 'react';
 import useForceUpdate from '../useForceUpdate';
-import EventsManager from '../managers/EventsManager';
+import EventsManager from './EventsManager';
 
 import useGeneratorsContext from '../contexts/useGeneratorsContext';
 
-// import { throttle } from '../utils/throttle';
-
-export const GeneratorContext = React.createContext(null);
+export const GeneratorContext = createContext(null);
 
 export const DefaultProps = {
-    name: 'unnamed',
-    position: [0,0,0]
-}
+  name: 'unnamed',
+  position: [0, 0, 0],
+};
 
 const GeneratorManager = ({
-    children,
-    ...props
+  children,
+  ...props
 }) => {
-    const identifier = useRef(Symbol('Generator'));
-    const node = useRef(null);
-    
-    const [events] = useState(() => EventsManager());
+  const identifier = useRef(Symbol('Generator'));
+  const node = useRef(null);
 
-    const [uuid] = useState(props.uuid);
-    const [name] = useState(props.name);
-    const [displayName] = useState(props.displayName);
-    const [type, setType] = useState(props.type || '');
-    const [resolution, setResolution] = useState(props.resolution || 1);
-    const [rpm, setRpm] = useState(props.rpm || 1000);
-    const [loop, setLoop] = useState(props.loop || true);
-    const [paused, setPaused] = useState(props.paused || false);
+  const [events] = useState(() => EventsManager());
 
-    const [position, setPosition] = useState(props.position || [0,0,0]);
+  const [uuid] = useState(props.uuid);
+  const [name] = useState(props.name);
+  const [type, setType] = useState(props.type || '');
+  const [resolution, setResolution] = useState(props.resolution || 1);
+  const [rpm, setRpm] = useState(props.rpm || 1000);
+  const [loop, setLoop] = useState(props.loop || true);
+  const [paused, setPaused] = useState(props.paused || false);
 
-    // Limit publish events to once every...
-    // const broadcastThrottle = 1000/60;
-    
-    useEffect(() => { events.publish('position-updated', position) }, [position, events]);
+  const [position, setPosition] = useState([0, 0, 0]);
 
-    // const throttled = useRef(throttle((newValue) => events.publish('position-updated', position), broadcastThrottle))
-    // useEffect(() => throttled.current(position), [position])
-    
-    const { registerGenerator, unregisterGenerator } = useGeneratorsContext();
-    const forceUpdate = useForceUpdate();
+  useEffect(() => { events.publish(`${uuid}-position-updated`, position); }, [uuid, position, events]);
 
-    // Reference to object properties
-    const generatorRef = useMemo(() => {
-      return ({
-        uuid: uuid,
-        id: identifier.current,
-        
-        name, displayName,
-        
-        type, setType,
-        resolution, setResolution,
-        rpm, setRpm,
-        loop, setLoop,
-        paused, setPaused,
-        position, setPosition,
+  const { registerGenerator, unregisterGenerator } = useGeneratorsContext();
+  const forceUpdate = useForceUpdate();
 
-        subscribe: events.subscribe,
-        unsubscribe: events.unsubscribe,
-      })
-    }, [
-      uuid,
-      name, displayName,
+  // Reference to object properties
+  const generatorRef = useMemo(() => ({
+    uuid,
+    id: identifier.current,
 
-      type, setType,
-      resolution, setResolution,
-      rpm, setRpm,
-      loop, setLoop,
-      paused, setPaused,
-      position, setPosition,
+    name,
 
-      events,
-    ]);
+    type,
+    setType,
+    resolution,
+    setResolution,
+    rpm,
+    setRpm,
+    loop,
+    setLoop,
+    paused,
+    setPaused,
+    position,
+    setPosition,
 
-    // Callback to fetch properties of object
-    const getRef = useCallback(() => generatorRef, [generatorRef]);
+    subscribe: events.subscribe,
+    unsubscribe: events.unsubscribe,
+  }), [
+    uuid,
+    name,
 
-    // // On load, register object with app context
-    useLayoutEffect(() => {
-        // const id = identifier.current;
-        registerGenerator(uuid, generatorRef);
-        return () => unregisterGenerator(uuid, generatorRef);
-    }, [registerGenerator, unregisterGenerator, generatorRef, uuid]);
+    type, setType,
+    resolution, setResolution,
+    rpm, setRpm,
+    loop, setLoop,
+    paused, setPaused,
+    position, setPosition,
 
-    // Final context for provider
-    const contextValue = useMemo(()=>{
-      return ({
-        uuid: uuid,
-        id: identifier.current,
-        name,
-        nodeRef: node,
-        getRef,
+    events,
+  ]);
 
-        type, setType,
-        resolution, setResolution,
-        rpm, setRpm,
-        loop, setLoop,
-        paused, setPaused,
-        position, setPosition,
-        
-        forceUpdate,
-        
-        ...events,
-      })
-    },
-    [
-        uuid,
-        identifier,
-        name,
-        node,
-        getRef,
-        
-        type, setType,
-        resolution, setResolution,
-        rpm, setRpm,
-        loop, setLoop,
-        paused, setPaused,
-        position, setPosition,
+  // Callback to fetch properties of object
+  const getRef = useCallback(() => generatorRef, [generatorRef]);
 
-        forceUpdate,
-        events,
-      ]);
+  // // On load, register object with app context
+  useEffect(() => {
+    registerGenerator(uuid, generatorRef);
+    return () => unregisterGenerator(uuid, generatorRef);
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
-    return (
-        <GeneratorContext.Provider value={contextValue}>
-          {children}
-        </GeneratorContext.Provider>
-    );
-}
+  // Final context for provider
+  const contextValue = useMemo(() => ({
+    uuid,
+    id: identifier.current,
+    name,
+    nodeRef: node,
+    getRef,
+
+    type,
+    setType,
+    resolution,
+    setResolution,
+    rpm,
+    setRpm,
+    loop,
+    setLoop,
+    paused,
+    setPaused,
+    position,
+    setPosition,
+
+    forceUpdate,
+
+    ...events,
+  }),
+  [
+    uuid,
+    identifier,
+    name,
+    node,
+    getRef,
+
+    type, setType,
+    resolution, setResolution,
+    rpm, setRpm,
+    loop, setLoop,
+    paused, setPaused,
+    position, setPosition,
+
+    forceUpdate,
+    events,
+  ]);
+
+  return (
+    <GeneratorContext.Provider value={contextValue}>
+      {children}
+    </GeneratorContext.Provider>
+  );
+};
 
 GeneratorManager.whyDidYouRender = false;
+
+GeneratorManager.propTypes = {
+  children: PropTypes.shape([]).isRequired,
+  uuid: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  resolution: PropTypes.number.isRequired,
+  rpm: PropTypes.number.isRequired,
+  loop: PropTypes.bool.isRequired,
+  paused: PropTypes.bool.isRequired,
+};
 
 export default GeneratorManager;

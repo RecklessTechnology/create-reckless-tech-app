@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { PeersContext } from '../managers/PeersManager';
 
-export default function usePeersContext() {
-    return useContext(PeersContext);
+export default function useConnectionsContext() {
+  return useContext(PeersContext);
 }

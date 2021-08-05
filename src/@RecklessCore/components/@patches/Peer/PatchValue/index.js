@@ -1,38 +1,48 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+/* eslint-disable react/jsx-filename-extension */
+
+import PropTypes from 'prop-types';
+
+import React, {
+  useState, useEffect, useRef, useCallback,
+} from 'react';
 
 import usePeersContext from '../../../../contexts/usePeersContext';
 
 import PatchValueView from '../../shared/PatchValue/view';
 
-const PatchValue = ({ uuid, propName, b }) => {
+const PatchValue = ({ uuid, propName }) => {
   const { findPeer } = usePeersContext();
   const peerObj = findPeer(uuid);
+  const [propVal, setPropVal] = useState([0, 0, 0]);
 
-  const [propVal, setPropVal] = useState(0);
+  const isMounted = useRef(false);
 
-  let isMounted = useRef(false);
-  
-  const updateProp = useCallback((val)=>{
+  const updateProp = useCallback((val) => {
     if (isMounted.current) {
-      setPropVal(val)
+      setPropVal(val);
     }
   }, [isMounted, setPropVal]);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (peerObj !== undefined) {
       isMounted.current = true;
-      if (peerObj !== undefined) {
-        peerObj.subscribe(`${propName}-updated`, updateProp);
+      if (typeof peerObj.subscribe === 'function') {
+        peerObj.subscribe(`${uuid}-${propName.toLowerCase()}-updated`, updateProp);
       }
     }
-    return ()=>{
+    return () => {
       isMounted.current = false;
     };
-  }, [peerObj, propName, updateProp]);
+  }, [peerObj, propName, updateProp, uuid]);
 
-  if (peerObj === undefined) { return null }
+  if (peerObj === undefined) { return <PatchValueView {...{ value: [0, 0, 0] }} />; }
 
   return <PatchValueView {...{ value: propVal }} />;
-}
+};
+
+PatchValue.propTypes = {
+  uuid: PropTypes.string.isRequired,
+  propName: PropTypes.string.isRequired,
+};
 
 export default PatchValue;

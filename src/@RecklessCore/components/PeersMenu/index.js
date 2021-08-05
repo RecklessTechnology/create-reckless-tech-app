@@ -1,12 +1,14 @@
-import { memo } from 'react';
+/* eslint-disable react/jsx-filename-extension */
+
+import React, { memo } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import { List, ListItem } from "@material-ui/core";
+import { List, ListItem } from '@material-ui/core';
 
 import PeersInfo from '../PeersInfo';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: 'block',
     width: '100%',
@@ -14,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
   listItem: {
     paddingTop: 0,
-  }
+  },
 }));
 
 const PeersMenu = () => {
@@ -29,7 +31,7 @@ const PeersMenu = () => {
       className={classes.listItem}
     >
       <List className={classes.root}>
-        <PeersInfo/>
+        <PeersInfo />
       </List>
     </ListItem>
   );

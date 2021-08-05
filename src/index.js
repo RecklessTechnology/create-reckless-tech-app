@@ -1,11 +1,13 @@
-import './wdyr'; // <--- first import
+/* eslint-disable no-undef */
+/* eslint-disable react/jsx-filename-extension */
+import './wdyr';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { ThemeProvider } from "@material-ui/styles";
-import { CssBaseline, unstable_createMuiStrictModeTheme as createMuiTheme } from "@material-ui/core";
-import { Palette } from "@material-ui/core/styles/createPalette";
+import { ThemeProvider } from '@material-ui/styles';
+import { CssBaseline, unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-ui/core';
+import { Palette } from '@material-ui/core/styles/createPalette';
 
 import AppManager from './@RecklessCore/managers/AppManager';
 import ConnectionsManager from './@RecklessCore/managers/ConnectionsManager';
@@ -24,7 +26,7 @@ const theme = createMuiTheme({
   palette: {
     type: 'dark',
     background: {
-      default: "#303030"
+      default: '#303030',
     },
     ...Palette,
   },
@@ -32,7 +34,7 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}> 
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <AppManager>
         <ThreeObjectsManager>
@@ -41,13 +43,13 @@ ReactDOM.render(
               <DevicesManager>
                 <GeneratorsManager>
                   <TransformsManager>
-                  <EditorMenuManager>
-                    <ToolsMenuManager>
-                      <InspectorMenuManager>
-                        <App />
-                      </InspectorMenuManager>
-                    </ToolsMenuManager>
-                  </EditorMenuManager>
+                    <EditorMenuManager>
+                      <ToolsMenuManager>
+                        <InspectorMenuManager>
+                          <App />
+                        </InspectorMenuManager>
+                      </ToolsMenuManager>
+                    </EditorMenuManager>
                   </TransformsManager>
                 </GeneratorsManager>
               </DevicesManager>
@@ -57,5 +59,5 @@ ReactDOM.render(
       </AppManager>
     </ThemeProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );

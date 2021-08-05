@@ -1,51 +1,57 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+/* eslint-disable react/jsx-filename-extension */
+
+import PropTypes from 'prop-types';
+
+import React, {
+  useState, useEffect, useRef, useCallback,
+} from 'react';
 
 import useAppContext from '../../contexts/useAppContext';
-import usePeersContext from '../../contexts/usePeersContext';
+import useConnectionsContext from '../../contexts/useConnectionsContext';
 
 import ShareScenePeerButtonView from './view';
 
 const ShareScenePeerButton = ({ peerInfo }) => {
   const { subscribe } = useAppContext();
-  const { getMe } = usePeersContext();
-  
-  const [ me, setMe ] = useState({});
+  const { getMe } = useConnectionsContext();
 
-  let isMounted = useRef(false); 
-  
-  useEffect(()=>{
-    if (isMounted.current) {
-      const m = getMe();
-      if (m !== undefined) {
-        setMe(m);
-      }
+  const [me, setMe] = useState({});
+
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    const m = getMe();
+    if (m !== undefined) {
+      setMe(m);
     }
   }, [setMe, getMe]);
 
-  const updateMe = useCallback((peer)=>{ //update data only when peer list is modified
+  const updateMe = useCallback(() => { // update data only when peer list is modified
     if (isMounted.current) {
       const m = getMe();
       if (m !== undefined) {
         setMe(m);
       }
     }
-  }, [getMe, setMe])
-  
-  
+  }, [getMe, setMe]);
 
-  useEffect(()=>{
+  useEffect(() => {
     isMounted.current = true;
     subscribe('me-modified', updateMe);
-    return ()=>{
+    return () => {
       isMounted.current = false;
     };
   }, [subscribe, updateMe]);
 
   if (!me) { return null; }
 
-  return <ShareScenePeerButtonView {...{me: me, peerInfo: peerInfo}}/>;
-}
+  return <ShareScenePeerButtonView {...{ me, peerInfo }} />;
+};
 
 ShareScenePeerButton.whyDidYouRender = true;
+
+ShareScenePeerButton.propTypes = {
+  peerInfo: PropTypes.shape({}).isRequired,
+};
 
 export default ShareScenePeerButton;

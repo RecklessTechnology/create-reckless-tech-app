@@ -1,9 +1,11 @@
+/* eslint-disable react/jsx-filename-extension */
+
 import React, { useRef } from 'react';
 import useUserMedia from '../../../contexts/useUserMedia';
 
 const CAPTURE_OPTIONS = {
-    audio: false,
-    video: { facingMode: "environment" },
+  audio: false,
+  video: { facingMode: 'environment' },
 };
 
 const CameraView = () => {

@@ -1,4 +1,11 @@
-import { useEffect, createContext, useState, useMemo, useCallback } from 'react';
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable no-undef */
+
+import PropTypes from 'prop-types';
+
+import React, {
+  useRef, useEffect, createContext, useState, useMemo, useCallback,
+} from 'react';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -9,63 +16,178 @@ import usePeersContext from '../contexts/usePeersContext';
 import generateRoomId from '../utils/generateRoomId';
 import { restoreData, persistData } from '../PersistantStorage';
 
+import EventsManager from './EventsManager';
+
 export const ConnectionsContext = createContext(null);
+// eslint-disable-next-line import/no-mutable-exports
 export let connectionsContextValue = {};
 
-export default function ConnectionsManager({ children }) {
+const ConnectionsManager = ({ children }) => {
   const { subscribe, publish, setSceneJSON } = useAppContext();
-  const { findPeer, registerPeer, unregisterPeer, updatePeerInfo } = usePeersContext();
-  
-  const [ connectionType ] = useState(window.location.hash.substr(1) === '' ? 'host' : 'peer');
 
-  const [ room, setRoom ] = useState(null);
-  const [ roomInfo, setRoomInfo ] = useState(null);
-  
-  let roomActions = {};
+  const { findPeer } = usePeersContext();
+
+  const [events] = useState(() => EventsManager());
+
+  const [connectionType] = useState(window.location.hash.substr(1) === '' ? 'host' : 'peer');
+
+  const [room, setRoom] = useState(null);
+  const [roomInfo, setRoomInfo] = useState(null);
 
   // Pull from local storage
   const me = restoreData('me');
 
+  const [ConnectionRegistry] = useState(() => new Map());
+
+  const isMounted = useRef(false);
+
+  const getMe = useCallback(
+    () => Array.from(ConnectionRegistry.keys())
+      .map((id) => ConnectionRegistry.get(id)).filter((p) => p.isMe === true)[0],
+    [ConnectionRegistry],
+  );
+
+  const getHost = useCallback(
+    () => Array.from(ConnectionRegistry.keys())
+      .map((id) => ConnectionRegistry.get(id)).filter((p) => p.isHost === true)[0],
+    [ConnectionRegistry],
+  );
+
+  const getByUUID = useCallback(
+    (uuid) => Array.from(ConnectionRegistry.keys())
+      .map((id) => ConnectionRegistry.get(id)).filter((p) => p.uuid === uuid)[0],
+    [ConnectionRegistry],
+  );
+
+  const updateConnectionInfo = useCallback((uuid, ref) => {
+    let oldRefs = {};
+
+    if (ConnectionRegistry.has(ref.connectionId)) {
+      oldRefs = {
+        ...oldRefs,
+        ...ConnectionRegistry.get(ref.connectionId),
+      };
+      ConnectionRegistry.delete(ref.connectionId);
+    }
+
+    if (ConnectionRegistry.has(uuid)) {
+      oldRefs = {
+        ...oldRefs,
+        ...ConnectionRegistry.get(uuid),
+      };
+      ConnectionRegistry.delete(uuid);
+    }
+
+    const newRef = { ...oldRefs, ...ref };
+
+    ConnectionRegistry.set(uuid, newRef);
+    // addPeer(uuid, newRef);
+
+    if (newRef.isMe) {
+      persistData('me', newRef);
+      publish('me-modified', newRef);
+    }
+
+    if (newRef.isHost) {
+      publish('host-modified', newRef);
+    }
+
+    persistData('connections', Array.from(ConnectionRegistry));
+    publish('connection-modified', newRef);
+  }, [ConnectionRegistry, publish]);
+
+  const findConnection = useCallback((id) => ConnectionRegistry.get(id), [ConnectionRegistry]);
+
+  const registerConnection = useCallback((identifier, ref) => {
+    // register by id
+    ConnectionRegistry.set(identifier, ref);
+
+    if (ref.isMe) {
+      persistData('me', ref);
+      publish('me-modified', ref);
+    }
+
+    if (ref.isHost) {
+      publish('host-modified', ref);
+    }
+
+    persistData('connections', Array.from(ConnectionRegistry));
+
+    publish('connections-list-changed', 'add');
+    publish('connection-modified', ref);
+  }, [ConnectionRegistry, publish]);
+
+  const unregisterConnection = useCallback((identifier) => {
+    // unregister by id
+    ConnectionRegistry.delete(identifier);
+    publish('connections-list-changed', 'remove');
+  }, [ConnectionRegistry, publish]);
+
+  const getConnectionsArray = useCallback(
+    () => Array.from(ConnectionRegistry.keys())
+      .map((id) => ConnectionRegistry.get(id)),
+    [ConnectionRegistry],
+  );
+
+  const getRoomInfo = useCallback(() => roomInfo, [roomInfo]);
+
+  const connectionRegistryUtils = useMemo(
+    () => ({
+      updateConnectionInfo,
+      findConnection,
+      registerConnection,
+      unregisterConnection,
+      getConnectionsArray,
+      getRoomInfo,
+      getMe,
+      getHost,
+      getByUUID,
+    }),
+    [
+      updateConnectionInfo,
+      findConnection,
+      getConnectionsArray,
+      registerConnection,
+      unregisterConnection,
+      getRoomInfo,
+      getMe,
+      getHost,
+      getByUUID,
+    ],
+  );
+
   // Store props for context provider
   connectionsContextValue = useMemo(() => ({
+    ConnectionRegistry,
+    ...connectionRegistryUtils,
     connectionType,
-    room, setRoom,
-    roomInfo, setRoomInfo,
+    room,
+    setRoom,
+    roomInfo,
+    setRoomInfo,
   }), [
+    ConnectionRegistry,
+    connectionRegistryUtils,
     connectionType,
     room, setRoom,
     roomInfo, setRoomInfo,
   ]);
 
   // Find, create, and save details abount a room
-  useEffect(()=>{
-    // There is no roomInfo, create it
-    if (roomInfo === null) {
-      let info = null;
-      
-      const isHost = (window.location.hash.substr(1) === '');
-      // If there is no connection url, you're the host
-      if (isHost) {
-        const hostInfo = restoreData('roomInfo');
-        
-        if (hostInfo === null) {
-          // There is no stored state, make it up
+  useEffect(() => {
+    if (roomInfo === null) { // There is no roomInfo, create it
+      let info = restoreData('roomInfo');
+
+      if (info === null) { // There is no stored state, make it up
+        const isHost = (window.location.hash.substr(1) === '');
+        if (isHost) { // If there is no connection url, you're the host
           info = {
-            id: generateRoomId()
+            id: generateRoomId(),
           };
         } else {
-          info = hostInfo;
-        }
-      } else {
-        const peerInfo = restoreData('roomInfo');
-        
-        if (peerInfo === null) {
-          // There is no stored state, make it up
           info = {
-            id: window.location.hash.substr(1)
+            id: window.location.hash.substr(1),
           };
-        } else {
-          info = peerInfo;
         }
       }
 
@@ -73,26 +195,27 @@ export default function ConnectionsManager({ children }) {
       persistData('roomInfo', info);
       setRoomInfo(info);
     }
-  }, [roomInfo, setRoomInfo])
+  }, [roomInfo, setRoomInfo]);
 
   // Save roomInfo updates to localstorage
   useEffect(() => {
     if (roomInfo !== null) {
       persistData('roomInfo', roomInfo);
+      publish('room-modified', roomInfo);
     }
-  }, [roomInfo]);
+  }, [roomInfo, publish]);
 
   // Create peer to peer room
-  useEffect(()=>{
+  useEffect(() => {
     if (room === null && roomInfo !== null) {
-        setRoom(joinRoom({appId: `Reckless Technology room ${roomInfo.id}`}, roomInfo.id));
+      setRoom(joinRoom({ appId: `Reckless Technology room ${roomInfo.id}` }, roomInfo.id));
     }
-  }, [setRoom, room, roomInfo])
+  }, [setRoom, room, roomInfo]);
 
   // Create ref to access me props
   const meRef = useMemo(() => ({
     status: 'connected',
-    peerId: selfId,
+    connectionId: selfId,
     uuid: me !== null ? me.uuid : uuidv4(),
     name: me !== null ? me.name : `new ${connectionType}`,
     isMe: true,
@@ -101,92 +224,139 @@ export default function ConnectionsManager({ children }) {
     lastSeen: Date.now(),
   }), [me, connectionType]);
 
-  const pingMe = useCallback(()=>{
-    if (room !== null) {
-      console.log(`took ${room.ping(meRef.peerId)}ms`)
-    }
-  }, [room, meRef]);
+  const pingMe = useCallback(() => {
+    // if (room !== null) {
+    //   console.log(`took ${room.ping(meRef.connectionId)}ms`);
+    // }
+  }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (room !== null) {
-      const [ sendAnnounce, getAnnounce ] = room.makeAction('announce');
-      const [ sendData, restoreData ] = room.makeAction('scene');
+      const [sendAnnounce, getAnnounce] = room.makeAction('announce');
+      const [sendData, getData] = room.makeAction('scene');
 
       // If someone connects to host
-      const peerJoin = (id)=>{
-        // Create ref to access peer props
-        const peerRef = {
+      const connectionJoin = (id) => {
+        // Create ref to access connection props
+        const connectionRef = {
           status: 'connected',
-          peerId: id,
-          name: 'new peer',
+          connectionId: id,
+          name: 'new connection',
           isMe: false,
           isHost: false,
           mode: 'view',
           lastSeen: Date.now(),
         };
-          
-        // Add to peer registry
-        registerPeer(id, {
-          ...peerRef,
-          restoreData, sendData,
-          getAnnounce, sendAnnounce,
+
+        // Add to connection registry
+        registerConnection(id, {
+          ...connectionRef,
+          getData,
+          sendData,
+          getAnnounce,
+          sendAnnounce,
           ping: pingMe,
         });
-        
+
         // Send your info to connected peers
         sendAnnounce({
-          peerId: meRef.peerId,
-          uuid: meRef.uuid, 
+          connectionId: meRef.connectionId,
+          uuid: meRef.uuid,
           name: meRef.name,
-          isHost: meRef.isHost
-        })
+          isHost: meRef.isHost,
+        });
       };
-      room.onPeerJoin(id => peerJoin(id));
+
+      room.onPeerJoin((id) => connectionJoin(id));
 
       // Add me to registry
-      registerPeer(selfId, {
+      registerConnection(meRef.uuid, {
         ...meRef,
-        restoreData, sendData,
-        getAnnounce, sendAnnounce,
+        getData,
+        sendData,
+        getAnnounce,
+        sendAnnounce,
         ping: pingMe,
       });
-  
-      // Remove peer from registry if they leave the room
-      room.onPeerLeave(id => unregisterPeer(id));
-      
-      // Listen for commands
-      restoreData((data)=>{
-        if (data.type === 'shareScene') {
-          setSceneJSON(data.payload);
-          publish('scene-changed', data.payload);
-        } else {
-          console.log('data', data);
-        }
-      })
 
-      // Listen for info about peer
-      getAnnounce(({peerId, uuid, name, isHost})=>{
-        updatePeerInfo(peerId, { isHost: isHost, uuid: uuid, name: name, lastSeen: Date.now() });
+      // Remove connection from registry if they leave the room
+      room.onPeerLeave((id) => unregisterConnection(id));
+
+      // Listen for commands
+      getData((data) => {
+        const peer = findPeer(data.uuid);
+        switch (data.type) {
+          default:
+            if (peer !== undefined && typeof peer.setData === 'function') {
+              peer.setData(data.payload);
+            }
+            break;
+          case 'shareScene':
+            setSceneJSON(data.payload);
+            publish('scene-changed', data.payload);
+            break;
+        }
+      });
+
+      // Listen for info about connection
+      getAnnounce(({
+        connectionId, uuid, name, isHost,
+      }) => {
+        updateConnectionInfo(uuid, {
+          connectionId, isHost, uuid, name, lastSeen: Date.now(),
+        });
       });
     }
-  }, [room, connectionType, publish, setSceneJSON, registerPeer, unregisterPeer, me, updatePeerInfo, findPeer, meRef, pingMe])
+  }, [
+    events.subscribe,
+    events.unsubscribe,
+    meRef,
+    pingMe,
+    publish,
+    registerConnection,
+    room,
+    setSceneJSON,
+    unregisterConnection,
+    findConnection,
+    updateConnectionInfo,
+    findPeer,
+  ]);
 
-  // send updates to peers
-  const announceMeChanges = useCallback((peer)=>{
-    if (peer !== undefined) {
-      if (peer.isMe) {
-        if (typeof peer.sendAnnounce === 'function') {
-          peer.sendAnnounce({
-            peerId: peer.peerId,
-            uuid: peer.uuid, 
-            name: peer.name,
-            isHost: peer.isHost
+  // send updates to connections
+  const announceMeChanges = useCallback((connection) => {
+    if (isMounted.current && connection !== undefined) {
+      if (connection.isMe) {
+        if (typeof connection.sendAnnounce === 'function') {
+          connection.sendAnnounce({
+            connectionId: connection.connectionId,
+            uuid: connection.uuid,
+            name: connection.name,
+            isHost: connection.isHost,
           });
         }
       }
     }
-  }, [])
-  useMemo(()=>subscribe('me-modified', announceMeChanges), [subscribe, announceMeChanges]);
+  }, []);
 
-  return (<ConnectionsContext.Provider value={connectionsContextValue}>{children}</ConnectionsContext.Provider>)
-}
+  useEffect(() => {
+    if (meRef !== undefined) {
+      isMounted.current = true;
+      subscribe('me-modified', announceMeChanges);
+    }
+    return () => {
+      isMounted.current = false;
+    };
+  }, [subscribe, announceMeChanges, meRef]);
+
+  return (
+    <ConnectionsContext.Provider value={connectionsContextValue}>
+      {children}
+    </ConnectionsContext.Provider>
+  );
+};
+
+ConnectionsManager.propTypes = {
+  children: PropTypes.shape([]).isRequired,
+};
+
+export default ConnectionsManager;

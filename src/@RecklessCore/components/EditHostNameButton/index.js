@@ -1,8 +1,6 @@
 import EditPeerNameButtonView from './view';
 
-const EditPeerNameButton = ({peerInfo}) => {
-  return <EditPeerNameButtonView {...{peerInfo: peerInfo}}/>;
-}
+const EditPeerNameButton = ({ peerInfo }) => <EditPeerNameButtonView {...{ peerInfo }} />;
 
 EditPeerNameButton.whyDidYouRender = true;
 

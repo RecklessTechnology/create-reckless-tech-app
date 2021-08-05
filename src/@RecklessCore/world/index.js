@@ -1,4 +1,11 @@
-import React, { createElement, memo, useEffect } from 'react';
+/* eslint-disable object-shorthand */
+/* eslint-disable no-undef */
+/* eslint-disable react/jsx-filename-extension */
+
+import PropTypes from 'prop-types';
+
+import React, { createElement, memo } from 'react';
+
 import { Canvas } from '@react-three/fiber';
 import { makeStyles } from '@material-ui/core';
 import { OrbitControls } from '@react-three/drei';
@@ -15,7 +22,7 @@ import Peers from '../inputs/peers/index';
 import Devices from '../inputs/devices/index';
 import Transforms from '../inputs/transforms/index';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     position: 'relative',
     userSelect: 'none',
@@ -26,50 +33,51 @@ const useStyles = makeStyles((theme) => ({
 
 const World = ({
   children,
-  ...props
 }) => {
   const { sceneJSON } = useAppContext();
-  const { object, camera, generators, peers, devices, transforms } = sceneJSON;
-  
+  const {
+    object, camera, generators, peers, devices, transforms,
+  } = sceneJSON;
+
   const { fog } = object;
   const classes = useStyles();
 
-  console.log('world render', object.type);
-  switch(object.type) {
+  switch (object.type) {
     case 'Camera':
-      return (<div className={classes.root}>
-        <WorldManager>
-          {/* <Generators {...{generators, connections}}></Generators> */}
-          {/* <Peers {...{peers, connections}}></Peers> */}
-          {/* <Devices {...{devices, connections}}></Devices> */}
-          <CameraView/>
-        </WorldManager>
-      </div>);
+      return (
+        <div className={classes.root}>
+          <WorldManager>
+            <CameraView />
+          </WorldManager>
+        </div>
+      );
     default:
     case 'Scene':
       return (
         <div className={classes.root}>
           <Canvas
-            // mode="concurrent"
             shadows
             camera={camera}
             dpr={window.devicePixelRatio}
-            {...props}
           >
             <WorldManager>
-              <Generators {...{generators: generators}}></Generators>
-              <Peers {...{peers: peers}}></Peers>
-              <Devices {...{devices: devices}}></Devices>
-              <Transforms {...{transforms: transforms}}></Transforms>
+              <Generators {...{ generators: generators }} />
+              <Peers {...{ peers: peers }} />
+              <Devices {...{ devices: devices }} />
+              <Transforms {...{ transforms: transforms }} />
               {/* FOG */}
-              {fog !== undefined ? createElement(fog.type, { type: fog.type, attach: "fog", args: ThreeParamsToArgs(fog) }, [] ) : null}
+              {fog !== undefined ? createElement(fog.type, { type: fog.type, attach: 'fog', args: ThreeParamsToArgs(fog) }, []) : null}
               {children}
-              <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
+              <OrbitControls enablePan enableZoom enableRotate />
             </WorldManager>
           </Canvas>
         </div>
       );
   }
-}
+};
+
+World.propTypes = {
+  children: PropTypes.shape([]).isRequired,
+};
 
 export default memo(World);

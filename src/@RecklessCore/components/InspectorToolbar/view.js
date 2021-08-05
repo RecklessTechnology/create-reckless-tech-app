@@ -1,3 +1,7 @@
+/* eslint-disable react/jsx-filename-extension */
+
+import React from 'react';
+
 import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -12,11 +16,11 @@ const useStyles = makeStyles((theme) => ({
     ...theme.mixins.toolbar,
     justifyContent: 'flex-start',
   },
-}));  
+}));
 
 const InspectorToolbarView = () => {
   const classes = useStyles();
-  
+
   return (
     <div className={classes.drawerHeader}>
       <InspectorCloseButton />
@@ -25,7 +29,7 @@ const InspectorToolbarView = () => {
       </Typography>
     </div>
   );
-}
+};
 
 InspectorToolbarView.whyDidYouRender = true;
 

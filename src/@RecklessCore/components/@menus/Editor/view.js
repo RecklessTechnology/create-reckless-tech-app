@@ -1,11 +1,17 @@
+/* eslint-disable react/jsx-filename-extension */
+
+import PropTypes from 'prop-types';
+
+import React from 'react';
+
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Drawer, Divider } from '@material-ui/core'
+import { Drawer, Divider } from '@material-ui/core';
 
 import NodeEditor from '../../NodeEditor/index';
 import EditorToolbar from '../../EditorToolbar/index';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   drawer: {
     width: '100%',
     height: (props) => props.editorMenuHeight,
@@ -15,26 +21,34 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: (props) => props.editorMenuHeight,
   },
-}));  
+}));
 
-const EditorView = ({ editorMenuOpen, editorMenuHeight, setEditorMenuOpen}) => {
-  const classes = useStyles({ editorMenuOpen, editorMenuHeight, setEditorMenuOpen});
-  
-  return <Drawer
-    className={classes.drawer}
-    variant="persistent"
-    anchor="bottom"
-    open={editorMenuOpen}
-    classes={{
-      paper: classes.drawerPaper,
-    }}
-  >
-    <EditorToolbar />
-    <Divider />
-    <NodeEditor />
-  </Drawer>;
-}
+const EditorView = ({ editorMenuOpen, editorMenuHeight, setEditorMenuOpen }) => {
+  const classes = useStyles({ editorMenuOpen, editorMenuHeight, setEditorMenuOpen });
+
+  return (
+    <Drawer
+      className={classes.drawer}
+      variant="persistent"
+      anchor="bottom"
+      open={editorMenuOpen}
+      classes={{
+        paper: classes.drawerPaper,
+      }}
+    >
+      <EditorToolbar />
+      <Divider />
+      <NodeEditor />
+    </Drawer>
+  );
+};
 
 EditorView.whyDidYouRender = true;
+
+EditorView.propTypes = {
+  editorMenuOpen: PropTypes.bool.isRequired,
+  editorMenuHeight: PropTypes.number.isRequired,
+  setEditorMenuOpen: PropTypes.func.isRequired,
+};
 
 export default EditorView;

@@ -1,16 +1,11 @@
-import { memo } from 'react'
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/jsx-filename-extension */
 
-import PeersView from './view';
+import React, { memo } from 'react';
 
-const Peers = ({peers}) => {
-  return peers.map((peer)=>{
-    // if (peer.uuid === undefined) {
-      return null;
-    // }
-    return (<PeersView key={`rt_${peer.type}_peer_${peer.uuid}`} {...{props: peer}}/>);
-  })
-  
-}
+import PeerView from './view';
+
+const Peers = ({ peers }) => peers.map((peer) => (<PeerView key={`rt_${peer.type}_peer_${peer.uuid}`} {...peer} />));
 
 Peers.whyDidYouRender = false;
 

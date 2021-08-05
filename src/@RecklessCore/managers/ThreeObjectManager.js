@@ -1,13 +1,17 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/jsx-filename-extension */
+
 import React, {
   useCallback,
-  useLayoutEffect,
   useMemo,
   useRef,
   useState,
-  useEffect
+  useEffect,
+  createContext,
 } from 'react';
 import useForceUpdate from '../useForceUpdate';
-import EventsManager from '../managers/EventsManager';
+import EventsManager from './EventsManager';
 
 import useThreeObjectsContext from '../contexts/useThreeObjectsContext';
 import useAppContext from '../contexts/useAppContext';
@@ -18,18 +22,15 @@ import usePeersContext from '../contexts/usePeersContext';
 import useDevicesConext from '../contexts/useDevicesContext';
 import useTransformsConext from '../contexts/useTransformsContext';
 
-// import { throttle } from '../utils/throttle';
-
-export const ThreeObjectContext = React.createContext(null);
-export const ThreeObjectPositionContext = React.createContext(null);
-export const ThreeObjectRotationContext = React.createContext(null);
-export const ThreeObjectScaleContext = React.createContext(null);
-
+export const ThreeObjectContext = createContext(null);
+export const ThreeObjectPositionContext = createContext(null);
+export const ThreeObjectRotationContext = createContext(null);
+export const ThreeObjectScaleContext = createContext(null);
 
 export const DefaultProps = {
   name: 'unnamed',
-  position: [0,0,0]
-}
+  position: [0, 0, 0],
+};
 
 const ThreeObjectManager = ({
   name,
@@ -41,7 +42,7 @@ const ThreeObjectManager = ({
   const isMounted = useRef(false);
 
   const { sceneJSON } = useAppContext();
-  const { connections} = sceneJSON;
+  const { connections } = sceneJSON;
 
   const { findGenerator } = useGeneratorsContext();
   const { findPeer } = usePeersContext();
@@ -50,20 +51,20 @@ const ThreeObjectManager = ({
 
   const identifier = useRef(Symbol('ThreeObject'));
   const node = useRef(null);
-  
+
   const [uuid] = useState(props.uuid);
   const [events] = useState(() => EventsManager());
 
   const [disabled, setDisabled] = useState(props.disabled || false);
   const [debug, setDebug] = useState(props.debug || false);
 
-  const [position, setPosition] = useState(props.position || [0,0,0]);
-  const [rotation, setRotation] = useState(props.rotation || [0,0,0]);
+  const [position, setPosition] = useState(props.position || [0, 0, 0]);
+  const [rotation, setRotation] = useState(props.rotation || [0, 0, 0]);
   const [scale, setScale] = useState(props.scale || 1);
-  
+
   // Inputs
-  const updateFromInput = (prop, val)=>{
-    switch(prop) {
+  const updateFromInput = (prop, val) => {
+    switch (prop) {
       default:
         break;
       case 'position':
@@ -77,82 +78,67 @@ const ThreeObjectManager = ({
         break;
     }
   };
-  
-  useEffect(()=>{
-    connections.filter((c)=>(c.to===uuid)).forEach((c)=>{
+
+  useEffect(() => {
+    connections.filter((c) => (c.to === uuid)).forEach((c) => {
       const peer = findPeer(c.from);
-      if (peer) { peer.subscribe(`${c.fromProp}-updated`, (val)=>{updateFromInput(c.fromProp, val)}) }
+      if (peer) { peer.subscribe(`${c.from}-${c.fromProp.toLowerCase()}-updated`, (val) => { updateFromInput(c.toProp.toLowerCase(), val); }); }
 
       const gen = findGenerator(c.from);
-      if (gen) { gen.subscribe(`${c.fromProp}-updated`, (val)=>{updateFromInput(c.fromProp, val)}) }
+      if (gen) { gen.subscribe(`${c.from}-${c.fromProp.toLowerCase()}-updated`, (val) => { updateFromInput(c.toProp.toLowerCase(), val); }); }
 
       const device = findDevice(c.from);
-      if (device) { device.subscribe(`${c.fromProp}-updated`, (val)=>{updateFromInput(c.fromProp, val)}) }
+      if (device) { device.subscribe(`${c.from}-${c.fromProp.toLowerCase()}-updated`, (val) => { updateFromInput(c.toProp.toLowerCase(), val); }); }
 
       const transform = findTransform(c.from);
-      if (transform) { transform.subscribe(`${c.fromProp}-updated`, (val)=>{updateFromInput(c.fromProp, val)}) }
-    })
-  }, [connections, uuid, findGenerator, findPeer, findDevice, findTransform])
+      if (transform) { transform.subscribe(`${c.from}-${c.fromProp.toLowerCase()}-updated`, (val) => { updateFromInput(c.toProp.toLowerCase(), val); }); }
+    });
+  }, [connections, uuid, findGenerator, findPeer, findDevice, findTransform]);
 
   // Outputs
-  
+
   // Limit publish events to once every...
   // const broadcastThrottle = 1000/60;
 
   useEffect(() => {
     if (isMounted.current) {
       if (events !== undefined) {
-        events.publish('disabled-updated', disabled)
+        events.publish(`${uuid}-disabled-updated`, disabled);
       }
     }
-  }, [disabled, events]);
-  
-  // const throttleDisabled = useRef(throttle((newValue) => events.publish('disabled-updated', disabled), broadcastThrottle));
-  // useEffect(() => throttleDisabled.current(disabled), [disabled]);
+  }, [disabled, events, uuid]);
 
   useEffect(() => {
     if (isMounted.current) {
       if (events !== undefined) {
-        events.publish('debug-updated', debug)
+        events.publish(`${uuid}-debug-updated`, debug);
       }
     }
-  }, [debug, events]);
-
-  // const throttleDebug = useRef(throttle((newValue) => events.publish('debug-updated', debug), broadcastThrottle));
-  // useEffect(() => throttleDebug.current(debug), [debug]);
+  }, [debug, events, uuid]);
 
   useEffect(() => {
     if (isMounted.current) {
       if (events !== undefined) {
-        events.publish('position-updated', position)
+        events.publish(`${uuid}-position-updated`, position);
       }
     }
-  }, [position, events]);
-
-  // const throttlePosition = useRef(throttle((newValue) => events.publish('position-updated', position), broadcastThrottle));
-  // useEffect(() => throttlePosition.current(position), [position]);
+  }, [position, events, uuid]);
 
   useEffect(() => {
     if (isMounted.current) {
       if (events !== undefined) {
-        events.publish('rotation-updated', rotation)
+        events.publish(`${uuid}-rotation-updated`, rotation);
       }
     }
-  }, [rotation, events]);
-
-  // const throttleRotation = useRef(throttle((newValue) => events.publish('rotation-updated', rotation), broadcastThrottle));
-  // useEffect(() => throttleRotation.current(rotation), [rotation]);
+  }, [rotation, events, uuid]);
 
   useEffect(() => {
     if (isMounted.current) {
       if (events !== undefined) {
-        events.publish('scale-updated', scale)
+        events.publish(`${uuid}-scale-updated`, scale);
       }
     }
-  }, [scale, events]);
-
-  // const throttleScale = useRef(throttle((newValue) => events.publish('scale-updated', scale), broadcastThrottle));
-  // useEffect(() => throttleScale.current(scale), [scale]);
+  }, [scale, events, uuid]);
 
   const { registerThreeObject, unregisterThreeObject } = useThreeObjectsContext();
   const forceUpdate = useForceUpdate();
@@ -160,17 +146,24 @@ const ThreeObjectManager = ({
   // Reference to object properties
   const threeObjectRef = useMemo(
     () => ({
-      uuid: uuid,
+      uuid,
       id: identifier.current,
-      
-      name, displayName, type,
-      
-      disabled, setDisabled,
-      debug, setDebug,
 
-      position, setPosition,
-      rotation, setRotation,
-      scale, setScale,
+      name,
+      displayName,
+      type,
+
+      disabled,
+      setDisabled,
+      debug,
+      setDebug,
+
+      position,
+      setPosition,
+      rotation,
+      setRotation,
+      scale,
+      setScale,
 
       subscribe: events.subscribe,
       unsubscribe: events.unsubscribe,
@@ -178,7 +171,7 @@ const ThreeObjectManager = ({
     [
       uuid,
       name, displayName, type,
-      
+
       disabled, setDisabled,
       debug, setDebug,
 
@@ -187,40 +180,41 @@ const ThreeObjectManager = ({
       scale, setScale,
 
       events,
-    ]
+    ],
   );
 
   // Callback to fetch properties of object
   const getRef = useCallback(() => threeObjectRef, [threeObjectRef]);
 
-  // // On load, register object with app context
-  useLayoutEffect(() => {
+  // On load, register object with app context
+  useEffect(() => {
     isMounted.current = true;
-    // const id = identifier.current;
     registerThreeObject(uuid, threeObjectRef);
-    return ()=>{
+    return () => {
       isMounted.current = false;
-      unregisterThreeObject(uuid, threeObjectRef)
+      unregisterThreeObject(uuid, threeObjectRef);
     };
-  }, [registerThreeObject, unregisterThreeObject, threeObjectRef, uuid]);
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
 
   // Final context for provider
-  const contextValue = useMemo(()=>({
-    uuid: uuid,
+  const contextValue = useMemo(() => ({
+    uuid,
     id: identifier.current,
     name,
     nodeRef: node,
     getRef,
 
-    disabled, setDisabled,
-    debug, setDebug,
+    disabled,
+    setDisabled,
+    debug,
+    setDebug,
 
     setPosition,
     setRotation,
     setScale,
 
     forceUpdate,
-    
+
     ...events,
   }), [
     uuid,
@@ -237,33 +231,31 @@ const ThreeObjectManager = ({
     events,
   ]);
 
-  const positionContextValue = useMemo(()=>({ position }), [ position ]);
-  const rotationContextValue = useMemo(()=>({ rotation }), [ rotation ]);
-  const scaleContextValue = useMemo(()=>({ scale }), [ scale ]);
+  const positionContextValue = useMemo(() => ({ position }), [position]);
+  const rotationContextValue = useMemo(() => ({ rotation }), [rotation]);
+  const scaleContextValue = useMemo(() => ({ scale }), [scale]);
 
   return (
     <ThreeObjectContext.Provider value={contextValue}>
-      {/* <Generators {...{generators, connections}}></Generators> */}
-      {/* <Peers {...{peers, connections}}></Peers> */}
-      {/* <Devices {...{devices, connections}}></Devices> */}
       <ThreeObjectPositionContext.Provider value={positionContextValue}>
         <ThreeObjectRotationContext.Provider value={rotationContextValue}>
           <ThreeObjectScaleContext.Provider value={scaleContextValue}>
             <RenderThreeChildrenView {...{
-              name: name,
-              node: node,
-              position: position,
-              rotation: rotation,
-              scale: scale,
-            }}>
-              {!disabled ? children : null}
+              name,
+              node,
+              position,
+              rotation,
+              scale,
+            }}
+            >
+              {!disabled ? children : []}
             </RenderThreeChildrenView>
           </ThreeObjectScaleContext.Provider>
         </ThreeObjectRotationContext.Provider>
       </ThreeObjectPositionContext.Provider>
     </ThreeObjectContext.Provider>
   );
-}
+};
 
 ThreeObjectManager.whyDidYouRender = false;
 

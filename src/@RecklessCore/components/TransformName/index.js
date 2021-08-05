@@ -1,6 +1,4 @@
-const TransformName = ({ transformInfo, onNameUpdate }) => {
-  return transformInfo.name;
-}
+const TransformName = ({ transformInfo, onNameUpdate }) => transformInfo.name;
 
 TransformName.whyDidYouRender = true;
 

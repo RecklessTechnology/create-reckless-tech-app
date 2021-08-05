@@ -1,4 +1,6 @@
-import { memo } from 'react';
+/* eslint-disable react/jsx-filename-extension */
+
+import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
@@ -35,12 +37,12 @@ const EditorToolbarView = () => {
             Scene Editor
           </Typography>
           <SceneDownloadButtton />
-          <div className={classes.spacer}></div>
+          <div className={classes.spacer} />
           <AddToEditorMenu />
         </Toolbar>
       </AppBar>
     </div>
   );
-}
+};
 
 export default memo(EditorToolbarView);

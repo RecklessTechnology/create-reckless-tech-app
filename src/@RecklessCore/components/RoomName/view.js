@@ -1,10 +1,14 @@
-import { memo } from 'react';
+/* eslint-disable react/jsx-filename-extension */
+
+import PropTypes from 'prop-types';
+
+import React, { memo } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Typography, Tooltip } from "@material-ui/core";
+import { Typography, Tooltip } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   roomName: {
     marginRight: 'auto',
     marginLeft: 'auto',
@@ -12,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RoomNameView = ({
-  roomId
+  roomId,
 }) => {
   // Create local classes
   const classes = useStyles();
@@ -22,8 +26,12 @@ const RoomNameView = ({
       <Typography className={classes.roomName} variant="subtitle1">{roomId}</Typography>
     </Tooltip>
   );
-}
+};
 
 RoomNameView.whyDidYouRender = true;
+
+RoomNameView.propTypes = {
+  roomId: PropTypes.string.isRequired,
+};
 
 export default memo(RoomNameView);

@@ -1,9 +1,12 @@
-import { memo } from 'react';
+/* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-filename-extension */
+
+import React, { memo } from 'react';
 
 import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
-const useStyles = makeStyles((theme)=>({
+const useStyles = makeStyles(() => ({
   propText: {
     fontSize: '12px',
     whiteSpace: 'nowrap',
@@ -14,9 +17,9 @@ const useStyles = makeStyles((theme)=>({
 const PatchValueView = ({ value }) => {
   const classes = useStyles();
   if (typeof value === 'object') {
-    return <Typography className={classes.propText}>{(value.map((v, idx)=>(`${v.toFixed(3)}${value.length-1!==idx?', ':''} `)))}</Typography>;
+    return <Typography className={classes.propText}>{(value.map((v, idx) => (`${v.toFixed(3)}${value.length - 1 !== idx ? ', ' : ''} `)))}</Typography>;
   }
   return <Typography className={classes.propText}>{`${value}`}</Typography>;
-}
+};
 
 export default memo(PatchValueView);

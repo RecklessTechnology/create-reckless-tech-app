@@ -1,4 +1,6 @@
-import { useCallback, useMemo, useState } from 'react';
+import {
+  useCallback, useEffect, useRef, useState,
+} from 'react';
 
 import { Divider } from '@material-ui/core';
 
@@ -10,24 +12,39 @@ import useThreeObjectsContext from '../../contexts/useThreeObjectsContext';
 const SceneList = () => {
   const { threeObjectNamesArray } = useThreeObjectsContext();
   const { subscribe } = useAppContext();
-  const [ forceListUpdate, setForceListUpdate ] = useState(false);
-  
-  let [ objects, setObjects ] = useState([]);
 
-  const updateObjects = useCallback(()=>{ //update data only when peer list is modified
-    setForceListUpdate(true);
-  }, [setForceListUpdate])
-  useMemo(()=>subscribe('threeObjects-list-changed', updateObjects), [subscribe, updateObjects]);
+  const [objects, setObjects] = useState([]);
 
-  useMemo(()=>{
-    if (forceListUpdate) {
-      setObjects(threeObjectNamesArray());
-      setForceListUpdate(false);
+  const isMounted = useRef(false);
+
+  const updateObjects = useCallback(() => { // update data only when peer list is modified
+    if (isMounted.current) {
+      const o = threeObjectNamesArray();
+      if (o !== undefined) {
+        setObjects(o);
+      }
     }
-  }, [forceListUpdate, setObjects, threeObjectNamesArray]);
+  }, [threeObjectNamesArray]);
 
-  return threeObjectNamesArray().map((name)=>(<div key={name}><ObjectInfo name={name}/><Divider /></div>));
-}
+  useEffect(() => {
+    if (threeObjectNamesArray !== undefined) {
+      isMounted.current = true;
+      subscribe('threeObjects-list-changed', updateObjects);
+    }
+    return () => {
+      isMounted.current = false;
+    };
+  }, [subscribe, threeObjectNamesArray, updateObjects]);
+
+  if (objects.length <= 0) { return null; }
+
+  return objects.map((name) => (
+    <div key={name}>
+      <ObjectInfo name={name} />
+      <Divider />
+    </div>
+  ));
+};
 
 SceneList.whyDidYouRender = true;
 

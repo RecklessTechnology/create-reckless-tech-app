@@ -1,12 +1,10 @@
-import { memo } from 'react'
+import { memo } from 'react';
 
-import { ListItemText } from "@material-ui/core";
+import { ListItemText } from '@material-ui/core';
 
-const ObjectName = ({ name }) => {
-  return (
-      <ListItemText primary={name}/>
-  );
-}
+const ObjectName = ({ name }) => (
+  <ListItemText primary={name} />
+);
 
 ObjectName.whyDidYouRender = true;
 

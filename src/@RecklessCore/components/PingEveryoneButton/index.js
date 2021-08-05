@@ -5,8 +5,8 @@ import PingEveryoneButtonview from './view';
 const PingEveryoneButton = () => {
   const { me } = useConnectionsContext();
 
-  return <PingEveryoneButtonview {...{me: me}}/>;
-}
+  return <PingEveryoneButtonview {...{ me }} />;
+};
 
 PingEveryoneButton.whyDidYouRender = true;
 

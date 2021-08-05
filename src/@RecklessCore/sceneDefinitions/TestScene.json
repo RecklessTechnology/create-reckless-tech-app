@@ -286,33 +286,10 @@
 			}]
 	},
   "connections": [
-    {
-      "uuid": "ZYXWVUTSRQPONMLKJIHGFEDCBA",
-      "from": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-      "fromProp": "position",
-      "to": "8292A663-D5D0-43B1-826F-1F0DD2293E19",
-      "toProp": "position"
-    }
   ],
   "generators": [
-    {
-      "uuid": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-      "type": "Orbit",
-      "name": "Orbit - 1",
-			"resolution": 32,
-			"rpm": 30,
-			"radiusW": 0.25,
-			"radiusH": 0,
-			"loop": true,
-			"paused": false
-    }
   ],
   "devices": [
-    {
-      "uuid": "0123456789-9876543210",
-      "type": "Mouse",
-      "name": "Mouse - 1"
-    }
   ],
 	"peers": [],
 	"transforms": []

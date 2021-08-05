@@ -1,35 +1,46 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+/* eslint-disable react/jsx-filename-extension */
+
+import PropTypes from 'prop-types';
+
+import React, {
+  useState, useEffect, useRef, useCallback,
+} from 'react';
 
 import useGeneratorsContext from '../../../../contexts/useGeneratorsContext';
 
 import PatchValueView from '../../shared/PatchValue/view';
 
-const PatchValue = ({ uuid, propName, a }) => {
+const PatchValue = ({ uuid, propName }) => {
   const { findGenerator } = useGeneratorsContext();
   const generatorObj = findGenerator(uuid);
-  const [propVal, setPropVal] = useState(0);
+  const [propVal, setPropVal] = useState([0, 0, 0]);
 
-  let isMounted = useRef(false);
-  
-  const updateProp = useCallback((val)=>{
+  const isMounted = useRef(false);
+
+  const updateProp = useCallback((val) => {
     if (isMounted.current) {
-      setPropVal(val)
+      setPropVal(val);
     }
   }, [isMounted, setPropVal]);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (generatorObj !== undefined) {
       isMounted.current = true;
-      generatorObj.subscribe(`${propName}-updated`, updateProp);
+      generatorObj.subscribe(`${uuid}-${propName.toLowerCase()}-updated`, updateProp);
     }
-    return ()=>{
+    return () => {
       isMounted.current = false;
     };
-  }, [generatorObj, propName, updateProp]);
-  
-  if (generatorObj === undefined) { return null }
+  }, [generatorObj, propName, updateProp, uuid]);
+
+  if (generatorObj === undefined) { return <PatchValueView {...{ value: [0, 0, 0] }} />; }
 
   return <PatchValueView {...{ value: propVal }} />;
-}
+};
+
+PatchValue.propTypes = {
+  uuid: PropTypes.string.isRequired,
+  propName: PropTypes.string.isRequired,
+};
 
 export default PatchValue;

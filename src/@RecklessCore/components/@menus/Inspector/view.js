@@ -1,12 +1,17 @@
-import { memo } from 'react';
+/* eslint-disable react/jsx-filename-extension */
+
+import PropTypes from 'prop-types';
+
+import React, { memo } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Drawer, Divider, Tabs, Tab } from '@material-ui/core'
+import {
+  Drawer, Divider, Tabs, Tab,
+} from '@material-ui/core';
 
 import RoomMenu from '../../RoomMenu';
 import PeersMenu from '../../PeersMenu';
-// import SceneMenu from '../../SceneMenu';
 import InspectorToolbar from '../../InspectorToolbar';
 
 const useStyles = makeStyles((theme) => ({
@@ -15,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    height: (props)=>(`calc(100% - ${(props.editorMenuOpen ? props.editorMenuHeight : 0)}px)`),
-    width: (props)=>(props.inspectorMenuWidth),
+    height: (props) => (`calc(100% - ${(props.editorMenuOpen ? props.editorMenuHeight : 0)}px)`),
+    width: (props) => (props.inspectorMenuWidth),
     position: 'fixed',
     right: 0,
     top: 0,
@@ -42,47 +47,53 @@ const InspectorView = ({
   editorMenuHeight,
   inspectorMenuWidth,
   inspectorMenuOpen,
-  setInspectorMenuOpen,
   inspectorMenuTab,
-  setInspectorMenuTab
+  setInspectorMenuTab,
 }) => {
-  
   const classes = useStyles({
     editorMenuOpen,
     editorMenuHeight,
     inspectorMenuWidth,
   });
 
-  return (<Drawer
-    className={classes.drawer}
-    variant="persistent"
-    anchor="right"
-    open={inspectorMenuOpen}
-    classes={{
-      paper: classes.drawerPaper,
-    }}
-  >
-    <InspectorToolbar />
-    <Divider />
-    <Tabs
-      value={inspectorMenuTab}
-      indicatorColor="primary"
-      textColor="primary"
-      onChange={(event, newValue) => setInspectorMenuTab(newValue)}
-      aria-label="disabled tabs example"
-      variant="fullWidth"
+  return (
+    <Drawer
+      className={classes.drawer}
+      variant="persistent"
+      anchor="right"
+      open={inspectorMenuOpen}
+      classes={{
+        paper: classes.drawerPaper,
+      }}
     >
-      <Tab label="Room" />
-      <Tab label="Peers"/>
-      {/* <Tab label="Scene"/> */}
-    </Tabs>
-    {inspectorMenuTab === 0 ? <RoomMenu/> : null}
-    {inspectorMenuTab === 1 ? <PeersMenu/> : null}
-    {/* {inspectorMenuTab === 1 ? <SceneMenu/> : null} */}
-  </Drawer>
+      <InspectorToolbar />
+      <Divider />
+      <Tabs
+        value={inspectorMenuTab}
+        indicatorColor="primary"
+        textColor="primary"
+        onChange={(event, newValue) => setInspectorMenuTab(newValue)}
+        aria-label="disabled tabs example"
+        variant="fullWidth"
+      >
+        <Tab label="Room" />
+        <Tab label="Peers" />
+      </Tabs>
+      {inspectorMenuTab === 0 ? <RoomMenu /> : null}
+      {inspectorMenuTab === 1 ? <PeersMenu /> : null}
+    </Drawer>
   );
-}
+};
 
-InspectorView.whyDidYouRender = true
+InspectorView.whyDidYouRender = true;
+
+InspectorView.propTypes = {
+  editorMenuOpen: PropTypes.bool.isRequired,
+  editorMenuHeight: PropTypes.number.isRequired,
+  inspectorMenuWidth: PropTypes.number.isRequired,
+  inspectorMenuOpen: PropTypes.bool.isRequired,
+  inspectorMenuTab: PropTypes.number.isRequired,
+  setInspectorMenuTab: PropTypes.func.isRequired,
+};
 
 export default memo(InspectorView);

@@ -1,6 +1,12 @@
+/* eslint-disable react/jsx-filename-extension */
+
+import React from 'react';
+
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, IconButton } from '@material-ui/core'
+import {
+  Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, IconButton,
+} from '@material-ui/core';
 
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -16,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    height: (props)=>(`calc(100% - ${(props.editorMenuOpen ? props.editorMenuHeight : 0)}px)`),
-    width: (props)=>(props.toolsMenuWidth),
+    height: (props) => (`calc(100% - ${(props.editorMenuOpen ? props.editorMenuHeight : 0)}px)`),
+    width: (props) => (props.toolsMenuWidth),
     position: 'fixed',
     left: 0,
     top: 0,
@@ -37,60 +43,63 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ToolsDrawer() {
+const ToolsDrawer = () => {
   const { toolsMenuWidth, toolsMenuOpen, setToolsMenuOpen } = useToolsMenuContext();
   const { editorMenuOpen, editorMenuHeight } = useEditorMenuContext();
 
   const classes = useStyles({ toolsMenuWidth, editorMenuOpen, editorMenuHeight });
   const theme = useTheme();
-  
-  const handleDrawerClose = (e) => {
+
+  const handleDrawerClose = () => {
     setToolsMenuOpen(false);
   };
 
   if (!toolsMenuOpen) return null;
 
-  return (<Drawer
-    className={classes.drawer}
-    variant="persistent"
-    anchor="left"
-    open={toolsMenuOpen}
-    classes={{
-      paper: classes.drawerPaper,
-    }}
-  >
-    <div className={classes.drawerHeader}>
-      <IconButton onClick={handleDrawerClose}>
-        {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-      </IconButton>
-    </div>
-    <Divider />
-    <List>
-      {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-        <ListItem button key={text}>
-          <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-          <ListItemText primary={text} />
-        </ListItem>
-      ))}
-    </List>
-    <Divider />
-    <List>
-      {['All mail', 'Trash', 'Spam'].map((text, index) => (
-        <ListItem button key={text}>
-          <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-          <ListItemText primary={text} />
-        </ListItem>
-      ))}
-    </List>
-    <Divider />
-    <List>
-      {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-        <ListItem button key={text}>
-          <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-          <ListItemText primary={text} />
-        </ListItem>
-      ))}
-    </List>
-  </Drawer>
+  return (
+    <Drawer
+      className={classes.drawer}
+      variant="persistent"
+      anchor="left"
+      open={toolsMenuOpen}
+      classes={{
+        paper: classes.drawerPaper,
+      }}
+    >
+      <div className={classes.drawerHeader}>
+        <IconButton onClick={handleDrawerClose}>
+          {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+        </IconButton>
+      </div>
+      <Divider />
+      <List>
+        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          <ListItem button key={text}>
+            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {['All mail', 'Trash', 'Spam'].map((text, index) => (
+          <ListItem button key={text}>
+            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          <ListItem button key={text}>
+            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+      </List>
+    </Drawer>
   );
-}
+};
+
+export default ToolsDrawer;

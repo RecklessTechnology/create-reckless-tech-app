@@ -1,80 +1,98 @@
-import { memo, useState, useEffect, useMemo, useCallback } from 'react';
+/* eslint-disable react/jsx-filename-extension */
 
-import { Divider, ListItem, Grid, List, Typography } from "@material-ui/core";
+import React, {
+  memo, useCallback, useEffect, useRef, useState,
+} from 'react';
 
 import { makeStyles } from '@material-ui/styles';
+
+import {
+  ListItem, Grid, List, Divider, Typography,
+} from '@material-ui/core';
 
 import PeerAvatar from '../PeerAvatar';
 import PeerName from '../PeerName';
 import PeerToolbar from '../PeerToolbar';
 
-// import PingPeerButton from '../PingPeerButton';
-// import ShareScenePeerButton from '../ShareScenePeerButton';
-
-import useAppContext from '../../contexts/useAppContext';
-import usePeersContext from '../../contexts/usePeersContext';
 import EditPeerNameButton from '../EditPeerNameButton';
+import useAppContext from '../../contexts/useAppContext';
+import useConnectionsContext from '../../contexts/useConnectionsContext';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
+  listItem: {
+    padding: 0,
+    overflow: 'hidden',
+  },
+  list: {
+    width: '100%',
+  },
   sectionTitle: {
     marginTop: 10,
   },
-  listItem: {
-    padding: 0,
-  }
 }));
 
 const MeInfo = () => {
   const classes = useStyles();
 
-  const { updatePeerInfo, getMe } = usePeersContext();
+  const { updateConnectionInfo, getMe } = useConnectionsContext();
   const { subscribe } = useAppContext();
 
-  const [ meName, setMeName ] = useState('');
-  const [ me, setMe ] = useState({});
+  const [meName, setMeName] = useState(null);
+  const [me, setMe] = useState(null);
 
-  useEffect(()=>{
-    setMe(getMe());
-  }, [setMe, getMe]);
+  const isMounted = useRef(false);
 
-  const updateMe = useCallback((peer)=>{ //update data only when peer list is modified
+  useEffect(() => { // update data on load
     const m = getMe();
     if (m !== undefined) {
       setMe(m);
       setMeName(m.name);
     }
-  }, [getMe, setMe, setMeName]);
-  useMemo(()=>subscribe('me-modified', updateMe), [subscribe, updateMe]);
+  }, [getMe, setMe]);
 
-  const updateName = useCallback((e) => {
-    setMeName(e.currentTarget.value)
-  }, [setMeName]);
+  const updateMe = useCallback(() => { // update data again when peer list is modified
+    if (isMounted.current) {
+      const h = getMe();
+      if (h !== undefined) {
+        setMe(h);
+        setMeName(h.name);
+      }
+    }
+  }, [getMe, setMe]);
 
   useEffect(() => {
-    if (me && me.name !== meName) {
-      setMeName(me.name)
+    if (getMe !== undefined) {
+      isMounted.current = true;
+      subscribe('me-modified', updateMe);
     }
-  }, [me, setMeName, meName]);
+    return () => {
+      isMounted.current = false;
+    };
+  }, [getMe, subscribe, updateMe]);
+
+  const updateName = useCallback((e) => {
+    setMeName(e.currentTarget.value);
+  }, [setMeName]);
 
   const updateMeInfo = useCallback((id, type, val) => {
     switch (type) {
       default:
       case 'cancel':
-        updatePeerInfo(id, val);
+        updateConnectionInfo(id, val);
         break;
       case 'save':
-        updatePeerInfo(id, {
+        updateConnectionInfo(id, {
           ...val,
-          name: meName
+          name: meName,
         });
         break;
     }
-  }, [updatePeerInfo, meName]);
+  }, [updateConnectionInfo, meName]);
 
+  if (me === null || meName === null || me.isHost) { return null; }
 
-  if (!me || me.isHost) { return null; }
-
-  return (<ListItem className={classes.listItem}>
+  return (
+    <ListItem className={classes.listItem}>
       <Grid container spacing={0}>
         <Grid item xs={12}>
           <Typography className={classes.sectionTitle}>Me</Typography>
@@ -82,13 +100,13 @@ const MeInfo = () => {
         <Grid item xs={12}>
           <List className={classes.list}>
             <ListItem className={classes.listItem} alignItems="flex-start">
-              <PeerAvatar {...{ peerInfo: me}} />
-              <PeerName {...{peerInfo: { ...me, name: meName }, onNameUpdate: updateName}} />
-              {(!me.isMe) ? null : <PeerToolbar>
-                <EditPeerNameButton {...{peerInfo: me, updatePeerInfo: updateMeInfo}} />
-                {/* <PingPeerButton />
-                <ShareScenePeerButton  {...{peerInfo:host}} /> */}
-              </PeerToolbar>}
+              <PeerAvatar {...{ peerInfo: me }} />
+              <PeerName {...{ peerInfo: { ...me, name: meName }, onNameUpdate: updateName }} />
+              {(!me.isMe) ? null : (
+                <PeerToolbar>
+                  <EditPeerNameButton {...{ peerInfo: me, updateConnectionInfo: updateMeInfo }} />
+                </PeerToolbar>
+              )}
             </ListItem>
           </List>
         </Grid>
@@ -96,25 +114,9 @@ const MeInfo = () => {
           <Divider />
         </Grid>
       </Grid>
-    </ListItem>)
-  
-//   <ListItem className={classes.listItem}>
-//   <Grid container spacing={0}>
-//     <Grid item xs={12}>
-//       Me
-//     </Grid>
-//     <Grid item xs={12}>
-//       <MeName />
-//     </Grid>          
-//     <Grid item xs={12}>
-//       <MeToolbar />
-//     </Grid>
-//     <Grid item xs={12}>
-//       <Divider/>
-//     </Grid>
-//   </Grid>
-// </ListItem>
-}
+    </ListItem>
+  );
+};
 
 MeInfo.whyDidYouRender = true;
 

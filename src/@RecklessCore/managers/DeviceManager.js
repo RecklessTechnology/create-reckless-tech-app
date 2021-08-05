@@ -1,13 +1,19 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/jsx-filename-extension */
+
+import PropTypes from 'prop-types';
+
 import React, {
-    useCallback,
-    useLayoutEffect,
-    useMemo,
-    useRef,
-    useState,
-    useEffect,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+  useEffect,
+  createContext,
 } from 'react';
+
 import useForceUpdate from '../useForceUpdate';
-import EventsManager from '../managers/EventsManager';
+import EventsManager from './EventsManager';
 
 import useDevicesContext from '../contexts/useDevicesContext';
 import useAppContext from '../contexts/useAppContext';
@@ -16,156 +22,154 @@ import usePeersContext from '../contexts/usePeersContext';
 import useTransformsContext from '../contexts/useTransformsContext';
 import useThreeObjectsContext from '../contexts/useThreeObjectsContext';
 
-// import { throttle } from '../utils/throttle';
-
-export const DeviceContext = React.createContext(null);
+export const DeviceContext = createContext(null);
 
 export const DefaultProps = {
-    name: 'unnamed',
-    position: [0,0,0]
-}
+  name: 'unnamed',
+  position: [0, 0, 0],
+};
 
 const DeviceManager = ({
-    children,
-    ...props
+  children,
+  ...props
 }) => {
-    const isMounted = useRef(false);
+  const { sceneJSON } = useAppContext();
+  const { connections } = sceneJSON;
 
-    const { sceneJSON } = useAppContext();
-    const { connections} = sceneJSON;
+  const { findThreeObject } = useThreeObjectsContext();
+  const { findGenerator } = useGeneratorsContext();
+  const { findPeer } = usePeersContext();
+  const { findTransform } = useTransformsContext();
 
-    const { findThreeObject } = useThreeObjectsContext();
-    const { findGenerator } = useGeneratorsContext();
-    const { findPeer } = usePeersContext();
-    const { findTransform } = useTransformsContext();
-    
-    const identifier = useRef(Symbol('Device'));
-    const node = useRef(null);
-    
-    const [events] = useState(() => EventsManager());
+  const identifier = useRef(Symbol('Device'));
+  const node = useRef(null);
 
-    const [uuid] = useState(props.uuid);
-    const [name] = useState(props.name);
-    const [displayName] = useState(props.displayName);
-    const [type, setType] = useState(props.type || '');
+  const [events] = useState(() => EventsManager());
 
-    const [data, setData] = useState(props.data || [0,0,0]);
+  const [uuid] = useState(props.uuid);
+  const [name] = useState(props.name);
+  const [displayName] = useState(props.displayName);
+  const [type, setType] = useState(props.type || '');
 
+  const [position, setPosition] = useState(props.position || [0, 0, 0]);
 
-    // Inputs
-    const updateFromInput = (prop, val)=>{
-      switch(prop) {
-        default:
-          break;
-        case 'data':
-          setData(val);
-          break;
-      }
-    };
-    
-    useEffect(()=>{
-      connections.filter((c)=>(c.to===uuid)).forEach((c)=>{
-        const peer = findPeer(c.from);
-        if (peer) { peer.subscribe(`${c.fromProp}-updated`, (val)=>{updateFromInput(c.fromProp, val)}) }
+  // Inputs
+  const updateFromInput = (prop, val) => {
+    switch (prop) {
+      default:
+        break;
+      case 'position':
+        setPosition(val);
+        break;
+    }
+  };
 
-        const obj = findThreeObject(c.from);
-        if (obj) { obj.subscribe(`${c.fromProp}-updated`, (val)=>{updateFromInput(c.fromProp, val)}) }
+  useEffect(() => {
+    connections.filter((c) => (c.to === uuid)).forEach((c) => {
+      const peer = findPeer(c.from);
+      if (peer) { peer.subscribe(`${c.from}-${c.fromProp.toLowerCase()}-updated`, (val) => { updateFromInput(c.toProp.toLowerCase(), val); }); }
 
-        const gen = findGenerator(c.from);
-        if (gen) { gen.subscribe(`${c.fromProp}-updated`, (val)=>{updateFromInput(c.fromProp, val)}) }
-  
-        const transform = findTransform(c.from);
-        if (transform) { transform.subscribe(`${c.fromProp}-updated`, (val)=>{updateFromInput(c.fromProp, val)}) }
-      })
-    }, [connections, uuid, findGenerator, findPeer, findTransform, findThreeObject])
+      const obj = findThreeObject(c.from);
+      if (obj) { obj.subscribe(`${c.from}-${c.fromProp.toLowerCase()}-updated`, (val) => { updateFromInput(c.toProp.toLowerCase(), val); }); }
 
-    // Outputs
+      const gen = findGenerator(c.from);
+      if (gen) { gen.subscribe(`${c.from}-${c.fromProp.toLowerCase()}-updated`, (val) => { updateFromInput(c.toProp.toLowerCase(), val); }); }
 
-    // Limit publish events to once every...
-    // const broadcastThrottle = 1000/60;
-    
-    useEffect(() => { events.publish('data-updated', data) }, [data, events]);
+      const transform = findTransform(c.from);
+      if (transform) { transform.subscribe(`${c.from}-${c.fromProp.toLowerCase()}-updated`, (val) => { updateFromInput(c.toProp.toLowerCase(), val); }); }
+    });
+  }, [connections, uuid, findGenerator, findPeer, findTransform, findThreeObject]);
 
-    // const throttled = useRef(throttle((newValue) => events.publish('position-updated', position), broadcastThrottle))
-    // useEffect(() => throttled.current(position), [position])
-    
-    const { registerDevice, unregisterDevice } = useDevicesContext();
-    const forceUpdate = useForceUpdate();
+  // Outputs
+  useEffect(() => { events.publish(`${uuid}-position-updated`, position); }, [uuid, position, events]);
 
-    // Reference to object properties
-    const deviceRef = useMemo(() => {
-      return ({
-        uuid: uuid,
-        id: identifier.current,
-        
-        name, displayName,
-        
-        type, setType,
-        
-        data, setData,
+  const { registerDevice, unregisterDevice } = useDevicesContext();
+  const forceUpdate = useForceUpdate();
 
-        subscribe: events.subscribe,
-        unsubscribe: events.unsubscribe,
-      })
-    }, [
-      uuid,
-      name, displayName,
+  // Reference to object properties
+  const deviceRef = useMemo(() => ({
+    uuid,
+    id: identifier.current,
 
-      type, setType,
-      
-      data, setData,
+    name,
+    displayName,
 
-      events,
-    ]);
+    type,
+    setType,
 
-    // Callback to fetch properties of object
-    const getRef = useCallback(() => deviceRef, [deviceRef]);
+    position,
+    setPosition,
 
-    // // On load, register object with app context
-    useLayoutEffect(() => {
-        // const id = identifier.current;
-        registerDevice(uuid, deviceRef);
-        return () => unregisterDevice(uuid, deviceRef);
-    }, [registerDevice, unregisterDevice, deviceRef, uuid]);
+    subscribe: events.subscribe,
+    unsubscribe: events.unsubscribe,
+  }), [
+    uuid,
+    name, displayName,
 
-    // Final context for provider
-    const contextValue = useMemo(()=>{
-      return ({
-        uuid: uuid,
-        id: identifier.current,
-        name,
-        nodeRef: node,
-        getRef,
+    type, setType,
 
-        type, setType,
-        data,setData,
+    position, setPosition,
 
-        forceUpdate,
-        
-        ...events,
-      })
-    },
-    [
-        uuid,
-        identifier,
-        name,
-        node,
-        getRef,
-        
-        type, setType,
-        data, setData,
+    events,
+  ]);
 
-        forceUpdate,
-        events,
-      ]);
+  // Callback to fetch properties of object
+  const getRef = useCallback(() => deviceRef, [deviceRef]);
 
-    return (
-        <DeviceContext.Provider value={contextValue}>
-          {children}
-        </DeviceContext.Provider>
-    );
-}
+  // On load, register object with app context
+
+  useEffect(() => {
+    registerDevice(uuid, deviceRef);
+    return () => unregisterDevice(uuid, deviceRef);
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  // Final context for provider
+  const contextValue = useMemo(() => ({
+    uuid,
+    id: identifier.current,
+    name,
+    nodeRef: node,
+    getRef,
+
+    type,
+    setType,
+    position,
+    setPosition,
+
+    forceUpdate,
+
+    ...events,
+  }),
+  [
+    uuid,
+    identifier,
+    name,
+    node,
+    getRef,
+
+    type, setType,
+    position, setPosition,
+
+    forceUpdate,
+    events,
+  ]);
+
+  return (
+    <DeviceContext.Provider value={contextValue}>
+      {children}
+    </DeviceContext.Provider>
+  );
+};
 
 DeviceManager.whyDidYouRender = false;
+
+DeviceManager.propTypes = {
+  children: PropTypes.shape([]).isRequired,
+  uuid: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  displayName: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  position: PropTypes.shape([]).isRequired,
+};
 
 export default DeviceManager;

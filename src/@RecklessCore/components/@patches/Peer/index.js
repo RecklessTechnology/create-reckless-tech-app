@@ -1,78 +1,66 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/jsx-filename-extension */
+
 import React, { useEffect, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import { List, ListItem } from '@material-ui/core';
+import { ListItem } from '@material-ui/core';
 
 import PropListItem from '../shared/PropListItem/index';
 import PatchValue from './PatchValue/index';
-// import PatchDetails from '../shared/PatchDetails/index';
-import PeerInfo from '../../PeerInfo';
-import usePeersContext from '../../../contexts/usePeersContext';
+import PatchDetails from '../shared/PatchDetails/index';
+import useConnectionsContext from '../../../contexts/useConnectionsContext';
+import PatchRoot from '../shared/PatchRoot';
 
-const useStyles = makeStyles((theme)=>({
-  root: {
-    width: (props)=>(props.width),
-    height: (props)=>(props.height),
-    backgroundColor: theme.palette.background.paper,
-    border: '1px solid white',
-  },
-  propItem: {
-    margin: 0,
-    padding: '0 10px',
-  },
-  propGrid: {
-    width: '100%',
-    height: '100%',
-  },
-  propText: {
-    fontSize: '12px',
-    whiteSpace: 'nowrap',
-    textAlign: 'center',
-  },
-  handle: {
-    width: '10px',
-    height: '10px',
-    position: 'relative',
-    margin: 0,
+import PatchToolbar from './PatchToolbar/index';
+
+const useStyles = makeStyles(() => ({
+  toolbar: {
     padding: 0,
-    borderRadius: 0,
-    marginTop: 10,
+    position: 'fixed',
+    bottom: 0,
   },
-  handleLeft: {
-    float: 'left',
-    left: '-25px'
-  },
-  handleRight: {
-    float: 'right',
-    right: '-25px'
-  }
 }));
 
 const PeerPatch = ({ data }) => {
-  const { findPeer } = usePeersContext();
-  const [ peer, setPeer ] = useState(null);
-  const { id, width, height, } = data;
-  const classes = useStyles({ width, height });
-  
-  const props = [
-    // { uuid: uuid, propName: 'disabled', disableInput: false, disableOutput: false },
-    // { uuid: uuid, propName: 'debug', disableInput: false, disableOutput: false },
-    { uuid: id, propName: 'data', disableInput: false, disableOutput: false },
-  ]
+  const { findConnection } = useConnectionsContext();
+  const [peer, setPeer] = useState(null);
+  const { uuid, width } = data;
 
-  useEffect(()=>{
-    const p = findPeer(id);
-    setPeer(p);
-  }, [id, findPeer, setPeer])
+  const [props, setProps] = useState([]);
 
-  return (<List className={classes.root}>
-    <ListItem className={classes.propItem}>
-      {/* <PatchDetails {...{ name:id, type: type}} /> */}
-      <PeerInfo peerInfo={peer}></PeerInfo>
-    </ListItem>
-    {props.map((p)=>(<PropListItem key={`${p.uuid}-${p.propName}-prop`} {...p}><PatchValue {...{ uuid: p.uuid, propName: p.propName }} /></PropListItem>))}
-  </List>);
-}
+  useEffect(() => {
+    if (peer !== null) {
+      setProps([
+        {
+          uuid: peer.uuid, propName: 'data', disableInput: false, disableOutput: false,
+        },
+      ]);
+    }
+  }, [peer]);
+
+  const classes = useStyles();
+  useEffect(() => {
+    const p = findConnection(uuid);
+    if (p !== undefined) {
+      setPeer(p);
+    }
+  }, [uuid, findConnection, setPeer]);
+
+  if (peer === null) { return null; }
+
+  return (
+    <PatchRoot {...{ width }}>
+      <PatchDetails {...{ name: `${peer.name}`, uuid: `${peer.uuid}`, type: 'Peer' }} />
+      {props.map((p) => (<PropListItem key={`${peer.uuid}-${p.propName}-prop`} {...p}><PatchValue {...{ uuid: peer.uuid, propName: p.propName }} /></PropListItem>))}
+      <ListItem className={classes.toolbar}>
+        <PatchToolbar parents={[]} uuid={peer.uuid} />
+      </ListItem>
+    </PatchRoot>
+  );
+};
 
 export default PeerPatch;

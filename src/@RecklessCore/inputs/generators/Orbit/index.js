@@ -1,31 +1,33 @@
-import { useState, useMemo, useCallback, useEffect } from 'react';
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable react/jsx-filename-extension */
 
+import {
+  useState, useMemo, useCallback, useEffect,
+} from 'react';
+
+import { useSpring } from '@react-spring/core';
 import useGeneratorContext from '../../../contexts/useGeneratorContext';
 
 import DrawCircle from '../../../shapes/drawCircle';
 
-import { useSpring } from '@react-spring/core';
-
 const OrbitGenerator = ({ toProp }) => {
-  const { type, resolution, rpm, loop, paused, setPosition: setGenPosition } = useGeneratorContext();
- 
-  const [ animMili ] = useState((60 * 1000 / rpm) / (360 / resolution));
-  
-  const points = useMemo(()=>{
-    switch(type) {
+  const {
+    type, resolution, rpm, loop, paused, setPosition: setGenPosition,
+  } = useGeneratorContext();
+
+  const [animMili] = useState(((60 * 1000) / rpm) / (360 / resolution));
+
+  const points = useMemo(() => {
+    switch (type) {
       default:
       case 'sine':
         return DrawCircle(resolution);
     }
   }, [type, resolution]);
 
-  const toPoints = useMemo(()=>{
-    return [
-      ...points.map((pos)=> {
-        return { [toProp]: [pos[0], pos[1], 0] }
-      })
-    ]
-  }, [points, toProp]);
+  const toPoints = useMemo(() => [
+    ...points.map((pos) => ({ [toProp]: [pos[0], pos[1], 0] })),
+  ], [points, toProp]);
 
   const handleChange = useCallback((result) => {
     if (result.value !== undefined) {
@@ -33,25 +35,25 @@ const OrbitGenerator = ({ toProp }) => {
     }
   }, [toProp, setGenPosition]);
 
-  const config = useMemo(()=>({
+  const config = useMemo(() => ({
     pause: paused,
-    loop: loop,
+    loop,
     to: toPoints,
     config: {
-      duration:	animMili,
-      friction: 5
+      duration: animMili,
+      friction: 5,
     },
     onChange: handleChange,
   }), [toPoints, animMili, paused, loop, handleChange]);
 
-  const [, api] = useSpring(()=>(config))
-  useEffect(()=>{
+  const [, api] = useSpring(() => (config));
+  useEffect(() => {
     api.stop();
     api.start(config);
   }, [api, config]);
 
   return null;
-}
+};
 
 OrbitGenerator.whyDidYouRender = false;
 

@@ -1,20 +1,22 @@
-import { memo } from 'react';
+/* eslint-disable react/jsx-filename-extension */
+
+import React, { memo } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import { List, ListItem } from "@material-ui/core";
+import { List, ListItem } from '@material-ui/core';
 
 import HostInfo from '../HostInfo';
 import MeInfo from '../MeInfo';
 import PeersList from '../PeersList';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   list: {
     width: '100%',
   },
   listItem: {
     paddingTop: 0,
-  }
+  },
 }));
 
 const PeersInfo = () => {
@@ -22,16 +24,16 @@ const PeersInfo = () => {
   const classes = useStyles();
 
   return (
-    
+
     <ListItem className={classes.listItem}>
       <List className={classes.list}>
-        <MeInfo/>
-        <HostInfo/>
+        <MeInfo />
+        <HostInfo />
         <PeersList />
       </List>
     </ListItem>
   );
-}
+};
 
 PeersInfo.whyDidYouRender = true;
 

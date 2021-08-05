@@ -1,9 +1,13 @@
+/* eslint-disable react/jsx-filename-extension */
+
+import { PropTypes } from 'prop-types';
+
 import React, { createContext, memo } from 'react';
 
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { AppBar, Toolbar, IconButton } from "@material-ui/core";
+import { AppBar, Toolbar, IconButton } from '@material-ui/core';
 
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import CreateIcon from '@material-ui/icons/Create';
@@ -22,14 +26,14 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'scroll',
   },
   rootShiftBottom: {
-    height: (props)=>(`calc(100% - ${props.editorMenuOpen ? props.editorMenuHeight : 0}px)`),
+    height: (props) => (`calc(100% - ${props.editorMenuOpen ? props.editorMenuHeight : 0}px)`),
     transition: theme.transitions.create('height', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
   appBar: {
-    width: (props)=>(`calc(100% - ${(props.toolsMenuOpen ? props.toolsMenuWidth : 0) + (props.inspectorMenuOpen ? props.inspectorMenuWidth : 0)}px)`),
+    width: (props) => (`calc(100% - ${(props.toolsMenuOpen ? props.toolsMenuWidth : 0) + (props.inspectorMenuOpen ? props.inspectorMenuWidth : 0)}px)`),
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -38,14 +42,14 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: 'none',
   },
   appBarShiftLeft: {
-    marginLeft: (props)=>(props.toolsMenuWidth),
+    marginLeft: (props) => (props.toolsMenuWidth),
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
   appBarShiftRight: {
-    marginRight: (props)=>(props.inspectorMenuWidth),
+    marginRight: (props) => (props.inspectorMenuWidth),
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
@@ -56,7 +60,6 @@ const useStyles = makeStyles((theme) => ({
   },
   renderArea: {
     flexGrow: 1,
-    // paddingTop: theme.spacing(3),
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -70,32 +73,32 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    marginLeft: (props)=>(props.toolsMenuWidth),
+    marginLeft: (props) => (props.toolsMenuWidth),
   },
   renderAreaShiftRight: {
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    marginRight: (props)=>(props.inspectorMenuWidth),
+    marginRight: (props) => (props.inspectorMenuWidth),
   },
   bottomAppBar: {
-    width: (props)=>(`calc(100% - ${(props.toolsMenuOpen ? props.toolsMenuWidth : 0) + (props.inspectorMenuOpen ? props.inspectorMenuWidth : 0)}px)`),
+    width: (props) => (`calc(100% - ${(props.toolsMenuOpen ? props.toolsMenuWidth : 0) + (props.inspectorMenuOpen ? props.inspectorMenuWidth : 0)}px)`),
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
     top: 'auto',
-    bottom: (props)=>(props.editorMenuOpen ? props.editorMenuHeight : 0),
+    bottom: (props) => (props.editorMenuOpen ? props.editorMenuHeight : 0),
     background: 'none',
     boxShadow: 'none',
   },
   bottomToolbar: {
-    width: '100%'
+    width: '100%',
   },
   inspectorButton: {
     marginLeft: 'auto',
-  }
+  },
 }));
 
 const AppView = ({
@@ -105,10 +108,9 @@ const AppView = ({
   setEditorMenuOpen,
   toolsMenuOpen,
   toolsMenuWidth,
-  setToolsMenuOpen,
   inspectorMenuOpen,
   inspectorMenuWidth,
-  setInspectorMenuOpen
+  setInspectorMenuOpen,
 }) => {
   // Local CSS classes
   const classes = useStyles({
@@ -120,52 +122,72 @@ const AppView = ({
     inspectorMenuWidth,
   });
 
-  return(
+  return (
     <div
       className={clsx(classes.root, {
         [classes.rootShiftBottom]: editorMenuOpen,
       })}
     >
-        {toolsMenuOpen === true ? <Tools/> : null}
-        <main
-          className={clsx(classes.renderArea, {
-            [classes.renderAreaShiftLeft]: toolsMenuOpen,
-            [classes.renderAreaShiftRight]: inspectorMenuOpen,
-          })}
-        >
-          {children}
-          <AppBar position="fixed" color="primary" className={clsx(classes.bottomAppBar, {
+      {toolsMenuOpen === true ? <Tools /> : null}
+      <main
+        className={clsx(classes.renderArea, {
+          [classes.renderAreaShiftLeft]: toolsMenuOpen,
+          [classes.renderAreaShiftRight]: inspectorMenuOpen,
+        })}
+      >
+        {children}
+        <AppBar
+          position="fixed"
+          color="primary"
+          className={clsx(classes.bottomAppBar, {
             [classes.appBarShiftLeft]: toolsMenuOpen,
             [classes.appBarShiftRight]: inspectorMenuOpen,
-          })}>
-            <Toolbar className={classes.bottomToolbar}>
-            {editorMenuOpen !== true ? <IconButton
+          })}
+        >
+          <Toolbar className={classes.bottomToolbar}>
+            {editorMenuOpen !== true ? (
+              <IconButton
                 color="inherit"
                 aria-label="open drawer"
-                onClick={()=>{setEditorMenuOpen(!editorMenuOpen)}}
+                onClick={() => { setEditorMenuOpen(!editorMenuOpen); }}
                 edge="end"
                 className={classes.menuButton}
               >
                 <CreateIcon />
-              </IconButton> : null}
-              {inspectorMenuOpen !== true ? <IconButton
+              </IconButton>
+            ) : null}
+            {inspectorMenuOpen !== true ? (
+              <IconButton
                 color="inherit"
                 aria-label="open add element"
-                onClick={()=>{setInspectorMenuOpen(!inspectorMenuOpen)}}
+                onClick={() => { setInspectorMenuOpen(!inspectorMenuOpen); }}
                 edge="end"
                 className={classes.inspectorButton}
               >
                 <InfoOutlinedIcon />
-              </IconButton> : null}
-            </Toolbar>
-          </AppBar>
-        </main>
-        {inspectorMenuOpen === true ? <Inspector/> : null}
-        {editorMenuOpen === true ? <Editor/> : null}
+              </IconButton>
+            ) : null}
+          </Toolbar>
+        </AppBar>
+      </main>
+      {inspectorMenuOpen === true ? <Inspector /> : null}
+      {editorMenuOpen === true ? <Editor /> : null}
     </div>
-  )
-}
+  );
+};
 
 AppView.whyDidYouRender = true;
+
+AppView.propTypes = {
+  children: PropTypes.shape([]).isRequired,
+  editorMenuOpen: PropTypes.bool.isRequired,
+  editorMenuHeight: PropTypes.number.isRequired,
+  setEditorMenuOpen: PropTypes.func.isRequired,
+  toolsMenuOpen: PropTypes.bool.isRequired,
+  toolsMenuWidth: PropTypes.number.isRequired,
+  inspectorMenuOpen: PropTypes.bool.isRequired,
+  inspectorMenuWidth: PropTypes.number.isRequired,
+  setInspectorMenuOpen: PropTypes.func.isRequired,
+};
 
 export default memo(AppView);

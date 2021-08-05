@@ -1,22 +1,23 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/jsx-filename-extension */
+
 import React, { useEffect, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import { List, ListItem } from '@material-ui/core';
+import { ListItem, Typography } from '@material-ui/core';
 
-import PropListItem from '../shared/PropListItem/index';
 import PatchValue from './PatchValue/index';
-// import PatchDetails from '../shared/PatchDetails/index';
-import TransformInfo from '../../TransformInfo';
-import useTransformsContext from '../../../contexts/useTransformsContext';
+import PatchToolbar from './PatchToolbar/index';
 
-const useStyles = makeStyles((theme)=>({
-  root: {
-    width: (props)=>(props.width),
-    height: (props)=>(props.height),
-    backgroundColor: theme.palette.background.paper,
-    border: '1px solid white',
-  },
+import PatchDetails from '../shared/PatchDetails/index';
+import PropListItem from '../shared/PropListItem/index';
+import useTransformsContext from '../../../contexts/useTransformsContext';
+import PatchRoot from '../shared/PatchRoot';
+
+const useStyles = makeStyles(() => ({
   propItem: {
     margin: 0,
     padding: '0 10px',
@@ -24,55 +25,51 @@ const useStyles = makeStyles((theme)=>({
   propGrid: {
     width: '100%',
     height: '100%',
+    borderBottom: '1px solid rgba(255,255,255,0.05)',
   },
   propText: {
-    fontSize: '12px',
     whiteSpace: 'nowrap',
     textAlign: 'center',
+    width: '100%',
   },
-  handle: {
-    width: '10px',
-    height: '10px',
-    position: 'relative',
-    margin: 0,
+  toolbar: {
     padding: 0,
-    borderRadius: 0,
-    marginTop: 10,
+    position: 'fixed',
+    bottom: 0,
   },
-  handleLeft: {
-    float: 'left',
-    left: '-25px'
-  },
-  handleRight: {
-    float: 'right',
-    right: '-25px'
-  }
 }));
 
 const TransformPatch = ({ data }) => {
   const { findTransform } = useTransformsContext();
-  const [ transform, setTransform ] = useState(null);
-  const { id, width, height, } = data;
-  const classes = useStyles({ width, height });
-  
+  const [transform, setTransform] = useState({ amount: 1 });
+  const { uuid, width, label } = data;
+  const classes = useStyles({ width });
+
   const props = [
-    // { uuid: uuid, propName: 'disabled', disableInput: false, disableOutput: false },
-    // { uuid: uuid, propName: 'debug', disableInput: false, disableOutput: false },
-    { uuid: id, propName: 'data', disableInput: false, disableOutput: false },
-  ]
+    {
+      uuid, propName: 'value', disableInput: false, disableOutput: false,
+    },
+  ];
 
-  useEffect(()=>{
-    const p = findTransform(id);
-    setTransform(p);
-  }, [id, findTransform, setTransform])
+  useEffect(() => {
+    const p = findTransform(uuid);
+    if (p !== undefined) {
+      setTransform(p);
+    }
+  }, [uuid, findTransform, setTransform]);
 
-  return (<List className={classes.root}>
-    <ListItem className={classes.propItem}>
-      {/* <PatchDetails {...{ name:id, type: type}} /> */}
-      <TransformInfo transformInfo={transform}></TransformInfo>
-    </ListItem>
-    {props.map((p)=>(<PropListItem key={`${p.uuid}-${p.propName}-prop`} {...p}><PatchValue {...{ uuid: p.uuid, propName: p.propName }} /></PropListItem>))}
-  </List>);
-}
+  return (
+    <PatchRoot {...{ width }}>
+      <PatchDetails {...{ name: `${label}`, uuid: `${uuid}`, type: 'Transform' }} />
+      <ListItem className={classes.propItem}>
+        <Typography className={classes.propText}>{`x${transform.amount}`}</Typography>
+      </ListItem>
+      {props.map((p) => (<PropListItem key={`${p.uuid}-${p.propName}-prop`} {...p}><PatchValue {...{ uuid: p.uuid, propName: p.propName }} /></PropListItem>))}
+      <ListItem className={classes.toolbar}>
+        <PatchToolbar parents={[]} uuid={uuid} />
+      </ListItem>
+    </PatchRoot>
+  );
+};
 
 export default TransformPatch;

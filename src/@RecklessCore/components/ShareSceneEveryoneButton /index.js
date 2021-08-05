@@ -7,8 +7,8 @@ const ShareSceneEveryoneButton = () => {
   const { sceneJSON } = useAppContext();
   const { me } = useConnectionsContext();
 
-  return <ShareSceneEveryoneButtonView {...{me: me, sceneJSON: sceneJSON}}/>;
-}
+  return <ShareSceneEveryoneButtonView {...{ me, sceneJSON }} />;
+};
 
 ShareSceneEveryoneButton.whyDidYouRender = true;
 

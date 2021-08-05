@@ -1,32 +1,50 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/prop-types */
+
+import React, {
+  useState, useEffect, useRef, useCallback,
+} from 'react';
 
 import useAppContext from '../../contexts/useAppContext';
-import usePeersContext from '../../contexts/usePeersContext';
+import useConnectionsContext from '../../contexts/useConnectionsContext';
 
 import PingPeerButtonview from './view';
 
-const PingPeerButton = ({peerInfo}) => {
-  const { getMe } = usePeersContext();
+const PingPeerButton = ({ peerInfo }) => {
+  const { getMe } = useConnectionsContext();
   const { subscribe } = useAppContext();
 
-  const [ me, setMe ] = useState({});
+  const [me, setMe] = useState({});
 
-  useEffect(()=>{
+  const isMounted = useRef(false);
+
+  useEffect(() => {
     setMe(getMe());
   }, [setMe, getMe]);
 
-  const updateMe = useCallback((peer)=>{ //update data only when peer list is modified
-    const m = getMe()
-    if (m !== undefined) {
-      setMe(m);
+  const updateMe = useCallback(() => { // update data only when peer list is modified
+    if (isMounted.current) {
+      const m = getMe();
+      if (m !== undefined) {
+        setMe(m);
+      }
     }
-  }, [getMe, setMe])
-  useMemo(()=>subscribe('me-modified', updateMe), [subscribe, updateMe]);
+  }, [getMe, setMe]);
+
+  useEffect(() => {
+    if (getMe !== undefined) {
+      isMounted.current = true;
+      subscribe('me-modified', updateMe);
+    }
+    return () => {
+      isMounted.current = false;
+    };
+  }, [getMe, subscribe, updateMe]);
 
   if (!me) { return null; }
 
-  return <PingPeerButtonview {...{me: me, peerInfo: peerInfo}}/>;
-}
+  return <PingPeerButtonview {...{ me, peerInfo }} />;
+};
 
 PingPeerButton.whyDidYouRender = true;
 

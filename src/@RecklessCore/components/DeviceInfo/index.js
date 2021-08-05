@@ -1,12 +1,10 @@
-import { memo, useState, useCallback, useEffect } from 'react';
+import { memo, useState, useEffect } from 'react';
 
 import { makeStyles } from '@material-ui/styles';
 
-import { ListItem } from "@material-ui/core";
+import { ListItem } from '@material-ui/core';
 
 import DeviceName from '../DeviceName';
-
-import useDevicesContext from '../../contexts/useDevicesContext';
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -14,29 +12,28 @@ const useStyles = makeStyles((theme) => ({
   },
   buttons: {
     right: 0,
-  }
+  },
 }));
 
-
-const DeviceInfo = ({deviceInfo}) => {
+const DeviceInfo = ({ deviceInfo }) => {
   const classes = useStyles();
-  
-  const [ deviceName, setDeviceName ] = useState('');
-  
-  useEffect(()=>{
+
+  const [deviceName, setDeviceName] = useState('');
+
+  useEffect(() => {
     if (deviceInfo) {
-      setDeviceName(deviceInfo.name)
+      setDeviceName(deviceInfo.name);
     }
-  }, [deviceInfo, setDeviceName])
+  }, [deviceInfo, setDeviceName]);
 
   if (!deviceInfo) { return null; }
 
   return (
     <ListItem className={classes.listItem} alignItems="flex-start">
-      <DeviceName {...{deviceInfo: { ...deviceInfo, name: deviceName }}} />
+      <DeviceName {...{ deviceInfo: { ...deviceInfo, name: deviceName } }} />
     </ListItem>
   );
-}
+};
 
 DeviceInfo.whyDidYouRender = true;
 

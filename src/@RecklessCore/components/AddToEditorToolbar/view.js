@@ -1,4 +1,9 @@
-import { memo, forwardRef } from 'react';
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-filename-extension */
+
+import React, { memo, forwardRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
@@ -25,6 +30,6 @@ const AddToEditorToolbarView = (props, ref) => {
       </AppBar>
     </div>
   );
-}
+};
 
 export default memo(forwardRef(AddToEditorToolbarView));

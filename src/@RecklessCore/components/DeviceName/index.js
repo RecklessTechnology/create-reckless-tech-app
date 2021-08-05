@@ -1,6 +1,4 @@
-const DeviceName = ({ deviceInfo, onNameUpdate }) => {
-  return deviceInfo.name;
-}
+const DeviceName = ({ deviceInfo, onNameUpdate }) => deviceInfo.name;
 
 DeviceName.whyDidYouRender = true;
 

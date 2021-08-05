@@ -1,32 +1,47 @@
-import { memo } from 'react';
+/* eslint-disable react/prop-types */
+/* eslint-disable no-param-reassign */
+/* eslint-disable react/jsx-filename-extension */
+
+import React, { memo } from 'react';
 import ReactFlow, { Controls, isNode } from 'react-flow-renderer';
 import dagre from 'dagre';
 
 import { makeStyles } from '@material-ui/styles';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     width: '100%',
     height: '100%',
   },
 }));
 
-const onLoad = (reactFlowInstance) => {
+const onLoad = () => {
   // reactFlowInstance.fitView();
 };
 
-const nodeWidth = 200;
-const nodeHeight = 250;
+const nodeWidth = 150;
+const nodeHeight = 200;
 
-const NodeEditorView = ({ elements, nodeTypes, updateConnection, addConnection}) => {
+const NodeEditorView = ({
+  elements, nodeTypes, edgeTypes, updateConnection, addConnection,
+}) => {
   const dagreGraph = new dagre.graphlib.Graph();
   dagreGraph.setDefaultEdgeLabel(() => ({}));
 
-  const getLayoutedElements = (elements) => {
-    const direction = 'RL';
-    dagreGraph.setGraph({ rankdir: direction, align: 'UL' });
+  const getLayoutedElements = (elems) => {
+    dagreGraph.setGraph({
+      rankdir: 'LR',
+      align: 'DL',
+      // ranker: 'tight-tree',
+      // acyclicer: 'greedy',
+      nodesep: 50,
+      edgesep: 0,
+      ranksep: 50,
+      marginx: 20,
+      marginy: 20,
+    });
 
-    elements.forEach((el) => {
+    elems.forEach((el) => {
       if (isNode(el)) {
         dagreGraph.setNode(el.id, { width: nodeWidth, height: nodeHeight });
       } else {
@@ -36,7 +51,7 @@ const NodeEditorView = ({ elements, nodeTypes, updateConnection, addConnection})
 
     dagre.layout(dagreGraph);
 
-    return elements.filter((el)=>!el.isHidden).map((el) => {
+    return elems.filter((el) => !el.isHidden).map((el) => {
       if (isNode(el)) {
         const nodeWithPosition = dagreGraph.node(el.id);
         el.targetPosition = 'right';
@@ -44,7 +59,8 @@ const NodeEditorView = ({ elements, nodeTypes, updateConnection, addConnection})
 
         // unfortunately we need this little hack to pass a slightly different position
         // to notify react flow about the change. Moreover we are shifting the dagre node position
-        // (anchor=center center) to the top left so it matches the react flow node anchor point (top left).
+        // (anchor=center center) to the top left
+        // so it matches the react flow node anchor point (top left).
         el.position = {
           x: nodeWithPosition.x - nodeWidth / 2 + Math.random() / 1000,
           y: nodeWithPosition.y - nodeHeight / 2,
@@ -55,7 +71,7 @@ const NodeEditorView = ({ elements, nodeTypes, updateConnection, addConnection})
     });
   };
 
-  const layoutedElements = getLayoutedElements(elements.filter((el)=>!el.isHidden));
+  const layoutedElements = getLayoutedElements(elements.filter((el) => !el.isHidden));
 
   // Local CSS classes
   const classes = useStyles();
@@ -64,13 +80,14 @@ const NodeEditorView = ({ elements, nodeTypes, updateConnection, addConnection})
       <ReactFlow
         elements={layoutedElements}
         nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
         onLoad={onLoad}
         snapToGrid
         // nodesDraggable={false}
         // onElementClick={()=>{console.log('node click');}}
         onEdgeUpdate={updateConnection}
         onConnect={addConnection}
-        onElementsRemove={()=>{}}
+        onElementsRemove={() => {}}
         // onDrop={()=>{console.log('drop');}}
         // onDragOver={()=>{console.log(' dragOver');}}
         // onNodeDragStart={()=>{console.log('node drag');}}

@@ -1,12 +1,14 @@
-import { memo } from 'react';
+/* eslint-disable react/jsx-filename-extension */
+
+import React, { memo } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import { List, ListItem } from "@material-ui/core";
+import { List, ListItem } from '@material-ui/core';
 
 import RoomInfo from '../RoomInfo';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: 'block',
     width: '100%',
@@ -24,7 +26,7 @@ const RoomMenu = () => {
       aria-labelledby={`full-width-tab-${0}`}
     >
       <List className={classes.root}>
-        <RoomInfo/>
+        <RoomInfo />
       </List>
     </ListItem>
   );

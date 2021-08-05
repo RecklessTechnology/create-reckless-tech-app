@@ -1,34 +1,37 @@
-import { useState, useRef, useEffect, useCallback } from 'react'
+import {
+  useState, useRef, useEffect, useCallback,
+} from 'react';
 
 import ObjectDisableButttonView from './view';
 
 import useThreeObjectsContext from '../../contexts/useThreeObjectsContext';
 
-const ObjectDisableButtton = ({ name }) => {
+const ObjectDisableButtton = ({ uuid, name }) => {
   const { findThreeObjectByName } = useThreeObjectsContext();
   const threeObj = findThreeObjectByName(name);
-  
-  const [ disabled, setDisabled ] = useState(false);
-  
-  let isMounted = useRef(false);
-  
-  const updateProp = useCallback((val)=>{
+
+  const [disabled, setDisabled] = useState(false);
+
+  const isMounted = useRef(false);
+
+  const updateProp = useCallback((val) => {
     if (isMounted.current) {
-      setDisabled(val)
+      setDisabled(val);
     }
   }, [isMounted, setDisabled]);
 
-  useEffect(()=>{
-    isMounted.current = true;
-    threeObj.subscribe(`disabled-updated`, updateProp);
-    return ()=>{
+  useEffect(() => {
+    if (threeObj !== undefined) {
+      isMounted.current = true;
+      threeObj.subscribe(`${uuid}-disabled-updated`, updateProp);
+    }
+    return () => {
       isMounted.current = false;
     };
-  }, [threeObj, updateProp]);
+  }, [threeObj, updateProp, uuid]);
 
-
-  return <ObjectDisableButttonView {...{ disabled: disabled, setDisabled: threeObj.setDisabled }}/>;
-}
+  return <ObjectDisableButttonView {...{ disabled, setDisabled: threeObj.setDisabled }} />;
+};
 
 ObjectDisableButtton.whyDidYouRender = true;
 

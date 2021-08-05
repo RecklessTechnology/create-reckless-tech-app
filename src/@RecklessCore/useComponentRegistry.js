@@ -2,18 +2,16 @@ import { useLayoutEffect } from 'react';
 import useThreeObjectContext from './contexts/useThreeObjectContext';
 
 export default function useComponentRegistry(
-    name,
-    api
+  name,
+  api,
 ) {
-    const { registerComponent, unregisterComponent } = useThreeObjectContext();
+  const { registerComponent, unregisterComponent } = useThreeObjectContext();
 
-    useLayoutEffect(() => {
-        registerComponent(name, api);
-    });
+  useLayoutEffect(() => {
+    registerComponent(name, api);
+  });
 
-    useLayoutEffect(() => {
-        return () => unregisterComponent(name);
-    }, [unregisterComponent, name]);
+  useLayoutEffect(() => () => unregisterComponent(name), [unregisterComponent, name]);
 
-    return api;
+  return api;
 }

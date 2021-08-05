@@ -1,14 +1,19 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/destructuring-assignment */
+
 import React, {
-    useCallback,
-    useLayoutEffect,
-    useMemo,
-    useRef,
-    useState,
-    useEffect,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+  useEffect,
+  createContext,
 } from 'react';
 import useForceUpdate from '../useForceUpdate';
-import EventsManager from '../managers/EventsManager';
+import EventsManager from './EventsManager';
 
+import useConnectionsContext from '../contexts/useConnectionsContext';
 import usePeersContext from '../contexts/usePeersContext';
 import useAppContext from '../contexts/useAppContext';
 import useGeneratorsContext from '../contexts/useGeneratorsContext';
@@ -16,155 +21,156 @@ import useDevicesContext from '../contexts/useDevicesContext';
 import useTransformsContext from '../contexts/useTransformsContext';
 import useThreeObjectsContext from '../contexts/useThreeObjectsContext';
 
-// import { throttle } from '../utils/throttle';
-
-export const PeerContext = React.createContext(null);
+export const PeerContext = createContext(null);
 
 export const DefaultProps = {
-    name: 'unnamed',
-    position: [0,0,0]
-}
+  name: 'unnamed',
+  position: [0, 0, 0],
+};
 
 const PeerManager = ({
-    children,
-    ...props
+  children,
+  ...props
 }) => {
-    const isMounted = useRef(false);
+  const { sceneJSON } = useAppContext();
+  const { connections } = sceneJSON;
 
-    const { sceneJSON } = useAppContext();
-    const { connections} = sceneJSON;
+  const { registerPeer, unregisterPeer } = usePeersContext();
+  const { getMe, findConnection } = useConnectionsContext();
+  const forceUpdate = useForceUpdate();
 
-    const { registerPeer, unregisterPeer } = usePeersContext();
-    const forceUpdate = useForceUpdate();
+  const { findThreeObject } = useThreeObjectsContext();
+  const { findGenerator } = useGeneratorsContext();
+  const { findDevice } = useDevicesContext();
+  const { findTransform } = useTransformsContext();
 
-    const { findThreeObject } = useThreeObjectsContext();
-    const { findGenerator } = useGeneratorsContext();
-    const { findDevice } = useDevicesContext();
-    const { findTransform } = useTransformsContext();
-    
-    const identifier = useRef(Symbol('Peer'));
-    const node = useRef(null);
-    
-    const [events] = useState(() => EventsManager());
+  const node = useRef(null);
 
-    const [uuid] = useState(props.uuid);
-    const [name] = useState(props.name);
-    const [displayName] = useState(props.displayName);
-    const [type, setType] = useState(props.type || '');
+  const [events] = useState(() => EventsManager());
 
-    const [data, setData] = useState(props.data || [0,0,0]);
+  const [uuid] = useState(props.uuid);
+  const [name] = useState(props.name);
+  const [type, setType] = useState(props.type);
 
+  const [data, setData] = useState(props.data || [0, 0, 0]);
 
-    // Inputs
-    const updateFromInput = (prop, val)=>{
-      switch(prop) {
-        default:
-          break;
-        case 'data':
-          setData(val);
-          break;
-      }
-    };
-    
-    useEffect(()=>{
-      connections.filter((c)=>(c.to===uuid)).forEach((c)=>{
-        const obj = findThreeObject(c.from);
-        if (obj) { obj.subscribe(`${c.fromProp}-updated`, (val)=>{updateFromInput(c.fromProp, val)}) }
+  const [connection, setConnection] = useState();
 
-        const gen = findGenerator(c.from);
-        if (gen) { gen.subscribe(`${c.fromProp}-updated`, (val)=>{updateFromInput(c.fromProp, val)}) }
-  
-        const device = findDevice(c.from);
-        if (device) { device.subscribe(`${c.fromProp}-updated`, (val)=>{updateFromInput(c.fromProp, val)}) }
-  
-        const transform = findTransform(c.from);
-        if (transform) { transform.subscribe(`${c.fromProp}-updated`, (val)=>{updateFromInput(c.fromProp, val)}) }
-      })
-    }, [connections, uuid, findGenerator, findDevice, findTransform, findThreeObject])
+  useEffect(() => {
+    setConnection(findConnection(uuid));
+  }, [findConnection, uuid]);
 
-    // Outputs
+  // Inputs
+  const updateFromInput = useCallback((prop, from, val) => {
+    const me = getMe();
+    // findConnection();
+    switch (prop) {
+      default:
+        break;
+      case 'data':
+        if (connection !== undefined) {
+          if (typeof connection.sendData === 'function') {
+            connection.sendData({
+              type: from, payload: val, uuid: me.uuid, from: me.connectionId, timestamp: Date.now,
+            });
+            setData(val);
+          }
+        }
+        break;
+    }
+  }, [connection, getMe]);
 
-    // Limit publish events to once every...
-    // const broadcastThrottle = 1000/60;
-    
-    useEffect(() => { events.publish('data-updated', data) }, [data, events]);
+  useEffect(() => {
+    connections.filter((c) => (c.to === uuid)).forEach((c) => {
+      const obj = findThreeObject(c.from);
+      if (obj) { obj.subscribe(`${c.from}-${c.fromProp.toLowerCase()}-updated`, (val) => { updateFromInput(c.toProp.toLowerCase(), c.fromProp.toLowerCase(), val); }); }
 
-    // const throttled = useRef(throttle((newValue) => events.publish('position-updated', position), broadcastThrottle))
-    // useEffect(() => throttled.current(position), [position])
-    
-    // Reference to object properties
-    const peerRef = useMemo(() => {
-      return ({
-        uuid: uuid,
-        id: identifier.current,
-        
-        name, displayName,
-        
-        type, setType,
-        
-        data, setData,
+      const gen = findGenerator(c.from);
+      if (gen) { gen.subscribe(`${c.from}-${c.fromProp.toLowerCase()}-updated`, (val) => { updateFromInput(c.toProp.toLowerCase(), c.fromProp.toLowerCase(), val); }); }
 
-        subscribe: events.subscribe,
-        unsubscribe: events.unsubscribe,
-      })
-    }, [
-      uuid,
-      name, displayName,
+      const device = findDevice(c.from);
+      if (device) { device.subscribe(`${c.from}-${c.fromProp.toLowerCase()}-updated`, (val) => { updateFromInput(c.toProp.toLowerCase(), c.fromProp.toLowerCase(), val); }); }
 
-      type, setType,
-      
-      data, setData,
+      const transform = findTransform(c.from);
+      if (transform) { transform.subscribe(`${c.from}-${c.fromProp.toLowerCase()}-updated`, (val) => { updateFromInput(c.toProp.toLowerCase(), c.fromProp.toLowerCase(), val); }); }
+    });
+  }, [
+    connections,
+    uuid,
+    findGenerator,
+    findDevice,
+    findTransform,
+    findThreeObject,
+    updateFromInput,
+  ]);
 
-      events,
-    ]);
+  useEffect(() => { events.publish(`${uuid}-data-updated`, data); }, [uuid, data, events]);
 
-    // Callback to fetch properties of object
-    const getRef = useCallback(() => peerRef, [peerRef]);
+  // Reference to object properties
+  const peerRef = useMemo(() => ({
+    uuid,
+    name,
 
-    // // On load, register object with app context
-    useLayoutEffect(() => {
-        // const id = identifier.current;
-        registerPeer(uuid, peerRef);
-        return () => unregisterPeer(uuid, peerRef);
-    }, [registerPeer, unregisterPeer, peerRef, uuid]);
+    data,
+    setData,
 
-    // Final context for provider
-    const contextValue = useMemo(()=>{
-      return ({
-        uuid: uuid,
-        id: identifier.current,
-        name,
-        nodeRef: node,
-        getRef,
+    subscribe: events.subscribe,
+    unsubscribe: events.unsubscribe,
+  }), [
+    uuid,
+    name,
 
-        type, setType,
-        data,setData,
+    data, setData,
 
-        forceUpdate,
-        
-        ...events,
-      })
-    },
-    [
-        uuid,
-        identifier,
-        name,
-        node,
-        getRef,
-        
-        type, setType,
-        data, setData,
+    events,
+  ]);
 
-        forceUpdate,
-        events,
-      ]);
+  // Callback to fetch properties of object
+  const getRef = useCallback(() => peerRef, [peerRef]);
 
-    return (
-        <PeerContext.Provider value={contextValue}>
-          {children}
-        </PeerContext.Provider>
-    );
-}
+  // On load, register object with app context
+  useEffect(() => {
+    registerPeer(uuid, peerRef);
+    return () => unregisterPeer(uuid, peerRef);
+  }, []); /* eslint-disable-line react-hooks/exhaustive-deps */
+
+  // Final context for provider
+  const contextValue = useMemo(() => ({
+    uuid,
+    name,
+
+    nodeRef: node,
+    getRef,
+
+    type,
+    setType,
+    data,
+    setData,
+
+    forceUpdate,
+
+    ...events,
+  }),
+  [
+    uuid,
+    name,
+
+    node,
+    getRef,
+
+    type, setType,
+    data, setData,
+
+    forceUpdate,
+    events,
+  ]);
+
+  return (
+    <PeerContext.Provider value={contextValue}>
+      {children}
+    </PeerContext.Provider>
+  );
+};
 
 PeerManager.whyDidYouRender = false;
 

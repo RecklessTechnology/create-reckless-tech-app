@@ -1,12 +1,10 @@
-import { memo, useState, useCallback, useEffect } from 'react';
+import { memo, useState, useEffect } from 'react';
 
 import { makeStyles } from '@material-ui/styles';
 
-import { ListItem } from "@material-ui/core";
+import { ListItem } from '@material-ui/core';
 
 import TransformName from '../TransformName';
-
-import useTransformsContext from '../../contexts/useTransformsContext';
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -14,29 +12,28 @@ const useStyles = makeStyles((theme) => ({
   },
   buttons: {
     right: 0,
-  }
+  },
 }));
 
-
-const TransformInfo = ({transformInfo}) => {
+const TransformInfo = ({ transformInfo }) => {
   const classes = useStyles();
-  
-  const [ transformName, setTransformName ] = useState('');
-  
-  useEffect(()=>{
+
+  const [transformName, setTransformName] = useState('');
+
+  useEffect(() => {
     if (transformInfo) {
-      setTransformName(transformInfo.name)
+      setTransformName(transformInfo.name);
     }
-  }, [transformInfo, setTransformName])
+  }, [transformInfo, setTransformName]);
 
   if (!transformInfo) { return null; }
 
   return (
     <ListItem className={classes.listItem} alignItems="flex-start">
-      <TransformName {...{transformInfo: { ...transformInfo, name: transformName }}} />
+      <TransformName {...{ transformInfo: { ...transformInfo, name: transformName } }} />
     </ListItem>
   );
-}
+};
 
 TransformInfo.whyDidYouRender = true;
 

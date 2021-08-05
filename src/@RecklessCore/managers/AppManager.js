@@ -1,104 +1,174 @@
-import { createContext, useMemo, useState } from 'react';
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable no-undef */
+
+import PropTypes from 'prop-types';
+
+import React, {
+  createContext,
+  useMemo,
+  useState,
+  useCallback,
+} from 'react';
 
 import { v4 as uuidv4 } from 'uuid';
 
-import EventsManager from '../managers/EventsManager';
-import DefaultSceneJSON from '../sceneDefinitions/LogoScene';
-import DefaultSceneJSONClient from '../sceneDefinitions/PosenetScene';
+import EventsManager from './EventsManager';
+import DefaultSceneJSON from '../sceneDefinitions/LogoScene.json';
+import DefaultSceneJSONClient from '../sceneDefinitions/TestScene.json';
 
 export const AppContext = createContext(null);
+// eslint-disable-next-line import/no-mutable-exports
 export let appContextValue = {};
 
-export default function AppManager({
-  children
-}) {
-  const [sceneJSON, setSceneJSON] = useState(()=>{
+const AppManager = ({
+  children,
+}) => {
+  const [sceneJSON, setSceneJSON] = useState(() => {
     if (window.location.hash.substr(1) === '') {
       return DefaultSceneJSON;
-    } else {
-      return DefaultSceneJSONClient;
     }
+    return DefaultSceneJSONClient;
   });
+
   const [paused, setPaused] = useState(false);
-  
+
   const [events] = useState(() => EventsManager());
-  
-  const getDefaultGeo = (geoUUID, type) => {
-    return {
-      uuid: geoUUID,
-      type: `${type}Geometry`,
-      width: 1,
-      height: 1,
-      depth: 1,
-      widthSegments: 1,
-      heightSegments: 1,
-      depthSegments: 1
-    }
-  };
 
-  const getDefaultMat = (materialUUID) => {
-    return {
-      "uuid": materialUUID,
-      "type": "MeshStandardMaterial",
-      "color": 16777215,
-      "roughness": 1,
-      "metalness": 0,
-      "emissive": 0,
-      "envMapIntensity": 1,
-      "refractionRatio": 0.98,
-      "depthFunc": 3,
-      "depthTest": true,
-      "depthWrite": true,
-      "colorWrite": true,
-      "stencilWrite": false,
-      "stencilWriteMask": 255,
-      "stencilFunc": 519,
-      "stencilRef": 0,
-      "stencilFuncMask": 255,
-      "stencilFail": 7680,
-      "stencilZFail": 7680,
-      "stencilZPass": 7680
-    };
-  }
+  const getDefaultGeo = (geoUUID, type) => ({
+    uuid: geoUUID,
+    type: `${type}Geometry`,
+    width: 1,
+    height: 1,
+    depth: 1,
+    widthSegments: 1,
+    heightSegments: 1,
+    depthSegments: 1,
+  });
 
-  const removeChild = (children, uuid, callback) => {
-    children.forEach((child, idx) => {
+  const getDefaultMat = (materialUUID) => ({
+    uuid: materialUUID,
+    type: 'MeshStandardMaterial',
+    color: 16777215,
+    roughness: 1,
+    metalness: 0,
+    emissive: 0,
+    envMapIntensity: 1,
+    refractionRatio: 0.98,
+    depthFunc: 3,
+    depthTest: true,
+    depthWrite: true,
+    colorWrite: true,
+    stencilWrite: false,
+    stencilWriteMask: 255,
+    stencilFunc: 519,
+    stencilRef: 0,
+    stencilFuncMask: 255,
+    stencilFail: 7680,
+    stencilZFail: 7680,
+    stencilZPass: 7680,
+  });
+
+  const removeChild = useCallback((childs, uuid, callback) => {
+    childs.forEach((child, idx) => {
       if (child.uuid === uuid) {
-        children.splice(idx,1);
+        childs.splice(idx, 1);
         callback();
-      }
-      else if (child.children !== undefined) {
+      } else if (child.children !== undefined) {
         removeChild(child.children, uuid, callback);
       }
     });
-  }
+  }, []);
 
   // Add, remove, and update objects from the scene json
   const sceneUtils = useMemo(() => ({
-    removeThreeObj(parents, uuid) {
+    removeTransform(uuid) {
+      setSceneJSON({
+        ...sceneJSON,
+        transforms: [
+          ...sceneJSON.transforms.filter((t) => (t.uuid !== uuid)),
+        ],
+        connections: [
+          ...sceneJSON.connections.filter((c) => (c.from !== uuid && c.to !== uuid)),
+        ],
+      });
+    },
+    addTransform(type) {
+      setSceneJSON({
+        ...sceneJSON,
+        transforms: [
+          ...sceneJSON.transforms,
+          {
+            uuid: uuidv4(),
+            type,
+            name: `new ${type}`,
+            amount: 2,
+          },
+        ],
+      });
+    },
+    removeDevice(uuid) {
+      setSceneJSON({
+        ...sceneJSON,
+        devices: [
+          ...sceneJSON.devices.filter((d) => (d.uuid !== uuid)),
+        ],
+        connections: [
+          ...sceneJSON.connections.filter((c) => (c.from !== uuid && c.to !== uuid)),
+        ],
+      });
+    },
+    addDevice(type) {
+      setSceneJSON({
+        ...sceneJSON,
+        devices: [
+          ...sceneJSON.devices,
+          {
+            uuid: uuidv4(),
+            type,
+            name: `new ${type}`,
+          },
+        ],
+      });
+    },
+    removeGenerator(uuid) {
+      setSceneJSON({
+        ...sceneJSON,
+        generators: [
+          ...sceneJSON.generators.filter((g) => (g.uuid !== uuid)),
+        ],
+        connections: [
+          ...sceneJSON.connections.filter((c) => (c.from !== uuid && c.to !== uuid)),
+        ],
+      });
+    },
+    addGenerator(type) {
+      setSceneJSON({
+        ...sceneJSON,
+        generators: [
+          ...sceneJSON.generators,
+          {
+            uuid: uuidv4(),
+            type,
+            name: `new ${type}`,
+            resolution: 32,
+            rpm: 30,
+            loop: true,
+            paused: false,
+          },
+        ],
+      });
+    },
+    removeThreeObj(uuid) {
       const filterdChildren = sceneJSON.object.children;
-      removeChild(filterdChildren, uuid, ()=>{
-        // console.log(childs);
+      removeChild(filterdChildren, uuid, () => {
         setSceneJSON({
           ...sceneJSON,
           object: {
             ...sceneJSON.object,
             children: filterdChildren,
-          }
+          },
         });
-      })
-      // console.log(childs);
-      // parents.map((p)=>{
-      //   const match = childs.filter((c)=>(c.uuid === p));
-      //   if (match.length > 0) {
-      //     childs = match.children;
-      //   }
-      //   return null
-      // });
-      // parents.map((id)=>{
-      //   let obj = childs.filter((c)=>())
-      // });
-      
+      });
     },
     addThreeObj(type) {
       const geoUUID = uuidv4();
@@ -119,43 +189,50 @@ export default function AppManager({
             ...sceneJSON.object.children,
             {
               uuid: uuidv4(),
-              type: "Mesh",
+              type: 'Mesh',
               name: type,
               layers: 1,
-              matrix: [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
+              matrix: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
               geometry: geoUUID,
               material: materialUUID,
-            }
-          ]
-        }
+            },
+          ],
+        },
       });
     },
     // Peers
-    updatePeer(identifier, ref) {
+    updatePeer(uuid, ref) {
+      setSceneJSON({
+        ...sceneJSON,
+        peers: [
+          ...sceneJSON.peers,
+          ...ref,
+        ],
+      });
+    },
+    removePeer(uuid) {
+      setSceneJSON({
+        ...sceneJSON,
+        peers: [
+          ...sceneJSON.peers.filter((p) => (p.uuid !== uuid)),
+        ],
+        connections: [
+          ...sceneJSON.connections.filter((c) => (c.from !== uuid && c.to !== uuid)),
+        ],
+      });
+    },
+    addPeer(uuid) {
       setSceneJSON({
         ...sceneJSON,
         peers: [
           ...sceneJSON.peers,
           {
             type: 'peer',
-            ...ref
+            name: uuid,
+            uuid,
           },
         ],
       });
-    },
-    addPeer(identifier, ref) {
-      setSceneJSON({
-        ...sceneJSON,
-        peers: [
-          ...sceneJSON.peers,
-          {
-            type: 'peer',
-            ...ref
-          },
-        ],
-      });
-    },
-    removePeer(identifier, ref) {
     },
     // Connections
     addConnection(edge) {
@@ -166,44 +243,52 @@ export default function AppManager({
           {
             uuid: uuidv4(),
             from: edge.source,
-            fromProp: edge.sourceHandle.replace(edge.source, '').split('-')[1],
+            fromProp: edge.sourceHandle.replace(edge.source, '').split('-')[1].toLowerCase(),
             to: edge.target,
-            toProp: edge.targetHandle.replace(edge.target, '').split('-')[2]
+            toProp: edge.targetHandle.replace(edge.target, '').split('-')[2].toLowerCase(),
           },
-        ]
-      })
+        ],
+      });
     },
     updateConnection(oldEdge, newConnection) {
       setSceneJSON({
         ...sceneJSON,
         connections: [
-          ...(sceneJSON.connections.filter((con)=>(con.uuid !== oldEdge.id)) ? sceneJSON.connections.filter((con)=>(con.uuid !== oldEdge.id)) : []),
+          ...(sceneJSON.connections.filter((con) => (con.uuid !== oldEdge.id))
+            ? sceneJSON.connections.filter((con) => (con.uuid !== oldEdge.id)) : []),
           {
             uuid: oldEdge.id,
             from: newConnection.source,
             fromProp: newConnection.sourceHandle.replace(newConnection.source, '').split('-')[1],
             to: newConnection.target,
-            toProp: newConnection.targetHandle.replace(newConnection.target, '').split('-')[2]
+            toProp: newConnection.targetHandle.replace(newConnection.target, '').split('-')[2],
           },
-        ]
+        ],
       });
-    }
-  }), [sceneJSON, setSceneJSON]);
+    },
+  }), [sceneJSON, setSceneJSON, removeChild]);
 
   appContextValue = useMemo(() => ({
-  settings: {
-  },
-  paused,
-  setPaused,
-  sceneJSON, setSceneJSON,
-  ...events,
-  ...sceneUtils
+    settings: {
+    },
+    paused,
+    setPaused,
+    sceneJSON,
+    setSceneJSON,
+    ...events,
+    ...sceneUtils,
   }), [
-  paused, setPaused,
-  sceneJSON, setSceneJSON,
-  events,
-  sceneUtils
-]);
+    paused, setPaused,
+    sceneJSON, setSceneJSON,
+    events,
+    sceneUtils,
+  ]);
 
-  return (<AppContext.Provider value={appContextValue}>{children}</AppContext.Provider>)
-}
+  return (<AppContext.Provider value={appContextValue}>{children}</AppContext.Provider>);
+};
+
+AppManager.propTypes = {
+  children: PropTypes.shape([]).isRequired,
+};
+
+export default AppManager;
