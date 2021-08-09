@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable no-undef */
 
@@ -185,6 +186,9 @@ const ConnectionsManager = ({ children }) => {
             id: generateRoomId(),
           };
         } else {
+          console.log(window.location);
+          console.log(window.location.hash);
+          console.log(window.location.hash.substr(1));
           info = {
             id: window.location.hash.substr(1),
           };

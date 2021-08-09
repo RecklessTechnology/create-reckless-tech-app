@@ -4,7 +4,10 @@
 
 // Returns all props in a nested object
 const isHost = () => {
-  console.log((window.location.hash.substr(1) === ''), window.location.hash);
+  console.log(window.location);
+  console.log(window.location.hash);
+  console.log(window.location.hash.substr(1));
+  console.log((window.location.hash.substr(1) === ''));
   return (window.location.hash.substr(1) === '');
 };
 
