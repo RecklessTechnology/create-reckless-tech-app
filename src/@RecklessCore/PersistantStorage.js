@@ -1,9 +1,10 @@
 /* eslint-disable no-undef */
 
+import { isHost } from './utils/userCheck';
+
 // Save data in local or session storage.
 const persistData = (key, data) => {
-  const isHost = (window.location.hash.substr(1) === '');
-  if (isHost) {
+  if (isHost()) {
     // Hosts remember room details between sessions
     localStorage.setItem(key, JSON.stringify(data));
   } else {
@@ -13,8 +14,7 @@ const persistData = (key, data) => {
 };
 
 const restoreData = (key) => {
-  const isHost = (window.location.hash.substr(1) === '');
-  if (isHost) {
+  if (isHost()) {
     return JSON.parse(localStorage.getItem(key));
   }
 

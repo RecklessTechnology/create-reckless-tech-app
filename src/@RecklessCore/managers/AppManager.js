@@ -15,6 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
 import EventsManager from './EventsManager';
 import DefaultSceneJSON from '../sceneDefinitions/LogoScene.json';
 import DefaultSceneJSONClient from '../sceneDefinitions/TestScene.json';
+import { isHost } from '../utils/userCheck';
 
 export const AppContext = createContext(null);
 // eslint-disable-next-line import/no-mutable-exports
@@ -24,7 +25,7 @@ const AppManager = ({
   children,
 }) => {
   const [sceneJSON, setSceneJSON] = useState(() => {
-    if (window.location.hash.substr(1) === '') {
+    if (isHost()) {
       return DefaultSceneJSON;
     }
     return DefaultSceneJSONClient;

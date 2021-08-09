@@ -13,6 +13,8 @@ import RoomRefreshIdButton from '../RoomRefreshIdButton';
 import RoomCopyUrlButton from '../RoomCopyUrlButton';
 import RoomOpenUrlButton from '../RoomOpenUrlButton';
 
+import { isHost } from '../../utils/userCheck';
+
 const RoomInfo = () => (
   <List>
     <ListSubheader>Room</ListSubheader>
@@ -25,7 +27,7 @@ const RoomInfo = () => (
     <ListItem>
       <Grid container>
         <Grid item xs={4}>
-          {(window.location.hash.substr(1) === '') ? <RoomRefreshIdButton /> : null}
+          {(isHost()) ? <RoomRefreshIdButton /> : null}
         </Grid>
         <Grid item xs={4}>
           <RoomCopyUrlButton />

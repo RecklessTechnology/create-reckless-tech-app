@@ -17,6 +17,7 @@ import generateRoomId from '../utils/generateRoomId';
 import { restoreData, persistData } from '../PersistantStorage';
 
 import EventsManager from './EventsManager';
+import { isHost } from '../utils/userCheck';
 
 export const ConnectionsContext = createContext(null);
 // eslint-disable-next-line import/no-mutable-exports
@@ -29,7 +30,7 @@ const ConnectionsManager = ({ children }) => {
 
   const [events] = useState(() => EventsManager());
 
-  const [connectionType] = useState(window.location.hash.substr(1) === '' ? 'host' : 'peer');
+  const [connectionType] = useState((isHost()) ? 'host' : 'peer');
 
   const [room, setRoom] = useState(null);
   const [roomInfo, setRoomInfo] = useState(null);
@@ -179,8 +180,7 @@ const ConnectionsManager = ({ children }) => {
       let info = restoreData('roomInfo');
 
       if (info === null) { // There is no stored state, make it up
-        const isHost = (window.location.hash.substr(1) === '');
-        if (isHost) { // If there is no connection url, you're the host
+        if (isHost()) { // If there is no connection url, you're the host
           info = {
             id: generateRoomId(),
           };
@@ -300,10 +300,10 @@ const ConnectionsManager = ({ children }) => {
 
       // Listen for info about connection
       getAnnounce(({
-        connectionId, uuid, name, isHost,
+        connectionId, uuid, name, isHost: host,
       }) => {
         updateConnectionInfo(uuid, {
-          connectionId, isHost, uuid, name, lastSeen: Date.now(),
+          connectionId, host, uuid, name, lastSeen: Date.now(),
         });
       });
     }
