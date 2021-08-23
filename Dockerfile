@@ -17,7 +17,7 @@ RUN npm run build
 FROM nginx:stable-alpine
 COPY --from=build /usr/src/app/build /usr/share/nginx/html
 # new
-COPY nginx/nginx.conf /etc/nginx/nginx.conf
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port. Used for local Docker build. Will be overridden by Docker Compose
 EXPOSE 80
