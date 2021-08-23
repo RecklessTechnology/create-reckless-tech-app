@@ -220,6 +220,9 @@
     "uuid": "5FC9ACA9-2A93-474D-AA32-FACC76551914",
     "type": "Scene",
     "name": "Scene",
+    "userData": {
+      "isPatchHidden": false
+    },
     "layers": 1,
     "matrix": [
       1,
@@ -244,6 +247,9 @@
         "uuid": "1F0AFF04-BE32-494A-A764-1137A90E3D4B",
         "type": "Group",
         "name": "Logo",
+        "userData": {
+					"isPatchHidden": false
+				},
         "layers": 1,
         "matrix": [
           0,
@@ -268,6 +274,9 @@
             "uuid": "F78CD658-4B78-47DB-B55E-639DC10578D7",
             "type": "Group",
             "name": "R",
+            "userData": {
+              "isPatchHidden": true
+            },
             "layers": 1,
             "matrix": [
               1,
@@ -292,6 +301,9 @@
                 "uuid": "0829FFE5-E183-48F5-BB24-4D8FD7C6E5A8",
                 "type": "Group",
                 "name": "R Group",
+                "userData": {
+                  "isPatchHidden": true
+                },
                 "layers": 1,
                 "matrix": [
                   1,
@@ -318,6 +330,9 @@
                     "name": "Right R",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -346,6 +361,9 @@
                     "name": "Top R",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -374,6 +392,9 @@
                     "name": "Back R",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -402,6 +423,9 @@
                     "name": "Slash R",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -430,6 +454,9 @@
                     "name": "Middle R",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -459,6 +486,9 @@
                     "castShadow": true,
                     "receiveShadow": true,
                     "visible": false,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -490,6 +520,9 @@
             "type": "Group",
             "name": "E",
             "renderOrder": 1,
+            "userData": {
+              "isPatchHidden": true
+            },
             "layers": 1,
             "matrix": [
               1,
@@ -514,6 +547,9 @@
                 "uuid": "9DD7EEB7-F932-4162-B197-75381CC4644B",
                 "type": "Group",
                 "name": "E Group",
+                "userData": {
+                  "isPatchHidden": true
+                },
                 "layers": 1,
                 "matrix": [
                   1,
@@ -540,6 +576,9 @@
                     "name": "Top E",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -569,6 +608,9 @@
                     "castShadow": true,
                     "receiveShadow": true,
                     "frustumCulled": false,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -597,6 +639,9 @@
                     "name": "Bottom E",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -625,6 +670,9 @@
                     "name": "Middle E",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -656,6 +704,9 @@
             "type": "Group",
             "name": "C",
             "renderOrder": 2,
+            "userData": {
+              "isPatchHidden": true
+            },
             "layers": 1,
             "matrix": [
               1,
@@ -680,6 +731,9 @@
                 "uuid": "9C93C279-6848-4CA1-ABF3-2F049E4D7227",
                 "type": "Group",
                 "name": "C Group",
+                "userData": {
+                  "isPatchHidden": true
+                },
                 "layers": 1,
                 "matrix": [
                   1,
@@ -706,6 +760,9 @@
                     "name": "Top C",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -734,6 +791,9 @@
                     "name": "Back C",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -762,6 +822,9 @@
                     "name": "Bottom C",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -793,6 +856,9 @@
             "type": "Group",
             "name": "K",
             "renderOrder": 3,
+            "userData": {
+              "isPatchHidden": true
+            },
             "layers": 1,
             "matrix": [
               1,
@@ -817,6 +883,9 @@
                 "uuid": "E5EFAB06-D824-4F1D-8532-ECE33C1E3DD7",
                 "type": "Group",
                 "name": "K Group",
+                "userData": {
+                  "isPatchHidden": true
+                },
                 "layers": 1,
                 "matrix": [
                   1,
@@ -843,6 +912,9 @@
                     "name": "Top Slash K",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -871,6 +943,9 @@
                     "name": "Bottom Slash K",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -899,6 +974,9 @@
                     "name": "Back K",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -928,6 +1006,9 @@
                     "castShadow": true,
                     "receiveShadow": true,
                     "visible": false,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -957,6 +1038,9 @@
                     "castShadow": true,
                     "receiveShadow": true,
                     "visible": false,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -988,6 +1072,9 @@
             "type": "Group",
             "name": "L",
             "renderOrder": 2,
+            "userData": {
+              "isPatchHidden": true
+            },
             "layers": 1,
             "matrix": [
               1,
@@ -1012,6 +1099,9 @@
                 "uuid": "B0D3C1BB-D093-45DD-9D0C-BF38BD58A4B4",
                 "type": "Group",
                 "name": "L Group",
+                "userData": {
+                  "isPatchHidden": true
+                },
                 "layers": 1,
                 "matrix": [
                   1,
@@ -1038,6 +1128,9 @@
                     "name": "Back L",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -1066,6 +1159,9 @@
                     "name": "Bottom L",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -1097,6 +1193,9 @@
             "type": "Group",
             "name": "E",
             "renderOrder": 1,
+            "userData": {
+              "isPatchHidden": true
+            },
             "layers": 1,
             "matrix": [
               1,
@@ -1121,6 +1220,9 @@
                 "uuid": "7BE1CB8C-45D1-4082-BC65-65B8FBE0054C",
                 "type": "Group",
                 "name": "E Group",
+                "userData": {
+                  "isPatchHidden": true
+                },
                 "layers": 1,
                 "matrix": [
                   1,
@@ -1147,6 +1249,9 @@
                     "name": "Top E",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -1176,6 +1281,9 @@
                     "castShadow": true,
                     "receiveShadow": true,
                     "frustumCulled": false,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -1204,6 +1312,9 @@
                     "name": "Bottom E",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -1232,6 +1343,9 @@
                     "name": "Middle E",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -1263,6 +1377,9 @@
             "type": "Group",
             "name": "S",
             "renderOrder": 1,
+            "userData": {
+              "isPatchHidden": true
+            },
             "layers": 1,
             "matrix": [
               1,
@@ -1287,6 +1404,9 @@
                 "uuid": "E6F7FF1F-2248-4788-AF89-4D9658952800",
                 "type": "Group",
                 "name": "S Group",
+                "userData": {
+                  "isPatchHidden": true
+                },
                 "layers": 1,
                 "matrix": [
                   1,
@@ -1313,6 +1433,9 @@
                     "name": "Top S",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -1342,6 +1465,9 @@
                     "castShadow": true,
                     "receiveShadow": true,
                     "frustumCulled": false,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -1370,6 +1496,9 @@
                     "name": "Bottom E",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -1398,6 +1527,9 @@
                     "name": "Middle E",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -1429,6 +1561,9 @@
             "type": "Group",
             "name": "S",
             "renderOrder": 1,
+            "userData": {
+              "isPatchHidden": true
+            },
             "layers": 1,
             "matrix": [
               1,
@@ -1453,6 +1588,9 @@
                 "uuid": "4DCD62E3-DD01-4899-BDFA-38664B2DA09A",
                 "type": "Group",
                 "name": "S Group",
+                "userData": {
+                  "isPatchHidden": true
+                },
                 "layers": 1,
                 "matrix": [
                   1,
@@ -1479,6 +1617,9 @@
                     "name": "Top S",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -1508,6 +1649,9 @@
                     "castShadow": true,
                     "receiveShadow": true,
                     "frustumCulled": false,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -1536,6 +1680,9 @@
                     "name": "Bottom E",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -1564,6 +1711,9 @@
                     "name": "Middle E",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -1594,6 +1744,9 @@
             "uuid": "D13AAF7C-D8D0-441B-A04E-B11722F81CD0",
             "type": "Group",
             "name": "T",
+            "userData": {
+              "isPatchHidden": true
+            },
             "layers": 1,
             "matrix": [
               1,
@@ -1618,6 +1771,9 @@
                 "uuid": "6C0CB751-35B5-4870-B935-5F34CB65B365",
                 "type": "Group",
                 "name": "T Group",
+                "userData": {
+                  "isPatchHidden": true
+                },
                 "layers": 1,
                 "matrix": [
                   1,
@@ -1644,6 +1800,9 @@
                     "name": "Top T",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -1672,6 +1831,9 @@
                     "name": "Bar T",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -1703,6 +1865,9 @@
             "type": "Group",
             "name": "E",
             "renderOrder": 1,
+            "userData": {
+              "isPatchHidden": true
+            },
             "layers": 1,
             "matrix": [
               1,
@@ -1727,6 +1892,9 @@
                 "uuid": "7E3D0AD1-D5E7-4FCD-9A4C-9880FBDAEC7A",
                 "type": "Group",
                 "name": "E Group",
+                "userData": {
+                  "isPatchHidden": true
+                },
                 "layers": 1,
                 "matrix": [
                   1,
@@ -1753,6 +1921,9 @@
                     "name": "Top E",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -1782,6 +1953,9 @@
                     "castShadow": true,
                     "receiveShadow": true,
                     "frustumCulled": false,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -1810,6 +1984,9 @@
                     "name": "Bottom E",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -1838,6 +2015,9 @@
                     "name": "Middle E",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -1869,6 +2049,9 @@
             "type": "Group",
             "name": "C",
             "renderOrder": 2,
+            "userData": {
+              "isPatchHidden": true
+            },
             "layers": 1,
             "matrix": [
               1,
@@ -1893,6 +2076,9 @@
                 "uuid": "116A744C-7BE2-4357-9CA2-C63F06022C14",
                 "type": "Group",
                 "name": "C Group",
+                "userData": {
+                  "isPatchHidden": true
+                },
                 "layers": 1,
                 "matrix": [
                   1,
@@ -1919,6 +2105,9 @@
                     "name": "Top C",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -1947,6 +2136,9 @@
                     "name": "Back C",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -1975,6 +2167,9 @@
                     "name": "Bottom C",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -2006,6 +2201,9 @@
             "type": "Group",
             "name": "H",
             "renderOrder": 1,
+            "userData": {
+              "isPatchHidden": true
+            },
             "layers": 1,
             "matrix": [
               1,
@@ -2030,6 +2228,9 @@
                 "uuid": "C89CAF61-8688-4630-84FC-BF69530AA5FD",
                 "type": "Group",
                 "name": "H Group",
+                "userData": {
+                  "isPatchHidden": true
+                },
                 "layers": 1,
                 "matrix": [
                   1,
@@ -2057,6 +2258,9 @@
                     "castShadow": true,
                     "receiveShadow": true,
                     "frustumCulled": false,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -2086,6 +2290,9 @@
                     "castShadow": true,
                     "receiveShadow": true,
                     "frustumCulled": false,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -2114,6 +2321,9 @@
                     "name": "Middle H",
                     "castShadow": true,
                     "receiveShadow": true,
+                    "userData": {
+                      "isPatchHidden": true
+                    },
                     "layers": 1,
                     "matrix": [
                       1,
@@ -2146,7 +2356,11 @@
         "uuid": "DBBD9C2E-4D8E-4628-9427-9DEBA682526C",
         "type": "Mesh",
         "name": "Floor",
+
         "receiveShadow": true,
+        "userData": {
+          "isPatchHidden": false
+        },
         "layers": 1,
         "matrix": [
           1,
@@ -2174,6 +2388,9 @@
         "type": "SpotLight",
         "name": "SpotLight",
         "castShadow": true,
+        "userData": {
+          "isPatchHidden": false
+        },
         "layers": 1,
         "matrix": [
           1,
@@ -2237,10 +2454,10 @@
     {
       "uuid": "7ea68760-0c58-4378-8bad-076477a3726e",
       "type": "Sinewave",
-      "name": "new Sinewave",
+      "name": "Sinewave",
       "resolution": 32,
       "rpm": 30,
-      "loop": true,
+      "looped": true,
       "paused": false
     }
   ],
@@ -2250,7 +2467,7 @@
     {
       "uuid": "3948a8d7-dd32-4ca8-9c0f-f28a1dff3e10",
       "type": "Multiply",
-      "name": "new Multiply",
+      "name": "Multiply",
       "amount": 2
     }
   ]

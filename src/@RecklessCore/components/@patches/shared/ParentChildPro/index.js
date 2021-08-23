@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-filename-extension */
 
@@ -5,44 +6,159 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Typography, Grid } from '@material-ui/core';
+import {
+  ListItemSecondaryAction,
+  List, ListItemText, ListItemIcon,
+  ListItem, Typography, Grid,
+} from '@material-ui/core';
+
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faSignOutAlt,
+} from '@fortawesome/free-solid-svg-icons';
 
 import OutputHandle from '../OutputHandle';
 import InputHandle from '../InputHandle';
 
+import PropAccordianView from '../PropAccordian/view';
+
+import { getIconByType } from '../../../../utils/iconLookup';
+
+import IconButtonView from '../../../@buttons/IconButton/view';
+
 const useStyles = makeStyles(() => ({
+  propItem: {
+    margin: 0,
+    padding: 0,
+    oveflow: 'hidden',
+    borderBottom: '1px solid rgba(255,255,255,0.05)',
+  },
   propGrid: {
     width: '100%',
     height: '100%',
-    borderBottom: '1px solid rgba(255,255,255,0.05)',
   },
   propText: {
     fontSize: '12px',
     whiteSpace: 'nowrap',
     textAlign: 'center',
+    textTransform: 'capitalize',
+  },
+  propAccordList: {
+    margin: 0,
+    padding: 0,
+  },
+  toolbar: {
+    padding: 0,
+    position: 'fixed',
+    bottom: 0,
+  },
+  propAccord: {
+    width: '100%',
+    marginBottom: '0px !important',
+    background: 'none',
+    boxShadow: 'none',
+    borderRadius: 0,
+  },
+  propSummary: {
+    padding: '0 0px',
+    width: '100%',
+    minHeight: '25px !important',
+  },
+  propSummaryContent: {
+    margin: '0 !important',
+  },
+  propSummaryExapand: {
+    padding: '0 12px',
+  },
+  propDetails: {
+    padding: 0,
+    width: '100%',
+    overflow: 'hidden',
+    position: 'relative',
+  },
+  handleGridLeft: {
+    padding: 0,
+    paddingLeft: 9,
+    paddingTop: 15,
+  },
+  handleGridRight: {
+    padding: 0,
+    paddingRight: 9,
+    paddingTop: 15,
+  },
+  iconButton: {
+    // margin: 0,
+    // padding: 0,
+  },
+  childList: {
+    width: '100%',
+  },
+  childListItem: {
+    padding: 0,
+  },
+  secondRoot: {
+    paddingRight: 0,
+  },
+  childListIcon: {
+    minWidth: 'auto',
+    padding: 10,
   },
 }));
 
 const ParentChildProp = ({
   // eslint-disable-next-line no-unused-vars
-  type, uuid, children, isChildHidden,
+  type, uuid, children, isChildHidden, hidePatch,
 }) => {
   const classes = useStyles();
   return (
-    <Grid container className={classes.propGrid}>
-      <Grid item xs={12}>
-        <Typography className={classes.propText}>{`Children (${children ? children.length : 0}) ${type !== 'Scene' ? '| Parent' : ''}`}</Typography>
+    <ListItem dense className={classes.propItem}>
+      <Grid spacing={0} container className={classes.propGrid}>
+        <Grid item xs={1} className={classes.handleGridLeft}>
+          {(children.filter((c) => (!c.userData.isPatchHidden)).length > 0) ? <InputHandle {...{ uuid, propName: 'children' }} /> : null}
+        </Grid>
+        <Grid item xs={10}>
+          <PropAccordianView
+            defaultOpen={false}
+            header={<Typography className={classes.propText}>{`Children (${children.length}) ${type !== 'Scene' ? '' : ''}`}</Typography>}
+            expandIcon={(
+              <ExpandMoreIcon fontSize="small" />
+            )}
+          >
+            <List dense className={classes.childList}>
+              {children.filter((c) => (c.userData.isPatchHidden)).map((c) => (
+                <ListItem dense key={`${c.uuid}_${c.name}_patch_child_list`} className={classes.childListItem}>
+                  <ListItemIcon className={classes.childListIcon}>
+                    {getIconByType(c.type)}
+                  </ListItemIcon>
+                  <ListItemText primary={c.name} />
+                  <ListItemSecondaryAction classes={{
+                    root: classes.secondRoot,
+                  }}
+                  >
+                    <IconButtonView
+                      {...{
+                        label: 'Pop Out',
+                        handeClick: () => {
+                          hidePatch(c.uuid, false);
+                        },
+                      }}
+                      className={classes.iconButton}
+                    >
+                      <FontAwesomeIcon flip="horizontal" icon={faSignOutAlt} />
+                    </IconButtonView>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              ))}
+            </List>
+          </PropAccordianView>
+        </Grid>
+        <Grid item xs={1} className={classes.handleGridRight}>
+          {type !== 'Scene' ? <OutputHandle {...{ uuid, propName: 'parent' }} /> : null}
+        </Grid>
       </Grid>
-      <Grid item xs={1}>
-        <InputHandle {...{ uuid, propName: 'children' }} />
-      </Grid>
-      <Grid item xs={10}>
-        <Typography className={classes.propText}>&nbsp;</Typography>
-      </Grid>
-      <Grid item xs={1}>
-        {type !== 'Scene' ? <OutputHandle {...{ uuid, propName: 'parent' }} /> : null}
-      </Grid>
-    </Grid>
+    </ListItem>
   );
 };
 

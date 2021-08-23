@@ -92,14 +92,14 @@ const HostInfo = () => {
   if (host === null || hostName === null) { return null; }
 
   return (
-    <ListItem className={classes.listItem}>
-      <Grid container spacing={0}>
+    <ListItem dense className={classes.listItem}>
+      <Grid spacing={0} container>
         <Grid item xs={12}>
           <Typography className={classes.sectionTitle}>Host</Typography>
         </Grid>
         <Grid item xs={12}>
-          <List className={classes.list}>
-            <ListItem className={classes.listItem} alignItems="flex-start">
+          <List dense className={classes.list}>
+            <ListItem dense className={classes.listItem} alignItems="flex-start">
               <PeerAvatar {...{ peerInfo: host }} />
               <PeerName {...{ peerInfo: { ...host, name: hostName }, onNameUpdate: updateName }} />
               {(!host.isMe) ? null : (

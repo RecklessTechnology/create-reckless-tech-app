@@ -16,16 +16,16 @@ import RoomOpenUrlButton from '../RoomOpenUrlButton';
 import { isHost } from '../../utils/userCheck';
 
 const RoomInfo = () => (
-  <List>
+  <List dense>
     <ListSubheader>Room</ListSubheader>
-    <ListItem>
+    <ListItem dense>
       <RoomQR />
     </ListItem>
-    <ListItem>
+    <ListItem dense>
       <RoomName />
     </ListItem>
-    <ListItem>
-      <Grid container>
+    <ListItem dense>
+      <Grid spacing={0} container>
         <Grid item xs={4}>
           {(isHost()) ? <RoomRefreshIdButton /> : null}
         </Grid>

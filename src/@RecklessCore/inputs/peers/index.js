@@ -7,6 +7,6 @@ import PeerView from './view';
 
 const Peers = ({ peers }) => peers.map((peer) => (<PeerView key={`rt_${peer.type}_peer_${peer.uuid}`} {...peer} />));
 
-Peers.whyDidYouRender = false;
+Peers.whyDidYouRender = true;
 
 export default memo(Peers);

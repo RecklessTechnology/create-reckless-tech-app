@@ -3,11 +3,11 @@
 
 import React, { memo } from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
-
-import { IconButton, Tooltip } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 
 import AdjustIcon from '@material-ui/icons/Adjust';
+
+import IconButtonView from '../@buttons/IconButton/view';
 
 const useStyles = makeStyles(() => ({
   iconButton: {
@@ -17,23 +17,22 @@ const useStyles = makeStyles(() => ({
 }));
 
 const PingPeerButtonView = ({ me, peerInfo }) => {
-  // Create local classes
   const classes = useStyles();
-
   return (
-    <Tooltip title="Ping" aria-label="Ping">
-      <IconButton
-        className={classes.iconButton}
-        onClick={() => {
+    <IconButtonView
+      {...{
+        label: 'Ping',
+        handeClick: () => {
           // send ping to this user
           peerInfo.sendData({
             type: 'ping', payload: {}, from: me.connectionId, timestamp: Date.now,
           }, peerInfo.connectionId);
-        }}
-      >
-        <AdjustIcon />
-      </IconButton>
-    </Tooltip>
+        },
+      }}
+      className={classes.iconButton}
+    >
+      <AdjustIcon fontSize="small" />
+    </IconButtonView>
   );
 };
 

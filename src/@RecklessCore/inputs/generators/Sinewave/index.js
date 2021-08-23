@@ -11,12 +11,17 @@ import { useSpring } from '@react-spring/core';
 import useGeneratorContext from '../../../contexts/useGeneratorContext';
 
 import DrawSine from '../../../shapes/drawSine';
+import { rpmToMili } from '../../../utils/commonMath';
 
 const SinewaveGenerator = ({ toProp }) => {
   const {
-    type, resolution, rpm, loop, paused, setPosition: setGenPosition,
+    type, resolution, rpm, looped, paused, setPosition: setGenPosition,
   } = useGeneratorContext();
-  const [animMili] = useState(((60 * 1000) / rpm) / (360 / resolution));
+  const [animMili, setAnimMili] = useState(rpmToMili(rpm, resolution));
+
+  useEffect(() => {
+    setAnimMili(rpmToMili(rpm, resolution));
+  }, [rpm, resolution]);
 
   const points = useMemo(() => {
     switch (type) {
@@ -38,14 +43,14 @@ const SinewaveGenerator = ({ toProp }) => {
 
   const config = useMemo(() => ({
     pause: paused,
-    loop,
+    loop: looped,
     to: toPoints,
     config: {
       duration: animMili,
       friction: 5,
     },
     onChange: handleChange,
-  }), [toPoints, animMili, paused, loop, handleChange]);
+  }), [toPoints, animMili, paused, looped, handleChange]);
 
   const [, api] = useSpring(() => (config));
   useEffect(() => {
@@ -56,10 +61,10 @@ const SinewaveGenerator = ({ toProp }) => {
   return null;
 };
 
-SinewaveGenerator.whyDidYouRender = false;
-
 SinewaveGenerator.propTypes = {
   toProp: PropTypes.string.isRequired,
 };
+
+SinewaveGenerator.whyDidYouRender = false;
 
 export default SinewaveGenerator;

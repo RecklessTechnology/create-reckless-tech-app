@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable import/prefer-default-export */
 
 // Take threejs JSON Object Scene format:
@@ -42,14 +43,16 @@ function makeFlowProps(props, parents, hidden, hideChildren, type) {
     type,
     id: `${props.uuid}`,
     data: {
+      children: [],
       ...props,
       parents,
       width: dimensionsLookup(type)[0],
       height: dimensionsLookup(type)[1],
       label: props.name,
       isChildHidden: hideChildren,
+      isPatchHidden: (props.userData !== undefined) ? props.userData.isPatchHidden : false,
     },
-    isHidden: hidden,
+    isHidden: (props.userData !== undefined) ? props.userData.isPatchHidden : false,
     parents,
     children: [],
   });

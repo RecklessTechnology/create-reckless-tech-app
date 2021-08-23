@@ -7,6 +7,6 @@ import GeneratorsView from './view';
 
 const Generators = ({ generators }) => generators.map((gen) => (<GeneratorsView key={`rt_${gen.type}_generator_${gen.uuid}`} {...gen} />));
 
-Generators.whyDidYouRender = false;
+Generators.whyDidYouRender = true;
 
 export default memo(Generators);

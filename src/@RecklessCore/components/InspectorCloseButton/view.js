@@ -4,17 +4,20 @@ import PropTypes from 'prop-types';
 
 import React, { memo } from 'react';
 
-import { IconButton } from '@material-ui/core';
-
 import CloseIcon from '@material-ui/icons/Close';
 
+import IconButtonView from '../@buttons/IconButton/view';
+
 const InspectorCloseButtonView = ({ inspectorMenuOpen, setInspectorMenuOpen }) => (
-  <IconButton onClick={() => {
-    setInspectorMenuOpen(!inspectorMenuOpen);
+  <IconButtonView {...{
+    label: 'Close',
+    handeClick: () => {
+      setInspectorMenuOpen(!inspectorMenuOpen);
+    },
   }}
   >
-    <CloseIcon />
-  </IconButton>
+    <CloseIcon fontSize="small" />
+  </IconButtonView>
 );
 
 InspectorCloseButtonView.whyDidYouRender = true;

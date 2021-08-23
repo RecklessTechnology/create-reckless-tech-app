@@ -25,8 +25,8 @@ const PeersInfo = () => {
 
   return (
 
-    <ListItem className={classes.listItem}>
-      <List className={classes.list}>
+    <ListItem dense className={classes.listItem}>
+      <List dense className={classes.list}>
         <MeInfo />
         <HostInfo />
         <PeersList />

@@ -69,6 +69,18 @@ const AppManager = ({
     stencilZPass: 7680,
   });
 
+  const hideChild = useCallback((childs, uuid, val, callback) => {
+    childs.forEach((child) => {
+      if (child.uuid === uuid) {
+        // eslint-disable-next-line no-param-reassign
+        child.userData.isPatchHidden = val;
+        callback();
+      } else if (child.children !== undefined) {
+        hideChild(child.children, uuid, val, callback);
+      }
+    });
+  }, []);
+
   const removeChild = useCallback((childs, uuid, callback) => {
     childs.forEach((child, idx) => {
       if (child.uuid === uuid) {
@@ -103,6 +115,9 @@ const AppManager = ({
             type,
             name: `new ${type}`,
             amount: 2,
+            userData: {
+              isPatchHidden: false,
+            },
           },
         ],
       });
@@ -127,6 +142,9 @@ const AppManager = ({
             uuid: uuidv4(),
             type,
             name: `new ${type}`,
+            userData: {
+              isPatchHidden: false,
+            },
           },
         ],
       });
@@ -153,10 +171,25 @@ const AppManager = ({
             name: `new ${type}`,
             resolution: 32,
             rpm: 30,
-            loop: true,
+            looped: true,
             paused: false,
+            userData: {
+              isPatchHidden: false,
+            },
           },
         ],
+      });
+    },
+    hideThreeObjPatch(uuid, val) {
+      const filterdChildren = sceneJSON.object.children;
+      hideChild(filterdChildren, uuid, val, () => {
+        setSceneJSON({
+          ...sceneJSON,
+          object: {
+            ...sceneJSON.object,
+            children: filterdChildren,
+          },
+        });
       });
     },
     removeThreeObj(uuid) {
@@ -168,6 +201,9 @@ const AppManager = ({
             ...sceneJSON.object,
             children: filterdChildren,
           },
+          connections: [
+            ...sceneJSON.connections.filter((c) => (c.from !== uuid && c.to !== uuid)),
+          ],
         });
       });
     },
@@ -196,6 +232,9 @@ const AppManager = ({
               matrix: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
               geometry: geoUUID,
               material: materialUUID,
+              userData: {
+                isPatchHidden: false,
+              },
             },
           ],
         },
@@ -231,6 +270,9 @@ const AppManager = ({
             type: 'peer',
             name: uuid,
             uuid,
+            userData: {
+              isPatchHidden: false,
+            },
           },
         ],
       });
@@ -267,7 +309,7 @@ const AppManager = ({
         ],
       });
     },
-  }), [sceneJSON, setSceneJSON, removeChild]);
+  }), [sceneJSON, setSceneJSON, removeChild, hideChild]);
 
   appContextValue = useMemo(() => ({
     settings: {
@@ -291,5 +333,7 @@ const AppManager = ({
 AppManager.propTypes = {
   children: PropTypes.shape([]).isRequired,
 };
+
+AppManager.whyDidYouRender = false;
 
 export default AppManager;

@@ -45,6 +45,9 @@ const RenderThreeChildren = ({
     const args = params === undefined ? [] : Object.keys(params).map((param) => props[param]);
 
     return {
+      userData: {
+        isPatchHidden: false,
+      },
       ...usedProps,
       key: props.uuid,
       args,
@@ -137,6 +140,24 @@ const RenderThreeChildren = ({
     }
   });
 
+  let objChildren = [];
+
+  if (props.children && props.children.length > 0) {
+    objChildren = props.children.map((childProps) => (
+      <RenderThreeChildren
+        {...{
+          key: childProps.uuid,
+          props: childProps,
+          geometries,
+          materials,
+          devices,
+          generators,
+          connections,
+        }}
+      />
+    ));
+  }
+
   return (
     <ThreeObjectManager key={`rt_${props.uuid}`} {...DefaultProps} type={props.type} {...props}>
       {createElement(
@@ -144,21 +165,13 @@ const RenderThreeChildren = ({
         objProps,
         [
           ...matGeoChildren,
-          props.children && props.children.length > 0
-            ? props.children.map((childProps) => RenderThreeChildren(
-              {
-                props: childProps,
-                geometries,
-                materials,
-                devices,
-                generators,
-                connections,
-              },
-            )) : null,
+          ...objChildren,
         ],
       )}
     </ThreeObjectManager>
   );
 };
+
+RenderThreeChildren.whyDidYouRender = true;
 
 export default RenderThreeChildren;

@@ -125,4 +125,6 @@ Scene.propTypes = {
   children: PropTypes.shape([]).isRequired,
 };
 
+Scene.whyDidYouRender = true;
+
 export default Scene;

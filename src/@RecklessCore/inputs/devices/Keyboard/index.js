@@ -14,7 +14,7 @@ import DrawSine from '../../../shapes/drawSine';
 
 const KeyboardDevice = ({ toProp }) => {
   const {
-    type, resolution, rpm, loop, paused, setPosition: setGenPosition,
+    type, resolution, rpm, looped, paused, setPosition: setGenPosition,
   } = useGeneratorContext();
   const [animMili] = useState(((60 * 1000) / rpm) / (360 / resolution));
 
@@ -38,14 +38,14 @@ const KeyboardDevice = ({ toProp }) => {
 
   const config = useMemo(() => ({
     pause: paused,
-    loop,
+    loop: looped,
     to: toPoints,
     config: {
       duration: animMili,
       friction: 5,
     },
     onChange: handleChange,
-  }), [toPoints, animMili, paused, loop, handleChange]);
+  }), [toPoints, animMili, paused, looped, handleChange]);
 
   const [, api] = useSpring(() => (config));
   useEffect(() => {
@@ -56,7 +56,7 @@ const KeyboardDevice = ({ toProp }) => {
   return null;
 };
 
-KeyboardDevice.whyDidYouRender = false;
+KeyboardDevice.whyDidYouRender = true;
 
 KeyboardDevice.propTypes = {
   toProp: PropTypes.string.isRequired,

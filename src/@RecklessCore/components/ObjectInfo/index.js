@@ -6,7 +6,7 @@ import ObjectName from '../ObjectName';
 import ObjectDisableButtton from '../ObjectDisableButton';
 
 const ObjectInfo = ({ name }) => (
-  <ListItem>
+  <ListItem dense>
     <ObjectName {...{ name }} />
     <ListItemSecondaryAction>
       <ObjectDisableButtton {...{ name }} />

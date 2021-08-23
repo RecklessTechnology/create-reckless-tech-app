@@ -1,12 +1,15 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/react-in-jsx-scope */
 import { memo } from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
-
-import { IconButton, Tooltip } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 
 import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser';
 
-const useStyles = makeStyles((theme) => ({
+import IconButtonView from '../@buttons/IconButton/view';
+
+const useStyles = makeStyles(() => ({
   iconButton: {
     padding: '5px',
     marginLeft: '5px',
@@ -14,23 +17,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ShareSceneEveryoneButtonView = ({ me, sceneJSON }) => {
-  // Create local classes
   const classes = useStyles();
-
   return (
-    <Tooltip title="Share Scene With Everyone" aria-label="Share Scene">
-      <IconButton
-        className={classes.iconButton}
-        onClick={() => {
+    <IconButtonView
+      {...{
+        label: 'Share Scene',
+        handeClick: () => {
           // broadcast ping to everyone
           me.sendData({
             type: 'shareScene', payload: sceneJSON, from: me.connectionId, timestamp: Date.now,
           });
-        }}
-      >
-        <OpenInBrowserIcon />
-      </IconButton>
-    </Tooltip>
+        },
+      }}
+      className={classes.iconButton}
+    >
+      <OpenInBrowserIcon fontSize="small" />
+    </IconButtonView>
+
   );
 };
 

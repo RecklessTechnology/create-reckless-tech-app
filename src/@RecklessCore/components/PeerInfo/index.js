@@ -60,7 +60,7 @@ const PeerInfo = ({ peerInfo }) => {
   if (!peerInfo || peerName === null) { return null; }
 
   return (
-    <ListItem className={classes.listItem} alignItems="flex-start">
+    <ListItem dense className={classes.listItem} alignItems="flex-start">
       <PeerAvatar {...{ peerInfo }} />
       <PeerName {...{ peerInfo: { ...peerInfo, name: peerName }, onNameUpdate: updateName }} />
       <PeerToolbar>

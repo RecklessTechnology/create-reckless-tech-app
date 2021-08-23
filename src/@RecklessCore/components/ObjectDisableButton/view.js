@@ -1,20 +1,23 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/react-in-jsx-scope */
 import { memo } from 'react';
-
-import { IconButton } from '@material-ui/core';
 
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
+import IconButtonView from '../@buttons/IconButton/view';
+
 const ObjectDisableButttonView = ({ disabled, setDisabled }) => (
-  <IconButton
-    edge="end"
-    aria-label="disabled"
-    onClick={() => {
+  <IconButtonView {...{
+    label: 'Close',
+    handeClick: () => {
       setDisabled(!disabled);
-    }}
+    },
+  }}
   >
-    { !disabled ? <VisibilityIcon /> : <VisibilityOffIcon /> }
-  </IconButton>
+    { !disabled ? <VisibilityIcon fontSize="small" /> : <VisibilityOffIcon fontSize="small" /> }
+  </IconButtonView>
 );
 
 ObjectDisableButttonView.whyDidYouRender = true;

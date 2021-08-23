@@ -8,6 +8,12 @@ import React, {
 
 import { makeStyles } from '@material-ui/styles';
 
+import {
+  ListItem, Grid,
+} from '@material-ui/core';
+
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 import useGeneratorsContext from '../../../../contexts/useGeneratorsContext';
 
 import DrawSine from '../../../../shapes/drawSine';
@@ -16,12 +22,34 @@ import DrawCircle from '../../../../shapes/drawCircle';
 import ShapePreviewBackground from './background';
 import ShapePreviewIndicator from './indicator';
 
+import PropAccordianView from '../../shared/PropAccordian/view';
+import PlaybackToolbar from '../PlaybackToolbar';
+
 const useStyles = makeStyles(() => ({
   shapeContainer: {
     width: '100%',
     height: 100,
     padding: '0 10%',
+  },
+  propItem: {
+    margin: 0,
+    padding: 0,
+    oveflow: 'hidden',
     borderBottom: '1px solid rgba(255,255,255,0.05)',
+  },
+  propGrid: {
+    width: '100%',
+    height: '100%',
+  },
+  handleGridLeft: {
+    padding: 0,
+    paddingLeft: 9,
+    paddingTop: 15,
+  },
+  handleGridRight: {
+    padding: 0,
+    paddingRight: 9,
+    paddingTop: 15,
   },
 }));
 
@@ -79,22 +107,43 @@ const ShapePreview = ({ uuid, propName }) => {
     }
   }, [setShape, generator]);
 
-  if (generator === null) {
+  const getPreview = (s, size) => {
+    if (generator === null) {
+      return (
+        <div className={classes.shapeContainer} ref={shapeRef}>
+          <ShapePreviewBackground {...{ shape: s, parentSize: size }} />
+        </div>
+      );
+    }
     return (
       <div className={classes.shapeContainer} ref={shapeRef}>
-        <ShapePreviewBackground {...{ shape, parentSize: containerSize }} />
+        <ShapePreviewIndicator {...{
+          shape: s, setGenerator, propName, parentSize: size, uuid,
+        }}
+        />
+        <ShapePreviewBackground {...{ shape: s, parentSize: size }} />
       </div>
     );
-  }
+  };
 
   return (
-    <div className={classes.shapeContainer} ref={shapeRef}>
-      <ShapePreviewIndicator {...{
-        shape, propName, parentSize: containerSize, uuid,
-      }}
-      />
-      <ShapePreviewBackground {...{ shape, parentSize: containerSize }} />
-    </div>
+    <ListItem dense className={classes.propItem}>
+      <Grid spacing={0} container className={classes.propGrid}>
+        <Grid item xs={1} className={classes.handleGridLeft} />
+        <Grid item xs={10}>
+          <PropAccordianView
+            defaultOpen
+            header={<PlaybackToolbar uuid={uuid} />}
+            expandIcon={(
+              <ExpandMoreIcon fontSize="small" />
+            )}
+          >
+            { getPreview(shape, containerSize) }
+          </PropAccordianView>
+        </Grid>
+        <Grid item xs={1} className={classes.handleGridRight} />
+      </Grid>
+    </ListItem>
   );
 };
 

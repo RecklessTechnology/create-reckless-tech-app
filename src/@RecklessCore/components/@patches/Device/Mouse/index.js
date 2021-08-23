@@ -7,22 +7,12 @@ import PropTypes from 'prop-types';
 
 import React from 'react';
 
-import { ListItem, makeStyles } from '@material-ui/core';
-
 import PatchToolbar from '../PatchToolbar/index';
 import PatchValue from '../PatchValue/index';
 
 import PropListItem from '../../shared/PropListItem/index';
 import PatchDetails from '../../shared/PatchDetails/index';
 import PatchRoot from '../../shared/PatchRoot';
-
-const useStyles = makeStyles(() => ({
-  toolbar: {
-    padding: 0,
-    position: 'fixed',
-    bottom: 0,
-  },
-}));
 
 const MousePatch = ({ data }) => {
   const {
@@ -35,14 +25,11 @@ const MousePatch = ({ data }) => {
     },
   ];
 
-  const classes = useStyles();
   return (
     <PatchRoot {...{ width }}>
-      <PatchDetails {...{ name: label, type }} />
+      <PatchDetails {...{ name: `${label}`, uuid: `${uuid}`, type }} />
       {props.map((p) => (<PropListItem key={`${p.uuid}-${p.propName}-prop`} {...p}><PatchValue {...{ uuid: p.uuid, propName: p.propName }} /></PropListItem>))}
-      <ListItem className={classes.toolbar}>
-        <PatchToolbar parents={[]} uuid={uuid} />
-      </ListItem>
+      <PatchToolbar uuid={uuid} />
     </PatchRoot>
   );
 };

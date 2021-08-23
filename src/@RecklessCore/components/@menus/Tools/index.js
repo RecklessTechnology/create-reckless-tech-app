@@ -5,7 +5,7 @@ import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 import {
-  Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, IconButton,
+  Drawer, List, ListItem, ListItemIcon, ListItemText, Divider,
 } from '@material-ui/core';
 
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -15,6 +15,8 @@ import MailIcon from '@material-ui/icons/Mail';
 
 import useToolsMenuContext from '../../../contexts/useToolsMenuContext';
 import useEditorMenuContext from '../../../contexts/useEditorMenuContext';
+
+import IconButtonView from '../../@buttons/IconButton/view';
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -67,33 +69,39 @@ const ToolsDrawer = () => {
       }}
     >
       <div className={classes.drawerHeader}>
-        <IconButton onClick={handleDrawerClose}>
-          {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-        </IconButton>
+        <IconButtonView {...{
+          label: 'Close',
+          handeClick: () => {
+            handleDrawerClose();
+          },
+        }}
+        >
+          {theme.direction === 'ltr' ? <ChevronLeftIcon fontSize="small" /> : <ChevronRightIcon fontSize="small" />}
+        </IconButtonView>
       </div>
       <Divider />
-      <List>
+      <List dense>
         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+          <ListItem dense button key={text}>
+            <ListItemIcon>{index % 2 === 0 ? <InboxIcon fontSize="small" /> : <MailIcon fontSize="small" />}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
       </List>
       <Divider />
-      <List>
+      <List dense>
         {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+          <ListItem dense button key={text}>
+            <ListItemIcon>{index % 2 === 0 ? <InboxIcon fontSize="small" /> : <MailIcon fontSize="small" />}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
       </List>
       <Divider />
-      <List>
+      <List dense>
         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+          <ListItem dense button key={text}>
+            <ListItemIcon>{index % 2 === 0 ? <InboxIcon fontSize="small" /> : <MailIcon fontSize="small" />}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
@@ -101,5 +109,7 @@ const ToolsDrawer = () => {
     </Drawer>
   );
 };
+
+ToolsDrawer.whyDidYouRender = true;
 
 export default ToolsDrawer;

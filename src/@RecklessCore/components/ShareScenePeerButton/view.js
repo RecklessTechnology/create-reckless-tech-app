@@ -8,7 +8,7 @@ import React, {
 import { makeStyles } from '@material-ui/core/styles';
 
 import {
-  IconButton, Tooltip, Menu, MenuItem,
+  Menu, MenuItem,
 } from '@material-ui/core';
 
 import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser';
@@ -16,6 +16,8 @@ import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser';
 import testJSON from '../../sceneDefinitions/TestScene.json';
 import posenetJSON from '../../sceneDefinitions/PosenetScene.json';
 import useAppContext from '../../contexts/useAppContext';
+
+import IconButtonView from '../@buttons/IconButton/view';
 
 const useStyles = makeStyles(() => ({
   iconButton: {
@@ -72,11 +74,17 @@ const ShareScenePeerButtonView = ({ me, peerInfo }) => {
   };
   return (
     <div style={{ display: 'block' }}>
-      <Tooltip title={peerInfo.isMe ? 'Share Scene With Everyone' : 'Share Scene'} aria-label="Share Scene">
-        <IconButton ref={buttonRef} className={classes.iconButton} onClick={handleClick}>
-          <OpenInBrowserIcon />
-        </IconButton>
-      </Tooltip>
+      <IconButtonView
+        {...{
+          label: peerInfo.isMe ? 'Share Scene With Everyone' : 'Share Scene',
+          handeClick: () => {
+            handleClick();
+          },
+        }}
+        className={classes.iconButton}
+      >
+        <OpenInBrowserIcon fontSize="small" />
+      </IconButtonView>
       <Menu
         className={classes.sceneMenu}
         id="scene-menu"
@@ -85,9 +93,9 @@ const ShareScenePeerButtonView = ({ me, peerInfo }) => {
         open={menuOpen}
         onClose={handleClose}
       >
-        <MenuItem data-menu-value="mine" onClick={handleClose}>My Scene</MenuItem>
-        <MenuItem data-menu-value="test" onClick={handleClose}>Test Scene</MenuItem>
-        <MenuItem data-menu-value="posenet" onClick={handleClose}>Posenet</MenuItem>
+        <MenuItem dense data-menu-value="mine" onClick={handleClose}>My Scene</MenuItem>
+        <MenuItem dense data-menu-value="test" onClick={handleClose}>Test Scene</MenuItem>
+        <MenuItem dense data-menu-value="posenet" onClick={handleClose}>Posenet</MenuItem>
       </Menu>
     </div>
   );

@@ -182,15 +182,15 @@ const ConnectionsManager = ({ children }) => {
 
       if (info === null) { // There is no stored state, make it up
         if (isHost()) { // If there is no connection url, you're the host
+          const newId = generateRoomId();
           info = {
-            id: generateRoomId(),
+            id: newId,
+            url: `${window.location.href}#${newId}`,
           };
         } else {
-          console.log(window.location);
-          console.log(window.location.hash);
-          console.log(window.location.hash.substr(1));
           info = {
             id: window.location.hash.substr(1),
+            url: `${window.location.href}#${window.location.hash.substr(1)}`,
           };
         }
       }

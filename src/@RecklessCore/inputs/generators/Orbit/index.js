@@ -12,7 +12,7 @@ import DrawCircle from '../../../shapes/drawCircle';
 
 const OrbitGenerator = ({ toProp }) => {
   const {
-    type, resolution, rpm, loop, paused, setPosition: setGenPosition,
+    type, resolution, rpm, looped, paused, setPosition: setGenPosition,
   } = useGeneratorContext();
 
   const [animMili] = useState(((60 * 1000) / rpm) / (360 / resolution));
@@ -37,14 +37,14 @@ const OrbitGenerator = ({ toProp }) => {
 
   const config = useMemo(() => ({
     pause: paused,
-    loop,
+    loop: looped,
     to: toPoints,
     config: {
       duration: animMili,
       friction: 5,
     },
     onChange: handleChange,
-  }), [toPoints, animMili, paused, loop, handleChange]);
+  }), [toPoints, animMili, paused, looped, handleChange]);
 
   const [, api] = useSpring(() => (config));
   useEffect(() => {
@@ -55,6 +55,6 @@ const OrbitGenerator = ({ toProp }) => {
   return null;
 };
 
-OrbitGenerator.whyDidYouRender = false;
+OrbitGenerator.whyDidYouRender = true;
 
 export default OrbitGenerator;

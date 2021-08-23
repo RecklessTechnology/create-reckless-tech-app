@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
 const PatchValueView = ({ value }) => {
   const classes = useStyles();
   if (typeof value === 'object') {
-    return <Typography className={classes.propText}>{(value.map((v, idx) => (`${v.toFixed(3)}${value.length - 1 !== idx ? ', ' : ''} `)))}</Typography>;
+    return <Typography className={classes.propText}>{(`[${value.map((v) => (`${v.toFixed(3)}`))}]`)}</Typography>;
   }
   return <Typography className={classes.propText}>{`${value}`}</Typography>;
 };

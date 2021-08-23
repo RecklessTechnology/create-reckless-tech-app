@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 
 import React, { memo } from 'react';
 
-import { makeStyles } from '@material-ui/styles';
-
-import { IconButton } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 
 import GetAppIcon from '@material-ui/icons/GetApp';
+
+import IconButtonView from '../@buttons/IconButton/view';
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
@@ -20,20 +20,20 @@ const useStyles = makeStyles((theme) => ({
 const SceneDownloadButttonView = ({ sceneJSON }) => {
   const classes = useStyles();
   return (
-    <IconButton
-      edge="start"
-      className={classes.menuButton}
-      color="inherit"
-      aria-label="menu"
-      onClick={() => {
-        const link = document.createElement('a');
-        link.download = 'RT_Scene.json';
-        link.href = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(sceneJSON))}`;
-        link.click();
+    <IconButtonView
+      {...{
+        label: 'Download Scene',
+        handeClick: () => {
+          const link = document.createElement('a');
+          link.download = 'RT_Scene.json';
+          link.href = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(sceneJSON))}`;
+          link.click();
+        },
       }}
+      className={classes.menuButton}
     >
-      <GetAppIcon />
-    </IconButton>
+      <GetAppIcon fontSize="small" />
+    </IconButtonView>
   );
 };
 

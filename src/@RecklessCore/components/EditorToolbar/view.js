@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
+    minHeight: 'auto !important',
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -31,10 +32,12 @@ const EditorToolbarView = () => {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar
+          variant="dense"
+        >
           <EditorCloseButton />
           <Typography variant="h6" className={classes.title}>
-            Scene Editor
+            Editor
           </Typography>
           <SceneDownloadButtton />
           <div className={classes.spacer} />

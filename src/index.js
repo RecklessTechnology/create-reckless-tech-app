@@ -1,5 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/jsx-filename-extension */
+/* eslint-disable no-console */
+
 import './wdyr';
 
 import React from 'react';
@@ -9,18 +11,22 @@ import { ThemeProvider } from '@material-ui/styles';
 import { CssBaseline, unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-ui/core';
 import { Palette } from '@material-ui/core/styles/createPalette';
 
+import App from './App';
+
 import AppManager from './@RecklessCore/managers/AppManager';
+import ThreeObjectsManager from './@RecklessCore/managers/ThreeObjectsManager';
+import PeersManager from './@RecklessCore/managers/PeersManager';
 import ConnectionsManager from './@RecklessCore/managers/ConnectionsManager';
+
+import DevicesManager from './@RecklessCore/managers/DevicesManager';
+import GeneratorsManager from './@RecklessCore/managers/GeneratorsManager';
+import TransformsManager from './@RecklessCore/managers/TransformsManager';
+
 import InspectorMenuManager from './@RecklessCore/managers/InspectorMenuManager';
 import ToolsMenuManager from './@RecklessCore/managers/ToolsMenuManager';
 import EditorMenuManager from './@RecklessCore/managers/EditorMenuManager';
 
-import App from './App';
-import PeersManager from './@RecklessCore/managers/PeersManager';
-import ThreeObjectsManager from './@RecklessCore/managers/ThreeObjectsManager';
-import GeneratorsManager from './@RecklessCore/managers/GeneratorsManager';
-import DevicesManager from './@RecklessCore/managers/DevicesManager';
-import TransformsManager from './@RecklessCore/managers/TransformsManager';
+// import reportWebVitals from './reportWebVitals';
 
 const theme = createMuiTheme({
   palette: {
@@ -61,3 +67,8 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root'),
 );
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+// reportWebVitals(console.log);

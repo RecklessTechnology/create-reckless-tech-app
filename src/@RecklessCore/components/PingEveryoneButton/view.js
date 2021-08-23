@@ -1,12 +1,15 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/react-in-jsx-scope */
 import { memo } from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
-
-import { IconButton, Tooltip } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 
 import AdjustIcon from '@material-ui/icons/Adjust';
 
-const useStyles = makeStyles((theme) => ({
+import IconButtonView from '../@buttons/IconButton/view';
+
+const useStyles = makeStyles(() => ({
   iconButton: {
     padding: '5px',
     marginLeft: '5px',
@@ -14,25 +17,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PingEveryoneButtonView = ({ me }) => {
-  // Create local classes
   const classes = useStyles();
-
   return (
-    <Tooltip title="Ping Everyone" aria-label="Ping Everyone">
-      <IconButton
-        className={classes.iconButton}
-        onClick={() => {
+    <IconButtonView
+      {...{
+        label: 'Ping Everyone',
+        handeClick: () => {
           // broadcast ping to everyone
           setInterval(() => {
             me.sendData({
               type: 'ping', payload: {}, from: me.connectionId, timestamp: Date.now,
             });
           }, 1000 / 60);
-        }}
-      >
-        <AdjustIcon />
-      </IconButton>
-    </Tooltip>
+        },
+      }}
+      className={classes.iconButton}
+    >
+      <AdjustIcon fontSize="small" />
+    </IconButtonView>
   );
 };
 

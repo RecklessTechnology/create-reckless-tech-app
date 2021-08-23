@@ -25,7 +25,7 @@ const RoomMenu = () => {
       id={`full-width-tabpanel-${0}`}
       aria-labelledby={`full-width-tab-${0}`}
     >
-      <List className={classes.root}>
+      <List dense className={classes.root}>
         <RoomInfo />
       </List>
     </ListItem>

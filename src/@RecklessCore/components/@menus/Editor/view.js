@@ -12,12 +12,12 @@ import NodeEditor from '../../NodeEditor/index';
 import EditorToolbar from '../../EditorToolbar/index';
 
 const useStyles = makeStyles(() => ({
-  drawer: {
+  root: {
     width: '100%',
     height: (props) => props.editorMenuHeight,
     position: 'fixed',
   },
-  drawerPaper: {
+  paper: {
     width: '100%',
     height: (props) => props.editorMenuHeight,
   },
@@ -28,12 +28,12 @@ const EditorView = ({ editorMenuOpen, editorMenuHeight, setEditorMenuOpen }) => 
 
   return (
     <Drawer
-      className={classes.drawer}
       variant="persistent"
       anchor="bottom"
       open={editorMenuOpen}
       classes={{
-        paper: classes.drawerPaper,
+        root: classes.root,
+        paper: classes.paper,
       }}
     >
       <EditorToolbar />
@@ -43,12 +43,12 @@ const EditorView = ({ editorMenuOpen, editorMenuHeight, setEditorMenuOpen }) => 
   );
 };
 
-EditorView.whyDidYouRender = true;
-
 EditorView.propTypes = {
   editorMenuOpen: PropTypes.bool.isRequired,
   editorMenuHeight: PropTypes.number.isRequired,
   setEditorMenuOpen: PropTypes.func.isRequired,
 };
+
+EditorView.whyDidYouRender = true;
 
 export default EditorView;

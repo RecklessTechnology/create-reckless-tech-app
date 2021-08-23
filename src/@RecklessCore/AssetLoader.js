@@ -24,9 +24,9 @@ function loadAsset(url) {
         // if (imageRegExp.test(url)) asset = new Image();
         // else if (audioRegExp.test(url)) asset = new Audio();
         // else if (gltfRegExp.test(url)) {
-            console.log(url);
+            // console.log(url);
             const { nodes, materials } = useGLTF(url);
-            console.log({ nodes, materials });
+            // console.log({ nodes, materials });
             resolve({nodes, materials });
         // }
         

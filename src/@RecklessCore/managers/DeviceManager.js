@@ -1,7 +1,6 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-filename-extension */
-
-import PropTypes from 'prop-types';
 
 import React, {
   useCallback,
@@ -48,7 +47,6 @@ const DeviceManager = ({
 
   const [uuid] = useState(props.uuid);
   const [name] = useState(props.name);
-  const [displayName] = useState(props.displayName);
   const [type, setType] = useState(props.type || '');
 
   const [position, setPosition] = useState(props.position || [0, 0, 0]);
@@ -92,7 +90,6 @@ const DeviceManager = ({
     id: identifier.current,
 
     name,
-    displayName,
 
     type,
     setType,
@@ -104,7 +101,7 @@ const DeviceManager = ({
     unsubscribe: events.unsubscribe,
   }), [
     uuid,
-    name, displayName,
+    name,
 
     type, setType,
 
@@ -162,14 +159,5 @@ const DeviceManager = ({
 };
 
 DeviceManager.whyDidYouRender = false;
-
-DeviceManager.propTypes = {
-  children: PropTypes.shape([]).isRequired,
-  uuid: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  displayName: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  position: PropTypes.shape([]).isRequired,
-};
 
 export default DeviceManager;

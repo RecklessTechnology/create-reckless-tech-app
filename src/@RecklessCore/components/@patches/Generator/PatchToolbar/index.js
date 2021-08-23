@@ -7,8 +7,13 @@ import useAppContext from '../../../../contexts/useAppContext';
 import PatchToolbarView from '../../shared/PatchToolbar/view';
 
 const PatchToolbar = ({ uuid }) => {
-  const { removeGenerator } = useAppContext();
-  return <PatchToolbarView {...{ parents: [], uuid, removeObj: removeGenerator }} />;
+  const { removeGenerator, hideGeneratorPatch } = useAppContext();
+  return (
+    <PatchToolbarView {...{
+      uuid, removeObj: removeGenerator, hidePatch: hideGeneratorPatch,
+    }}
+    />
+  );
 };
 
 PatchToolbar.whyDidYouRender = true;

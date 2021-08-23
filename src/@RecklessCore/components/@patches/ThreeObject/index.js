@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
@@ -5,45 +6,20 @@
 
 import React from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
-
-import { ListItem } from '@material-ui/core';
-
 import PropListItem from '../shared/PropListItem/index';
 import PatchValue from './PatchValue/index';
 import PatchDetails from '../shared/PatchDetails/index';
 import ParentChildProp from '../shared/ParentChildPro/index';
 import PatchToolbar from './PatchToolbar/index';
 import PatchRoot from '../shared/PatchRoot';
-
-const useStyles = makeStyles(() => ({
-  propItem: {
-    margin: 0,
-    padding: '0 10px',
-  },
-  propGrid: {
-    width: '100%',
-    height: '100%',
-    borderBottom: '1px solid rgba(255,255,255,0.05)',
-  },
-  propText: {
-    fontSize: '12px',
-    whiteSpace: 'nowrap',
-    textAlign: 'center',
-  },
-  toolbar: {
-    padding: 0,
-    position: 'fixed',
-    bottom: 0,
-  },
-}));
+import useAppContext from '../../../contexts/useAppContext';
 
 const ThreeObjectPatch = ({ data }) => {
   const {
-    uuid, label, type, width, children, isChildHidden, parents,
+    uuid, label, type, width, children, isChildHidden, isHidden,
   } = data;
 
-  const classes = useStyles();
+  const { hideThreeObjPatch } = useAppContext();
 
   const props = [
     {
@@ -60,20 +36,16 @@ const ThreeObjectPatch = ({ data }) => {
   return (
     <PatchRoot {...{ width }}>
       <PatchDetails {...{ name: `${label}`, uuid: `${uuid}`, type }} />
-      <ListItem className={classes.propItem}>
-        <ParentChildProp {...{
-          isChildHidden, type, uuid, children,
-        }}
-        />
-      </ListItem>
+      <ParentChildProp {...{
+        isChildHidden, type, uuid, children, isHidden, hidePatch: hideThreeObjPatch,
+      }}
+      />
       {
         props.map((p) => (
           <PropListItem key={`${p.uuid}-${p.propName}-prop`} {...p}><PatchValue {...{ uuid: p.uuid, propName: p.propName }} /></PropListItem>
         ))
       }
-      <ListItem className={classes.toolbar}>
-        <PatchToolbar parents={parents} uuid={uuid} />
-      </ListItem>
+      <PatchToolbar uuid={uuid} />
     </PatchRoot>
   );
 };

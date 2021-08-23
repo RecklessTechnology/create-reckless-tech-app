@@ -16,6 +16,6 @@ const PropListItem = ({
   </PropListItemView>
 );
 
-PropListItem.whyDidYouRender = false;
+PropListItem.whyDidYouRender = true;
 
 export default PropListItem;

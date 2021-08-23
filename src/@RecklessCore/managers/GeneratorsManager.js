@@ -54,10 +54,10 @@ const GeneratorsManager = ({
   );
 };
 
-GeneratorsManager.whyDidYouRender = false;
-
 GeneratorsManager.propTypes = {
   children: PropTypes.shape([]).isRequired,
 };
+
+GeneratorsManager.whyDidYouRender = false;
 
 export default GeneratorsManager;

@@ -2,7 +2,9 @@
 
 import React from 'react';
 
-import EditorCloseButtonView from './view';
+import CloseIcon from '@material-ui/icons/Close';
+
+import IconButtonView from '../@buttons/IconButton/view';
 
 import useEditorMenuContext from '../../contexts/useEditorMenuContext';
 
@@ -10,7 +12,16 @@ const EditorCloseButton = () => {
   const { editorMenuOpen, setEditorMenuOpen } = useEditorMenuContext();
 
   return (
-    <EditorCloseButtonView {...{ editorMenuOpen, setEditorMenuOpen }} />);
+    <IconButtonView {...{
+      label: 'Close',
+      handeClick: () => {
+        setEditorMenuOpen(!editorMenuOpen);
+      },
+    }}
+    >
+      <CloseIcon fontSize="small" />
+    </IconButtonView>
+  );
 };
 
 EditorCloseButton.whyDidYouRender = true;

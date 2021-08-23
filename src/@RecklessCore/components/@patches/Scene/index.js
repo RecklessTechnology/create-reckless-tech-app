@@ -3,37 +3,26 @@
 
 import React from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
-
-import { ListItem } from '@material-ui/core';
-
 import PatchDetails from '../shared/PatchDetails/index';
 
 import ParentChildProp from '../shared/ParentChildPro/index';
 import PatchRoot from '../shared/PatchRoot';
-
-const useStyles = makeStyles(() => ({
-  propItem: {
-    margin: 0,
-    padding: '0 10px',
-  },
-}));
+import useAppContext from '../../../contexts/useAppContext';
 
 const ScenePatch = ({ data }) => {
   const {
-    uuid, label, type, width, children, isChildHidden,
+    uuid, label, type, width, children, isChildHidden, isHidden,
   } = data;
-  const classes = useStyles();
+
+  const { hideThreeObjPatch } = useAppContext();
 
   return (
     <PatchRoot {...{ width }}>
       <PatchDetails {...{ name: `${label}`, uuid: `${uuid}`, type: 'Scene' }} />
-      <ListItem className={classes.propItem}>
-        <ParentChildProp {...{
-          isChildHidden, type, uuid, children,
-        }}
-        />
-      </ListItem>
+      <ParentChildProp {...{
+        isChildHidden, type, uuid, children, isHidden, hidePatch: hideThreeObjPatch,
+      }}
+      />
     </PatchRoot>
   );
 };

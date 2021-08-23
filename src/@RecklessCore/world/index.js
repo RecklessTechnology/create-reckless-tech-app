@@ -80,4 +80,6 @@ World.propTypes = {
   children: PropTypes.shape([]).isRequired,
 };
 
+World.whyDidYouRender = true;
+
 export default memo(World);

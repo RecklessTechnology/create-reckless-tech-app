@@ -95,4 +95,6 @@ SceneManager.propTypes = {
   defaultScene: PropTypes.string.isRequired,
 };
 
+SceneManager.whyDidYouRender = true;
+
 export default SceneManager;

@@ -30,7 +30,7 @@ const PeersMenu = () => {
       aria-labelledby={`full-width-tab-${0}`}
       className={classes.listItem}
     >
-      <List className={classes.root}>
+      <List dense className={classes.root}>
         <PeersInfo />
       </List>
     </ListItem>

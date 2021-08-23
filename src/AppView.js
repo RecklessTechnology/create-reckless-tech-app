@@ -7,7 +7,9 @@ import React, { createContext, memo } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { AppBar, Toolbar, IconButton } from '@material-ui/core';
+import {
+  AppBar, Toolbar,
+} from '@material-ui/core';
 
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import CreateIcon from '@material-ui/icons/Create';
@@ -15,6 +17,8 @@ import CreateIcon from '@material-ui/icons/Create';
 import Tools from './@RecklessCore/components/@menus/Tools/index';
 import Inspector from './@RecklessCore/components/@menus/Inspector/index';
 import Editor from './@RecklessCore/components/@menus/Editor/index';
+
+import IconButtonView from './@RecklessCore/components/@buttons/IconButton/view';
 
 export const ToolsMenuContext = createContext(null);
 export const EditorMenuContext = createContext(null);
@@ -55,9 +59,6 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
   renderArea: {
     flexGrow: 1,
     transition: theme.transitions.create('margin', {
@@ -97,7 +98,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   inspectorButton: {
-    marginLeft: 'auto',
+    marginLeft: 'auto !important',
   },
 }));
 
@@ -144,28 +145,33 @@ const AppView = ({
             [classes.appBarShiftRight]: inspectorMenuOpen,
           })}
         >
-          <Toolbar className={classes.bottomToolbar}>
+          <Toolbar
+            variant="dense"
+            className={classes.bottomToolbar}
+          >
             {editorMenuOpen !== true ? (
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={() => { setEditorMenuOpen(!editorMenuOpen); }}
-                edge="end"
-                className={classes.menuButton}
+              <IconButtonView {...{
+                label: 'Edit',
+                handeClick: () => {
+                  setEditorMenuOpen(!editorMenuOpen);
+                },
+              }}
               >
-                <CreateIcon />
-              </IconButton>
+                <CreateIcon fontSize="small" />
+              </IconButtonView>
             ) : null}
             {inspectorMenuOpen !== true ? (
-              <IconButton
-                color="inherit"
-                aria-label="open add element"
-                onClick={() => { setInspectorMenuOpen(!inspectorMenuOpen); }}
-                edge="end"
+              <IconButtonView
+                {...{
+                  label: 'Inspect',
+                  handeClick: () => {
+                    setInspectorMenuOpen(!inspectorMenuOpen);
+                  },
+                }}
                 className={classes.inspectorButton}
               >
-                <InfoOutlinedIcon />
-              </IconButton>
+                <InfoOutlinedIcon fontSize="small" />
+              </IconButtonView>
             ) : null}
           </Toolbar>
         </AppBar>
@@ -189,5 +195,7 @@ AppView.propTypes = {
   inspectorMenuWidth: PropTypes.number.isRequired,
   setInspectorMenuOpen: PropTypes.func.isRequired,
 };
+
+AppView.whyDidYouRender = true;
 
 export default memo(AppView);

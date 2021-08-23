@@ -6,9 +6,14 @@ import React from 'react';
 import useAppContext from '../../../../contexts/useAppContext';
 import PatchToolbarView from '../../shared/PatchToolbar/view';
 
-const PatchToolbar = ({ parents, uuid }) => {
-  const { removeDevice } = useAppContext();
-  return <PatchToolbarView {...{ parents, uuid, removeObj: removeDevice }} />;
+const PatchToolbar = ({ uuid }) => {
+  const { removeDevice, hideDevicePatch } = useAppContext();
+  return (
+    <PatchToolbarView {...{
+      uuid, removeObj: removeDevice, hidePatch: hideDevicePatch,
+    }}
+    />
+  );
 };
 
 PatchToolbar.whyDidYouRender = true;

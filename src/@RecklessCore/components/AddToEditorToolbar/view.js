@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
@@ -23,8 +24,10 @@ const AddToEditorToolbarView = (props, ref) => {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Toolbar>
-          <AddToEditorCloseButton handleClose={props.handleClose} />
+        <Toolbar
+          variant="dense"
+        >
+          <AddToEditorCloseButton handleClose={(evt) => props.handleClose(evt)} />
           <Typography>Add Component</Typography>
         </Toolbar>
       </AppBar>

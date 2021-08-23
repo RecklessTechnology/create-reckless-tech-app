@@ -71,6 +71,7 @@ const TransformManager = ({
   }, [connections, uuid, findGenerator, findPeer, findDevice]);
 
   useEffect(() => { events.publish(`${uuid}-value-updated`, value); }, [value, events, uuid]);
+  useEffect(() => { events.publish(`${uuid}-amount-updated`, amount); }, [amount, events, uuid]);
 
   const { registerTransform, unregisterTransform } = useTransformsContext();
   const forceUpdate = useForceUpdate();

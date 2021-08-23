@@ -25,7 +25,7 @@ const InspectorToolbarView = () => {
     <div className={classes.drawerHeader}>
       <InspectorCloseButton />
       <Typography variant="h6" className={classes.title}>
-        Inspector
+        Inspect
       </Typography>
     </div>
   );

@@ -8,16 +8,20 @@ import React, {
 
 import { makeStyles } from '@material-ui/styles';
 
-import { MenuItem } from '@material-ui/core';
+import {
+  ListItemIcon,
+  ListSubheader,
+  MenuItem,
+  Typography,
+} from '@material-ui/core';
 
 import useConnectionsContext from '../../contexts/useConnectionsContext';
 import useAppContext from '../../contexts/useAppContext';
+import { getIconByType } from '../../utils/iconLookup';
 
 const useStyles = makeStyles(() => ({
-  listItem: {
-    padding: 0,
-  },
   list: {
+    padding: 0,
     width: '100%',
   },
   sectionTitle: {
@@ -62,12 +66,30 @@ const AddPeersToScene = ({ closeMenu }) => {
     };
   }, [subscribe, updateConnections]);
 
-  if (connections.length === 0) { return null; }
+  if (connections.length === 0) {
+    return (
+      <ul className={classes.list}>
+        <ListSubheader>No Connected Peers</ListSubheader>
+      </ul>
+    );
+  }
 
   return (
-    <ul className={classes.listItem}>
-
-      {connections.map((connection) => <MenuItem disabled={(sceneJSON.peers.filter((p) => p.uuid === connection.uuid).length > 0)} key={`add_peer_menu_${connection.uuid}_${connection.connectionId}`} onClick={() => { addPeer(connection.uuid); closeMenu(); }}>{`${connection.name} (${connection.uuid})`}</MenuItem>)}
+    <ul className={classes.list}>
+      <ListSubheader>Add Peer</ListSubheader>
+      {connections.map((connection) => (
+        <MenuItem
+          dense
+          key={`add_peer_menu_${connection.uuid}_${connection.connectionId}`}
+          disabled={(sceneJSON.peers.filter((p) => p.uuid === connection.uuid).length > 0)}
+          onClick={() => { addPeer(connection.uuid); closeMenu(); }}
+        >
+          <ListItemIcon>
+            {getIconByType('Peer')}
+          </ListItemIcon>
+          <Typography variant="inherit">{`${connection.name} (${connection.uuid})`}</Typography>
+        </MenuItem>
+      ))}
     </ul>
   );
 };

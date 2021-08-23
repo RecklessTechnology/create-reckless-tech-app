@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 
 import React, { memo } from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
-
-import { IconButton, Tooltip } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 
 import FileCopyIcon from '@material-ui/icons/FileCopy';
+
+import IconButtonView from '../@buttons/IconButton/view';
 
 const useStyles = makeStyles(() => ({
   iconButton: {
@@ -18,20 +18,19 @@ const useStyles = makeStyles(() => ({
 }));
 
 const RoomCopyUrlButtonView = ({ url }) => {
-  // Create local classes
   const classes = useStyles();
-
   return (
-    <Tooltip title="Copy URL">
-      <IconButton
-        className={classes.iconButton}
-        onClick={() => {
+    <IconButtonView
+      {...{
+        label: 'Copy URL',
+        handeClick: () => {
           navigator.clipboard.writeText(url).then();
-        }}
-      >
-        <FileCopyIcon />
-      </IconButton>
-    </Tooltip>
+        },
+      }}
+      className={classes.iconButton}
+    >
+      <FileCopyIcon fontSize="small" />
+    </IconButtonView>
   );
 };
 

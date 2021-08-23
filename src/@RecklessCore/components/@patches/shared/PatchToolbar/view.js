@@ -1,14 +1,21 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-filename-extension */
-
+/* eslint-disable react/prop-types */
 import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import {
-  AppBar, Toolbar, ButtonGroup, Button, Tooltip,
+  Grid,
+  ListItem, Button,
+  AppBar, Toolbar,
 } from '@material-ui/core';
 
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faTrashAlt,
+  faSignInAlt,
+} from '@fortawesome/free-solid-svg-icons';
+
+import IconButtonView from '../../../@buttons/IconButton/view';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -17,7 +24,7 @@ const useStyles = makeStyles(() => ({
     borderBottomLeftRadius: '10px',
     borderBottomRightRadius: '10px',
     overflow: 'hidden',
-    minHeight: '32px',
+    padding: 0,
   },
   toolbar: {
     padding: 0,
@@ -28,39 +35,65 @@ const useStyles = makeStyles(() => ({
   },
   group: {
     width: '100%',
-
+    display: 'block',
   },
   button: {
-    padding: '5px 16px',
-    minWidth: '48px',
-    borderRight: '1px solid rgba(255,255,255,0.05)',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    display: 'block',
+  },
+  gridItem: {
+    borderRight: '1px solid rgba(255,255,255,0.25)',
   },
 }));
 
-// eslint-disable-next-line no-unused-vars
-const PatchToolbarView = ({ parents, uuid, removeObj }) => {
+const PatchToolbarView = ({
+  uuid, removeObj, hidePatch,
+}) => {
   const classes = useStyles();
   return (
-    <div className={classes.root}>
+    <ListItem dense className={classes.root}>
       <AppBar position="static" className={classes.appbar}>
-        <Toolbar className={classes.toolbar}>
-          <ButtonGroup variant="text" aria-label="text primary button group" className={classes.group}>
-            <Button className={classes.button} />
-            <Button className={classes.button} />
-            <Button
-              className={classes.button}
-              onClick={() => {
-                removeObj(uuid);
-              }}
-            >
-              <Tooltip title="Delete" aria-label="delete">
-                <DeleteOutlineIcon fontSize="small" />
-              </Tooltip>
-            </Button>
-          </ButtonGroup>
+        <Toolbar
+          variant="dense"
+          className={classes.toolbar}
+        >
+          <Grid spacing={0} container>
+            <Grid item xs={4} className={classes.gridItem} />
+            <Grid item xs={4} className={classes.gridItem}>
+              {(typeof hidePatch === 'function')
+                ? (
+                  <IconButtonView
+                    {...{
+                      label: 'Hide Patch',
+                      handeClick: () => {
+                        hidePatch(uuid, true);
+                      },
+                    }}
+                    className={classes.button}
+                  >
+                    <FontAwesomeIcon icon={faSignInAlt} />
+                  </IconButtonView>
+                )
+                : <Button className={classes.button} /> }
+            </Grid>
+            <Grid item xs={4}>
+              <IconButtonView
+                {...{
+                  label: 'Delete',
+                  handeClick: () => {
+                    removeObj(uuid);
+                  },
+                }}
+                className={classes.button}
+              >
+                <FontAwesomeIcon icon={faTrashAlt} />
+              </IconButtonView>
+            </Grid>
+          </Grid>
         </Toolbar>
       </AppBar>
-    </div>
+    </ListItem>
   );
 };
 

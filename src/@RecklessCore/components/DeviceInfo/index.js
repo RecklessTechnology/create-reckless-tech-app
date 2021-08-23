@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/react-in-jsx-scope */
 import { memo, useState, useEffect } from 'react';
 
 import { makeStyles } from '@material-ui/styles';
@@ -29,7 +31,7 @@ const DeviceInfo = ({ deviceInfo }) => {
   if (!deviceInfo) { return null; }
 
   return (
-    <ListItem className={classes.listItem} alignItems="flex-start">
+    <ListItem dense className={classes.listItem} alignItems="flex-start">
       <DeviceName {...{ deviceInfo: { ...deviceInfo, name: deviceName } }} />
     </ListItem>
   );

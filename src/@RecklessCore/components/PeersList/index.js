@@ -61,13 +61,13 @@ const PeersList = () => {
   if (connections.length === 0) { return null; }
 
   return (
-    <ListItem className={classes.listItem}>
-      <Grid container spacing={0}>
+    <ListItem dense className={classes.listItem}>
+      <Grid spacing={0} container>
         <Grid item xs={12}>
           <Typography className={classes.sectionTitle}>Peers</Typography>
         </Grid>
         <Grid item xs={12}>
-          <List className={classes.list}>
+          <List dense className={classes.list}>
             {connections.map((peer) => <PeerInfo key={peer.connectionId} peerInfo={peer} />)}
           </List>
         </Grid>

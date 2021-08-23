@@ -7,6 +7,6 @@ import DevicesView from './view';
 
 const Devices = ({ devices }) => devices.map((dev) => (<DevicesView key={`rt_${dev.type}_device_${dev.uuid}`} {...dev} />));
 
-Devices.whyDidYouRender = false;
+Devices.whyDidYouRender = true;
 
 export default memo(Devices);

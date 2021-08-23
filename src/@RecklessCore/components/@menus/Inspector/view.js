@@ -85,8 +85,6 @@ const InspectorView = ({
   );
 };
 
-InspectorView.whyDidYouRender = true;
-
 InspectorView.propTypes = {
   editorMenuOpen: PropTypes.bool.isRequired,
   editorMenuHeight: PropTypes.number.isRequired,
@@ -95,5 +93,7 @@ InspectorView.propTypes = {
   inspectorMenuTab: PropTypes.number.isRequired,
   setInspectorMenuTab: PropTypes.func.isRequired,
 };
+
+InspectorView.whyDidYouRender = true;
 
 export default memo(InspectorView);

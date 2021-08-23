@@ -21,6 +21,6 @@ const MouseDevice = () => {
   return null;
 };
 
-MouseDevice.whyDidYouRender = false;
+MouseDevice.whyDidYouRender = true;
 
 export default MouseDevice;

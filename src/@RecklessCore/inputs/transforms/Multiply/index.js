@@ -5,7 +5,7 @@ import useDevicesContext from '../../../contexts/useDevicesContext';
 import useGeneratorsContext from '../../../contexts/useGeneratorsContext';
 import useTransformContext from '../../../contexts/useTransformContext';
 
-const MultiplyTransform = ({ ...props }) => {
+const MultiplyTransform = ({ amount }) => {
   const { uuid, setValue: setTransValue } = useTransformContext();
   const { sceneJSON } = useAppContext();
 
@@ -21,7 +21,7 @@ const MultiplyTransform = ({ ...props }) => {
         default:
           break;
         case 'value':
-          setTransValue(val.map((v) => (v * props.amount)));
+          setTransValue(val.map((v) => (v * amount)));
           break;
       }
     };
@@ -33,7 +33,7 @@ const MultiplyTransform = ({ ...props }) => {
       const device = findDevice(c.from);
       if (device) { device.subscribe(`${c.from}-${c.fromProp.toLowerCase()}-updated`, (val) => { updateFromInput(c.toProp.toLowerCase(), val); }); }
     });
-  }, [connections, uuid, findGenerator, findDevice, props, setTransValue]);
+  }, [connections, uuid, findGenerator, findDevice, amount, setTransValue]);
 
   return null;
 };

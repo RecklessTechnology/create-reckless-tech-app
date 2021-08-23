@@ -12,7 +12,7 @@ const RoomCopyUrlButton = () => {
 
   if (roomInfo === null) { return null; }
 
-  return <RoomCopyUrlButtonView {...{ url: `${window.location.href}#${roomInfo.id}` }} />;
+  return <RoomCopyUrlButtonView {...{ url: `${roomInfo.url}` }} />;
 };
 
 RoomCopyUrlButton.whyDidYouRender = true;

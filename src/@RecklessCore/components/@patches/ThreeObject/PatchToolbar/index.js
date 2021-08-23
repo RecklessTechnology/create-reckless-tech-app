@@ -6,9 +6,14 @@ import React from 'react';
 import useAppContext from '../../../../contexts/useAppContext';
 import PatchToolbarView from '../../shared/PatchToolbar/view';
 
-const PatchToolbar = ({ parents, uuid }) => {
-  const { removeThreeObj } = useAppContext();
-  return <PatchToolbarView {...{ parents, uuid, removeObj: removeThreeObj }} />;
+const PatchToolbar = ({ uuid }) => {
+  const { removeThreeObj, hideThreeObjPatch } = useAppContext();
+  return (
+    <PatchToolbarView {...{
+      uuid, removeObj: removeThreeObj, hidePatch: hideThreeObjPatch,
+    }}
+    />
+  );
 };
 
 PatchToolbar.whyDidYouRender = true;

@@ -71,7 +71,7 @@ const RoomQR = () => {
     <ListItemIcon className={classes.qrContainer} ref={qrRef}>
       <RoomQRView {...{
         size: qrSize,
-        url: `${window.location.href}#${room.id}`,
+        url: `${room.url}`,
       }}
       />
     </ListItemIcon>

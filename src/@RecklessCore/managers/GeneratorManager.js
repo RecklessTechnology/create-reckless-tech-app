@@ -35,14 +35,18 @@ const GeneratorManager = ({
   const [uuid] = useState(props.uuid);
   const [name] = useState(props.name);
   const [type, setType] = useState(props.type || '');
-  const [resolution, setResolution] = useState(props.resolution || 1);
-  const [rpm, setRpm] = useState(props.rpm || 1000);
-  const [loop, setLoop] = useState(props.loop || true);
+  const [resolution, setResolution] = useState(parseInt(props.resolution, 10) || 1);
+  const [rpm, setRpm] = useState(parseInt(props.rpm, 10) || 1000);
+  const [looped, setLooped] = useState(props.looped || true);
   const [paused, setPaused] = useState(props.paused || false);
 
   const [position, setPosition] = useState([0, 0, 0]);
 
   useEffect(() => { events.publish(`${uuid}-position-updated`, position); }, [uuid, position, events]);
+  useEffect(() => { events.publish(`${uuid}-paused-updated`, paused); }, [uuid, paused, events]);
+  useEffect(() => { events.publish(`${uuid}-looped-updated`, looped); }, [uuid, looped, events]);
+  useEffect(() => { events.publish(`${uuid}-rpm-updated`, rpm); }, [uuid, rpm, events]);
+  useEffect(() => { events.publish(`${uuid}-resolution-updated`, resolution); }, [uuid, resolution, events]);
 
   const { registerGenerator, unregisterGenerator } = useGeneratorsContext();
   const forceUpdate = useForceUpdate();
@@ -60,8 +64,8 @@ const GeneratorManager = ({
     setResolution,
     rpm,
     setRpm,
-    loop,
-    setLoop,
+    looped,
+    setLooped,
     paused,
     setPaused,
     position,
@@ -76,7 +80,7 @@ const GeneratorManager = ({
     type, setType,
     resolution, setResolution,
     rpm, setRpm,
-    loop, setLoop,
+    looped, setLooped,
     paused, setPaused,
     position, setPosition,
 
@@ -106,8 +110,8 @@ const GeneratorManager = ({
     setResolution,
     rpm,
     setRpm,
-    loop,
-    setLoop,
+    looped,
+    setLooped,
     paused,
     setPaused,
     position,
@@ -127,7 +131,7 @@ const GeneratorManager = ({
     type, setType,
     resolution, setResolution,
     rpm, setRpm,
-    loop, setLoop,
+    looped, setLooped,
     paused, setPaused,
     position, setPosition,
 
@@ -142,8 +146,6 @@ const GeneratorManager = ({
   );
 };
 
-GeneratorManager.whyDidYouRender = false;
-
 GeneratorManager.propTypes = {
   children: PropTypes.shape([]).isRequired,
   uuid: PropTypes.string.isRequired,
@@ -151,8 +153,10 @@ GeneratorManager.propTypes = {
   type: PropTypes.string.isRequired,
   resolution: PropTypes.number.isRequired,
   rpm: PropTypes.number.isRequired,
-  loop: PropTypes.bool.isRequired,
+  looped: PropTypes.bool.isRequired,
   paused: PropTypes.bool.isRequired,
 };
+
+GeneratorManager.whyDidYouRender = false;
 
 export default GeneratorManager;

@@ -12,7 +12,7 @@ const RoomOpenUrlButton = () => {
 
   if (roomInfo === null) { return null; }
 
-  return <RoomOpenUrlButtonView {...{ url: `${window.location.href}#${roomInfo.id}` }} />;
+  return <RoomOpenUrlButtonView {...{ url: `${roomInfo.url}` }} />;
 };
 
 RoomOpenUrlButton.whyDidYouRender = true;

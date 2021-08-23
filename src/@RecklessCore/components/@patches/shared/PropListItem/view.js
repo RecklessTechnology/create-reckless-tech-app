@@ -5,27 +5,43 @@ import React, { memo } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Typography, Grid, ListItem } from '@material-ui/core';
+import {
+  Grid, Typography, ListItem,
+} from '@material-ui/core';
+
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import InputHandle from '../InputHandle';
 import OutputHandle from '../OutputHandle';
 
+import PropAccordianView from '../PropAccordian/view';
+
 const useStyles = makeStyles(() => ({
   propItem: {
     margin: 0,
-    padding: '0 10px',
+    padding: 0,
     oveflow: 'hidden',
+    borderBottom: '1px solid rgba(255,255,255,0.05)',
   },
   propGrid: {
     width: '100%',
     height: '100%',
-    borderBottom: '1px solid rgba(255,255,255,0.05)',
   },
   propText: {
     fontSize: '12px',
     whiteSpace: 'nowrap',
     textAlign: 'center',
     textTransform: 'capitalize',
+  },
+  handleGridLeft: {
+    padding: 0,
+    paddingLeft: 9,
+    paddingTop: 15,
+  },
+  handleGridRight: {
+    padding: 0,
+    paddingRight: 9,
+    paddingTop: 15,
   },
 }));
 
@@ -34,18 +50,23 @@ const PropListItemView = ({
 }) => {
   const classes = useStyles();
   return (
-    <ListItem className={classes.propItem}>
-      <Grid container className={classes.propGrid}>
-        <Grid item xs={12}>
-          <Typography className={classes.propText}>{propName}</Typography>
-        </Grid>
-        <Grid item xs={1}>
+    <ListItem dense className={classes.propItem}>
+      <Grid spacing={0} container className={classes.propGrid}>
+        <Grid item xs={1} className={classes.handleGridLeft}>
           {disableInput === false ? <InputHandle {...{ uuid, propName }} /> : null}
         </Grid>
         <Grid item xs={10}>
-          {children}
+          <PropAccordianView
+            defaultOpen={false}
+            header={<Typography className={classes.propText}>{propName}</Typography>}
+            expandIcon={(
+              <ExpandMoreIcon fontSize="small" />
+            )}
+          >
+            { children }
+          </PropAccordianView>
         </Grid>
-        <Grid item xs={1}>
+        <Grid item xs={1} className={classes.handleGridRight}>
           {disableOutput === false ? <OutputHandle {...{ uuid, propName }} /> : null}
         </Grid>
       </Grid>
@@ -53,6 +74,6 @@ const PropListItemView = ({
   );
 };
 
-PropListItemView.whyDidYouRender = false;
+PropListItemView.whyDidYouRender = true;
 
 export default memo(PropListItemView);
