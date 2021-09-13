@@ -8,8 +8,6 @@ import React, {
 } from 'react';
 import useAppContext from '../contexts/useAppContext';
 
-import { SceneStoreProvider } from '../useThreeObjectStore';
-
 import waitForMs from '../utils/waitForMs';
 
 export const SceneManagerContext = createContext(null);
@@ -83,9 +81,7 @@ const SceneManager = ({ defaultScene, children }) => {
 
   return (
     <SceneManagerContext.Provider value={api}>
-      <SceneStoreProvider>
-        {children}
-      </SceneStoreProvider>
+      {children}
     </SceneManagerContext.Provider>
   );
 };

@@ -10,7 +10,7 @@ import React, {
   useEffect,
   createContext,
 } from 'react';
-import useForceUpdate from '../useForceUpdate';
+import useForceUpdate from '../utils/useForceUpdate';
 import EventsManager from './EventsManager';
 
 import useThreeObjectsContext from '../contexts/useThreeObjectsContext';

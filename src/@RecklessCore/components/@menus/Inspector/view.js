@@ -7,12 +7,13 @@ import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import {
-  Drawer, Divider, Tabs, Tab,
+  Drawer,
 } from '@material-ui/core';
 
-import RoomMenu from '../../RoomMenu';
-import PeersMenu from '../../PeersMenu';
-import InspectorToolbar from '../../InspectorToolbar';
+import RoomMenu from '../RoomMenu';
+import PeersMenu from '../PeersMenu';
+import InspectorToolbar from './InspectorToolbar';
+import HelpMenu from '../HelpMenu';
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -66,21 +67,10 @@ const InspectorView = ({
         paper: classes.drawerPaper,
       }}
     >
-      <InspectorToolbar />
-      <Divider />
-      <Tabs
-        value={inspectorMenuTab}
-        indicatorColor="primary"
-        textColor="primary"
-        onChange={(event, newValue) => setInspectorMenuTab(newValue)}
-        aria-label="disabled tabs example"
-        variant="fullWidth"
-      >
-        <Tab label="Room" />
-        <Tab label="Peers" />
-      </Tabs>
+      <InspectorToolbar {...{ handleChange: setInspectorMenuTab, value: inspectorMenuTab }} />
       {inspectorMenuTab === 0 ? <RoomMenu /> : null}
       {inspectorMenuTab === 1 ? <PeersMenu /> : null}
+      {inspectorMenuTab === 2 ? <HelpMenu /> : null}
     </Drawer>
   );
 };

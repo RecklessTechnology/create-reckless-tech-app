@@ -11,7 +11,7 @@ import React, {
   createContext,
 } from 'react';
 
-import useForceUpdate from '../useForceUpdate';
+import useForceUpdate from '../utils/useForceUpdate';
 import EventsManager from './EventsManager';
 
 import useDevicesContext from '../contexts/useDevicesContext';

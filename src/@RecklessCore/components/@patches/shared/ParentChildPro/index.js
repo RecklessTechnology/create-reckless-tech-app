@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-filename-extension */
 
@@ -6,10 +5,13 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
+import clsx from 'clsx';
+
 import {
   ListItemSecondaryAction,
   List, ListItemText, ListItemIcon,
   ListItem, Typography, Grid,
+  Tooltip,
 } from '@material-ui/core';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -99,11 +101,15 @@ const useStyles = makeStyles(() => ({
     padding: 0,
   },
   secondRoot: {
-    paddingRight: 0,
+    right: 0,
+    background: 'linear-gradient(90deg, transparent, #555555)',
   },
   childListIcon: {
     minWidth: 'auto',
     padding: 10,
+  },
+  lightIcon: {
+    padding: '10px 7px',
   },
 }));
 
@@ -129,10 +135,17 @@ const ParentChildProp = ({
             <List dense className={classes.childList}>
               {children.filter((c) => (c.userData.isPatchHidden)).map((c) => (
                 <ListItem dense key={`${c.uuid}_${c.name}_patch_child_list`} className={classes.childListItem}>
-                  <ListItemIcon className={classes.childListIcon}>
-                    {getIconByType(c.type)}
-                  </ListItemIcon>
-                  <ListItemText primary={c.name} />
+                  <Tooltip title={c.type} aria-label={c.type}>
+                    <ListItemIcon className={
+                      clsx(classes.childListIcon, { [classes.lightIcon]: c.type.toLowerCase().includes('light') })
+                    }
+                    >
+                      {getIconByType(c.type)}
+                    </ListItemIcon>
+                  </Tooltip>
+                  <Tooltip title={c.uuid} aria-label={c.uuid}>
+                    <ListItemText primary={c.name} />
+                  </Tooltip>
                   <ListItemSecondaryAction classes={{
                     root: classes.secondRoot,
                   }}

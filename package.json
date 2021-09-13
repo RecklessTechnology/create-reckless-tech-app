@@ -1,5 +1,6 @@
 {
   "name": "@recklesstechnology/create-reckless-tech-app",
+  "homepage": "https://reckless.technology/",
   "version": "0.0.52",
   "description": "Creates a standard Reckless Tech app from the current template.",
   "main": "index.js",
@@ -35,8 +36,10 @@
     "react-flow-renderer": "^9.5.4",
     "react-qr-code": "^1.1.1",
     "react-scripts": "4.0.3",
+    "react-spring": "^9.2.4",
     "three": "^0.129.0",
     "trystero": "^0.7.11",
+    "typeface-roboto-material": "^0.0.1",
     "uuid": "^8.3.2",
     "web-vitals": "^1.0.1"
   },
@@ -73,7 +76,6 @@
   "bugs": {
     "url": "https://github.com/RecklessTechnology/create-reckless-tech-app/issues"
   },
-  "homepage": "https://reckless.technology/demos/create-reckless-tech-app/",
   "devDependencies": {
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.23.4",

@@ -1,5 +1,10 @@
-#### Creates the standard Reckless Tech app template.  
+#### Check out the [demo](https://reckless.technology)
 ---  
+
+#### Reckless Technology is a free and open source progressive web app that allows artists and performers to quickly connect and collaborate in real-time.  
+
+---  
+
 #### Getting started  
 ```  
 npx @recklesstechnology/create-reckless-tech-app my-app  

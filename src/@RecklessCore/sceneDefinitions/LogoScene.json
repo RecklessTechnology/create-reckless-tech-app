@@ -219,7 +219,7 @@
   "object": {
     "uuid": "5FC9ACA9-2A93-474D-AA32-FACC76551914",
     "type": "Scene",
-    "name": "Scene",
+    "name": "Reckless Logo",
     "userData": {
       "isPatchHidden": false
     },
@@ -2359,7 +2359,7 @@
 
         "receiveShadow": true,
         "userData": {
-          "isPatchHidden": false
+          "isPatchHidden": true
         },
         "layers": 1,
         "matrix": [
@@ -2389,7 +2389,7 @@
         "name": "SpotLight",
         "castShadow": true,
         "userData": {
-          "isPatchHidden": false
+          "isPatchHidden": true
         },
         "layers": 1,
         "matrix": [

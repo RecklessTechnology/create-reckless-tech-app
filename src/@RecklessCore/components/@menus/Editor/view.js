@@ -8,8 +8,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { Drawer, Divider } from '@material-ui/core';
 
-import NodeEditor from '../../NodeEditor/index';
-import EditorToolbar from '../../EditorToolbar/index';
+import NodeEditor from '../../NodeEditor';
+import EditorToolbar from './EditorToolbar';
 
 const useStyles = makeStyles(() => ({
   root: {

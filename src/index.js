@@ -1,15 +1,17 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/jsx-filename-extension */
-/* eslint-disable no-console */
 
 import './wdyr';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import 'typeface-roboto-material';
+
 import { ThemeProvider } from '@material-ui/styles';
 import { CssBaseline, unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-ui/core';
 import { Palette } from '@material-ui/core/styles/createPalette';
+import grey from '@material-ui/core/colors/grey';
 
 import App from './App';
 
@@ -23,7 +25,6 @@ import GeneratorsManager from './@RecklessCore/managers/GeneratorsManager';
 import TransformsManager from './@RecklessCore/managers/TransformsManager';
 
 import InspectorMenuManager from './@RecklessCore/managers/InspectorMenuManager';
-import ToolsMenuManager from './@RecklessCore/managers/ToolsMenuManager';
 import EditorMenuManager from './@RecklessCore/managers/EditorMenuManager';
 
 // import reportWebVitals from './reportWebVitals';
@@ -32,9 +33,16 @@ const theme = createMuiTheme({
   palette: {
     type: 'dark',
     background: {
-      default: '#303030',
+      default: grey[900],
+      paper: grey[900],
     },
     ...Palette,
+    primary: {
+      main: grey[700],
+    },
+    secondary: {
+      main: grey[500],
+    },
   },
 });
 
@@ -50,11 +58,9 @@ ReactDOM.render(
                 <GeneratorsManager>
                   <TransformsManager>
                     <EditorMenuManager>
-                      <ToolsMenuManager>
-                        <InspectorMenuManager>
-                          <App />
-                        </InspectorMenuManager>
-                      </ToolsMenuManager>
+                      <InspectorMenuManager>
+                        <App />
+                      </InspectorMenuManager>
                     </EditorMenuManager>
                   </TransformsManager>
                 </GeneratorsManager>

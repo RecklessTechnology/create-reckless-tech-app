@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable import/prefer-default-export */
 
 // Take threejs JSON Object Scene format:

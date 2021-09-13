@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable no-undef */
 
@@ -15,7 +14,7 @@ import useAppContext from '../contexts/useAppContext';
 import usePeersContext from '../contexts/usePeersContext';
 
 import generateRoomId from '../utils/generateRoomId';
-import { restoreData, persistData } from '../PersistantStorage';
+import { restoreData, persistData } from '../utils/PersistantStorage';
 
 import EventsManager from './EventsManager';
 import { isHost } from '../utils/userCheck';

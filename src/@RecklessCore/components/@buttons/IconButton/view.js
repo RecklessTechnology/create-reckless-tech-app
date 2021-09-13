@@ -27,7 +27,6 @@ const IconButtonView = ({
     <Tooltip title={label} aria-label={label}>
       <IconButton
         size="small"
-        color="inherit"
         aria-label={label}
         onClick={handeClick}
         {...props}

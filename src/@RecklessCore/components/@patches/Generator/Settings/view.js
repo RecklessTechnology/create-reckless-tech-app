@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-filename-extension */
 

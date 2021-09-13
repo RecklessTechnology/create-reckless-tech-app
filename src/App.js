@@ -3,23 +3,20 @@ import React, { useCallback, useEffect, useRef } from 'react';
 
 import AppView from './AppView';
 import World from './@RecklessCore/world';
+
+import Scene from './@RecklessCore/scenes';
 import SceneManager from './@RecklessCore/managers/SceneManager';
-import Scene from './@RecklessCore/Scene';
-import DynamicScene from './@RecklessCore/scenes/Dynamic/index';
+import DynamicScene from './@RecklessCore/scenes/Dynamic';
 
 import useAppContext from './@RecklessCore/contexts/useAppContext';
 import useEditorMenuContext from './@RecklessCore/contexts/useEditorMenuContext';
-import useToolsMenuContext from './@RecklessCore/contexts/useToolsMenuContext';
 import useInspectorMenuContext from './@RecklessCore/contexts/useInspectorMenuContext';
-
-// import Outputs from './@RecklessCore/outputs/index';
 
 const App = () => {
   const {
     publish, subscribe, sceneJSON, setSceneJSON,
   } = useAppContext();
   const { editorMenuHeight, editorMenuOpen, setEditorMenuOpen } = useEditorMenuContext();
-  const { toolsMenuWidth, toolsMenuOpen, setToolsMenuOpen } = useToolsMenuContext();
   const { inspectorMenuWidth, inspectorMenuOpen, setInspectorMenuOpen } = useInspectorMenuContext();
 
   const isMounted = useRef(false);
@@ -45,9 +42,6 @@ const App = () => {
       editorMenuOpen,
       editorMenuHeight,
       setEditorMenuOpen,
-      toolsMenuOpen,
-      toolsMenuWidth,
-      setToolsMenuOpen,
       inspectorMenuOpen,
       inspectorMenuWidth,
       setInspectorMenuOpen,

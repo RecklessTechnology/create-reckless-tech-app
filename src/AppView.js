@@ -2,7 +2,7 @@
 
 import { PropTypes } from 'prop-types';
 
-import React, { createContext, memo } from 'react';
+import React, { memo } from 'react';
 
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,14 +14,11 @@ import {
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import CreateIcon from '@material-ui/icons/Create';
 
-import Tools from './@RecklessCore/components/@menus/Tools/index';
 import Inspector from './@RecklessCore/components/@menus/Inspector/index';
 import Editor from './@RecklessCore/components/@menus/Editor/index';
 
 import IconButtonView from './@RecklessCore/components/@buttons/IconButton/view';
-
-export const ToolsMenuContext = createContext(null);
-export const EditorMenuContext = createContext(null);
+import WelcomeModal from './@RecklessCore/components/@modals/welcome';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
   appBar: {
-    width: (props) => (`calc(100% - ${(props.toolsMenuOpen ? props.toolsMenuWidth : 0) + (props.inspectorMenuOpen ? props.inspectorMenuWidth : 0)}px)`),
+    width: (props) => (`calc(100% - ${(props.inspectorMenuOpen ? props.inspectorMenuWidth : 0)}px)`),
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -46,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: 'none',
   },
   appBarShiftLeft: {
-    marginLeft: (props) => (props.toolsMenuWidth),
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
@@ -74,7 +70,6 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    marginLeft: (props) => (props.toolsMenuWidth),
   },
   renderAreaShiftRight: {
     transition: theme.transitions.create('margin', {
@@ -84,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: (props) => (props.inspectorMenuWidth),
   },
   bottomAppBar: {
-    width: (props) => (`calc(100% - ${(props.toolsMenuOpen ? props.toolsMenuWidth : 0) + (props.inspectorMenuOpen ? props.inspectorMenuWidth : 0)}px)`),
+    width: (props) => (`calc(100% - ${(props.inspectorMenuOpen ? props.inspectorMenuWidth : 0)}px)`),
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -107,8 +102,6 @@ const AppView = ({
   editorMenuOpen,
   editorMenuHeight,
   setEditorMenuOpen,
-  toolsMenuOpen,
-  toolsMenuWidth,
   inspectorMenuOpen,
   inspectorMenuWidth,
   setInspectorMenuOpen,
@@ -117,8 +110,6 @@ const AppView = ({
   const classes = useStyles({
     editorMenuOpen,
     editorMenuHeight,
-    toolsMenuOpen,
-    toolsMenuWidth,
     inspectorMenuOpen,
     inspectorMenuWidth,
   });
@@ -129,10 +120,8 @@ const AppView = ({
         [classes.rootShiftBottom]: editorMenuOpen,
       })}
     >
-      {toolsMenuOpen === true ? <Tools /> : null}
       <main
         className={clsx(classes.renderArea, {
-          [classes.renderAreaShiftLeft]: toolsMenuOpen,
           [classes.renderAreaShiftRight]: inspectorMenuOpen,
         })}
       >
@@ -141,7 +130,6 @@ const AppView = ({
           position="fixed"
           color="primary"
           className={clsx(classes.bottomAppBar, {
-            [classes.appBarShiftLeft]: toolsMenuOpen,
             [classes.appBarShiftRight]: inspectorMenuOpen,
           })}
         >
@@ -178,6 +166,7 @@ const AppView = ({
       </main>
       {inspectorMenuOpen === true ? <Inspector /> : null}
       {editorMenuOpen === true ? <Editor /> : null}
+      <WelcomeModal />
     </div>
   );
 };
@@ -189,8 +178,6 @@ AppView.propTypes = {
   editorMenuOpen: PropTypes.bool.isRequired,
   editorMenuHeight: PropTypes.number.isRequired,
   setEditorMenuOpen: PropTypes.func.isRequired,
-  toolsMenuOpen: PropTypes.bool.isRequired,
-  toolsMenuWidth: PropTypes.number.isRequired,
   inspectorMenuOpen: PropTypes.bool.isRequired,
   inspectorMenuWidth: PropTypes.number.isRequired,
   setInspectorMenuOpen: PropTypes.func.isRequired,
