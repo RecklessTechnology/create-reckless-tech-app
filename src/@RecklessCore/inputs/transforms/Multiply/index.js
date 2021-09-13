@@ -5,8 +5,8 @@ import useDevicesContext from '../../../contexts/useDevicesContext';
 import useGeneratorsContext from '../../../contexts/useGeneratorsContext';
 import useTransformContext from '../../../contexts/useTransformContext';
 
-const MultiplyTransform = ({ amount }) => {
-  const { uuid, setValue: setTransValue } = useTransformContext();
+const MultiplyTransform = () => {
+  const { uuid, setValue: setTransValue, amount } = useTransformContext();
   const { sceneJSON } = useAppContext();
 
   const { connections } = sceneJSON;

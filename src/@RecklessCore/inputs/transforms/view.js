@@ -11,7 +11,6 @@ import MultiplyTransform from './Multiply/index';
 const TransformsView = ({ ...props }) => {
   switch (props.type) {
     default:
-    case 'Orbit':
       return (
         <TransformManager {...DefaultProps} type={props.type} {...props}>
           <MultiplyTransform {...props} />
