@@ -47,10 +47,11 @@ const TransformManager = ({
   const [uuid] = useState(props.uuid);
   const [name] = useState(props.name);
   const [displayName] = useState(props.displayName);
-  const [type, setType] = useState(props.type || '');
+  const [type, setType] = useState(props.type || 'calculator');
 
   const [amount, setAmount] = useState(props.amount || 1);
   const [value, setValue] = useState(props.value || [0, 0, 0]);
+  const [operation, setOperation] = useState(props.operation || 'multiply');
 
   // Inputs
   const updateFromInput = (prop, val) => {
@@ -72,6 +73,7 @@ const TransformManager = ({
 
   useEffect(() => { events.publish(`${uuid}-value-updated`, value); }, [value, events, uuid]);
   useEffect(() => { events.publish(`${uuid}-amount-updated`, amount); }, [amount, events, uuid]);
+  useEffect(() => { events.publish(`${uuid}-operation-updated`, operation); }, [operation, events, uuid]);
 
   const { registerTransform, unregisterTransform } = useTransformsContext();
   const forceUpdate = useForceUpdate();
@@ -89,8 +91,12 @@ const TransformManager = ({
 
     value,
     setValue,
+
     amount,
     setAmount,
+
+    operation,
+    setOperation,
 
     subscribe: events.subscribe,
     unsubscribe: events.unsubscribe,
@@ -102,6 +108,8 @@ const TransformManager = ({
 
     value, setValue,
     amount, setAmount,
+
+    operation, setOperation,
 
     events,
   ]);
@@ -126,10 +134,15 @@ const TransformManager = ({
 
     type,
     setType,
+
     value,
     setValue,
+
     amount,
     setAmount,
+
+    operation,
+    setOperation,
 
     forceUpdate,
 
@@ -145,6 +158,7 @@ const TransformManager = ({
     type, setType,
     value, setValue,
     amount, setAmount,
+    operation, setOperation,
 
     forceUpdate,
     events,

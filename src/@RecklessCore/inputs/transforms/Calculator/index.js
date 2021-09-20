@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useEffect } from 'react';
 
 import useAppContext from '../../../contexts/useAppContext';
@@ -5,8 +6,10 @@ import useDevicesContext from '../../../contexts/useDevicesContext';
 import useGeneratorsContext from '../../../contexts/useGeneratorsContext';
 import useTransformContext from '../../../contexts/useTransformContext';
 
-const MultiplyTransform = () => {
-  const { uuid, setValue: setTransValue, amount } = useTransformContext();
+const CalculatorTransform = () => {
+  const {
+    uuid, setValue: setTransValue, amount, operation,
+  } = useTransformContext();
   const { sceneJSON } = useAppContext();
 
   const { connections } = sceneJSON;
@@ -16,12 +19,26 @@ const MultiplyTransform = () => {
 
   // Inputs
   useEffect(() => {
+    console.log(operation);
+    const calculate = (v) => {
+      switch (operation) {
+        default:
+        case 'Addition':
+          return (v + amount);
+        case 'Subtraction':
+          return (v - amount);
+        case 'Multiply':
+          return (v * amount);
+        case 'Divide':
+          return (v / amount);
+      }
+    };
     const updateFromInput = (prop, val) => {
       switch (prop) {
         default:
           break;
         case 'value':
-          setTransValue(val.map((v) => (v * amount)));
+          setTransValue(val.map(calculate));
           break;
       }
     };
@@ -33,11 +50,11 @@ const MultiplyTransform = () => {
       const device = findDevice(c.from);
       if (device) { device.subscribe(`${c.from}-${c.fromProp.toLowerCase()}-updated`, (val) => { updateFromInput(c.toProp.toLowerCase(), val); }); }
     });
-  }, [connections, uuid, findGenerator, findDevice, amount, setTransValue]);
+  }, [connections, uuid, findGenerator, findDevice, amount, setTransValue, operation]);
 
   return null;
 };
 
-MultiplyTransform.whyDidYouRender = false;
+CalculatorTransform.whyDidYouRender = false;
 
-export default MultiplyTransform;
+export default CalculatorTransform;

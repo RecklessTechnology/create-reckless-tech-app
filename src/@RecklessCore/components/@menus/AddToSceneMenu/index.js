@@ -199,11 +199,11 @@ const AddToSceneMenu = () => {
           <TabPanel value={value} index={4}>
             <ul className={classes.itemList}>
               <ListSubheader>Add Transform</ListSubheader>
-              <MenuItem dense onClick={() => { addTransform('Multiply'); closeMenu(); }}>
+              <MenuItem dense onClick={() => { addTransform('Calculator'); closeMenu(); }}>
                 <ListItemIcon>
-                  {getIconByType('Transform')}
+                  {getIconByType('Calculator')}
                 </ListItemIcon>
-                <Typography variant="inherit">Multiply</Typography>
+                <Typography variant="inherit">Calculator</Typography>
               </MenuItem>
             </ul>
           </TabPanel>

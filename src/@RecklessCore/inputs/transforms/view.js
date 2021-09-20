@@ -6,14 +6,15 @@ import React, { memo } from 'react';
 
 import TransformManager, { DefaultProps } from '../../managers/TransformManager';
 
-import MultiplyTransform from './Multiply/index';
+import CalculatorTransform from './Calculator/index';
 
 const TransformsView = ({ ...props }) => {
   switch (props.type) {
     default:
+    case 'Calculator':
       return (
         <TransformManager {...DefaultProps} type={props.type} {...props}>
-          <MultiplyTransform {...props} />
+          <CalculatorTransform {...props} />
         </TransformManager>
       );
   }

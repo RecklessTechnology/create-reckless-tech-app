@@ -2466,9 +2466,10 @@
   "transforms": [
     {
       "uuid": "3948a8d7-dd32-4ca8-9c0f-f28a1dff3e10",
-      "type": "Multiply",
-      "name": "Multiply",
-      "amount": 2
+      "type": "Calculator",
+      "name": "Calculator",
+      "amount": 2,
+      "operation": "Multiply"
     }
   ]
 }

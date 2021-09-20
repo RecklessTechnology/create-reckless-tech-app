@@ -16,6 +16,7 @@ const TransformSettings = ({ uuid, ...props }) => {
   const transformObj = findTransform(uuid);
 
   const [amt, setAmt] = useState(1);
+  const [oper, setOper] = useState('Multiply');
 
   const isMounted = useRef(false);
 
@@ -24,6 +25,12 @@ const TransformSettings = ({ uuid, ...props }) => {
       setAmt(val);
     }
   }, [isMounted, setAmt]);
+
+  const updateOperation = useCallback((val) => {
+    if (isMounted.current) {
+      setOper(val);
+    }
+  }, [isMounted, setOper]);
 
   useEffect(() => {
     if (transformObj !== undefined) {
@@ -37,6 +44,18 @@ const TransformSettings = ({ uuid, ...props }) => {
     };
   }, [uuid, transformObj, updateAmount]);
 
+  useEffect(() => {
+    if (transformObj !== undefined) {
+      isMounted.current = true;
+
+      transformObj.subscribe(`${uuid}-operation-updated`, updateOperation);
+      setOper(transformObj.operation);
+    }
+    return () => {
+      isMounted.current = false;
+    };
+  }, [uuid, transformObj, updateOperation]);
+
   return (
     <TransformSettingsView
       {...props}
@@ -45,6 +64,12 @@ const TransformSettings = ({ uuid, ...props }) => {
         setAmount: (val) => {
           if (transformObj !== undefined) {
             transformObj.setAmount(val);
+          }
+        },
+        operation: oper,
+        setOperation: (val) => {
+          if (transformObj !== undefined) {
+            transformObj.setOperation(val);
           }
         },
       }}

@@ -9,7 +9,7 @@ import ImageIcon from '@material-ui/icons/Image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSun, faLayerGroup,
-  faCube, faWaveSquare, faMouse, faKeyboard, faSquareRootAlt,
+  faCube, faWaveSquare, faMouse, faKeyboard, faCalculator,
 } from '@fortawesome/free-solid-svg-icons';
 
 const getIconByType = (type) => {
@@ -31,8 +31,8 @@ const getIconByType = (type) => {
       return <FontAwesomeIcon icon={faCube} />;
     case 'scene':
       return <ImageIcon fontSize="small" />;
-    case 'transform':
-      return <FontAwesomeIcon icon={faSquareRootAlt} />;
+    case 'calculator':
+      return <FontAwesomeIcon icon={faCalculator} />;
     case 'mouse':
       return <FontAwesomeIcon icon={faMouse} />;
     case 'keyboard':
