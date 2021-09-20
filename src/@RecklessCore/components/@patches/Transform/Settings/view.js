@@ -7,7 +7,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
   ListItem, Grid,
   Typography, Tooltip, TextField,
+  Select, MenuItem,
+  ListItemIcon, ListItemText,
 } from '@material-ui/core';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faPlus, faMinus, faTimes, faDivide,
+} from '@fortawesome/free-solid-svg-icons';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
@@ -42,16 +49,83 @@ const useStyles = makeStyles(() => ({
     paddingRight: 9,
     paddingTop: 15,
   },
+  selectRoot: {
+    width: '100%',
+  },
+  menuItemRoot: {
+    padding: 0,
+  },
+  iconRoot: {
+    minWidth: 10,
+    marginRight: 10,
+  },
 }));
+
+const getIcon = (type) => {
+  switch (type) {
+    default:
+    case 'Add':
+      return <FontAwesomeIcon icon={faPlus} />;
+    case 'Subtract':
+      return <FontAwesomeIcon icon={faMinus} />;
+    case 'Multiply':
+      return <FontAwesomeIcon icon={faTimes} />;
+    case 'Divide':
+      return <FontAwesomeIcon icon={faDivide} />;
+  }
+};
 
 // eslint-disable-next-line no-unused-vars
 const TransformSettingsView = ({
-  amount, setAmount, uuid, propName, disableInput, disableOutput,
+  amount, setAmount,
+  operation, setOperation,
+  uuid, propName, disableInput, disableOutput,
 }) => {
   const classes = useStyles();
+  const options = ['Add', 'Subtract', 'Multiply', 'Divide'];
   return (
     <ListItem dense className={classes.propItem}>
       <Grid spacing={0} container className={classes.propGrid}>
+        <Grid item xs={1} className={classes.handleGridLeft} />
+        <Grid item xs={10}>
+          <PropAccordianView
+            defaultOpen
+            header={<Typography className={classes.propText}>Operation</Typography>}
+            expandIcon={(
+              <ExpandMoreIcon fontSize="small" />
+            )}
+          >
+            <Tooltip title={operation} aria-label={operation}>
+              <Select
+                className={classes.selectRoot}
+                labelId="label"
+                id="select"
+                value={operation}
+                onChange={(evt) => {
+                  setOperation(options[evt.currentTarget.value]);
+                }}
+                renderValue={() => (
+                  <MenuItem className={classes.menuItemRoot} value={operation}>
+                    <ListItemIcon className={classes.iconRoot}>
+                      {getIcon(operation)}
+                    </ListItemIcon>
+                    <ListItemText primary={operation} />
+                  </MenuItem>
+                )}
+              >
+                {options.map((o) => (
+                  <MenuItem key={`calc_select_${o}`} value={o}>
+                    <ListItemIcon className={classes.iconRoot}>
+                      {getIcon(o)}
+                    </ListItemIcon>
+                    <ListItemText primary={o} />
+                  </MenuItem>
+                ))}
+              </Select>
+            </Tooltip>
+          </PropAccordianView>
+        </Grid>
+        <Grid item xs={1} className={classes.handleGridLeft} />
         <Grid item xs={1} className={classes.handleGridLeft}>
           {disableInput === false ? <InputHandle {...{ uuid, propName }} /> : null}
         </Grid>

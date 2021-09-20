@@ -14,11 +14,12 @@ import PatchRoot from '../shared/PatchRoot';
 import TransformSettings from './Settings';
 
 const TransformPatch = ({ data }) => {
-  const { uuid, width, label } = data;
-
+  const {
+    uuid, width, label, type,
+  } = data;
   return (
     <PatchRoot {...{ width }}>
-      <PatchDetails {...{ name: `${label}`, uuid: `${uuid}`, type: 'Transform' }} />
+      <PatchDetails {...{ name: `${label}`, uuid: `${uuid}`, type }} />
       <TransformSettings {...{
         uuid, propName: 'amount', disableInput: true, disableOutput: true,
       }}
