@@ -1,5 +1,4 @@
-/* eslint-disable no-console */
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import useAppContext from '../../../contexts/useAppContext';
 import useDevicesContext from '../../../contexts/useDevicesContext';
@@ -8,7 +7,7 @@ import useTransformContext from '../../../contexts/useTransformContext';
 
 const CalculatorTransform = () => {
   const {
-    uuid, setValue: setTransValue, amount, operation,
+    uuid, setValue: setTransValue, amount, operator,
   } = useTransformContext();
   const { sceneJSON } = useAppContext();
 
@@ -17,22 +16,22 @@ const CalculatorTransform = () => {
   const { findGenerator } = useGeneratorsContext();
   const { findDevice } = useDevicesContext();
 
+  const calculate = useCallback((v) => {
+    switch (operator) {
+      default:
+      case 'Add':
+        return (v + amount);
+      case 'Subtract':
+        return (v - amount);
+      case 'Multiply':
+        return (v * amount);
+      case 'Divide':
+        return (v / amount);
+    }
+  }, [amount, operator]);
+
   // Inputs
   useEffect(() => {
-    console.log(operation);
-    const calculate = (v) => {
-      switch (operation) {
-        default:
-        case 'Addition':
-          return (v + amount);
-        case 'Subtraction':
-          return (v - amount);
-        case 'Multiply':
-          return (v * amount);
-        case 'Divide':
-          return (v / amount);
-      }
-    };
     const updateFromInput = (prop, val) => {
       switch (prop) {
         default:
@@ -50,7 +49,7 @@ const CalculatorTransform = () => {
       const device = findDevice(c.from);
       if (device) { device.subscribe(`${c.from}-${c.fromProp.toLowerCase()}-updated`, (val) => { updateFromInput(c.toProp.toLowerCase(), val); }); }
     });
-  }, [connections, uuid, findGenerator, findDevice, amount, setTransValue, operation]);
+  }, [connections, uuid, findGenerator, findDevice, amount, setTransValue, calculate]);
 
   return null;
 };

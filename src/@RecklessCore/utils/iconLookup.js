@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSun, faLayerGroup,
   faCube, faWaveSquare, faMouse, faKeyboard, faCalculator,
+  faPlus, faMinus, faTimes, faDivide,
 } from '@fortawesome/free-solid-svg-icons';
 
 const getIconByType = (type) => {
@@ -37,6 +38,14 @@ const getIconByType = (type) => {
       return <FontAwesomeIcon icon={faMouse} />;
     case 'keyboard':
       return <FontAwesomeIcon icon={faKeyboard} />;
+    case 'add':
+      return <FontAwesomeIcon icon={faPlus} />;
+    case 'subtract':
+      return <FontAwesomeIcon icon={faMinus} />;
+    case 'multiply':
+      return <FontAwesomeIcon icon={faTimes} />;
+    case 'divide':
+      return <FontAwesomeIcon icon={faDivide} />;
   }
 };
 

@@ -51,12 +51,18 @@ const TransformManager = ({
 
   const [amount, setAmount] = useState(props.amount || 1);
   const [value, setValue] = useState(props.value || [0, 0, 0]);
-  const [operation, setOperation] = useState(props.operation || 'multiply');
+  const [operator, setOperator] = useState(props.operator || 'Add');
 
   // Inputs
-  const updateFromInput = (prop, val) => {
-    setValue(val);
-  };
+  const updateFromInput = useCallback((prop, val) => {
+    switch (prop) {
+      default:
+        break;
+      case 'data':
+        setValue(val);
+        break;
+    }
+  }, [setValue]);
 
   useEffect(() => {
     connections.filter((c) => (c.to === uuid)).forEach((c) => {
@@ -69,11 +75,11 @@ const TransformManager = ({
       const device = findDevice(c.from);
       if (device) { device.subscribe(`${c.from}-${c.fromProp.toLowerCase()}-updated`, (val) => { updateFromInput(c.toProp.toLowerCase(), val); }); }
     });
-  }, [connections, uuid, findGenerator, findPeer, findDevice]);
+  }, [connections, uuid, findGenerator, findPeer, findDevice, updateFromInput]);
 
   useEffect(() => { events.publish(`${uuid}-value-updated`, value); }, [value, events, uuid]);
   useEffect(() => { events.publish(`${uuid}-amount-updated`, amount); }, [amount, events, uuid]);
-  useEffect(() => { events.publish(`${uuid}-operation-updated`, operation); }, [operation, events, uuid]);
+  useEffect(() => { events.publish(`${uuid}-operator-updated`, operator); }, [operator, events, uuid]);
 
   const { registerTransform, unregisterTransform } = useTransformsContext();
   const forceUpdate = useForceUpdate();
@@ -95,8 +101,8 @@ const TransformManager = ({
     amount,
     setAmount,
 
-    operation,
-    setOperation,
+    operator,
+    setOperator,
 
     subscribe: events.subscribe,
     unsubscribe: events.unsubscribe,
@@ -108,8 +114,7 @@ const TransformManager = ({
 
     value, setValue,
     amount, setAmount,
-
-    operation, setOperation,
+    operator, setOperator,
 
     events,
   ]);
@@ -141,8 +146,8 @@ const TransformManager = ({
     amount,
     setAmount,
 
-    operation,
-    setOperation,
+    operator,
+    setOperator,
 
     forceUpdate,
 
@@ -158,7 +163,7 @@ const TransformManager = ({
     type, setType,
     value, setValue,
     amount, setAmount,
-    operation, setOperation,
+    operator, setOperator,
 
     forceUpdate,
     events,

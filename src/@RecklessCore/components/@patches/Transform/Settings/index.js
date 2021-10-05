@@ -11,65 +11,41 @@ import useTransformsContext from '../../../../contexts/useTransformsContext';
 
 import TransformSettingsView from './view';
 
-const TransformSettings = ({ uuid, ...props }) => {
+const TransformSettings = (props) => {
+  const { uuid, propName, defaultVal } = props;
   const { findTransform } = useTransformsContext();
   const transformObj = findTransform(uuid);
 
-  const [amt, setAmt] = useState(1);
-  const [oper, setOper] = useState('Multiply');
+  const [val, setVal] = useState(defaultVal);
 
   const isMounted = useRef(false);
 
-  const updateAmount = useCallback((val) => {
+  const updateValue = useCallback((v) => {
     if (isMounted.current) {
-      setAmt(val);
+      setVal(v);
     }
-  }, [isMounted, setAmt]);
-
-  const updateOperation = useCallback((val) => {
-    if (isMounted.current) {
-      setOper(val);
-    }
-  }, [isMounted, setOper]);
+  }, [isMounted, setVal]);
 
   useEffect(() => {
     if (transformObj !== undefined) {
       isMounted.current = true;
 
-      transformObj.subscribe(`${uuid}-amount-updated`, updateAmount);
-      setAmt(transformObj.amount);
+      transformObj.subscribe(`${uuid}-${propName}-updated`, updateValue);
+      setVal(transformObj[propName]);
     }
     return () => {
       isMounted.current = false;
     };
-  }, [uuid, transformObj, updateAmount]);
-
-  useEffect(() => {
-    if (transformObj !== undefined) {
-      isMounted.current = true;
-
-      transformObj.subscribe(`${uuid}-operation-updated`, updateOperation);
-      setOper(transformObj.operation);
-    }
-    return () => {
-      isMounted.current = false;
-    };
-  }, [uuid, transformObj, updateOperation]);
+  }, [uuid, transformObj, updateValue, propName]);
 
   return (
     <TransformSettingsView
       {...props}
       {...{
-        amount: amt,
-        setAmount: (val) => {
+        value: val,
+        setValue: (v) => {
           if (transformObj !== undefined) {
-            transformObj.setAmount(val);
-          }
-        },
-        operation: oper,
-        setOperation: (val) => {
-          if (transformObj !== undefined) {
-            transformObj.setOperation(val);
+            transformObj[`set${propName.replace(/^\w/, (c) => c.toUpperCase())}`](v);
           }
         },
       }}

@@ -2469,7 +2469,7 @@
       "type": "Calculator",
       "name": "Calculator",
       "amount": 2,
-      "operation": "Multiply"
+      "operator": "Multiply"
     }
   ]
 }
