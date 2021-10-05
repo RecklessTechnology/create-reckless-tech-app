@@ -21,7 +21,11 @@ const TransformPatch = ({ data }) => {
     <PatchRoot {...{ width }}>
       <PatchDetails {...{ name: `${label}`, uuid: `${uuid}`, type }} />
       <TransformSettings {...{
-        uuid, propName: 'amount', disableInput: true, disableOutput: true,
+        uuid, propName: 'operator', type: 'select', defaultVal: 'Add', data: ['Add', 'Subtract', 'Multiply', 'Divide'], disableInput: true, disableOutput: true,
+      }}
+      />
+      <TransformSettings {...{
+        uuid, propName: 'amount', type: 'input', defaultVal: 1, data: 1, disableInput: true, disableOutput: true,
       }}
       />
       <PropListItem {...{
