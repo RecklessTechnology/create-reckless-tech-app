@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 
 # Install all node packages
 RUN yarn install
-RUN yarn global add react-scripts@3.4.1
+RUN yarn global add react-scripts
 
 # Build project
 RUN npm run build
