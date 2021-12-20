@@ -1,0 +1,104 @@
+import PropTypes from 'prop-types';
+
+import React, { memo } from 'react';
+import ReactFlow, {
+  Controls, isNode,
+} from 'react-flow-renderer';
+import dagre from 'dagre';
+
+import { makeStyles } from '@material-ui/styles';
+
+const useStyles = makeStyles(() => ({
+  root: {
+    width: '100%',
+    height: '100%',
+  },
+}));
+
+const onLoad = () => {
+  // reactFlowInstance.fitView();
+};
+
+const nodeWidth = 150;
+const nodeHeight = 200;
+
+const NodeEditorView = ({
+  elements, nodeTypes, edgeTypes, updateConnection, addConnection,
+}) => {
+  const dagreGraph = new dagre.graphlib.Graph();
+  dagreGraph.setDefaultEdgeLabel(() => ({}));
+
+  const getLayoutedElements = (elems) => {
+    dagreGraph.setGraph({
+      rankdir: 'LR',
+      align: 'DL',
+      // ranker: 'tight-tree',
+      // acyclicer: 'greedy',
+      nodesep: 50,
+      edgesep: 0,
+      ranksep: 50,
+      marginx: 20,
+      marginy: 20,
+    });
+
+    elems.forEach((el) => {
+      if (isNode(el)) {
+        dagreGraph.setNode(el.id, { width: nodeWidth, height: nodeHeight });
+      } else {
+        dagreGraph.setEdge(el.source, el.target);
+      }
+    });
+
+    dagre.layout(dagreGraph);
+
+    return elems.filter((el) => !el.isHidden).map((el) => {
+      let newProps = {};
+      if (isNode(el)) {
+        const nodeWithPosition = dagreGraph.node(el.id);
+        newProps = {
+          targetPosition: 'right',
+          sourcePosition: 'left',
+          position: {
+            x: nodeWithPosition.x - nodeWidth / 2 + Math.random() / 1000,
+            y: nodeWithPosition.y - nodeHeight / 2,
+          },
+        };
+      }
+
+      return {
+        ...el,
+        ...newProps,
+      };
+    });
+  };
+
+  const layoutedElements = getLayoutedElements(elements.filter((el) => !el.isHidden));
+  const classes = useStyles();
+  return (
+    <div className={classes.root}>
+      <ReactFlow
+        elements={layoutedElements}
+        nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
+        onLoad={onLoad}
+        snapToGrid
+        onEdgeUpdate={updateConnection}
+        onConnect={addConnection}
+      >
+        <Controls />
+      </ReactFlow>
+    </div>
+  );
+};
+
+NodeEditorView.whyDidYouRender = (process.env.NODE_ENV === 'development');
+
+NodeEditorView.propTypes = {
+  elements: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  nodeTypes: PropTypes.shape([]).isRequired,
+  edgeTypes: PropTypes.shape([]).isRequired,
+  updateConnection: PropTypes.func.isRequired,
+  addConnection: PropTypes.func.isRequired,
+};
+
+export default memo(NodeEditorView);

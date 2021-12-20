@@ -1,6 +1,3 @@
-/* eslint-disable no-undef */
-/* eslint-disable react/jsx-filename-extension */
-
 import './wdyr';
 
 import React from 'react';
@@ -13,19 +10,20 @@ import { CssBaseline, unstable_createMuiStrictModeTheme as createMuiTheme } from
 import { Palette } from '@material-ui/core/styles/createPalette';
 import grey from '@material-ui/core/colors/grey';
 
-import App from './App';
+import App from './@RecklessCore/App/Render/index';
 
-import AppManager from './@RecklessCore/managers/AppManager';
-import ThreeObjectsManager from './@RecklessCore/managers/ThreeObjectsManager';
-import PeersManager from './@RecklessCore/managers/PeersManager';
-import ConnectionsManager from './@RecklessCore/managers/ConnectionsManager';
+import AppManager from './@RecklessCore/App/Managers/AppManager';
+import ThreeObjectsManager from './@RecklessCore/ThreeObjects/Managers/ThreeObjectsManager';
+import PeersManager from './@RecklessCore/Peers/Managers/PeersManager';
+import ConnectionsManager from './@RecklessCore/Connections/Managers/ConnectionsManager';
 
-import DevicesManager from './@RecklessCore/managers/DevicesManager';
-import GeneratorsManager from './@RecklessCore/managers/GeneratorsManager';
-import TransformsManager from './@RecklessCore/managers/TransformsManager';
+import DevicesManager from './@RecklessCore/Devices/Managers/DevicesManager';
+import GeneratorsManager from './@RecklessCore/Generators/Managers/GeneratorsManager';
+import TransformsManager from './@RecklessCore/Transforms/Managers/TransformsManager';
+import WidgetsManager from './@RecklessCore/Widgets/Managers/WidgetsManager';
 
-import InspectorMenuManager from './@RecklessCore/managers/InspectorMenuManager';
-import EditorMenuManager from './@RecklessCore/managers/EditorMenuManager';
+import InspectorMenuManager from './@RecklessCore/InspectorMenu/Managers/InspectorMenuManager';
+import EditorMenuManager from './@RecklessCore/EditorMenu/Managers/EditorMenuManager';
 
 // import reportWebVitals from './reportWebVitals';
 
@@ -57,11 +55,13 @@ ReactDOM.render(
               <DevicesManager>
                 <GeneratorsManager>
                   <TransformsManager>
-                    <EditorMenuManager>
-                      <InspectorMenuManager>
-                        <App />
-                      </InspectorMenuManager>
-                    </EditorMenuManager>
+                    <WidgetsManager>
+                      <EditorMenuManager>
+                        <InspectorMenuManager>
+                          <App />
+                        </InspectorMenuManager>
+                      </EditorMenuManager>
+                    </WidgetsManager>
                   </TransformsManager>
                 </GeneratorsManager>
               </DevicesManager>
@@ -71,6 +71,7 @@ ReactDOM.render(
       </AppManager>
     </ThemeProvider>
   </React.StrictMode>,
+  // eslint-disable-next-line no-undef
   document.getElementById('root'),
 );
 

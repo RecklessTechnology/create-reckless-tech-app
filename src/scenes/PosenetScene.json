@@ -1,0 +1,78 @@
+{
+  "metadata": {
+    "version": 4.5,
+    "type": "Object",
+    "generator": "Object3D.toJSON"
+  },
+  "camera": {
+    "position": [
+      0,
+      4,
+      5
+    ],
+    "fov": 75
+  },
+  "geometries": [
+  ],
+  "materials": [
+  ],
+  "object": {
+    "uuid": "5FC9ACA9-2A93-474D-AA32-FACC76551914",
+    "type": "Scene",
+    "name": "Reckless Logo",
+    "userData": {
+      "isPatchHidden": false
+    },
+    "layers": 1,
+    "matrix": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "children": [
+    ]
+  },
+  "generators": [
+  ],
+  "devices": [
+    {
+      "uuid": "3a64508e-df3f-40f6-91aa-0e1b05096b90",
+      "type": "camera",
+      "name": "Camera"
+    }
+  ],
+  "peers": [],
+  "transforms": [
+  ],
+  "connections": [
+    {
+      "uuid": "6b698e7b-cb87-40a7-88ee-99f34752ac20",
+      "from": "3a64508e-df3f-40f6-91aa-0e1b05096b90",
+      "fromProp": "mediastream",
+      "to": "d269935f-333d-418d-81da-fb40d3ad8102",
+      "toProp": "mediastream"
+    }
+  ],
+  "widgets": [
+    {
+      "uuid": "d269935f-333d-418d-81da-fb40d3ad8102",
+      "type": "preview",
+      "name": "Camera Preview",
+      "size": "fullscreen",
+      "location": "top-left"
+    }
+  ]
+}

@@ -1,7 +1,3 @@
-/* eslint-disable object-shorthand */
-/* eslint-disable no-undef */
-/* eslint-disable react/jsx-filename-extension */
-
 import PropTypes from 'prop-types';
 
 import React, { createElement, memo } from 'react';
@@ -10,17 +6,16 @@ import { Canvas } from '@react-three/fiber';
 import { makeStyles } from '@material-ui/core';
 import { OrbitControls } from '@react-three/drei';
 
-import { ThreeParamsToArgs } from '../utils/threeParams';
+import { ThreeParamsToArgs } from '../Utils/threeParams';
 
-import useAppContext from '../contexts/useAppContext';
+import useAppContext from '../App/Contexts/useAppContext';
 
-import WorldManager from '../managers/WorldManager';
-import CameraView from '../components/@views/CameraView';
+import WorldManager from './Managers/WorldManager';
 
-import Generators from '../inputs/generators/index';
-import Peers from '../inputs/peers/index';
-import Devices from '../inputs/devices/index';
-import Transforms from '../inputs/transforms/index';
+import Generators from '../Generators/Providers/index';
+import Peers from '../Peers/Providers/index';
+import Devices from '../Devices/Providers/index';
+import Transforms from '../Transforms/Providers/index';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -39,34 +34,40 @@ const World = ({
     object, camera, generators, peers, devices, transforms,
   } = sceneJSON;
 
-  const { fog } = object;
   const classes = useStyles();
 
-  switch (object.type) {
-    case 'Camera':
-      return (
-        <div className={classes.root}>
-          <WorldManager>
-            <CameraView />
-          </WorldManager>
-        </div>
-      );
+  if (object === undefined) {
+    return (
+      <div className={classes.root}>
+        <Generators {...{ generators }} />
+        <Peers {...{ peers }} />
+        <Devices {...{ devices }} />
+        <Transforms {...{ transforms }} />
+      </div>
+    );
+  }
+
+  switch (object.type.toLowerCase()) {
     default:
-    case 'Scene':
+      return (
+        <div className={classes.root} />
+      );
+    case 'scene':
       return (
         <div className={classes.root}>
           <Canvas
             shadows
             camera={camera}
+            // eslint-disable-next-line no-undef
             dpr={window.devicePixelRatio}
           >
             <WorldManager>
-              <Generators {...{ generators: generators }} />
-              <Peers {...{ peers: peers }} />
-              <Devices {...{ devices: devices }} />
-              <Transforms {...{ transforms: transforms }} />
+              <Generators {...{ generators }} />
+              <Peers {...{ peers }} />
+              <Devices {...{ devices }} />
+              <Transforms {...{ transforms }} />
               {/* FOG */}
-              {fog !== undefined ? createElement(fog.type, { type: fog.type, attach: 'fog', args: ThreeParamsToArgs(fog) }, []) : null}
+              {object.fog !== undefined ? createElement(object.fog.type, { type: object.fog.type, attach: 'fog', args: ThreeParamsToArgs(object.fog) }, []) : null}
               {children}
               <OrbitControls enablePan enableZoom enableRotate />
             </WorldManager>
@@ -77,9 +78,9 @@ const World = ({
 };
 
 World.propTypes = {
-  children: PropTypes.shape([]).isRequired,
+  children: PropTypes.node.isRequired,
 };
 
-World.whyDidYouRender = true;
+World.whyDidYouRender = (process.env.NODE_ENV === 'development');
 
 export default memo(World);

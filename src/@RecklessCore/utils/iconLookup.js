@@ -1,6 +1,4 @@
-/* eslint-disable import/prefer-default-export */
-/* eslint-disable react/jsx-filename-extension */
-/* eslint-disable react/react-in-jsx-scope */
+import React from 'react';
 
 import PersonIcon from '@material-ui/icons/Person';
 import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
@@ -8,9 +6,11 @@ import ImageIcon from '@material-ui/icons/Image';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faSun, faLayerGroup,
-  faCube, faWaveSquare, faMouse, faKeyboard, faCalculator,
-  faPlus, faMinus, faTimes, faDivide,
+  faQuestion, faLayerGroup,
+  faCube, faWaveSquare,
+  faMouse, faKeyboard, faVideo,
+  faCalculator,
+  faPlus, faMinus, faTimes, faDivide, faThLarge,
 } from '@fortawesome/free-solid-svg-icons';
 
 const getIconByType = (type) => {
@@ -19,7 +19,7 @@ const getIconByType = (type) => {
   }
   switch (type.toLowerCase()) {
     default:
-      return <FontAwesomeIcon icon={faSun} />;
+      return <FontAwesomeIcon icon={faQuestion} />;
     case 'group':
       return <FontAwesomeIcon icon={faLayerGroup} />;
     case 'generator':
@@ -38,6 +38,8 @@ const getIconByType = (type) => {
       return <FontAwesomeIcon icon={faMouse} />;
     case 'keyboard':
       return <FontAwesomeIcon icon={faKeyboard} />;
+    case 'camera':
+      return <FontAwesomeIcon icon={faVideo} />;
     case 'add':
       return <FontAwesomeIcon icon={faPlus} />;
     case 'subtract':
@@ -46,9 +48,12 @@ const getIconByType = (type) => {
       return <FontAwesomeIcon icon={faTimes} />;
     case 'divide':
       return <FontAwesomeIcon icon={faDivide} />;
+    case 'preview':
+      return <FontAwesomeIcon icon={faThLarge} />;
   }
 };
 
 export {
+  // eslint-disable-next-line import/prefer-default-export
   getIconByType,
 };
