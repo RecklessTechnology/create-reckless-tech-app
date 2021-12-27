@@ -1,4 +1,4 @@
-FROM node:16-alpine as build
+FROM node:latest as build
  
 # Copies everything over to Docker environment
 COPY . /usr/src/app/
@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 
 # Install all node packages
 RUN yarn install
-RUN yarn global add react-scripts@latest
+RUN yarn global add react-scripts@3.4.1
 
 # Build project
 RUN npm run build
