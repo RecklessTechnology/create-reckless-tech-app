@@ -29,6 +29,7 @@ const SceneDownloadButttonView = ({ sceneJSON }) => {
         },
       }}
       className={classes.menuButton}
+      disabled={false}
     >
       <GetAppIcon fontSize="small" />
     </IconButtonView>

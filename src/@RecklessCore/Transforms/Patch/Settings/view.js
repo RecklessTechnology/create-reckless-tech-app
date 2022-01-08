@@ -11,7 +11,7 @@ import {
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import InputHandle from '../../../Components/Patches/InputHandle';
+import InputHandle from '../../../Components/Patches/InputHandle/index';
 import OutputHandle from '../../../Components/Patches/OutputHandle';
 
 import PropAccordianView from '../../../Components/Patches/PropAccordian/view';
@@ -92,7 +92,7 @@ const TransformSettingsView = ({
                   <ExpandMoreIcon fontSize="small" />
                 )}
               >
-                <Tooltip title={value} aria-label={value}>
+                <Tooltip title={value}>
                   <TextField
                     id="amt"
                     type="Number"
@@ -125,7 +125,7 @@ const TransformSettingsView = ({
                   <ExpandMoreIcon fontSize="small" />
                 )}
               >
-                <Tooltip title={value} aria-label={value}>
+                <Tooltip title={value}>
                   <List className={classes.selectListRoot}>
                     <RecklessSelectWithIcon
                       data={data}

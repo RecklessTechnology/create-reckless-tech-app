@@ -11,9 +11,15 @@
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/styles": "^4.11.4",
+    "@mediapipe/pose": "^0.5.1635988162",
     "@react-spring/core": "^9.2.4",
     "@react-three/drei": "^5.3.0",
     "@react-three/fiber": "^6.2.2",
+    "@tensorflow-models/pose-detection": "^0.0.6",
+    "@tensorflow/tfjs": "^3.12.0",
+    "@tensorflow/tfjs-backend-wasm": "^3.12.0",
+    "@tensorflow/tfjs-backend-webgl": "^3.12.0",
+    "@tensorflow/tfjs-core": "^3.12.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@typescript-eslint/eslint-plugin": "^4.29.0",
@@ -26,12 +32,13 @@
     "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-flowtype": "^5.9.0",
     "eslint-plugin-jest": "^24.4.0",
+    "eslint-plugin-storybook": "^0.5.5",
     "eslint-plugin-testing-library": "^4.10.1",
     "moment": "^2.29.1",
     "niceware": "^2.0.2",
     "prop-types": "^15.7.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^0.0.0-experimental-3dc41d8a2-20211223",
+    "react-dom": "^0.0.0-experimental-3dc41d8a2-20211223",
     "react-flow-renderer": "^9.7.0",
     "react-qr-code": "^1.1.1",
     "react-scripts": "4.0.3",
@@ -39,6 +46,7 @@
     "three": "^0.129.0",
     "trystero": "0.9.1",
     "typeface-roboto-material": "^0.0.1",
+    "typescript": "^4.5.4",
     "uuid": "^8.3.2",
     "web-vitals": "^1.0.1"
   },
@@ -46,12 +54,34 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public",
+    "storybook-docs": "start-storybook -p 6006 -s public --docs --no-manager-cache",
+    "build-storybook-docs": "build-storybook --docs"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      },
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
     ]
   },
   "browserslist": {
@@ -76,10 +106,21 @@
     "url": "https://github.com/RecklessTechnology/create-reckless-tech-app/issues"
   },
   "devDependencies": {
+    "@storybook/addon-a11y": "^6.4.9",
+    "@storybook/addon-actions": "^6.4.9",
+    "@storybook/addon-essentials": "^6.4.9",
+    "@storybook/addon-links": "^6.4.9",
+    "@storybook/node-logger": "^6.4.9",
+    "@storybook/preset-create-react-app": "^3.2.0",
+    "@storybook/react": "^6.4.9",
+    "@types/uuid": "^8.3.3",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0"
+  },
+  "resolutions": {
+    "babel-loader": "8.1.0"
   }
 }

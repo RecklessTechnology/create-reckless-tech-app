@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 
 import React, {
   useRef, useState, useEffect, useCallback,
+  memo,
 } from 'react';
 
 import { makeStyles } from '@material-ui/styles';
@@ -99,4 +100,4 @@ AddPeersToScene.propTypes = {
   closeMenu: PropTypes.func.isRequired,
 };
 
-export default AddPeersToScene;
+export default memo(AddPeersToScene);

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import React from 'react';
+import React, { memo } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -32,4 +32,4 @@ PatchRoot.propTypes = {
   width: PropTypes.number.isRequired,
 };
 
-export default PatchRoot;
+export default memo(PatchRoot);

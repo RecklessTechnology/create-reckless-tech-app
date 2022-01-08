@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 
 import React, {
   useState, useEffect, useRef, useCallback,
+  memo,
 } from 'react';
 
 import { makeStyles } from '@material-ui/styles';
@@ -153,4 +154,4 @@ ShapePreview.propTypes = {
   propName: PropTypes.string.isRequired,
 };
 
-export default ShapePreview;
+export default memo(ShapePreview);

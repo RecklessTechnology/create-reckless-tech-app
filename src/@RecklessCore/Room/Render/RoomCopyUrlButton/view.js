@@ -26,6 +26,7 @@ const RoomCopyUrlButtonView = ({ url }) => {
         },
       }}
       className={classes.iconButton}
+      disabled={false}
     >
       <FileCopyIcon fontSize="small" />
     </IconButtonView>

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
@@ -84,10 +84,11 @@ const CustomLineageEdge = ({
           {...{
             label: 'Emancipate',
             handeClick: () => {
-              removeFromParent({ uuid: source });
+              removeFromParent(source);
             },
           }}
           className={classes.deleteEdgeButton}
+          disabled={false}
         >
           <FontAwesomeIcon icon={faTimes} />
         </IconButtonView>
@@ -109,4 +110,4 @@ CustomLineageEdge.propTypes = {
   style: PropTypes.shape({}),
 };
 
-export default CustomLineageEdge;
+export default memo(CustomLineageEdge);

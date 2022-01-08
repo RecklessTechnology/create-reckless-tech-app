@@ -23,6 +23,7 @@ const InspectorCloseButtonView = ({ inspectorMenuOpen, setInspectorMenuOpen }) =
         },
       }}
       className={classes.button}
+      disabled={false}
     >
       <CloseIcon fontSize="small" />
     </IconButtonView>

@@ -60,8 +60,6 @@ const PropAccordianView = ({
           expandIcon: classes.propSummaryExapand,
         }}
         expandIcon={expandIcon}
-        aria-controls="panel-content"
-        id="panel-header"
       >
         {header}
       </AccordionSummary>

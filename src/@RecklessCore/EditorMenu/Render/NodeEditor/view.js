@@ -23,7 +23,13 @@ const nodeWidth = 150;
 const nodeHeight = 200;
 
 const NodeEditorView = ({
-  elements, nodeTypes, edgeTypes, updateConnection, addConnection,
+  elements,
+  nodeTypes,
+  edgeTypes,
+  updateConnection,
+  addConnection,
+  showControls,
+  interactive,
 }) => {
   const dagreGraph = new dagre.graphlib.Graph();
   dagreGraph.setDefaultEdgeLabel(() => ({}));
@@ -77,6 +83,12 @@ const NodeEditorView = ({
   return (
     <div className={classes.root}>
       <ReactFlow
+        nodesConnectable={interactive}
+        nodesDraggable={interactive}
+        zoomOnScroll={interactive}
+        panOnScroll={interactive}
+        zoomOnDoubleClick={interactive}
+        paneMoveable={interactive}
         elements={layoutedElements}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
@@ -85,7 +97,7 @@ const NodeEditorView = ({
         onEdgeUpdate={updateConnection}
         onConnect={addConnection}
       >
-        <Controls />
+        { showControls ? <Controls /> : null }
       </ReactFlow>
     </div>
   );
@@ -99,6 +111,8 @@ NodeEditorView.propTypes = {
   edgeTypes: PropTypes.shape([]).isRequired,
   updateConnection: PropTypes.func.isRequired,
   addConnection: PropTypes.func.isRequired,
+  showControls: PropTypes.bool.isRequired,
+  interactive: PropTypes.bool.isRequired,
 };
 
 export default memo(NodeEditorView);

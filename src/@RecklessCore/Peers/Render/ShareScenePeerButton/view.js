@@ -84,6 +84,7 @@ const ShareScenePeerButtonView = ({ me, peerInfo }) => {
           },
         }}
         className={classes.iconButton}
+        disabled={false}
       >
         <OpenInBrowserIcon fontSize="small" />
       </IconButtonView>

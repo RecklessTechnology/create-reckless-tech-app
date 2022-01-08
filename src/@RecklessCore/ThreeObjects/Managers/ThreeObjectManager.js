@@ -13,7 +13,7 @@ import useForceUpdate from '../../Utils/useForceUpdate';
 import useThreeObjectsContext from '../Contexts/useThreeObjectsContext';
 import useAppContext from '../../App/Contexts/useAppContext';
 
-import RenderThreeChildrenView from '../Render/view';
+import ThreeObjectView from '../Render/view';
 
 export const ThreeObjectContext = createContext(null);
 export const ThreeObjectPositionContext = createContext(null);
@@ -24,7 +24,6 @@ export const DefaultProps = {
   uuid: 'xxx',
   name: 'unnamed',
   type: 'three-object',
-  displayName: 'unnamed',
   disabled: false,
   debug: false,
   position: [0, 0, 0],
@@ -34,7 +33,6 @@ export const DefaultProps = {
 
 const ThreeObjectManager = ({
   name,
-  displayName,
   type,
   children,
   ...props
@@ -131,7 +129,6 @@ const ThreeObjectManager = ({
       id: identifier.current,
 
       name,
-      displayName,
       type,
 
       disabled,
@@ -148,7 +145,7 @@ const ThreeObjectManager = ({
     }),
     [
       uuid,
-      name, displayName, type,
+      name, type,
 
       disabled, setDisabled,
       debug, setDebug,
@@ -213,7 +210,7 @@ const ThreeObjectManager = ({
       <ThreeObjectPositionContext.Provider value={positionContextValue}>
         <ThreeObjectRotationContext.Provider value={rotationContextValue}>
           <ThreeObjectScaleContext.Provider value={scaleContextValue}>
-            <RenderThreeChildrenView {...{
+            <ThreeObjectView {...{
               name,
               node,
               position,
@@ -222,7 +219,7 @@ const ThreeObjectManager = ({
             }}
             >
               {!disabled ? children : []}
-            </RenderThreeChildrenView>
+            </ThreeObjectView>
           </ThreeObjectScaleContext.Provider>
         </ThreeObjectRotationContext.Provider>
       </ThreeObjectPositionContext.Provider>
@@ -237,7 +234,6 @@ ThreeObjectManager.propTypes = {
   uuid: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  displayName: PropTypes.string.isRequired,
   disabled: PropTypes.bool.isRequired,
   debug: PropTypes.bool.isRequired,
   position: PropTypes.arrayOf(PropTypes.number).isRequired,

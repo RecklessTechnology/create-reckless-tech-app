@@ -244,6 +244,36 @@
     ],
     "children": [
       {
+        "uuid": "ABCDEFG-GFEDCBA",
+        "type": "GLTF",
+        "name": "Something",
+        "url": "https://cyberkongz.fra1.cdn.digitaloceanspaces.com/public/10300/10300.glb",
+        "scale": [0.2, 0.2, 0.2],
+        "receiveShadow": true,
+        "userData": {
+          "isPatchHidden": false
+        },
+        "layers": 1,
+        "matrix": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          -1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      {
         "uuid": "1F0AFF04-BE32-494A-A764-1137A90E3D4B",
         "type": "Group",
         "name": "Logo",
@@ -2445,7 +2475,16 @@
       "paused": false
     }
   ],
-  "devices": [],
+  "devices": [
+    {
+      "uuid": "29b9d611-a0e6-4a00-980e-5a03eeec9294",
+      "type": "camera",
+      "name": "My Camera",
+      "userData": {
+        "isPatchHidden": false
+      }
+    }
+  ],
   "peers": [],
   "transforms": [
     {
@@ -2454,6 +2493,11 @@
       "name": "Calculator",
       "amount": 2,
       "operator": "multiply"
+    },
+    {
+      "uuid": "abcdefg-gfedcba",
+      "type": "tensorflow",
+      "name": "Tensorflow"
     }
   ],
   "connections": [
@@ -2470,7 +2514,39 @@
       "fromProp": "value",
       "to": "1F0AFF04-BE32-494A-A764-1137A90E3D4B",
       "toProp": "position"
-    }
+    },
+    {
+      "uuid": "ce568f89-cf9d-4c00-b58d-3aa7c328828c",
+      "from": "29b9d611-a0e6-4a00-980e-5a03eeec9294",
+      "fromProp": "mediastream",
+      "to": "556317ac-cc83-416f-ac1d-5614964b4fb0",
+      "toProp": "mediastream"
+    },
+    {
+      "uuid": "aaaa-bbbb-cccc",
+      "from": "29b9d611-a0e6-4a00-980e-5a03eeec9294",
+      "fromProp": "mediastream",
+      "to": "abcdefg-gfedcba",
+      "toProp": "mediastream"
+    },
+    {
+      "uuid": "dddd-eeee-ffff",
+      "from": "abcdefg-gfedcba",
+      "fromProp": "poses",
+      "to": "556317ac-cc83-416f-ac1d-5614964b4fb0",
+      "toProp": "poses"
+    } 
   ],
-  "widgets": []
+  "widgets": [
+    {
+      "uuid": "556317ac-cc83-416f-ac1d-5614964b4fb0",
+      "type": "Preview",
+      "name": "new preview",
+      "size": "small",
+      "location": "top-right",
+      "userData": {
+        "isPatchHidden": false
+      }
+    }
+  ]
 }

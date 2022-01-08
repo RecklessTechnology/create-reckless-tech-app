@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import React, { memo } from 'react';
 
-const RenderThreeChildrenView = ({
+const ThreeObjectView = ({
   name,
   node,
   position,
@@ -15,7 +15,7 @@ const RenderThreeChildrenView = ({
   </group>
 );
 
-RenderThreeChildrenView.propTypes = {
+ThreeObjectView.propTypes = {
   children: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,
   node: PropTypes.shape().isRequired,
@@ -24,4 +24,4 @@ RenderThreeChildrenView.propTypes = {
   scale: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
-export default memo(RenderThreeChildrenView);
+export default memo(ThreeObjectView);

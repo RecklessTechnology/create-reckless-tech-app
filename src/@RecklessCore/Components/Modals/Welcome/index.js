@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useState, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Fade = React.forwardRef((props, ref) => {
+const Fade = forwardRef((props, ref) => {
   const {
     in: open, children, onEnter, onExited,
     ...other
@@ -54,7 +54,7 @@ Fade.propTypes = {
 
 const WelcomeModal = () => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
 
   const handleClose = () => {
     setOpen(false);
@@ -64,8 +64,7 @@ const WelcomeModal = () => {
     <Modal
       disableEnforceFocus
       disableAutoFocus
-      aria-labelledby="spring-modal-title"
-      aria-describedby="spring-modal-description"
+      title="Welcome Model"
       className={classes.modal}
       open={open}
       onClose={handleClose}
@@ -82,4 +81,4 @@ const WelcomeModal = () => {
   );
 };
 
-export default WelcomeModal;
+export default memo(WelcomeModal);

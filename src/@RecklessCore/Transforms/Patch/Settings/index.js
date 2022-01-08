@@ -53,7 +53,7 @@ const TransformSettings = ({
       }
       {...props}
       {...{
-        value: val,
+        value: typeof val === 'string' ? val.toLowerCase() : val,
         setValue: (v) => {
           if (transformObj !== undefined) {
             transformObj[`set${propName.replace(/^\w/, (c) => c.toUpperCase())}`](v);

@@ -15,6 +15,7 @@ import DefaultSceneJSONClient from '../../../scenes/PosenetScene.json';
 import { isHost } from '../../Utils/userCheck';
 
 export const AppContext = createContext(null);
+
 // eslint-disable-next-line import/no-mutable-exports
 export let appContextValue = {};
 
@@ -67,24 +68,26 @@ const AppManager = ({
   });
 
   const hideChild = useCallback((childs, uuid, val, callback) => {
-    childs.forEach((child) => {
-      if (child.uuid === uuid) {
+    childs.forEach((c) => {
+      const { uuid: uid, userData, children: cChildren } = c;
+      if (uid === uuid) {
         // eslint-disable-next-line no-param-reassign
-        child.userData.isPatchHidden = val;
+        userData.isPatchHidden = val;
         callback();
-      } else if (child.children !== undefined) {
-        hideChild(child.children, uuid, val, callback);
+      } else if (cChildren !== undefined) {
+        hideChild(cChildren, uuid, val, callback);
       }
     });
   }, []);
 
   const removeChild = useCallback((childs, uuid, callback) => {
-    childs.forEach((child, idx) => {
-      if (child.uuid === uuid) {
-        const c = childs.splice(idx, 1);
-        callback(c);
-      } else if (child.children !== undefined) {
-        removeChild(child.children, uuid, callback);
+    childs.forEach((c, idx) => {
+      const { uuid: uid, children: cChildren } = c;
+      if (uid === uuid) {
+        const child = childs.splice(idx, 1);
+        callback(child);
+      } else if (cChildren !== undefined) {
+        removeChild(cChildren, uuid, callback);
       }
     });
   }, []);
@@ -92,15 +95,18 @@ const AppManager = ({
   // Add, remove, and update objects from the scene json
   const sceneUtils = useMemo(() => ({
     removeTransform(uuid) {
-      setSceneJSON({
+      const obj = {
         ...sceneJSON,
         transforms: [
           ...sceneJSON.transforms.filter((t) => (t.uuid !== uuid)),
         ],
         connections: [
-          ...sceneJSON.connections.filter((c) => (c.from !== uuid && c.to !== uuid)),
+          ...sceneJSON.connections.filter(
+            (c) => (c.from !== uuid && c.to !== uuid),
+          ),
         ],
-      });
+      };
+      setSceneJSON(obj);
     },
     addTransform(type) {
       setSceneJSON({
@@ -126,7 +132,9 @@ const AppManager = ({
           ...sceneJSON.widgets.filter((d) => (d.uuid !== uuid)),
         ],
         connections: [
-          ...sceneJSON.connections.filter((c) => (c.from !== uuid && c.to !== uuid)),
+          ...sceneJSON.connections.filter(
+            (c) => (c.from !== uuid && c.to !== uuid),
+          ),
         ],
       });
     },
@@ -137,7 +145,9 @@ const AppManager = ({
           ...sceneJSON.devices.filter((d) => (d.uuid !== uuid)),
         ],
         connections: [
-          ...sceneJSON.connections.filter((c) => (c.from !== uuid && c.to !== uuid)),
+          ...sceneJSON.connections.filter(
+            (c) => (c.from !== uuid && c.to !== uuid),
+          ),
         ],
       });
     },
@@ -196,7 +206,9 @@ const AppManager = ({
           ...sceneJSON.generators.filter((g) => (g.uuid !== uuid)),
         ],
         connections: [
-          ...sceneJSON.connections.filter((c) => (c.from !== uuid && c.to !== uuid)),
+          ...sceneJSON.connections.filter(
+            (c) => (c.from !== uuid && c.to !== uuid),
+          ),
         ],
       });
     },
@@ -242,7 +254,9 @@ const AppManager = ({
             children: filterdChildren,
           },
           connections: [
-            ...sceneJSON.connections.filter((c) => (c.from !== uuid && c.to !== uuid)),
+            ...sceneJSON.connections.filter(
+              (c) => (c.from !== uuid && c.to !== uuid),
+            ),
           ],
         });
       });
@@ -281,15 +295,6 @@ const AppManager = ({
       });
     },
     // Peers
-    updatePeer(uuid, ref) {
-      setSceneJSON({
-        ...sceneJSON,
-        peers: [
-          ...sceneJSON.peers,
-          ...ref,
-        ],
-      });
-    },
     removePeer(uuid) {
       setSceneJSON({
         ...sceneJSON,
@@ -297,7 +302,9 @@ const AppManager = ({
           ...sceneJSON.peers.filter((p) => (p.uuid !== uuid)),
         ],
         connections: [
-          ...sceneJSON.connections.filter((c) => (c.from !== uuid && c.to !== uuid)),
+          ...sceneJSON.connections.filter(
+            (c) => (c.from !== uuid && c.to !== uuid),
+          ),
         ],
       });
     },
@@ -337,7 +344,9 @@ const AppManager = ({
       setSceneJSON({
         ...sceneJSON,
         connections: [
-          ...sceneJSON.connections.filter((c) => (c.uuid !== oldEdge.id)),
+          ...sceneJSON.connections.filter(
+            (c) => (c.uuid !== oldEdge.id),
+          ),
           {
             uuid: oldEdge.id,
             from: newConnection.source,
@@ -352,13 +361,15 @@ const AppManager = ({
       setSceneJSON({
         ...sceneJSON,
         connections: [
-          ...sceneJSON.connections.filter((c) => (c.uuid !== oldEdge.id)),
+          ...sceneJSON.connections.filter(
+            (c) => (c.uuid !== oldEdge.id),
+          ),
         ],
       });
     },
-    removeFromParent(child) {
+    removeFromParent(uuid) {
       const filterdChildren = sceneJSON.object.children;
-      removeChild(filterdChildren, child.uuid, (c) => {
+      removeChild(filterdChildren, uuid, (c) => {
         setSceneJSON({
           ...sceneJSON,
           object: {

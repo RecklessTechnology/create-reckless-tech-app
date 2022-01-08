@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 
 import React, {
   useEffect, useRef, useState, useCallback,
+  memo,
 } from 'react';
 import {
   makeStyles, Card, CardActionArea, CardContent, Typography,
@@ -11,6 +12,7 @@ import useAppContext from '../../../App/Contexts/useAppContext';
 import useWidgetContext from '../../Contexts/useWidgetContext';
 
 import VideoPlayer from './VideoPlayer';
+import Canvas from './Canvas';
 
 const useStyles = makeStyles({
   root: {
@@ -52,33 +54,64 @@ const CameraPreview = ({
 
   const { subscribe, unsubscribe } = useAppContext();
 
-  const { previewStream } = useWidgetContext();
+  const { previewStream, poses } = useWidgetContext();
 
   const isMounted = useRef(false);
 
   const [stream, setStream] = useState(previewStream);
+  const [poseList, setPoseList] = useState(poses);
+  const [dim, setDim] = useState();
 
-  const updateProp = useCallback((val) => {
+  const previewRef = useRef(null);
+
+  const updateStream = useCallback((val) => {
     if (isMounted.current) {
       setStream(val);
     }
   }, [isMounted, setStream]);
 
+  const updatePoses = useCallback((val) => {
+    if (isMounted.current) {
+      setPoseList(val);
+    }
+  }, [isMounted, setPoseList]);
+
   useEffect(() => {
     isMounted.current = true;
-    subscribe(`${uuid}-mediastream-updated`, updateProp);
+    subscribe(`${uuid}-mediastream-updated`, updateStream);
+    // eslint-disable-next-line no-console
+    subscribe(`${uuid}-poses-updated`, updatePoses);
 
     return () => {
       isMounted.current = false;
-      unsubscribe(`${uuid}-mediastream-updated`, updateProp);
+      unsubscribe(`${uuid}-mediastream-updated`, updateStream);
     };
-  }, [subscribe, unsubscribe, updateProp, uuid]);
+  }, [subscribe, unsubscribe, updatePoses, updateStream, uuid]);
+
+  useEffect(() => {
+    if (previewRef.current) {
+      setDim([previewRef.current.offsetWidth, previewRef.current.offsetHeight]);
+    }
+  }, [previewRef, setDim, stream]);
 
   return (
     <Card className={classes.root}>
       <CardActionArea>
         <CardContent className={classes.content}>
-          { stream !== undefined ? <VideoPlayer stream={stream} /> : null }
+          <div
+            style={{
+              position: 'relative',
+              width: '100%',
+              minWidth: '100%',
+              height: '100%',
+              minHeight: '100%',
+              border: '1px solid white',
+            }}
+            ref={previewRef}
+          >
+            { stream !== undefined ? <VideoPlayer stream={stream} /> : null }
+            { poseList !== undefined ? <Canvas dim={dim} poses={poseList} /> : null }
+          </div>
           <Typography variant="body2" color="textSecondary" component="p">
             {name}
           </Typography>
@@ -95,4 +128,4 @@ CameraPreview.propTypes = {
   uuid: PropTypes.string.isRequired,
 };
 
-export default CameraPreview;
+export default memo(CameraPreview);

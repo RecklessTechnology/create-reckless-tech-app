@@ -1,5 +1,6 @@
 import React, {
   useEffect, useRef, useState, useCallback,
+  memo,
 } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -78,4 +79,4 @@ const RoomQR = () => {
 
 RoomQR.whyDidYouRender = (process.env.NODE_ENV === 'development');
 
-export default RoomQR;
+export default memo(RoomQR);

@@ -86,7 +86,7 @@ const sceneConnectionsToFlow = (children) => children
     animated: false,
   }));
 
-const connectionsToFlow = (rtScene) => rtScene.connections.map((c) => ({
+const connectionsToFlow = (connections) => connections.map((c) => ({
   id: `${c.uuid}`,
   type: 'custom',
 
@@ -99,26 +99,26 @@ const connectionsToFlow = (rtScene) => rtScene.connections.map((c) => ({
   animated: true,
 }));
 
-const generatorsToFlow = (rtScene) => rtScene.generators.map((props) => makeFlowProps(props, 'scene', false, false, 'generator'));
+const generatorsToFlow = (generators) => generators.map((props) => makeFlowProps(props, 'scene', false, false, 'generator'));
 
-const peersToFlow = (rtScene) => rtScene.peers.map((props) => makeFlowProps(props, 'scene', false, false, 'peer'));
+const peersToFlow = (peers) => peers.map((props) => makeFlowProps(props, 'scene', false, false, 'peer'));
 
-const devicesToFlow = (rtScene) => rtScene.devices.map((props) => makeFlowProps(props, 'scene', false, false, 'device'));
+const devicesToFlow = (devices) => devices.map((props) => makeFlowProps(props, 'scene', false, false, 'device'));
 
-const widgetsToFlow = (rtScene) => rtScene.widgets.map((props) => makeFlowProps(props, 'scene', false, false, 'widget'));
+const widgetsToFlow = (widgets) => widgets.map((props) => makeFlowProps(props, 'scene', false, false, 'widget'));
 
-const transformsToFlow = (rtScene) => rtScene.transforms.map((props) => makeFlowProps(props, 'scene', false, false, 'transform'));
+const transformsToFlow = (transforms) => transforms.map((props) => makeFlowProps(props, 'scene', false, false, 'transform'));
 
 const rtSceneToFlow = (rtScene) => [
-  ...widgetsToFlow(rtScene),
+  ...widgetsToFlow(rtScene.widgets),
 
-  ...peersToFlow(rtScene),
-  ...devicesToFlow(rtScene),
+  ...peersToFlow(rtScene.peers),
+  ...devicesToFlow(rtScene.devices),
 
-  ...generatorsToFlow(rtScene),
-  ...transformsToFlow(rtScene),
+  ...generatorsToFlow(rtScene.generators),
+  ...transformsToFlow(rtScene.transforms),
 
-  ...connectionsToFlow(rtScene),
+  ...connectionsToFlow(rtScene.connections),
 
   // regular three.js scene graph
   ...sceneGraphToFlow([rtScene.object], [], 1),
@@ -129,4 +129,11 @@ const rtSceneToFlow = (rtScene) => [
 export {
   // eslint-disable-next-line import/prefer-default-export
   rtSceneToFlow,
+  sceneGraphToFlow,
+  devicesToFlow,
+  widgetsToFlow,
+  peersToFlow,
+  generatorsToFlow,
+  transformsToFlow,
+  connectionsToFlow,
 };

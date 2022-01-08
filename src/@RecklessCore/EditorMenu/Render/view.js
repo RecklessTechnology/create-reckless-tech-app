@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import React from 'react';
+import React, { memo } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -49,4 +49,4 @@ EditorView.propTypes = {
 
 EditorView.whyDidYouRender = (process.env.NODE_ENV === 'development');
 
-export default EditorView;
+export default memo(EditorView);

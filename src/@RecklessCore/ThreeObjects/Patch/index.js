@@ -8,13 +8,15 @@ import PatchDetails from '../../Components/Patches/PatchDetails/index';
 import ParentChildProp from '../../Components/Patches/ParentChildProp/index';
 import PatchToolbar from './PatchToolbar/index';
 import PatchRoot from '../../Components/Patches/PatchRoot';
-import useAppContext from '../../App/Contexts/useAppContext';
+
+// import useAppContext from '../../App/Contexts/useAppContext';
 
 const ThreeObjectPatch = ({ data }) => {
   const {
     uuid, label, type, width, isChildHidden, isHidden, children,
   } = data;
-  const { hideThreeObjPatch } = useAppContext();
+
+  // const { hideThreeObjPatch } = useAppContext();
 
   const patchProps = [
     {
@@ -32,7 +34,7 @@ const ThreeObjectPatch = ({ data }) => {
     <PatchRoot {...{ width }}>
       <PatchDetails {...{ name: `${label}`, uuid: `${uuid}`, type }} />
       <ParentChildProp {...{
-        children, isChildHidden, type, uuid, isHidden, hidePatch: hideThreeObjPatch,
+        children, isChildHidden, type, uuid, isHidden, hidePatch: false,
       }}
       />
       {
@@ -49,11 +51,11 @@ ThreeObjectPatch.propTypes = {
   data: PropTypes.shape({
     uuid: PropTypes.string,
     label: PropTypes.string,
-    width: PropTypes.number,
     type: PropTypes.string,
+    width: PropTypes.number,
     isChildHidden: PropTypes.bool,
     isHidden: PropTypes.bool,
-    children: PropTypes.arrayOf(PropTypes.shape({ })),
+    children: PropTypes.node,
   }).isRequired,
 };
 

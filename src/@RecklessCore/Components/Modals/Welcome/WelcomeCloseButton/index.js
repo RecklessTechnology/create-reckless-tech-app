@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import React from 'react';
+import React, { memo } from 'react';
 
 import { makeStyles } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
@@ -23,6 +23,7 @@ const WelcomeCloseButton = ({ handleClose }) => {
         },
       }}
       className={classes.button}
+      disabled={false}
     >
       <CloseIcon fontSize="small" />
     </IconButtonView>
@@ -35,4 +36,4 @@ WelcomeCloseButton.propTypes = {
   handleClose: PropTypes.func.isRequired,
 };
 
-export default WelcomeCloseButton;
+export default memo(WelcomeCloseButton);

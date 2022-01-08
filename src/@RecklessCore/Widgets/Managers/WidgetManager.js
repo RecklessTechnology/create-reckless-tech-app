@@ -39,11 +39,15 @@ const WidgetManager = ({
   const [type, setType] = useState(props.type || '');
 
   const [previewStream, setPreviewStream] = useState();
+  const [poses, setPoses] = useState();
 
   // Inputs
   const updateFromInput = (prop, val) => {
     switch (prop.toLowerCase()) {
       default:
+        break;
+      case 'poses':
+        setPoses(val);
         break;
       case 'mediastream':
         setPreviewStream(val);
@@ -64,6 +68,7 @@ const WidgetManager = ({
 
   // Outputs
   useEffect(() => { publish(`${uuid}-mediastream-updated`, previewStream); }, [uuid, previewStream, publish]);
+  useEffect(() => { publish(`${uuid}-poses-updated`, poses); }, [uuid, poses, publish]);
 
   const { registerWidget, unregisterWidget } = useWidgetsContext();
   const forceUpdate = useForceUpdate();

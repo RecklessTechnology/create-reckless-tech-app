@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import React from 'react';
+import React, { memo } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -112,10 +112,9 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ParentChildProp = (props) => {
-  const {
-    type, uuid, children, hidePatch,
-  } = props;
+const ParentChildProp = ({
+  type, uuid, children, hidePatch,
+}) => {
   const classes = useStyles();
   return (
     <ListItem dense className={classes.propItem}>
@@ -141,7 +140,7 @@ const ParentChildProp = (props) => {
               {
                 children.filter((c) => (c.userData.isPatchHidden)).map((c) => (
                   <ListItem dense key={`${c.uuid}_${c.name}_patch_child_list`} className={classes.childListItem}>
-                    <Tooltip title={c.type} aria-label={c.type}>
+                    <Tooltip title={c.type}>
                       <ListItemIcon className={
                     clsx(classes.childListIcon, { [classes.lightIcon]: c.type.toLowerCase().includes('light') })
                   }
@@ -149,7 +148,7 @@ const ParentChildProp = (props) => {
                         {getIconByType(c.type)}
                       </ListItemIcon>
                     </Tooltip>
-                    <Tooltip title={c.uuid} aria-label={c.uuid}>
+                    <Tooltip title={c.uuid}>
                       <ListItemText primary={c.name} />
                     </Tooltip>
                     <ListItemSecondaryAction classes={{
@@ -164,6 +163,7 @@ const ParentChildProp = (props) => {
                           },
                         }}
                         className={classes.iconButton}
+                        disabled={false}
                       >
                         <FontAwesomeIcon flip="horizontal" icon={faSignOutAlt} />
                       </IconButtonView>
@@ -185,8 +185,8 @@ const ParentChildProp = (props) => {
 ParentChildProp.propTypes = {
   type: PropTypes.string.isRequired,
   uuid: PropTypes.string.isRequired,
-  children: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  hidePatch: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+  hidePatch: PropTypes.bool.isRequired,
 };
 
-export default ParentChildProp;
+export default memo(ParentChildProp);

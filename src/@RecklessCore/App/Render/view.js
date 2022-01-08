@@ -155,6 +155,7 @@ const AppView = ({
                   },
                 }}
                 className={classes.editorButton}
+                disabled={false}
               >
                 <CreateIcon fontSize="small" />
               </IconButtonView>
@@ -168,6 +169,7 @@ const AppView = ({
                   },
                 }}
                 className={classes.inspectorButton}
+                disabled={false}
               >
                 <InfoOutlinedIcon fontSize="small" />
               </IconButtonView>

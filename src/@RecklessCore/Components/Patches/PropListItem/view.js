@@ -10,7 +10,7 @@ import {
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import InputHandle from '../InputHandle';
+import InputHandle from '../InputHandle/index';
 import OutputHandle from '../OutputHandle';
 
 import PropAccordianView from '../PropAccordian/view';

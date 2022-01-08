@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import { makeStyles } from '@material-ui/core';
 
@@ -25,6 +25,7 @@ const EditorCloseButton = () => {
         },
       }}
       className={classes.button}
+      disabled={false}
     >
       <CloseIcon fontSize="small" />
     </IconButtonView>
@@ -33,4 +34,4 @@ const EditorCloseButton = () => {
 
 EditorCloseButton.whyDidYouRender = (process.env.NODE_ENV === 'development');
 
-export default EditorCloseButton;
+export default memo(EditorCloseButton);

@@ -80,7 +80,7 @@ const CameraSettingsView = ({
               <ExpandMoreIcon fontSize="small" />
             )}
           >
-            <Tooltip title={value.label === undefined ? '' : value.label} aria-label={value.label === undefined ? '' : value.label}>
+            <Tooltip title={value.label === undefined ? '' : value.label}>
               <List className={classes.selectListRoot}>
                 <RecklessSelect
                   data={data.map((d) => d.label)}

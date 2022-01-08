@@ -6,11 +6,13 @@ import { useFrame } from '@react-three/fiber';
 
 import * as THREE from 'three';
 
+import GLTFObject from './gltf';
+
 import ThreeObjectManager, { DefaultProps } from '../Managers/ThreeObjectManager';
 
 // Recursive function to convert THREE.js Object Scene to @react-three/fiber objects
 // https://github.com/mrdoob/three.js/wiki/JSON-Object-Scene-format-4
-const RenderThreeChildren = ({
+const ThreeObject = ({
   props: passedProps,
   geometries,
   materials,
@@ -21,7 +23,7 @@ const RenderThreeChildren = ({
   const childRef = useRef();
 
   const objProps = useMemo(() => {
-    const threeObj = new THREE[passedProps.type]();
+    const threeObj = (THREE[passedProps.type] === undefined) ? {} : new THREE[passedProps.type]();
     const propKeys = Object.keys(passedProps).filter((prop) => threeObj[prop] !== undefined);
     const filteredProps = propKeys
       .filter((key) => propKeys.includes(key))
@@ -141,7 +143,7 @@ const RenderThreeChildren = ({
 
   if (passedProps.children && passedProps.children.length > 0) {
     objChildren = passedProps.children.map((childProps) => (
-      <RenderThreeChildren
+      <ThreeObject
         {...{
           key: childProps.uuid,
           props: childProps,
@@ -155,23 +157,32 @@ const RenderThreeChildren = ({
     ));
   }
 
-  return (
-    <ThreeObjectManager key={`rt_${passedProps.uuid}`} {...DefaultProps} type={passedProps.type} {...passedProps}>
-      {createElement(
-        passedProps.type,
-        objProps,
-        [
-          ...matGeoChildren,
-          ...objChildren,
-        ],
-      )}
-    </ThreeObjectManager>
-  );
+  switch (passedProps.type) {
+    case 'GLTF':
+      return (
+        <ThreeObjectManager key={`rt_${passedProps.uuid}`} {...DefaultProps} type={passedProps.type} {...passedProps}>
+          <GLTFObject {...{ ...passedProps }} />
+        </ThreeObjectManager>
+      );
+    default:
+      return (
+        <ThreeObjectManager key={`rt_${passedProps.uuid}`} {...DefaultProps} type={passedProps.type} {...passedProps}>
+          {createElement(
+            passedProps.type,
+            objProps,
+            [
+              ...matGeoChildren,
+              ...objChildren,
+            ],
+          )}
+        </ThreeObjectManager>
+      );
+  }
 };
 
-RenderThreeChildren.whyDidYouRender = (process.env.NODE_ENV === 'development');
+ThreeObject.whyDidYouRender = (process.env.NODE_ENV === 'development');
 
-RenderThreeChildren.propTypes = {
+ThreeObject.propTypes = {
   props: PropTypes.shape({
     type: PropTypes.string,
     uuid: PropTypes.string,
@@ -183,4 +194,4 @@ RenderThreeChildren.propTypes = {
   connections: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
-export default RenderThreeChildren;
+export default ThreeObject;

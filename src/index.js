@@ -6,9 +6,7 @@ import ReactDOM from 'react-dom';
 import 'typeface-roboto-material';
 
 import { ThemeProvider } from '@material-ui/styles';
-import { CssBaseline, unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-ui/core';
-import { Palette } from '@material-ui/core/styles/createPalette';
-import grey from '@material-ui/core/colors/grey';
+import { CssBaseline } from '@material-ui/core';
 
 import App from './@RecklessCore/App/Render/index';
 
@@ -27,22 +25,7 @@ import EditorMenuManager from './@RecklessCore/EditorMenu/Managers/EditorMenuMan
 
 // import reportWebVitals from './reportWebVitals';
 
-const theme = createMuiTheme({
-  palette: {
-    type: 'dark',
-    background: {
-      default: grey[900],
-      paper: grey[900],
-    },
-    ...Palette,
-    primary: {
-      main: grey[700],
-    },
-    secondary: {
-      main: grey[500],
-    },
-  },
-});
+import theme from './theme';
 
 ReactDOM.render(
   <React.StrictMode>

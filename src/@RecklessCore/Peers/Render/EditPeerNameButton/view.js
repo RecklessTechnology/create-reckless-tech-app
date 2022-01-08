@@ -33,6 +33,7 @@ const EditPeerNameButtonView = ({ peerInfo, updateConnectionInfo }) => {
             },
           }}
           className={classes.iconButton}
+          disabled={false}
         >
           <CreateIcon fontSize="small" />
         </IconButtonView>
@@ -48,6 +49,7 @@ const EditPeerNameButtonView = ({ peerInfo, updateConnectionInfo }) => {
               },
             }}
             className={classes.iconButton}
+            disabled={false}
           >
             <CloseIcon fontSize="small" />
           </IconButtonView>
@@ -59,6 +61,7 @@ const EditPeerNameButtonView = ({ peerInfo, updateConnectionInfo }) => {
               },
             }}
             className={classes.iconButton}
+            disabled={false}
           >
             <CheckIcon fontSize="small" />
           </IconButtonView>

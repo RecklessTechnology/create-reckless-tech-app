@@ -29,6 +29,7 @@ const RoomRefreshIdButtonView = ({ setRoomInfo }) => {
         },
       }}
       className={classes.iconButton}
+      disabled={false}
     >
       <RefreshIcon fontSize="small" />
     </IconButtonView>

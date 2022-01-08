@@ -25,7 +25,7 @@ const RoomMenu = () => {
     <ListItem
       role="tabpanel"
       id={`full-width-tabpanel-${0}`}
-      aria-labelledby={`full-width-tab-${0}`}
+      title={`full-width-tab-${0}`}
       className={classes.root}
     >
       <List dense className={classes.listRoot}>

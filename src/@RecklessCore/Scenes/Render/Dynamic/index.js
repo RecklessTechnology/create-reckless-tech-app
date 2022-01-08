@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import React, { memo } from 'react';
 
-import RenderThreeChildren from '../../../ThreeObjects/Render';
+import ThreeObject from '../../../ThreeObjects/Render';
 
 const DynamicScene = ({ sceneJSON }) => {
   const {
@@ -14,7 +14,7 @@ const DynamicScene = ({ sceneJSON }) => {
     connections,
   } = sceneJSON;
   return (object.children.map((childProps) => (
-    <RenderThreeChildren
+    <ThreeObject
       key={childProps.uuid}
       props={childProps}
       geometries={geometries}

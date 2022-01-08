@@ -8,7 +8,7 @@ import { IconButton, Tooltip } from '@material-ui/core';
 
 import clsx from 'clsx';
 
-const useStyles = makeStyles(() => ({
+export const useStyles = makeStyles(() => ({
   menuButton: {
     // marginRight: theme.spacing(2),
     padding: '10px',
@@ -16,21 +16,24 @@ const useStyles = makeStyles(() => ({
 }));
 
 const IconButtonView = ({
-  children, label, handeClick, className, ...props
+  children, label, handeClick, className, disabled, ...props
 }) => {
   const classes = useStyles();
   return (
-    <Tooltip title={label} aria-label={label}>
-      <IconButton
-        size="small"
-        aria-label={label}
-        onClick={handeClick}
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...props}
-        className={clsx(classes.menuButton, className)}
-      >
-        { children }
-      </IconButton>
+    <Tooltip title={label}>
+      <span>
+        <IconButton
+          disabled={disabled}
+          size="small"
+          title={label}
+          onClick={handeClick}
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          {...props}
+          className={clsx(classes.menuButton, className)}
+        >
+          { children }
+        </IconButton>
+      </span>
     </Tooltip>
   );
 };
@@ -42,6 +45,7 @@ IconButtonView.propTypes = {
   label: PropTypes.string.isRequired,
   handeClick: PropTypes.func.isRequired,
   className: PropTypes.string.isRequired,
+  disabled: PropTypes.bool.isRequired,
 };
 
 export default memo(IconButtonView);

@@ -25,6 +25,7 @@ const RoomOpenUrlButtonView = ({ url }) => {
           },
         }}
         className={classes.iconButton}
+        disabled={false}
       >
         <OpenInNewIcon fontSize="small" />
       </IconButtonView>

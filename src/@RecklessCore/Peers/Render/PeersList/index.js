@@ -1,5 +1,6 @@
 import React, {
   useRef, useState, useEffect, useCallback,
+  memo,
 } from 'react';
 
 import { makeStyles } from '@material-ui/styles';
@@ -77,4 +78,4 @@ const PeersList = () => {
 
 PeersList.whyDidYouRender = (process.env.NODE_ENV === 'development');
 
-export default PeersList;
+export default memo(PeersList);

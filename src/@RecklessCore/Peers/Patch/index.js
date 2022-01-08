@@ -48,7 +48,7 @@ const PeerPatch = ({ data }) => {
 PeerPatch.propTypes = {
   data: PropTypes.shape({
     uuid: PropTypes.string,
-    width: PropTypes.string,
+    width: PropTypes.number,
   }).isRequired,
 };
 

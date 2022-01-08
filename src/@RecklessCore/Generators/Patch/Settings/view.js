@@ -60,7 +60,7 @@ const GeneratorSettingsView = ({
               <ExpandMoreIcon fontSize="small" />
             )}
           >
-            <Tooltip title={`${rpm} rpm (${(rpm / 60).toFixed(3)}/s)`} aria-label={`${rpm} rpm`}>
+            <Tooltip title={`${rpm} rpm (${(rpm / 60).toFixed(3)}/s)`}>
               <TextField
                 id="rpm"
                 type="Number"

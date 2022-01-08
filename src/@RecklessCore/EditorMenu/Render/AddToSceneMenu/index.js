@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 
-import React, {
-  useState,
-} from 'react';
+import React, { useState, memo } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -60,7 +58,7 @@ const TabPanel = ({
       role="tabpanel"
       hidden={value !== index}
       id={`scrollable-prevent-tabpanel-${index}`}
-      aria-labelledby={`scrollable-prevent-tab-${index}`}
+      title={`scrollable-prevent-tab-${index}`}
       {...props}
     >
       {value === index && (
@@ -116,10 +114,9 @@ const AddToSceneMenu = () => {
             openMenu(evt);
           },
         }}
-        aria-label="Add"
-        aria-controls="menu-appbar"
-        aria-haspopup="true"
+        title="Add"
         className={classes.button}
+        disabled={false}
       >
         <AddIcon fontSize="small" />
       </IconButtonView>
@@ -147,7 +144,14 @@ const AddToSceneMenu = () => {
           <AddToSceneToolbar {...{ value, handleChange, closeMenu }} />
           <TabPanel value={value} index={0}>
             <ul className={classes.itemList}>
-              <ListSubheader>Add 3d Object</ListSubheader>
+              <ListSubheader>Import</ListSubheader>
+              <MenuItem dense onClick={() => { addObject('GLTF'); closeMenu(); }}>
+                <ListItemIcon>
+                  {getIconByType('Mesh')}
+                </ListItemIcon>
+                <Typography variant="inherit">Cube</Typography>
+              </MenuItem>
+              <ListSubheader>Primatives</ListSubheader>
               <MenuItem dense onClick={() => { addObject('Box'); closeMenu(); }}>
                 <ListItemIcon>
                   {getIconByType('Mesh')}
@@ -222,4 +226,4 @@ const AddToSceneMenu = () => {
   );
 };
 
-export default AddToSceneMenu;
+export default memo(AddToSceneMenu);

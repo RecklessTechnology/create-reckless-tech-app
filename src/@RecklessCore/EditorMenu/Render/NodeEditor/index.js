@@ -40,7 +40,13 @@ const NodeEditor = () => {
 
   return (
     <NodeEditorView {...{
-      elements, nodeTypes, edgeTypes, updateConnection, addConnection,
+      elements,
+      nodeTypes,
+      edgeTypes,
+      updateConnection,
+      addConnection,
+      showControls: true,
+      interactive: true,
     }}
     />
   );

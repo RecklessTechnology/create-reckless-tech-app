@@ -20,7 +20,7 @@ const RoomNameView = ({
   const classes = useStyles();
 
   return (
-    <Tooltip title="Room ID" aria-label="Room ID">
+    <Tooltip title="Room ID">
       <Typography className={classes.roomName} variant="subtitle1">{roomId}</Typography>
     </Tooltip>
   );

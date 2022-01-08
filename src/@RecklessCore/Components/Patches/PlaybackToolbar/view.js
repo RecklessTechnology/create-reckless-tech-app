@@ -68,12 +68,12 @@ const PlaybackToolbarView = ({
               >
                 {(paused === true)
                   ? (
-                    <Tooltip title="Play" aria-label="Play">
+                    <Tooltip title="Play">
                       <PlayArrowIcon fontSize="small" />
                     </Tooltip>
                   )
                   : (
-                    <Tooltip title="Pause" aria-label="Pause">
+                    <Tooltip title="Pause">
                       <PauseIcon fontSize="small" />
                     </Tooltip>
                   )}
@@ -89,12 +89,12 @@ const PlaybackToolbarView = ({
               >
                 {(looped === true)
                   ? (
-                    <Tooltip title="No Loop" aria-label="No Loop">
+                    <Tooltip title="No Loop">
                       <RepeatIcon fontSize="small" />
                     </Tooltip>
                   )
                   : (
-                    <Tooltip title="Loop" aria-label="Loop">
+                    <Tooltip title="Loop">
                       <RepeatIcon color="disabled" fontSize="small" />
                     </Tooltip>
                   )}

@@ -44,41 +44,41 @@ const InspectorToolbarView = (props) => {
             indicatorColor="secondary"
             textColor="secondary"
             scrollButtons="off"
-            aria-label="scrollable prevent tabs example"
+            title="Inspect"
           >
-            <Tooltip title="Room" aria-label="Room">
+            <Tooltip title="Room">
               <Tab
                 classes={{
                   root: classes.tabRoot,
                 }}
                 icon={(<FontAwesomeIcon icon={faHome} />)}
-                aria-label="room"
+                title="room"
                 {...{
                   id: 'room-tab-0',
                   'aria-controls': 'room-tabpanel-0',
                 }}
               />
             </Tooltip>
-            <Tooltip title="Peers" aria-label="Peers">
+            <Tooltip title="Peers">
               <Tab
                 classes={{
                   root: classes.tabRoot,
                 }}
                 icon={<FontAwesomeIcon icon={faUsers} />}
-                aria-label="peers"
+                title="peers"
                 {...{
                   id: 'peers-tab-1',
                   'aria-controls': 'peers-tabpanel-1',
                 }}
               />
             </Tooltip>
-            <Tooltip title="Help" aria-label="Help">
+            <Tooltip title="Help">
               <Tab
                 classes={{
                   root: classes.tabRoot,
                 }}
                 icon={<FontAwesomeIcon icon={faQuestion} />}
-                aria-label="help"
+                title="help"
                 {...{
                   id: 'help-tab-1',
                   'aria-controls': 'help-tabpanel-1',

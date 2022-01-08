@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 
-import React from 'react';
+import React, { memo } from 'react';
 
-import { Handle } from 'react-flow-renderer';
+import { Handle, Position } from 'react-flow-renderer';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -40,11 +40,11 @@ const InputHandle = ({ uuid, propName }) => {
   const classes = useStyles();
 
   return (
-    <Tooltip title={`${uuid}-set-${propName}`} aria-label={`set ${propName}`}>
+    <Tooltip title={`${uuid}-set-${propName}`}>
       <div>
         <Handle
           type="target"
-          position="left"
+          position={Position.Left}
           id={`${uuid}-set-${propName}`}
           // eslint-disable-next-line no-console
           isValidConnection={(connection) => { console.log('Input isValid: ', connection); return true; }}
@@ -62,4 +62,4 @@ InputHandle.propTypes = {
   propName: PropTypes.string.isRequired,
 };
 
-export default InputHandle;
+export default memo(InputHandle);

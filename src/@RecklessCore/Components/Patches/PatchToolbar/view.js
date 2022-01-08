@@ -65,12 +65,14 @@ const PatchToolbarView = ({
                 ? (
                   <IconButtonView
                     {...{
+                      disabled: false,
                       label: 'Hide Patch',
                       handeClick: () => {
                         hidePatch(uuid, true);
                       },
                     }}
                     className={classes.button}
+                    disabled={false}
                   >
                     <FontAwesomeIcon icon={faSignInAlt} />
                   </IconButtonView>
@@ -86,6 +88,7 @@ const PatchToolbarView = ({
                   },
                 }}
                 className={classes.button}
+                disabled={false}
               >
                 <FontAwesomeIcon icon={faTrashAlt} />
               </IconButtonView>

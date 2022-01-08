@@ -28,12 +28,14 @@ const PatchDetails = ({ name, type, uuid }) => {
 
   return (
     <ListItem dense className={classes.propItem}>
-      <Tooltip title={type} aria-label={type}>
-        <ListItemIcon className={classes.propIcon}>
+      <Tooltip title={type}>
+        <ListItemIcon
+          className={classes.propIcon}
+        >
           {getIconByType(type)}
         </ListItemIcon>
       </Tooltip>
-      <Tooltip title={uuid} aria-label={uuid}>
+      <Tooltip title={uuid}>
         <ListItemText
           className={classes.propText}
           primary={name}

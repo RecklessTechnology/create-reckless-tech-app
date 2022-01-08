@@ -13,43 +13,58 @@ import {
   faPlus, faMinus, faTimes, faDivide, faThLarge,
 } from '@fortawesome/free-solid-svg-icons';
 
+import GLTF_ICON from '../ThreeObjects/Assets/gltf_file.png';
+
 const getIconByType = (type) => {
   if (type.toLowerCase().includes('light')) {
     return <EmojiObjectsIcon fontSize="small" />;
   }
   switch (type.toLowerCase()) {
     default:
-      return <FontAwesomeIcon icon={faQuestion} />;
+      return <FontAwesomeIcon title={type} icon={faQuestion} />;
+    case 'gltf':
+      return (
+        <img
+          src={GLTF_ICON}
+          alt={type}
+          fill="#FFF"
+          style={{
+            width: 20,
+            height: 20,
+            filter: 'invert(100%)',
+          }}
+        />
+      );
     case 'group':
-      return <FontAwesomeIcon icon={faLayerGroup} />;
+      return <FontAwesomeIcon title={type} icon={faLayerGroup} />;
     case 'generator':
-      return <FontAwesomeIcon icon={faWaveSquare} />;
+      return <FontAwesomeIcon title={type} icon={faWaveSquare} />;
     case 'peer':
-      return <PersonIcon fontSize="small" />;
+      return <PersonIcon title={type} fontSize="small" />;
     case 'device':
-      return <FontAwesomeIcon icon={faMouse} />;
+      return <FontAwesomeIcon title={type} icon={faMouse} />;
     case 'mesh':
-      return <FontAwesomeIcon icon={faCube} />;
+      return <FontAwesomeIcon title={type} icon={faCube} />;
     case 'scene':
-      return <ImageIcon fontSize="small" />;
+      return <ImageIcon title={type} fontSize="small" />;
     case 'calculator':
-      return <FontAwesomeIcon icon={faCalculator} />;
+      return <FontAwesomeIcon title={type} icon={faCalculator} />;
     case 'mouse':
-      return <FontAwesomeIcon icon={faMouse} />;
+      return <FontAwesomeIcon title={type} icon={faMouse} />;
     case 'keyboard':
-      return <FontAwesomeIcon icon={faKeyboard} />;
+      return <FontAwesomeIcon title={type} icon={faKeyboard} />;
     case 'camera':
-      return <FontAwesomeIcon icon={faVideo} />;
+      return <FontAwesomeIcon title={type} icon={faVideo} />;
     case 'add':
-      return <FontAwesomeIcon icon={faPlus} />;
+      return <FontAwesomeIcon title={type} icon={faPlus} />;
     case 'subtract':
-      return <FontAwesomeIcon icon={faMinus} />;
+      return <FontAwesomeIcon title={type} icon={faMinus} />;
     case 'multiply':
-      return <FontAwesomeIcon icon={faTimes} />;
+      return <FontAwesomeIcon title={type} icon={faTimes} />;
     case 'divide':
-      return <FontAwesomeIcon icon={faDivide} />;
+      return <FontAwesomeIcon title={type} icon={faDivide} />;
     case 'preview':
-      return <FontAwesomeIcon icon={faThLarge} />;
+      return <FontAwesomeIcon title={type} icon={faThLarge} />;
   }
 };
 

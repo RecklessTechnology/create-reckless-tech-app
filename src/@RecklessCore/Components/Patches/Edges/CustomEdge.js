@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
@@ -87,6 +87,7 @@ const CustomEdge = ({
             },
           }}
           className={classes.deleteEdgeButton}
+          disabled={false}
         >
           <FontAwesomeIcon icon={faTimes} />
         </IconButtonView>
@@ -107,4 +108,4 @@ CustomEdge.propTypes = {
   style: PropTypes.shape({}),
 };
 
-export default CustomEdge;
+export default memo(CustomEdge);

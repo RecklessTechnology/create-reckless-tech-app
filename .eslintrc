@@ -1,5 +1,5 @@
 {
-  "extends": ["airbnb", "airbnb/hooks"],
+  "extends": ["airbnb", "airbnb/hooks", "plugin:storybook/recommended"],
   "rules": {
     "react/jsx-filename-extension": "off",
     "react/jsx-props-no-spreading": "off"
@@ -8,5 +8,13 @@
   "parserOptions": {
     "sourceType": "module",
     "allowImportExportEverywhere": true
-  }
+  },
+  "overrides": [
+    {
+      // or whatever matches stories specified in .storybook/main.js
+      "files": ["*.stories.@(ts|tsx|js|jsx|mjs|cjs)"],
+      "rules": {
+      }
+    }
+  ]
 }

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import React from 'react';
+import React, { memo } from 'react';
 
 import { Handle } from 'react-flow-renderer';
 
@@ -40,7 +40,7 @@ const OutputHandle = ({ uuid, propName }) => {
   const classes = useStyles();
 
   return (
-    <Tooltip title={`${uuid}-${propName}`} aria-label={propName}>
+    <Tooltip title={`${uuid}-${propName}`}>
       <div>
         <Handle
           type="source"
@@ -62,4 +62,4 @@ OutputHandle.propTypes = {
   propName: PropTypes.string.isRequired,
 };
 
-export default OutputHandle;
+export default memo(OutputHandle);

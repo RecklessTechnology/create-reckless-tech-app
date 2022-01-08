@@ -23,6 +23,7 @@ const AddToSceneCloseButtonView = ({ handleClose }) => {
         },
       }}
       className={classes.button}
+      disabled={false}
     >
       <CloseIcon fontSize="small" />
     </IconButtonView>

@@ -22,6 +22,7 @@ const EditorCloseButtonView = ({ editorMenuOpen, setEditorMenuOpen }) => {
         },
       }}
       className={classes.button}
+      disabled={false}
     >
       <CloseIcon fontSize="small" />
     </IconButtonView>
