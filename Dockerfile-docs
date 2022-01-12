@@ -1,4 +1,4 @@
-FROM node:lts as build-docs
+FROM node:latest as build-docs
  
 # Copies everything over to Docker environment
 COPY . /usr/src/app/
