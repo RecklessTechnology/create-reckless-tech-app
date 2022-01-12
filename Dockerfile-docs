@@ -11,7 +11,7 @@ RUN yarn install
 RUN yarn global add react-scripts@3.4.1
 
 # Build project
-RUN npm run build
+RUN npm run build-storybook-docs
 
 # Run production server
 FROM nginx:stable-alpine
