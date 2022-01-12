@@ -18,10 +18,14 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const RecklessSelect = ({
-  data, // list of values: [1, 2, 3] or ['hello', 'world']
-  value, // current value: 1 or 'hello'
-  onChange, // callback when new item selected
+/**
+* Basic Select List.
+*/
+const RTSelect = ({
+  data = ['default', 'values'],
+  value = 'default',
+  // eslint-disable-next-line no-unused-vars
+  onChange = (event) => {},
 }) => {
   const classes = useStyles();
 
@@ -45,10 +49,19 @@ const RecklessSelect = ({
   );
 };
 
-RecklessSelect.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+RTSelect.propTypes = {
+  /**
+    List of options.
+  */
+  data: PropTypes.arrayOf(PropTypes.string).isRequired,
+  /**
+    Selected option.
+  */
   value: PropTypes.string.isRequired,
+  /**
+    Do something when changed.
+  */
   onChange: PropTypes.func.isRequired,
 };
 
-export default memo(RecklessSelect);
+export default memo(RTSelect);

@@ -2,10 +2,12 @@ import PropTypes from 'prop-types';
 
 import React, { memo } from 'react';
 
+import DeviceManager, { DefaultProps } from '../Managers/DeviceManager';
+
 import MouseDevice from './Mouse/index';
 import KeyboardDevice from './Keyboard/index';
-import DeviceManager, { DefaultProps } from '../Managers/DeviceManager';
 import CameraDevice from './Camera';
+import AccelDevice from './Accel';
 
 // eslint-disable-next-line react/prop-types
 const DevicesView = ({ connection, type, ...props }) => {
@@ -23,15 +25,17 @@ const DevicesView = ({ connection, type, ...props }) => {
           <KeyboardDevice {...props} />
         </DeviceManager>
       );
+    case 'accel':
+      return (
+        <DeviceManager {...DefaultProps} type={type} {...props}>
+          <AccelDevice {...props} />
+        </DeviceManager>
+      );
     case 'camera':
       return (
-        (connection)
-          ? (
-            <DeviceManager {...DefaultProps} type={type} {...props}>
-              <CameraDevice {...props} />
-            </DeviceManager>
-          )
-          : null
+        <DeviceManager {...DefaultProps} type={type} {...props}>
+          <CameraDevice {...props} />
+        </DeviceManager>
       );
   }
 };

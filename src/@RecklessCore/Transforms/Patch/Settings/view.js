@@ -16,7 +16,7 @@ import OutputHandle from '../../../Components/Patches/OutputHandle';
 
 import PropAccordianView from '../../../Components/Patches/PropAccordian/view';
 
-import RecklessSelectWithIcon from '../../../Components/Inputs/SelectWithIcon/index';
+import RTSelectWithIcon from '../../../Components/Inputs/SelectWithIcon/index';
 
 const useStyles = makeStyles(() => ({
   propText: {
@@ -127,7 +127,7 @@ const TransformSettingsView = ({
               >
                 <Tooltip title={value}>
                   <List className={classes.selectListRoot}>
-                    <RecklessSelectWithIcon
+                    <RTSelectWithIcon
                       data={data}
                       value={value}
                       onChange={(e) => {

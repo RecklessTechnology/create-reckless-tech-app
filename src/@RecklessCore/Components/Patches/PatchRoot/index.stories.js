@@ -5,19 +5,13 @@ import 'typeface-roboto-material';
 import { ThemeProvider } from '@material-ui/styles';
 import { CssBaseline } from '@material-ui/core';
 
-import PatchDetails from './index';
+import PatchRoot from './index';
 
 import theme from '../../../../theme';
 
 export default {
-  title: 'Editor/Patches/Components/Patch Details',
-  component: PatchDetails.type,
-  argTypes: {
-    type: {
-      options: ['mesh', 'group'],
-      control: { type: 'select' },
-    },
-  },
+  title: 'Editor/Patches/Components/Patch Root',
+  component: PatchRoot.type,
   decorators: [
     (Story) => (
       <ThemeProvider theme={theme}>
@@ -28,13 +22,11 @@ export default {
   ],
 };
 
-const Template = (data) => (<PatchDetails {...data} />);
+const Template = (data) => (<PatchRoot {...data}><span>Hello, world!</span></PatchRoot>);
 
-Template.propTypes = PatchDetails.propTypes;
+Template.propTypes = PatchRoot.propTypes;
 
 export const Default = Template.bind({});
 Default.args = {
-  name: 'Patch',
-  uuid: 'xxx',
-  type: 'mesh',
+  width: 100,
 };

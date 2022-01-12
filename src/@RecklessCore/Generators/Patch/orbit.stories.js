@@ -6,38 +6,42 @@ import { ThemeProvider } from '@material-ui/styles';
 import { CssBaseline } from '@material-ui/core';
 
 import AppManager from '../../App/Managers/AppManager';
-import PeersManager from '../Managers/PeersManager';
+import GeneratorsManager from '../Managers/GeneratorsManager';
 
-import Peer from './index';
+import Generator from './index';
+import Provider from '../Providers/view';
 
-import { peersToFlow } from '../../Utils/toFlow';
+import { generatorsToFlow } from '../../Utils/toFlow';
 
 import NodeEditorView from '../../EditorMenu/Render/NodeEditor/view';
 
 import theme from '../../../theme';
 
 export default {
-  title: 'Patches/Peer',
-  component: Peer,
+  title: 'Editor/Patches/Generator',
+  component: Generator.type,
   // argTypes: { onClick: { action: 'clicked' } },
   decorators: [
     (Story) => (
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <AppManager>
-          <PeersManager>
+          <GeneratorsManager>
             <Story />
-          </PeersManager>
+          </GeneratorsManager>
         </AppManager>
       </ThemeProvider>
     ),
   ],
+  argTypes: {
+    data: { table: { disable: true }, control: { disable: true } },
+  },
 };
 
 const Template = (data) => {
-  const elements = peersToFlow([data], [], 1);
+  const elements = generatorsToFlow([data], [], 1);
   const nodeTypes = {
-    peer: Peer,
+    generator: Generator,
   };
 
   return (
@@ -47,6 +51,7 @@ const Template = (data) => {
       height: '50vh',
     }}
     >
+      <Provider connection={{}} {...data} />
       <NodeEditorView {...{
         elements: [
           ...elements,
@@ -63,12 +68,16 @@ const Template = (data) => {
   );
 };
 
-Template.propTypes = Peer.propTypes;
+Template.propTypes = Generator.propTypes;
 
-export const Default = Template.bind({});
-Default.args = {
-  type: 'peer',
-  name: 'Peer',
+export const Orbit = Template.bind({});
+Orbit.args = {
+  name: 'Orbit',
+  type: 'orbit',
+  resolution: 32,
+  rpm: 30,
+  looped: true,
+  paused: false,
   uuid: 'xxx',
   userData: {
     isPatchHidden: false,

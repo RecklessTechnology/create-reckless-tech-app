@@ -14,7 +14,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import PropAccordianView from '../../../../Components/Patches/PropAccordian/view';
 
-import RecklessSelect from '../../../../Components/Inputs/Select/index';
+import RTSelect from '../../../../Components/Inputs/Select/index';
 
 const useStyles = makeStyles(() => ({
   propText: {
@@ -82,7 +82,7 @@ const CameraSettingsView = ({
           >
             <Tooltip title={value.label === undefined ? '' : value.label}>
               <List className={classes.selectListRoot}>
-                <RecklessSelect
+                <RTSelect
                   data={data.map((d) => d.label)}
                   value={value.label === undefined ? '' : value.label}
                   onChange={(e) => {

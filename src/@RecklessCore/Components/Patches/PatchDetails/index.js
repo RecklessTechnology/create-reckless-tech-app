@@ -23,7 +23,14 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const PatchDetails = ({ name, type, uuid }) => {
+/**
+* Basic Icon and Title for Patches.
+*/
+const PatchDetails = ({
+  name = 'Patch',
+  type = 'mesh',
+  uuid = 'xxx',
+}) => {
   const classes = useStyles();
 
   return (
@@ -46,9 +53,18 @@ const PatchDetails = ({ name, type, uuid }) => {
 };
 
 PatchDetails.propTypes = {
+  /**
+  * Name of Patch.
+  */
   name: PropTypes.string.isRequired,
-  uuid: PropTypes.string.isRequired,
+  /**
+  * Type of Patch.
+  */
   type: PropTypes.string.isRequired,
+  /**
+  * Unique Patch ID.
+  */
+  uuid: PropTypes.string.isRequired,
 };
 
 export default memo(PatchDetails);

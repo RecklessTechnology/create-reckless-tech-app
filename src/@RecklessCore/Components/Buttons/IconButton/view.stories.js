@@ -12,8 +12,8 @@ import IconButtonView from './view';
 import theme from '../../../../theme';
 
 export default {
-  title: 'Components/Icon Button',
-  component: IconButtonView,
+  title: 'Primatives/Icon Button',
+  component: IconButtonView.type,
   argTypes: { handeClick: { action: 'clicked' } },
   decorators: [
     (Story) => (
@@ -44,14 +44,14 @@ Template.propTypes = IconButtonView.propTypes;
 
 export const Default = Template.bind({});
 Default.args = {
-  disabled: false,
   label: 'Close',
+  disabled: false,
   className: 'iconButton',
 };
 
 export const Disabled = Template.bind({});
 Disabled.args = {
-  disabled: true,
   label: 'Disabled',
+  disabled: true,
   className: 'iconButton',
 };

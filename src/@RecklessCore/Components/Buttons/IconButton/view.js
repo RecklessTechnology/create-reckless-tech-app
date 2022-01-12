@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes, { node } from 'prop-types';
 
 import React, { memo } from 'react';
 
@@ -15,8 +15,17 @@ export const useStyles = makeStyles(() => ({
   },
 }));
 
+/**
+* Basic IconButton with Tooltip.
+*/
 const IconButtonView = ({
-  children, label, handeClick, className, disabled, ...props
+  children = node,
+  label = 'default',
+  className = '',
+  disabled = false,
+  // eslint-disable-next-line no-unused-vars
+  handeClick = (event) => {},
+  ...props
 }) => {
   const classes = useStyles();
   return (
@@ -41,11 +50,26 @@ const IconButtonView = ({
 IconButtonView.whyDidYouRender = (process.env.NODE_ENV === 'development');
 
 IconButtonView.propTypes = {
-  children: PropTypes.node.isRequired,
+  /**
+    Name of button. Tooltip text.
+  */
   label: PropTypes.string.isRequired,
+  /**
+    Do something on click.
+  */
   handeClick: PropTypes.func.isRequired,
-  className: PropTypes.string.isRequired,
+  /**
+    Disable button.
+  */
   disabled: PropTypes.bool.isRequired,
+  /**
+    Icon to display.
+  */
+  children: PropTypes.node.isRequired,
+  /**
+    Override default style.
+  */
+  className: PropTypes.string.isRequired,
 };
 
 export default memo(IconButtonView);

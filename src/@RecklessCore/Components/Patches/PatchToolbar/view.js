@@ -47,8 +47,15 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+/**
+ * Bottom Toolbar for Patches
+ */
 const PatchToolbarView = ({
-  uuid, removeObj, hidePatch,
+  uuid = 'xxx',
+  // eslint-disable-next-line no-unused-vars
+  removeObj = (event) => {},
+  // eslint-disable-next-line no-unused-vars
+  hidePatch = (event) => {},
 }) => {
   const classes = useStyles();
   return (
@@ -101,9 +108,18 @@ const PatchToolbarView = ({
 };
 
 PatchToolbarView.propTypes = {
-  uuid: PropTypes.string.isRequired,
+  /**
+   * Deletes Patch.
+   */
   removeObj: PropTypes.func.isRequired,
+  /**
+   * Hides Patch.
+   */
   hidePatch: PropTypes.func.isRequired,
+  /**
+  * Unique Patch ID.
+  */
+  uuid: PropTypes.string.isRequired,
 };
 
 export default memo(PatchToolbarView);

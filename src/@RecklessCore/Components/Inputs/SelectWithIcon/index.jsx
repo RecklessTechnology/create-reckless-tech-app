@@ -25,10 +25,14 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const RecklessSelectWithIcon = ({
-  data, // list of values: ['hello', 'world']
-  value, // current value: 'hello'
-  onChange, // callback when item selected
+/**
+* Basic Select List with Type Icons.
+*/
+const RTSelectWithIcon = ({
+  data = ['default', 'values'],
+  value = 'default',
+  // eslint-disable-next-line no-unused-vars
+  onChange = (event) => {},
 }) => {
   const classes = useStyles();
 
@@ -58,10 +62,19 @@ const RecklessSelectWithIcon = ({
   );
 };
 
-RecklessSelectWithIcon.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+RTSelectWithIcon.propTypes = {
+  /**
+    Array of strings to list.
+  */
+  data: PropTypes.arrayOf(PropTypes.string).isRequired,
+  /**
+    Selected value.
+  */
   value: PropTypes.string.isRequired,
+  /**
+    Handle action on change.
+  */
   onChange: PropTypes.func.isRequired,
 };
 
-export default memo(RecklessSelectWithIcon);
+export default memo(RTSelectWithIcon);

@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes, { node } from 'prop-types';
 
 import React, {
   useCallback,
@@ -23,7 +23,7 @@ export const DefaultProps = {
 };
 
 const PeerManager = ({
-  children,
+  children = node,
   ...props
 }) => {
   const {
@@ -35,7 +35,7 @@ const PeerManager = ({
   const { getMe, findConnection } = useConnectionsContext();
   const forceUpdate = useForceUpdate();
 
-  const node = useRef(null);
+  const nodeRef = useRef(null);
 
   const [uuid] = useState(props.uuid);
   const [name] = useState(props.name);
@@ -116,7 +116,7 @@ const PeerManager = ({
     uuid,
     name,
 
-    nodeRef: node,
+    nodeRef,
     getRef,
 
     type,
@@ -130,7 +130,7 @@ const PeerManager = ({
     uuid,
     name,
 
-    node,
+    nodeRef,
     getRef,
 
     type, setType,

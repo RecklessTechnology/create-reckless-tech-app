@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 
 import PropListItem from '../../Components/Patches/PropListItem/index';
 import PatchValue from './PatchValue/index';
@@ -10,8 +10,23 @@ import PatchRoot from '../../Components/Patches/PatchRoot';
 
 import PatchToolbar from './PatchToolbar/index';
 
-const PeerPatch = ({ data }) => {
-  const { uuid, width } = data;
+/**
+ * Patch for Controlling Peers
+ */
+const PeerPatch = ({
+  // eslint-disable-next-line no-unused-vars
+  type = 'peer',
+  // eslint-disable-next-line no-unused-vars
+  name = 'default',
+  // eslint-disable-next-line no-unused-vars
+  uuid = 'xxx',
+  // eslint-disable-next-line no-unused-vars
+  userData = {
+    isPatchHidden: false,
+  },
+  data,
+}) => {
+  const { uuid: uid, width } = data;
   const { findConnection } = useConnectionsContext();
   const [peer, setPeer] = useState(null);
 
@@ -28,11 +43,11 @@ const PeerPatch = ({ data }) => {
   }, [peer]);
 
   useEffect(() => {
-    const p = findConnection(uuid);
+    const p = findConnection(uid);
     if (p !== undefined) {
       setPeer(p);
     }
-  }, [uuid, findConnection, setPeer]);
+  }, [uid, findConnection, setPeer]);
 
   if (peer === null) { return null; }
 
@@ -46,10 +61,32 @@ const PeerPatch = ({ data }) => {
 };
 
 PeerPatch.propTypes = {
+  /**
+   * Name of Patch.
+   */
+  // eslint-disable-next-line react/require-default-props
+  name: PropTypes.string,
+  /**
+   * Type of Patch.
+   */
+  // eslint-disable-next-line react/require-default-props
+  type: PropTypes.string,
+  /**
+   * Unique Patch Id.
+   */
+  // eslint-disable-next-line react/require-default-props
+  uuid: PropTypes.string,
+  /**
+   * Props.
+   */
+  // eslint-disable-next-line react/require-default-props
+  userData: PropTypes.shape({
+    isPatchHidden: PropTypes.bool,
+  }),
   data: PropTypes.shape({
     uuid: PropTypes.string,
     width: PropTypes.number,
   }).isRequired,
 };
 
-export default PeerPatch;
+export default memo(PeerPatch);

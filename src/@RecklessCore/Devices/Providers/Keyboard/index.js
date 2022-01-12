@@ -1,62 +1,25 @@
-import PropTypes from 'prop-types';
+import { useCallback, useEffect } from 'react';
 
-import {
-  useState, useMemo, useCallback, useEffect,
-} from 'react';
+import useDeviceContext from '../../Contexts/useDeviceContext';
 
-import { useSpring } from '@react-spring/core';
-import useGeneratorContext from '../../../Generators/Contexts/useGeneratorContext';
+const KeyboardDevice = () => {
+  const { setPosition } = useDeviceContext();
 
-import DrawSine from '../../../Shapes/drawSine';
+  const updateKeyboardPosition = useCallback((ev) => {
+    setPosition([ev.clientX, ev.clientY, 0]);
+  }, [setPosition]);
 
-const KeyboardDevice = ({ toProp }) => {
-  const {
-    type, resolution, rpm, looped, paused, setPosition: setGenPosition,
-  } = useGeneratorContext();
-  const [animMili] = useState(((60 * 1000) / rpm) / (360 / resolution));
-
-  const points = useMemo(() => {
-    switch (type.toLowerCase()) {
-      default:
-      case 'sine':
-        return DrawSine(resolution);
-    }
-  }, [type, resolution]);
-
-  const toPoints = useMemo(() => [
-    ...points.map((pos) => ({ [toProp]: [pos[0], pos[1], 0] })),
-  ], [points, toProp]);
-
-  const handleChange = useCallback((result) => {
-    if (result.value !== undefined) {
-      setGenPosition(result.value[toProp]);
-    }
-  }, [toProp, setGenPosition]);
-
-  const config = useMemo(() => ({
-    pause: paused,
-    loop: looped,
-    to: toPoints,
-    config: {
-      duration: animMili,
-      friction: 5,
-    },
-    onChange: handleChange,
-  }), [toPoints, animMili, paused, looped, handleChange]);
-
-  const [, api] = useSpring(() => (config));
   useEffect(() => {
-    api.stop();
-    api.start(config);
-  }, [api, config]);
+    // eslint-disable-next-line no-undef
+    window.addEventListener('mousemove', updateKeyboardPosition);
+
+    // eslint-disable-next-line no-undef
+    return () => window.removeEventListener('mousemove', updateKeyboardPosition);
+  }, [updateKeyboardPosition]);
 
   return null;
 };
 
 KeyboardDevice.whyDidYouRender = (process.env.NODE_ENV === 'development');
-
-KeyboardDevice.propTypes = {
-  toProp: PropTypes.string.isRequired,
-};
 
 export default KeyboardDevice;

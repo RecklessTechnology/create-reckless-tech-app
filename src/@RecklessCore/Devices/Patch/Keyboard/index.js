@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import React, { memo } from 'react';
+import React from 'react';
 
 import PatchToolbar from '../PatchToolbar/index';
 import PatchValue from '../PatchValue/index';
@@ -9,7 +9,7 @@ import PropListItem from '../../../Components/Patches/PropListItem/index';
 import PatchDetails from '../../../Components/Patches/PatchDetails/index';
 import PatchRoot from '../../../Components/Patches/PatchRoot';
 
-const MousePatch = ({ data }) => {
+const KeyboardPatch = ({ data }) => {
   const {
     uuid, width, label, type,
   } = data;
@@ -29,7 +29,7 @@ const MousePatch = ({ data }) => {
   );
 };
 
-MousePatch.propTypes = {
+KeyboardPatch.propTypes = {
   data: PropTypes.shape({
     uuid: PropTypes.string.isRequired,
     width: PropTypes.number.isRequired,
@@ -38,4 +38,4 @@ MousePatch.propTypes = {
   }).isRequired,
 };
 
-export default memo(MousePatch);
+export default KeyboardPatch;

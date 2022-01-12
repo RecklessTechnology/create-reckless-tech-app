@@ -20,11 +20,31 @@ export const parameters = {
       },
     ],
   },
-  actions: { argTypesRegex: "^on[A-Z].*" },
   controls: {
     matchers: {
       color: /(background|color)$/i,
       date: /Date$/,
     },
   },
+  options: {
+    storySort: {
+      order: ['Intro', 'Features', 'Rooms & Sharing', 'Devices & Peers', 'Generators & Transforms', 'Scene JSON', 'Editor', ['Patches', ['*', 'Components']], '*', 'Primatives'],
+    },
+  },
+  docs: {
+    source: {
+      type: 'code',
+    },
+    page: () => (
+      <>
+        <Title />
+        <Subtitle />
+        <Description />
+        <Primary />
+        <ArgsTable story={PRIMARY_STORY} />
+        <Stories />
+      </>
+    ),
+  },
+  actions: { argTypesRegex: '^on.*' },
 }

@@ -6,38 +6,41 @@ import { ThemeProvider } from '@material-ui/styles';
 import { CssBaseline } from '@material-ui/core';
 
 import AppManager from '../../App/Managers/AppManager';
-import GeneratorsManager from '../Managers/GeneratorsManager';
+import DevicesManager from '../Managers/DevicesManager';
 
-import Generator from './index';
+import Device from './index';
+import Provider from '../Providers/view';
 
-import { generatorsToFlow } from '../../Utils/toFlow';
+import { devicesToFlow } from '../../Utils/toFlow';
 
 import NodeEditorView from '../../EditorMenu/Render/NodeEditor/view';
 
 import theme from '../../../theme';
 
 export default {
-  title: 'Patches/Generator',
-  component: Generator,
-  // argTypes: { onClick: { action: 'clicked' } },
+  title: 'Editor/Patches/Device',
+  component: Device.type,
   decorators: [
     (Story) => (
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <AppManager>
-          <GeneratorsManager>
+          <DevicesManager>
             <Story />
-          </GeneratorsManager>
+          </DevicesManager>
         </AppManager>
       </ThemeProvider>
     ),
   ],
+  argTypes: {
+    data: { table: { disable: true }, control: { disable: true } },
+  },
 };
 
 const Template = (data) => {
-  const elements = generatorsToFlow([data], [], 1);
+  const elements = devicesToFlow([data], [], 1);
   const nodeTypes = {
-    generator: Generator,
+    device: Device,
   };
 
   return (
@@ -47,6 +50,7 @@ const Template = (data) => {
       height: '50vh',
     }}
     >
+      <Provider connection={{}} {...data} />
       <NodeEditorView {...{
         elements: [
           ...elements,
@@ -63,13 +67,13 @@ const Template = (data) => {
   );
 };
 
-Template.propTypes = Generator.propTypes;
+Template.propTypes = Device.propTypes;
 
-export const Default = Template.bind({});
-Default.args = {
+export const Keyboard = Template.bind({});
+Keyboard.args = {
+  name: 'Keyboard',
+  type: 'keyboard',
   uuid: 'xxx',
-  type: 'camera',
-  name: 'Example',
   userData: {
     isPatchHidden: false,
   },

@@ -6,38 +6,41 @@ import { ThemeProvider } from '@material-ui/styles';
 import { CssBaseline } from '@material-ui/core';
 
 import AppManager from '../../App/Managers/AppManager';
-import ThreeObjectsManager from '../Managers/ThreeObjectsManager';
+import DevicesManager from '../Managers/DevicesManager';
 
-import ThreeObject from './index';
+import Device from './index';
+import Provider from '../Providers/view';
 
-import { sceneGraphToFlow } from '../../Utils/toFlow';
+import { devicesToFlow } from '../../Utils/toFlow';
 
 import NodeEditorView from '../../EditorMenu/Render/NodeEditor/view';
 
 import theme from '../../../theme';
 
 export default {
-  title: 'Editor/Patches/Three Object',
-  component: ThreeObject,
-  // argTypes: { onClick: { action: 'clicked' } },
+  title: 'Editor/Patches/Device',
+  component: Device.type,
   decorators: [
     (Story) => (
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <AppManager>
-          <ThreeObjectsManager>
+          <DevicesManager>
             <Story />
-          </ThreeObjectsManager>
+          </DevicesManager>
         </AppManager>
       </ThemeProvider>
     ),
   ],
+  argTypes: {
+    data: { table: { disable: true }, control: { disable: true } },
+  },
 };
 
 const Template = (data) => {
-  const elements = sceneGraphToFlow([data], [], 1);
+  const elements = devicesToFlow([data], [], 1);
   const nodeTypes = {
-    threeObj: ThreeObject,
+    device: Device,
   };
 
   return (
@@ -47,6 +50,7 @@ const Template = (data) => {
       height: '50vh',
     }}
     >
+      <Provider connection={{}} {...data} />
       <NodeEditorView {...{
         elements: [
           ...elements,
@@ -63,38 +67,12 @@ const Template = (data) => {
   );
 };
 
-Template.propTypes = ThreeObject.propTypes;
+Template.propTypes = Device.propTypes;
 
-export const Mesh = Template.bind({});
-Mesh.args = {
-  type: 'mesh',
-  name: 'Mesh',
-  geometry: 'xxx',
-  material: 'xxx',
-  uuid: 'xxx',
-  userData: {
-    isPatchHidden: false,
-  },
-};
-
-export const Group = Template.bind({});
-Group.args = {
-  type: 'group',
-  name: 'Group',
-  geometry: 'xxx',
-  material: 'xxx',
-  uuid: 'xxx',
-  userData: {
-    isPatchHidden: false,
-  },
-};
-
-export const GLTF = Template.bind({});
-GLTF.args = {
-  type: 'gltf',
-  name: 'GLTF',
-  geometry: 'xxx',
-  material: 'xxx',
+export const Camera = Template.bind({});
+Camera.args = {
+  name: 'Camera',
+  type: 'camera',
   uuid: 'xxx',
   userData: {
     isPatchHidden: false,

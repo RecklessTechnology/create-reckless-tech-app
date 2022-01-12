@@ -22,8 +22,8 @@ export const DefaultProps = {
   type: '',
   position: [0, 0, 0],
   active: false,
-  deviceList: [{}],
-  selectedDevice: {},
+  deviceList: [{ label: 'no data' }],
+  selectedDevice: { label: 'no data' },
 };
 
 const DeviceManager = ({

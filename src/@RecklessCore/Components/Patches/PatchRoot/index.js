@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes, { node } from 'prop-types';
 
 import React, { memo } from 'react';
 
@@ -8,6 +8,7 @@ import { List } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
   root: {
+    minHeight: '100px',
     width: (props) => (props.width),
     padding: 0,
     backgroundColor: '#555',
@@ -17,7 +18,13 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const PatchRoot = ({ children, width }) => {
+/**
+ * Root Panel for Patches.
+ */
+const PatchRoot = ({
+  children = node,
+  width = 100,
+}) => {
   const classes = useStyles({ width });
 
   return (
@@ -28,8 +35,14 @@ const PatchRoot = ({ children, width }) => {
 };
 
 PatchRoot.propTypes = {
-  children: PropTypes.node.isRequired,
+  /**
+   * Width of Patch.
+   */
   width: PropTypes.number.isRequired,
+  /**
+   * Contents of Patch.
+   */
+  children: PropTypes.node.isRequired,
 };
 
 export default memo(PatchRoot);

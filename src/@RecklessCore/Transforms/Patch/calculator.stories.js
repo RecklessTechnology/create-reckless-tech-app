@@ -6,28 +6,28 @@ import { ThemeProvider } from '@material-ui/styles';
 import { CssBaseline } from '@material-ui/core';
 
 import AppManager from '../../App/Managers/AppManager';
-import ThreeObjectsManager from '../Managers/ThreeObjectsManager';
+import TransformsManager from '../Managers/TransformsManager';
 
-import ThreeObject from './index';
+import Transform from './index';
 
-import { sceneGraphToFlow } from '../../Utils/toFlow';
+import { transformsToFlow } from '../../Utils/toFlow';
 
 import NodeEditorView from '../../EditorMenu/Render/NodeEditor/view';
 
 import theme from '../../../theme';
 
 export default {
-  title: 'Editor/Patches/Three Object',
-  component: ThreeObject,
+  title: 'Editor/Patches/Transform',
+  component: Transform,
   // argTypes: { onClick: { action: 'clicked' } },
   decorators: [
     (Story) => (
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <AppManager>
-          <ThreeObjectsManager>
+          <TransformsManager>
             <Story />
-          </ThreeObjectsManager>
+          </TransformsManager>
         </AppManager>
       </ThemeProvider>
     ),
@@ -35,9 +35,9 @@ export default {
 };
 
 const Template = (data) => {
-  const elements = sceneGraphToFlow([data], [], 1);
+  const elements = transformsToFlow([data], [], 1);
   const nodeTypes = {
-    threeObj: ThreeObject,
+    transform: Transform,
   };
 
   return (
@@ -63,38 +63,12 @@ const Template = (data) => {
   );
 };
 
-Template.propTypes = ThreeObject.propTypes;
+Template.propTypes = Transform.propTypes;
 
-export const Mesh = Template.bind({});
-Mesh.args = {
-  type: 'mesh',
-  name: 'Mesh',
-  geometry: 'xxx',
-  material: 'xxx',
-  uuid: 'xxx',
-  userData: {
-    isPatchHidden: false,
-  },
-};
-
-export const Group = Template.bind({});
-Group.args = {
-  type: 'group',
-  name: 'Group',
-  geometry: 'xxx',
-  material: 'xxx',
-  uuid: 'xxx',
-  userData: {
-    isPatchHidden: false,
-  },
-};
-
-export const GLTF = Template.bind({});
-GLTF.args = {
-  type: 'gltf',
-  name: 'GLTF',
-  geometry: 'xxx',
-  material: 'xxx',
+export const Calculator = Template.bind({});
+Calculator.args = {
+  name: 'Calculator',
+  type: 'calculator',
   uuid: 'xxx',
   userData: {
     isPatchHidden: false,

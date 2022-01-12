@@ -11,21 +11,44 @@ import PatchRoot from '../../Components/Patches/PatchRoot';
 import GeneratorSettings from './Settings';
 import PropListItem from '../../Components/Patches/PropListItem';
 
-const Generator = ({ data }) => {
-  const { uuid, label, width } = data;
+/**
+ * Patch for Controlling Generators
+ */
+const Generator = ({
+  // eslint-disable-next-line no-unused-vars
+  type = 'orbit',
+  // eslint-disable-next-line no-unused-vars
+  name = 'default',
+  // eslint-disable-next-line no-unused-vars
+  uuid = 'xxx',
+  // eslint-disable-next-line no-unused-vars
+  userData = {
+    isPatchHidden: false,
+  },
+  // eslint-disable-next-line no-unused-vars
+  resolution = 32,
+  // eslint-disable-next-line no-unused-vars
+  rpm = 30,
+  // eslint-disable-next-line no-unused-vars
+  looped = true,
+  // eslint-disable-next-line no-unused-vars
+  paused = false,
+  data,
+}) => {
+  const { uuid: uid, label, width } = data;
 
   return (
     <PatchRoot {...{ width }}>
-      <PatchDetails {...{ name: `${label}`, uuid: `${uuid}`, type: 'Generator' }} />
-      <ShapePreview {...{ uuid, propName: 'position' }} />
-      <GeneratorSettings uuid={uuid} />
+      <PatchDetails {...{ name: `${label}`, uuid: `${uid}`, type: 'Generator' }} />
+      <ShapePreview {...{ uuid: uid, propName: 'position' }} />
+      <GeneratorSettings uuid={uid} />
       <PropListItem {...{
-        uuid, propName: 'position', disableInput: true, disableOutput: false,
+        uuid: uid, propName: 'position', disableInput: true, disableOutput: false,
       }}
       >
-        <PatchValue {...{ uuid, propName: 'position' }} />
+        <PatchValue {...{ uuid: uid, propName: 'position' }} />
       </PropListItem>
-      <PatchToolbar uuid={uuid} />
+      <PatchToolbar uuid={uid} />
     </PatchRoot>
   );
 };
@@ -33,6 +56,36 @@ const Generator = ({ data }) => {
 Generator.whyDidYouRender = (process.env.NODE_ENV === 'development');
 
 Generator.propTypes = {
+  /**
+   * Name of Patch.
+   */
+  // eslint-disable-next-line react/require-default-props
+  name: PropTypes.string,
+  /**
+   * Type of Patch.
+   */
+  // eslint-disable-next-line react/require-default-props
+  type: PropTypes.string,
+  /**
+   * Unique Patch Id.
+   */
+  // eslint-disable-next-line react/require-default-props
+  uuid: PropTypes.string,
+  /**
+   * Props.
+   */
+  // eslint-disable-next-line react/require-default-props
+  userData: PropTypes.shape({
+    isPatchHidden: PropTypes.bool,
+  }),
+  // eslint-disable-next-line react/require-default-props
+  resolution: PropTypes.number,
+  // eslint-disable-next-line react/require-default-props
+  rpm: PropTypes.number,
+  // eslint-disable-next-line react/require-default-props
+  looped: PropTypes.bool,
+  // eslint-disable-next-line react/require-default-props
+  paused: PropTypes.bool,
   data: PropTypes.shape({
     uuid: PropTypes.string,
     label: PropTypes.string,

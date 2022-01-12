@@ -16,7 +16,7 @@ const CameraSettings = ({ uuid }) => {
 
   const isMounted = useRef(false);
 
-  const [list, setList] = useState([]);
+  const [list, setList] = useState([{ label: 'no data' }]);
   const [selected, setSelected] = useState(list[0]);
 
   const updateSelected = useCallback((val) => {
@@ -50,16 +50,12 @@ const CameraSettings = ({ uuid }) => {
 
   if (selected === undefined) return false;
 
-  const val = (list.filter((d) => d.label === selected.label).length < 1)
-    ? list[0]
-    : list.filter((d) => d.label === selected.label)[0];
-
   return (
     <CameraSettingsView
       {...{
         propName: 'Select Camera',
         data: list,
-        value: val,
+        value: selected,
         setValue: (v) => {
           if (deviceObj !== undefined) {
             deviceObj.setSelectedDevice(list.filter((d) => d.label === v)[0]);

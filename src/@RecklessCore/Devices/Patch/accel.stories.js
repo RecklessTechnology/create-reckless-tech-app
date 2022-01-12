@@ -9,6 +9,7 @@ import AppManager from '../../App/Managers/AppManager';
 import DevicesManager from '../Managers/DevicesManager';
 
 import Device from './index';
+import Provider from '../Providers/view';
 
 import { devicesToFlow } from '../../Utils/toFlow';
 
@@ -17,9 +18,8 @@ import NodeEditorView from '../../EditorMenu/Render/NodeEditor/view';
 import theme from '../../../theme';
 
 export default {
-  title: 'Patches/Device',
-  component: Device,
-  // argTypes: { onClick: { action: 'clicked' } },
+  title: 'Editor/Patches/Device',
+  component: Device.type,
   decorators: [
     (Story) => (
       <ThemeProvider theme={theme}>
@@ -32,6 +32,9 @@ export default {
       </ThemeProvider>
     ),
   ],
+  argTypes: {
+    data: { table: { disable: true }, control: { disable: true } },
+  },
 };
 
 const Template = (data) => {
@@ -47,6 +50,7 @@ const Template = (data) => {
       height: '50vh',
     }}
     >
+      <Provider connection={{}} {...data} />
       <NodeEditorView {...{
         elements: [
           ...elements,
@@ -65,11 +69,11 @@ const Template = (data) => {
 
 Template.propTypes = Device.propTypes;
 
-export const Default = Template.bind({});
-Default.args = {
+export const Accelerometer = Template.bind({});
+Accelerometer.args = {
+  name: 'Accelerometer',
+  type: 'accel',
   uuid: 'xxx',
-  type: 'camera',
-  name: 'Example',
   userData: {
     isPatchHidden: false,
   },
