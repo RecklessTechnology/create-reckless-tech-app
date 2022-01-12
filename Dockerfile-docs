@@ -1,4 +1,4 @@
-FROM node:lts as build
+FROM node:lts as build-docs
  
 # Copies everything over to Docker environment
 COPY . /usr/src/app/
@@ -15,7 +15,7 @@ RUN npm run build
 
 # Run production server
 FROM nginx:stable-alpine
-COPY --from=build /usr/src/app/storybook-static /usr/share/nginx/html
+COPY --from=build-docs /usr/src/app/storybook-static /usr/share/nginx/html
 # new
 COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
