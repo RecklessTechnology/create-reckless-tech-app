@@ -8,7 +8,7 @@ import 'typeface-roboto-material';
 import { ThemeProvider } from '@material-ui/styles';
 import { CssBaseline } from '@material-ui/core';
 
-import App from './@RecklessCore/App/Render/index';
+import App from './@RecklessCore/App';
 
 import AppManager from './@RecklessCore/App/Managers/AppManager';
 import ThreeObjectsManager from './@RecklessCore/ThreeObjects/Managers/ThreeObjectsManager';
@@ -20,8 +20,8 @@ import GeneratorsManager from './@RecklessCore/Generators/Managers/GeneratorsMan
 import TransformsManager from './@RecklessCore/Transforms/Managers/TransformsManager';
 import WidgetsManager from './@RecklessCore/Widgets/Managers/WidgetsManager';
 
-import InspectorMenuManager from './@RecklessCore/InspectorMenu/Managers/InspectorMenuManager';
-import EditorMenuManager from './@RecklessCore/EditorMenu/Managers/EditorMenuManager';
+import InspectorMenuManager from './@RecklessCore/Inspector/Managers/InspectorMenuManager';
+import EditorMenuManager from './@RecklessCore/Editor/Managers/EditorMenuManager';
 
 // import reportWebVitals from './reportWebVitals';
 

@@ -13,7 +13,7 @@ import useForceUpdate from '../../Utils/useForceUpdate';
 import useThreeObjectsContext from '../Contexts/useThreeObjectsContext';
 import useAppContext from '../../App/Contexts/useAppContext';
 
-import ThreeObjectView from '../Render/view';
+import ThreeObjectView from '../view';
 
 export const ThreeObjectContext = createContext(null);
 export const ThreeObjectPositionContext = createContext(null);
