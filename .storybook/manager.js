@@ -8,6 +8,6 @@ addons.setConfig({
   panelPosition: 'right',
   isToolshown: false,
   sidebar: {
-    collapsedRoots: ['buttons', 'menus', 'primatives'],
+    collapsedRoots: ['buttons', 'menus', 'modals', 'toolbars', 'pure-components'],
   },
 });

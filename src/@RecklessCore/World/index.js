@@ -56,7 +56,6 @@ const World = ({
       return (
         <div className={classes.root}>
           <Canvas
-            mode="concurrent"
             shadows
             camera={camera}
             // eslint-disable-next-line no-undef

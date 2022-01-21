@@ -10,7 +10,7 @@ import RTSelectWithIcon from './index';
 import theme from '../../../../theme';
 
 export default {
-  title: 'Primatives/Select with Icons',
+  title: 'Pure Components/Select with Icons',
   component: RTSelectWithIcon.type,
   argTypes: { onChange: { action: 'changed' } },
   decorators: [

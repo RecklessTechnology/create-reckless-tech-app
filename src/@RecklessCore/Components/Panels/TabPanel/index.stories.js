@@ -10,7 +10,7 @@ import TabPanel from './index';
 import theme from '../../../../theme';
 
 export default {
-  title: 'Primatives/TabPanel',
+  title: 'Pure Components/TabPanel',
   component: TabPanel.type,
   decorators: [
     (Story) => (

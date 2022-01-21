@@ -1,17 +1,20 @@
 import React, { memo, useState, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
+import { Modal, Paper, Divider } from '@material-ui/core';
 import Backdrop from '@material-ui/core/Backdrop';
 import { useSpring, animated } from 'react-spring';
 
-import WelcomeModalView from './view';
+import ModalToolbar from './Toolbar';
 
 const useStyles = makeStyles(() => ({
   modal: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  root: {
+    width: '375px',
   },
 }));
 
@@ -52,7 +55,7 @@ Fade.propTypes = {
   onExited: PropTypes.func,
 };
 
-const WelcomeModal = () => {
+const BasicModal = ({ children }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(true);
 
@@ -75,10 +78,18 @@ const WelcomeModal = () => {
       }}
     >
       <Fade in={open}>
-        <WelcomeModalView {...{ handleClose }} />
+        <Paper className={classes.root}>
+          <ModalToolbar {...{ handleClose }} />
+          <Divider />
+          {children}
+        </Paper>
       </Fade>
     </Modal>
   );
 };
 
-export default memo(WelcomeModal);
+BasicModal.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+export default memo(BasicModal);

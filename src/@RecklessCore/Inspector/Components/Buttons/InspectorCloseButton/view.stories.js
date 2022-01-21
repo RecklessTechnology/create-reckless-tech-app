@@ -5,14 +5,14 @@ import 'typeface-roboto-material';
 import { ThemeProvider } from '@material-ui/styles';
 import { CssBaseline } from '@material-ui/core';
 
-import RTSelect from './index';
+import InspectorCloseButtonView from './view';
 
-import theme from '../../../../theme';
+import theme from '../../../../../theme';
 
 export default {
-  title: 'Pure Components/Select',
-  component: RTSelect.type,
-  argTypes: { onChange: { action: 'changed' } },
+  title: 'Buttons/Inspector Close Button',
+  component: InspectorCloseButtonView.type,
+  argTypes: { setInspectorMenuOpen: { action: 'clicked' } },
   decorators: [
     (Story) => (
       <ThemeProvider theme={theme}>
@@ -24,21 +24,19 @@ export default {
 };
 
 const Template = ({
-  data, value, onChange,
+  inspectorMenuOpen, setInspectorMenuOpen,
 }) => (
-  <RTSelect
+  <InspectorCloseButtonView
     {...{
-      data,
-      value,
-      onChange,
+      inspectorMenuOpen,
+      setInspectorMenuOpen,
     }}
   />
 );
 
-Template.propTypes = RTSelect.propTypes;
+Template.propTypes = InspectorCloseButtonView.propTypes;
 
 export const Default = Template.bind({});
 Default.args = {
-  data: ['value 1', 'value 2', 'value 3'],
-  value: 'value 1',
+  inspectorMenuOpen: false,
 };

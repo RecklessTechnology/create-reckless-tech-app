@@ -121,7 +121,7 @@ const AddToSceneMenu = () => {
                 </ListItemIcon>
                 <Typography variant="inherit">GLTF</Typography>
               </MenuItem>
-              <ListSubheader>Primatives</ListSubheader>
+              <ListSubheader>Pure Components</ListSubheader>
               <MenuItem dense onClick={() => { addObject('Box'); closeMenu(); }}>
                 <ListItemIcon>
                   {getIconByType('Mesh')}

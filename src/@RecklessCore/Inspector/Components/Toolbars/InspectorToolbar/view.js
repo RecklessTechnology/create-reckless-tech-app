@@ -26,8 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const InspectorToolbarView = (props) => {
-  const { value, handleChange } = props;
+const InspectorToolbarView = ({ value, handleChange }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>

@@ -11,14 +11,15 @@ const useStyles = makeStyles(() => ({
   button: {},
 }));
 
-const EditorCloseButtonView = ({ editorMenuOpen, setEditorMenuOpen }) => {
+const ModalCloseButton = ({ handleClose }) => {
+  // Local CSS classes
   const classes = useStyles();
   return (
     <IconButtonView
       {...{
         label: 'Close',
         handeClick: () => {
-          setEditorMenuOpen(!editorMenuOpen);
+          handleClose();
         },
       }}
       className={classes.button}
@@ -29,11 +30,10 @@ const EditorCloseButtonView = ({ editorMenuOpen, setEditorMenuOpen }) => {
   );
 };
 
-EditorCloseButtonView.whyDidYouRender = (process.env.NODE_ENV === 'development');
+ModalCloseButton.whyDidYouRender = (process.env.NODE_ENV === 'development');
 
-EditorCloseButtonView.propTypes = {
-  editorMenuOpen: PropTypes.bool.isRequired,
-  setEditorMenuOpen: PropTypes.func.isRequired,
+ModalCloseButton.propTypes = {
+  handleClose: PropTypes.func.isRequired,
 };
 
-export default memo(EditorCloseButtonView);
+export default memo(ModalCloseButton);

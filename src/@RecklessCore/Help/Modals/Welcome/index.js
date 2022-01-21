@@ -1,17 +1,13 @@
-import PropTypes from 'prop-types';
-
 import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import {
-  Typography, List, ListItem, Divider, Paper, Link,
+  Typography, List, ListItem, Link,
 } from '@material-ui/core';
-import WelcomeToolbar from './WelcomeToolbar';
+
+import BasicModal from '../../../Components/Modals/Basic';
 
 const useStyles = makeStyles(() => ({
-  root: {
-    width: '375px',
-  },
   listRoot: {
     width: '100%',
   },
@@ -21,15 +17,10 @@ const useStyles = makeStyles(() => ({
   title: {},
 }));
 
-const WelcomeModalView = (props) => {
-  const {
-    handleClose,
-  } = props;
+const WelcomeModal = () => {
   const classes = useStyles();
   return (
-    <Paper className={classes.root}>
-      <WelcomeToolbar {...{ handleClose }} />
-      <Divider />
+    <BasicModal>
       <List
         dense
         className={classes.listRoot}
@@ -51,14 +42,10 @@ const WelcomeModalView = (props) => {
           </Typography>
         </ListItem>
       </List>
-    </Paper>
+    </BasicModal>
   );
 };
 
-WelcomeModalView.whyDidYouRender = (process.env.NODE_ENV === 'development');
+WelcomeModal.whyDidYouRender = (process.env.NODE_ENV === 'development');
 
-WelcomeModalView.propTypes = {
-  handleClose: PropTypes.func.isRequired,
-};
-
-export default memo(WelcomeModalView);
+export default memo(WelcomeModal);

@@ -5,14 +5,14 @@ import 'typeface-roboto-material';
 import { ThemeProvider } from '@material-ui/styles';
 import { CssBaseline } from '@material-ui/core';
 
-import RTSelect from './index';
+import HelpMenu from './index';
 
 import theme from '../../../../theme';
 
 export default {
-  title: 'Pure Components/Select',
-  component: RTSelect.type,
-  argTypes: { onChange: { action: 'changed' } },
+  title: 'Menus/Help Menu',
+  component: HelpMenu.type,
+  argTypes: { handeClick: { action: 'clicked' } },
   decorators: [
     (Story) => (
       <ThemeProvider theme={theme}>
@@ -23,22 +23,11 @@ export default {
   ],
 };
 
-const Template = ({
-  data, value, onChange,
-}) => (
-  <RTSelect
-    {...{
-      data,
-      value,
-      onChange,
-    }}
-  />
+const Template = () => (
+  <HelpMenu />
 );
 
-Template.propTypes = RTSelect.propTypes;
+Template.propTypes = HelpMenu.propTypes;
 
 export const Default = Template.bind({});
-Default.args = {
-  data: ['value 1', 'value 2', 'value 3'],
-  value: 'value 1',
-};
+Default.args = {};

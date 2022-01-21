@@ -12,7 +12,7 @@ import IconButtonView from './view';
 import theme from '../../../../theme';
 
 export default {
-  title: 'Primatives/Icon Button',
+  title: 'Pure Components/Icon Button',
   component: IconButtonView.type,
   argTypes: { handeClick: { action: 'clicked' } },
   decorators: [

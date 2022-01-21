@@ -16,7 +16,7 @@ import Inspector from '../Inspector';
 import Editor from '../Editor';
 
 import IconButtonView from '../Components/Buttons/IconButton/view';
-import WelcomeModal from '../Components/Modals/Welcome';
+import WelcomeModal from '../Help/Modals/Welcome';
 
 import Widgets from '../Widgets';
 

@@ -28,7 +28,7 @@ export const parameters = {
   },
   options: {
     storySort: {
-      order: ['Intro', 'Features', 'Rooms & Sharing', 'Devices & Peers', 'Generators & Transforms', 'Scene JSON', 'Editor', ['Patches', ['*', 'Components']], '*', 'Primatives'],
+      order: ['Intro', 'Features', 'Rooms & Sharing', 'Devices & Peers', 'Generators & Transforms', 'Scene JSON', 'Editor', ['Patches', ['*', 'Components']], '*', 'Pure Components'],
     },
   },
   docs: {

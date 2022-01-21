@@ -24,8 +24,6 @@ const DevicePatch = ({
   data,
 }) => {
   const { type: t } = data;
-  // eslint-disable-next-line no-console
-  console.log('flowed', t, data);
   switch (t.toLowerCase()) {
     default:
     case 'mouse':

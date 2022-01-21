@@ -11,7 +11,7 @@ import {
 import RoomMenu from '../Room';
 import PeersMenu from '../Peers';
 import InspectorToolbar from './Components/Toolbars/InspectorToolbar';
-import HelpMenu from './Components/Menus/HelpMenu';
+import HelpMenu from '../Help/Menus/HelpMenu';
 
 const useStyles = makeStyles((theme) => ({
   drawer: {

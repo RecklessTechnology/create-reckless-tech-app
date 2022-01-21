@@ -4,7 +4,7 @@ import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
-import WelcomeCloseButton from '../WelcomeCloseButton';
+import ModalCloseButton from '../CloseButton/index';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const WelcomeToolbarView = ({ handleClose }) => {
+const ModalToolbarView = ({ handleClose }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -32,7 +32,7 @@ const WelcomeToolbarView = ({ handleClose }) => {
         <Toolbar
           variant="dense"
         >
-          <WelcomeCloseButton {...{ handleClose }} />
+          <ModalCloseButton {...{ handleClose }} />
           <Typography variant="h6" className={classes.title}>
             Reckless Technology
           </Typography>
@@ -42,8 +42,8 @@ const WelcomeToolbarView = ({ handleClose }) => {
   );
 };
 
-WelcomeToolbarView.propTypes = {
+ModalToolbarView.propTypes = {
   handleClose: PropTypes.func.isRequired,
 };
 
-export default memo(WelcomeToolbarView);
+export default memo(ModalToolbarView);
