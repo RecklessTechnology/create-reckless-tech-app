@@ -1,5 +1,5 @@
 # Step 1 - Copy Files
-FROM node:lts as copy-files
+FROM node:16.13.2 as copy-files
  
 ## Copy everything over to Docker environment
 COPY . /usr/src/app/
@@ -11,8 +11,8 @@ FROM copy-files as install-dependencies
 WORKDIR /usr/src/app
 
 # Install all node packages
-RUN npm install
-RUN npm install -g react-scripts@3.4.1
+RUN yarn install
+RUN yarn global add react-scripts@3.4.1
 
 # Step 3 - Build
 FROM install-dependencies as build
