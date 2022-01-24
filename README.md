@@ -1,4 +1,4 @@
-[![Build](https://github.com/RecklessTechnology/demos/actions/workflows/develop.yml/badge.svg)](https://github.com/RecklessTechnology/demos/actions/workflows/develop.yml)
+[![Build Production](https://github.com/RecklessTechnology/demos/actions/workflows/build-production.yml/badge.svg)](https://github.com/RecklessTechnology/demos/actions/workflows/build-production.yml)
 
 ## Welcome to Reckless Technology
 ---  
