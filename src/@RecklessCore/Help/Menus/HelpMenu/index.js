@@ -11,6 +11,8 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 import BugReportIcon from '@material-ui/icons/BugReport';
 import InfoIcon from '@material-ui/icons/Info';
 
+import { version } from '../../../../../package.json';
+
 const useStyles = makeStyles(() => ({
   root: {
     paddingTop: 0,
@@ -116,6 +118,15 @@ const HelpMenu = () => {
             </Grid>
             <Grid item xs={12}>
               <Divider />
+            </Grid>
+          </Grid>
+        </ListItem>
+        <ListItem dense className={classes.listItem}>
+          <Grid spacing={0} container>
+            <Grid item xs={12}>
+              <Typography className={classes.itemText} style={{ textAlign: 'right' }}>
+                {`Version: ${version}`}
+              </Typography>
             </Grid>
           </Grid>
         </ListItem>
