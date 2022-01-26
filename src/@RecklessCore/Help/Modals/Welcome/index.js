@@ -35,10 +35,16 @@ const WelcomeModal = () => {
         <ListItem className={classes.listItem}>
           <Typography variant="body2">
             Check out
-            <Link target="_blank" href="https://github.com/RecklessTechnology/create-reckless-tech-app/wiki">
-              &nbsp;the wiki&nbsp;
+            <Link target="_blank" href="https://docs.reckless.technology">
+              &nbsp;the docs&nbsp;
             </Link>
             for more information.
+          </Typography>
+        </ListItem>
+        <ListItem className={classes.listItem}>
+          <Typography variant="body2">
+            Disclaimer: This project is a work in progress.
+            Things are a bit all over the place and not fit for production.
           </Typography>
         </ListItem>
       </List>

@@ -1,12 +1,14 @@
-[![Build Production](https://github.com/RecklessTechnology/demos/actions/workflows/build-production.yml/badge.svg)](https://github.com/RecklessTechnology/demos/actions/workflows/build-production.yml)
-
 ## Welcome to Reckless Technology
 ---  
 #### Reckless Technology is a free and open source app that allows artists, performers, and their audience to quickly craft, connect, and collaborate in real-time.
 
 &nbsp;
 
-#### Disclaimer: This project is a work in progress. It's not fit for production.  
+#### Check out [the docs](https://docs.reckless.technology) for more information.
+
+&nbsp;
+
+#### Disclaimer: This project is a work in progress. Things are a bit all over the place and not fit for production.  
 
 &nbsp;
 
@@ -18,7 +20,7 @@
 
 ## Learn More  
 ---  
-#### You can find information about Reckless Technology and how to use it on [the Wiki](https://github.com/RecklessTechnology/create-reckless-tech-app/wiki).  
+#### For more information about Reckless Technology and how to use it, check out [the docs](https://docs.reckless.technology).  
 
 &nbsp;
 
