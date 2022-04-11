@@ -1,0 +1,412 @@
+{
+  "metadata": {
+    "version": 4.5,
+    "type": "Object",
+    "generator": "Object3D.toJSON"
+  },
+  "camera": {
+    "position": [
+      0,
+      4,
+      5
+    ],
+    "fov": 75
+  },
+  "geometries": [
+    {
+      "uuid": "057766C8-4668-476F-A283-7B25D97D3941",
+      "type": "BoxGeometry",
+      "width": 1,
+      "height": 0.01,
+      "depth": 0.75,
+      "widthSegments": 1,
+      "heightSegments": 1,
+      "depthSegments": 1
+    },
+    {
+      "uuid": "68AB17BE-D311-4C8F-A4AA-EC7CBBAA44E1",
+      "type": "BoxGeometry",
+      "width": 1,
+      "height": 0.01,
+      "depth": 1,
+      "widthSegments": 1,
+      "heightSegments": 1,
+      "depthSegments": 1
+    },
+    {
+      "uuid": "9620A241-34A5-4BEC-8242-3E717FE32AE8",
+      "type": "BoxGeometry",
+      "width": 1,
+      "height": 0.01,
+      "depth": 1.5,
+      "widthSegments": 1,
+      "heightSegments": 1,
+      "depthSegments": 1
+    },
+    {
+      "uuid": "E38C38A8-DA21-45A6-8C1F-FF913A555003",
+      "type": "BoxGeometry",
+      "width": 1,
+      "height": 0.01,
+      "depth": 1.25,
+      "widthSegments": 1,
+      "heightSegments": 1,
+      "depthSegments": 1
+    },
+    {
+      "uuid": "249150A3-6DD8-4DA0-9103-DF6F86E5EC06",
+      "type": "BoxGeometry",
+      "width": 1,
+      "height": 0.01,
+      "depth": 1,
+      "widthSegments": 1,
+      "heightSegments": 1,
+      "depthSegments": 1
+    },
+    {
+      "uuid": "F2481688-8870-42FC-917C-9CEADAF9D0B3",
+      "type": "BoxGeometry",
+      "width": 1,
+      "height": 0.01,
+      "depth": 0.75,
+      "widthSegments": 1,
+      "heightSegments": 1,
+      "depthSegments": 1
+    },
+    {
+      "uuid": "141ECD77-67FA-4117-A044-8623F4059DCF",
+      "type": "PlaneGeometry",
+      "width": 100,
+      "height": 100,
+      "widthSegments": 1,
+      "heightSegments": 1
+    }
+  ],
+  "materials": [
+    {
+      "uuid": "171BCB11-F83C-4B61-9147-BC9DF4CD4ABF",
+      "type": "MeshStandardMaterial",
+      "color": 0,
+      "roughness": 1,
+      "metalness": 0,
+      "emissive": 0,
+      "envMapIntensity": 1,
+      "refractionRatio": 0.98,
+      "depthFunc": 3,
+      "depthTest": true,
+      "depthWrite": true,
+      "colorWrite": true,
+      "stencilWrite": false,
+      "stencilWriteMask": 255,
+      "stencilFunc": 519,
+      "stencilRef": 0,
+      "stencilFuncMask": 255,
+      "stencilFail": 7680,
+      "stencilZFail": 7680,
+      "stencilZPass": 7680
+    },
+    {
+      "uuid": "01C71024-FD33-49F5-921F-1B519E3F9831",
+      "type": "MeshStandardMaterial",
+      "color": 8026746,
+      "roughness": 1,
+      "metalness": 0,
+      "emissive": 0,
+      "envMapIntensity": 1,
+      "refractionRatio": 0.98,
+      "depthFunc": 3,
+      "depthTest": true,
+      "depthWrite": true,
+      "colorWrite": true,
+      "stencilWrite": false,
+      "stencilWriteMask": 255,
+      "stencilFunc": 519,
+      "stencilRef": 0,
+      "stencilFuncMask": 255,
+      "stencilFail": 7680,
+      "stencilZFail": 7680,
+      "stencilZPass": 7680
+    },
+    {
+      "uuid": "B0076335-A2AD-42AD-8563-E7903168F5D4",
+      "type": "MeshStandardMaterial",
+      "color": 0,
+      "roughness": 1,
+      "metalness": 0,
+      "emissive": 0,
+      "envMapIntensity": 1,
+      "refractionRatio": 0.98,
+      "depthFunc": 3,
+      "depthTest": true,
+      "depthWrite": true,
+      "colorWrite": true,
+      "stencilWrite": false,
+      "stencilWriteMask": 255,
+      "stencilFunc": 519,
+      "stencilRef": 0,
+      "stencilFuncMask": 255,
+      "stencilFail": 7680,
+      "stencilZFail": 7680,
+      "stencilZPass": 7680
+    },
+    {
+      "uuid": "4CBB5407-33B9-4512-9EAB-3617812A7823",
+      "type": "MeshStandardMaterial",
+      "color": 16777215,
+      "roughness": 1,
+      "metalness": 0,
+      "emissive": 0,
+      "envMapIntensity": 1,
+      "refractionRatio": 0.98,
+      "depthFunc": 3,
+      "depthTest": true,
+      "depthWrite": true,
+      "colorWrite": true,
+      "stencilWrite": false,
+      "stencilWriteMask": 255,
+      "stencilFunc": 519,
+      "stencilRef": 0,
+      "stencilFuncMask": 255,
+      "stencilFail": 7680,
+      "stencilZFail": 7680,
+      "stencilZPass": 7680
+    },
+    {
+      "uuid": "460A2475-D38E-42DB-8787-7D8B829059CF",
+      "type": "MeshStandardMaterial",
+      "color": 16777215,
+      "roughness": 1,
+      "metalness": 0,
+      "emissive": 0,
+      "envMapIntensity": 1,
+      "refractionRatio": 0.98,
+      "depthFunc": 3,
+      "depthTest": true,
+      "depthWrite": true,
+      "colorWrite": true,
+      "stencilWrite": false,
+      "stencilWriteMask": 255,
+      "stencilFunc": 519,
+      "stencilRef": 0,
+      "stencilFuncMask": 255,
+      "stencilFail": 7680,
+      "stencilZFail": 7680,
+      "stencilZPass": 7680
+    },
+    {
+      "uuid": "1CBA7500-7DA7-4062-9F37-9071B8807F4F",
+      "type": "MeshStandardMaterial",
+      "color": 9605778,
+      "roughness": 1,
+      "metalness": 0,
+      "emissive": 0,
+      "envMapIntensity": 1,
+      "refractionRatio": 0.98,
+      "depthFunc": 3,
+      "depthTest": true,
+      "depthWrite": true,
+      "colorWrite": true,
+      "stencilWrite": false,
+      "stencilWriteMask": 255,
+      "stencilFunc": 519,
+      "stencilRef": 0,
+      "stencilFuncMask": 255,
+      "stencilFail": 7680,
+      "stencilZFail": 7680,
+      "stencilZPass": 7680
+    }
+  ],
+  "object": {
+    "uuid": "5FC9ACA9-2A93-474D-AA32-FACC76551914",
+    "type": "Scene",
+    "name": "Music Scene",
+    "userData": {
+      "isPatchHidden": false
+    },
+    "layers": 1,
+    "matrix": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "children": [
+      {
+        "uuid": "123-dataGrid",
+        "type": "dataGrid",
+        "name": "Data Grid",
+        "castShadow": true,
+        "receiveShadow": true,
+        "userData": {
+          "isPatchHidden": true
+        },
+        "layers": 1,
+        "matrix": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          -1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "uuid": "DBBD9C2E-4D8E-4628-9427-9DEBA682526C",
+        "type": "Mesh",
+        "name": "Floor",
+        "receiveShadow": true,
+        "userData": {
+          "isPatchHidden": true
+        },
+        "layers": 1,
+        "matrix": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          -1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "geometry": "141ECD77-67FA-4117-A044-8623F4059DCF",
+        "material": "1CBA7500-7DA7-4062-9F37-9071B8807F4F"
+      },
+      {
+        "uuid": "D918E61C-AFE0-4C93-B3D2-99FD9F020FC2",
+        "type": "SpotLight",
+        "name": "SpotLight",
+        "castShadow": true,
+        "userData": {
+          "isPatchHidden": true
+        },
+        "layers": 1,
+        "matrix": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          -5,
+          10,
+          7.5,
+          1
+        ],
+        "color": 16777215,
+        "intensity": 1,
+        "distance": 0,
+        "angle": 0.314159,
+        "decay": 1,
+        "penumbra": 0,
+        "shadow": {
+          "camera": {
+            "uuid": "F99E4F32-37E2-42E6-8E9A-A6F0D0DF89AD",
+            "type": "PerspectiveCamera",
+            "layers": 1,
+            "fov": 36,
+            "zoom": 1,
+            "near": 0.5,
+            "far": 500,
+            "focus": 10,
+            "aspect": 1,
+            "filmGauge": 35,
+            "filmOffset": 0
+          }
+        }
+      }
+    ]
+  },
+  "generators": [],
+  "devices": [],
+  "mediaPlayers": [
+    {
+      "uuid": "123-musicPlayer",
+      "type": "musicPlayer",
+      "name": "Music Player",
+      "isPlaying": false,
+      "trackProgress": 0,
+      "trackIndex": 0,
+      "tracks": []
+    }
+  ],
+  "peers": [],
+  "transforms": [
+    {
+      "uuid": "123-AudioAnalyzer",
+      "type": "audioAnalyzer",
+      "name": "Audio Analyzer"
+    }
+  ],
+  "connections": [
+    {
+      "uuid": "123-connection",
+      "from": "123-musicPlayer",
+      "fromProp": "audio",
+      "to": "123-AudioAnalyzer",
+      "toProp": "audio"
+    },
+    {
+      "uuid": "321-connection",
+      "from": "123-AudioAnalyzer",
+      "fromProp": "freqs",
+      "to": "123-dataGrid",
+      "toProp": "freqs"
+    },
+    {
+      "uuid": "456-connection",
+      "from": "123-musicPlayer",
+      "fromProp": "audio",
+      "to": "123-musicControls",
+      "toProp": "audio"
+    }
+  ],
+  "widgets": [
+    {
+      "uuid": "123-musicControls",
+      "type": "musicControls",
+      "name": "Music Controls",
+      "size": 0,
+      "location": 2,
+      "userData": {
+        "isPatchHidden": false
+      }
+    }
+  ]
+}

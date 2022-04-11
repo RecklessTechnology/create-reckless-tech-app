@@ -10,7 +10,7 @@ import InspectorCloseButtonView from './view';
 import theme from '../../../../../theme';
 
 export default {
-  title: 'Buttons/Inspector Close Button',
+  title: 'Components/Buttons/Inspector Close Button',
   component: InspectorCloseButtonView.type,
   argTypes: { setInspectorMenuOpen: { action: 'clicked' } },
   decorators: [

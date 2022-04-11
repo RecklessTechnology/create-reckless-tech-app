@@ -13,7 +13,7 @@ import AppManager from '../../../../App/Managers/AppManager';
 import EditorMenuManager from '../../../Managers/EditorMenuManager';
 
 export default {
-  title: 'Toolbars/Editor Toolbar',
+  title: 'Components/Toolbars/Editor Toolbar',
   component: EditorToolbarView.type,
   argTypes: { handeClick: { action: 'clicked' } },
   decorators: [

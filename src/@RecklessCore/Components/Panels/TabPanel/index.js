@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import PropTypes, { node } from 'prop-types';
 
 import React, { memo } from 'react';
@@ -46,15 +47,15 @@ TabPanel.propTypes = {
   /**
    * Current selected tab.
    */
-  value: PropTypes.number.isRequired,
+  value: PropTypes.number,
   /**
    * Panel index.
    */
-  index: PropTypes.number.isRequired,
+  index: PropTypes.number,
   /**
    * Child content.
    */
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
 };
 
 export default memo(TabPanel);

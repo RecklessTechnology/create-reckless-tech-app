@@ -18,20 +18,20 @@ const DevicesManager = ({
   const deviceRegistryUtils = useMemo(
     () => ({
       findDevice(id) {
-        return DeviceRegistry.get(id);
+        return DeviceRegistry.get(id.toLowerCase());
       },
       registerDevice(identifier, ref) {
         // register by id
-        DeviceRegistry.set(identifier, ref);
+        DeviceRegistry.set(identifier.toLowerCase(), ref);
         publish('devices-list-changed', ref, 'add');
       },
       unregisterDevice(identifier) {
         // unregister by id
-        DeviceRegistry.delete(identifier);
+        DeviceRegistry.delete(identifier.toLowerCase());
         publish('devices-list-changed', identifier, 'remove');
       },
       getDevicesArray() {
-        return Array.from(DeviceRegistry.keys()).map((id) => DeviceRegistry.get(id));
+        return Array.from(DeviceRegistry.keys()).map((id) => DeviceRegistry.get(id.toLowerCase()));
       },
     }),
     [DeviceRegistry, publish],

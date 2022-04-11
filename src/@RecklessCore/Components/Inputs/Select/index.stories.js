@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import 'typeface-roboto-material';
 
@@ -12,7 +12,7 @@ import theme from '../../../../theme';
 export default {
   title: 'Pure Components/Select',
   component: RTSelect.type,
-  argTypes: { onChange: { action: 'changed' } },
+  actions: { argTypesRegex: '^on.*' },
   decorators: [
     (Story) => (
       <ThemeProvider theme={theme}>
@@ -24,16 +24,22 @@ export default {
 };
 
 const Template = ({
-  data, value, onChange,
-}) => (
-  <RTSelect
-    {...{
-      data,
-      value,
-      onChange,
-    }}
-  />
-);
+  data, value,
+}) => {
+  const [localVal, setLocalVal] = useState(value);
+  const onChange = (e) => {
+    setLocalVal(e.target.value);
+  };
+  return (
+    <RTSelect
+      {...{
+        data,
+        value: localVal,
+        onChange,
+      }}
+    />
+  );
+};
 
 Template.propTypes = RTSelect.propTypes;
 

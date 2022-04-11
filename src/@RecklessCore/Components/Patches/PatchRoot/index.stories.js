@@ -10,7 +10,7 @@ import PatchRoot from './index';
 import theme from '../../../../theme';
 
 export default {
-  title: 'Editor/Patches/Components/Patch Root',
+  title: 'Components/Patch/Root',
   component: PatchRoot.type,
   decorators: [
     (Story) => (

@@ -51,7 +51,6 @@ const InspectorToolbarView = ({ value, handleChange }) => {
                   root: classes.tabRoot,
                 }}
                 icon={(<FontAwesomeIcon icon={faHome} />)}
-                title="room"
                 {...{
                   id: 'room-tab-0',
                   'aria-controls': 'room-tabpanel-0',
@@ -64,7 +63,6 @@ const InspectorToolbarView = ({ value, handleChange }) => {
                   root: classes.tabRoot,
                 }}
                 icon={<FontAwesomeIcon icon={faUsers} />}
-                title="peers"
                 {...{
                   id: 'peers-tab-1',
                   'aria-controls': 'peers-tabpanel-1',
@@ -77,7 +75,6 @@ const InspectorToolbarView = ({ value, handleChange }) => {
                   root: classes.tabRoot,
                 }}
                 icon={<FontAwesomeIcon icon={faQuestion} />}
-                title="help"
                 {...{
                   id: 'help-tab-1',
                   'aria-controls': 'help-tabpanel-1',

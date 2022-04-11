@@ -17,7 +17,7 @@ import NodeEditorView from '../../Editor/Components/NodeEditor/view';
 import theme from '../../../theme';
 
 export default {
-  title: 'Editor/Patches/Transform',
+  title: 'Transforms/Calculator/Patch',
   component: Transform,
   // argTypes: { onClick: { action: 'clicked' } },
   decorators: [

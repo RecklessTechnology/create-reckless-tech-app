@@ -41,19 +41,19 @@ const ConnectionsManager = ({ children }) => {
 
   const getMe = useCallback(
     () => Array.from(ConnectionRegistry.keys())
-      .map((id) => ConnectionRegistry.get(id)).filter((p) => p.isMe === true)[0],
+      .map((id) => ConnectionRegistry.get(id.toLowerCase())).filter((p) => p.isMe === true)[0],
     [ConnectionRegistry],
   );
 
   const getHost = useCallback(
     () => Array.from(ConnectionRegistry.keys())
-      .map((id) => ConnectionRegistry.get(id)).filter((p) => p.isHost === true)[0],
+      .map((id) => ConnectionRegistry.get(id.toLowerCase())).filter((p) => p.isHost === true)[0],
     [ConnectionRegistry],
   );
 
   const getByUUID = useCallback(
     (uuid) => Array.from(ConnectionRegistry.keys())
-      .map((id) => ConnectionRegistry.get(id)).filter((p) => p.uuid === uuid)[0],
+      .map((id) => ConnectionRegistry.get(id.toLowerCase())).filter((p) => p.uuid === uuid)[0],
     [ConnectionRegistry],
   );
 
@@ -94,11 +94,12 @@ const ConnectionsManager = ({ children }) => {
     publish('connection-modified', newRef);
   }, [ConnectionRegistry, publish]);
 
-  const findConnection = useCallback((id) => ConnectionRegistry.get(id), [ConnectionRegistry]);
+  const findConnection = useCallback((id) => ConnectionRegistry
+    .get(id.toLowerCase()), [ConnectionRegistry]);
 
   const registerConnection = useCallback((identifier, ref) => {
     // register by id
-    ConnectionRegistry.set(identifier, ref);
+    ConnectionRegistry.set(identifier.toLowerCase(), ref);
 
     if (ref.isMe) {
       persistData('me', ref);
@@ -117,13 +118,13 @@ const ConnectionsManager = ({ children }) => {
 
   const unregisterConnection = useCallback((identifier) => {
     // unregister by id
-    ConnectionRegistry.delete(identifier);
+    ConnectionRegistry.delete(identifier.toLowerCase());
     publish('connections-list-changed', identifier, 'remove');
   }, [ConnectionRegistry, publish]);
 
   const getConnectionsArray = useCallback(
     () => Array.from(ConnectionRegistry.keys())
-      .map((id) => ConnectionRegistry.get(id)),
+      .map((id) => ConnectionRegistry.get(id.toLowerCase())),
     [ConnectionRegistry],
   );
 

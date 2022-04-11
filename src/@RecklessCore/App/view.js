@@ -25,6 +25,8 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: '100%',
     overflow: 'scroll',
+    pointerEvents: 'none',
+    position: 'relative',
   },
   rootShiftBottom: {
     height: (props) => (`calc(100% - ${props.editorMenuOpen ? props.editorMenuHeight : 0}px)`),
@@ -41,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
     }),
     background: 'none',
     boxShadow: 'none',
+    pointerEvents: 'none',
   },
   appBarShiftLeft: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -64,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 0,
     marginRight: 0,
     height: '100%',
+    pointerEvents: 'none',
   },
   renderAreaShiftLeft: {
     transition: theme.transitions.create('margin', {
@@ -88,13 +92,18 @@ const useStyles = makeStyles((theme) => ({
     bottom: (props) => (props.editorMenuOpen ? props.editorMenuHeight : 0),
     background: 'none',
     boxShadow: 'none',
+    pointerEvents: 'none',
   },
   bottomToolbar: {
     width: '100%',
+    pointerEvents: 'none',
   },
-  editorButton: {},
+  editorButton: {
+    pointerEvents: 'all',
+  },
   inspectorButton: {
     marginLeft: 'auto !important',
+    pointerEvents: 'all',
   },
 }));
 

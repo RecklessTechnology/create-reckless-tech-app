@@ -10,7 +10,7 @@ import React, {
 import { v4 as uuidv4 } from 'uuid';
 
 import EventsManager from '../../Events/Managers/EventsManager';
-import DefaultSceneJSON from '../../../scenes/LogoScene.json';
+import DefaultSceneJSON from '../../../scenes/AudioAnalyzerScene.json';
 import DefaultSceneJSONClient from '../../../scenes/PosenetScene.json';
 import { isHost } from '../../Utils/userCheck';
 

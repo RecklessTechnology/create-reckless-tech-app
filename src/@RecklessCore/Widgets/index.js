@@ -10,9 +10,9 @@ import WidgetsView from './view';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    pointerEvents: 'none',
     position: 'absolute',
     zIndex: 1,
-    pointerEvents: 'none',
     width: (props) => (
       `calc(100% - ${(props.inspectorMenuOpen ? props.inspectorMenuWidth : 0)}px)`
     ),

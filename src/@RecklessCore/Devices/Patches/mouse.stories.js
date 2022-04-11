@@ -18,7 +18,7 @@ import NodeEditorView from '../../Editor/Components/NodeEditor/view';
 import theme from '../../../theme';
 
 export default {
-  title: 'Editor/Patches/Device',
+  title: 'Devices/Mouse/Patch',
   component: Device.type,
   decorators: [
     (Story) => (

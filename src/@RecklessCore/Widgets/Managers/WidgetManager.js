@@ -20,6 +20,8 @@ export const DefaultProps = {
   uuid: 'xxx',
   name: 'unnamed',
   type: 'widget',
+  size: 3,
+  location: 0,
 };
 
 const WidgetManager = ({
@@ -34,9 +36,11 @@ const WidgetManager = ({
   const identifier = useRef(Symbol('device'));
   const node = useRef(null);
 
-  const [uuid] = useState(props.uuid);
-  const [name] = useState(props.name);
-  const [type, setType] = useState(props.type || '');
+  const [uuid] = useState(props.uuid || DefaultProps.uuid);
+  const [name] = useState(props.name || DefaultProps.name);
+  const [type, setType] = useState(props.type || DefaultProps.type);
+  const [size, setSize] = useState(props.size || DefaultProps.size);
+  const [location, setLocation] = useState(props.location || DefaultProps.location);
 
   const [previewStream, setPreviewStream] = useState();
   const [poses, setPoses] = useState();
@@ -45,6 +49,12 @@ const WidgetManager = ({
   const updateFromInput = (prop, val) => {
     switch (prop.toLowerCase()) {
       default:
+        break;
+      case 'size':
+        setSize(val);
+        break;
+      case 'location':
+        setLocation(val);
         break;
       case 'poses':
         setPoses(val);
@@ -69,6 +79,8 @@ const WidgetManager = ({
   // Outputs
   useEffect(() => { publish(`${uuid}-mediastream-updated`, previewStream); }, [uuid, previewStream, publish]);
   useEffect(() => { publish(`${uuid}-poses-updated`, poses); }, [uuid, poses, publish]);
+  useEffect(() => { publish(`${uuid}-size-updated`, size); }, [uuid, size, publish]);
+  useEffect(() => { publish(`${uuid}-location-updated`, location); }, [uuid, location, publish]);
 
   const { registerWidget, unregisterWidget } = useWidgetsContext();
   const forceUpdate = useForceUpdate();
@@ -83,6 +95,12 @@ const WidgetManager = ({
     type,
     setType,
 
+    size,
+    setSize,
+
+    location,
+    setLocation,
+
     previewStream,
     setPreviewStream,
   }), [
@@ -90,6 +108,9 @@ const WidgetManager = ({
     name,
 
     type, setType,
+
+    size, setSize,
+    location, setLocation,
 
     previewStream, setPreviewStream,
   ]);
@@ -115,6 +136,12 @@ const WidgetManager = ({
     type,
     setType,
 
+    size,
+    setSize,
+
+    location,
+    setLocation,
+
     previewStream,
     setPreviewStream,
 
@@ -128,6 +155,10 @@ const WidgetManager = ({
     getRef,
 
     type, setType,
+
+    size, setSize,
+    location, setLocation,
+
     previewStream, setPreviewStream,
 
     forceUpdate,
@@ -147,6 +178,8 @@ WidgetManager.propTypes = {
   uuid: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
+  size: PropTypes.number.isRequired,
+  location: PropTypes.number.isRequired,
 };
 
 export default WidgetManager;

@@ -5,7 +5,8 @@ import useAppContext from '../App/Contexts/useAppContext';
 
 import WidgetManager, { DefaultProps } from './Managers/WidgetManager';
 
-import Preview from './Components/Preview';
+import CameraPreview from '../Devices/Widgets/CameraPreview';
+import MusicControls from '../MediaPlayers/Widgets/MusicControls';
 
 const WidgetsView = ({ uuid, type, ...props }) => {
   const { sceneJSON } = useAppContext();
@@ -16,7 +17,27 @@ const WidgetsView = ({ uuid, type, ...props }) => {
         (sceneJSON.connections.filter((c) => (c.to === uuid))[0])
           ? (
             <WidgetManager {...DefaultProps} uuid={uuid} type={type} {...props}>
-              <Preview uuid={uuid} type={type} {...props} propName="previewstream" connection={sceneJSON.connections.filter((c) => (c.to === uuid))[0]} />
+              <CameraPreview
+                uuid={uuid}
+                type={type}
+                {...props}
+                connection={sceneJSON.connections.filter((c) => (c.to === uuid))[0]}
+              />
+            </WidgetManager>
+          )
+          : null
+      );
+    case 'musiccontrols':
+      return (
+        (sceneJSON.connections.filter((c) => (c.to === uuid))[0])
+          ? (
+            <WidgetManager {...DefaultProps} uuid={uuid} type={type} {...props}>
+              <MusicControls
+                uuid={uuid}
+                type={type}
+                {...props}
+                connection={sceneJSON.connections.filter((c) => (c.to === uuid))[0]}
+              />
             </WidgetManager>
           )
           : null

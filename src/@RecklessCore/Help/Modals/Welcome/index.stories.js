@@ -10,7 +10,7 @@ import WelcomeModal from './index';
 import theme from '../../../../theme';
 
 export default {
-  title: 'Modals/Welcome Modal',
+  title: 'Components/Modals/Welcome Modal',
   component: WelcomeModal.type,
   argTypes: { handeClick: { action: 'clicked' } },
   decorators: [

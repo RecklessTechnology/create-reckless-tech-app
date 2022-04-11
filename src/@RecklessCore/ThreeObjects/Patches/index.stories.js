@@ -17,7 +17,7 @@ import NodeEditorView from '../../Editor/Components/NodeEditor/view';
 import theme from '../../../theme';
 
 export default {
-  title: 'Editor/Patches/Three Object',
+  title: '3D Objects/Patch',
   component: ThreeObject,
   // argTypes: { onClick: { action: 'clicked' } },
   decorators: [

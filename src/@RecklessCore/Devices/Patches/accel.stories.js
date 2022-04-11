@@ -18,7 +18,7 @@ import NodeEditorView from '../../Editor/Components/NodeEditor/view';
 import theme from '../../../theme';
 
 export default {
-  title: 'Editor/Patches/Device',
+  title: 'Devices/Accelerometer/Patch',
   component: Device.type,
   decorators: [
     (Story) => (

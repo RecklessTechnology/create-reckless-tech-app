@@ -18,20 +18,20 @@ const WidgetsManager = ({
   const widgetRegistryUtils = useMemo(
     () => ({
       findWidget(id) {
-        return WidgetRegistry.get(id);
+        return WidgetRegistry.get(id.toLowerCase());
       },
       registerWidget(identifier, ref) {
         // register by id
-        WidgetRegistry.set(identifier, ref);
+        WidgetRegistry.set(identifier.toLowerCase(), ref);
         publish('widgets-list-changed', ref, 'add');
       },
       unregisterWidget(identifier) {
         // unregister by id
-        WidgetRegistry.delete(identifier);
+        WidgetRegistry.delete(identifier.toLowerCase());
         publish('widgets-list-changed', identifier, 'remove');
       },
       getWidgetsArray() {
-        return Array.from(WidgetRegistry.keys()).map((id) => WidgetRegistry.get(id));
+        return Array.from(WidgetRegistry.keys()).map((id) => WidgetRegistry.get(id.toLowerCase()));
       },
     }),
     [WidgetRegistry, publish],

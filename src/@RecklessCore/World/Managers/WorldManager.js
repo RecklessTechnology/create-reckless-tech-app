@@ -8,6 +8,7 @@ import { PeersContext, peersContextValue } from '../../Peers/Managers/PeersManag
 import { ConnectionsContext, connectionsContextValue } from '../../Connections/Managers/ConnectionsManager';
 import { GeneratorsContext, generatorsContextValue } from '../../Generators/Managers/GeneratorsManager';
 import { DevicesContext, devicesContextValue } from '../../Devices/Managers/DevicesManager';
+import { MediaPlayersContext, mediaPlayersContextValue } from '../../MediaPlayers/Managers/MediaPlayersManager';
 import { TransformsContext, transformsContextValue } from '../../Transforms/Managers/TransformsManager';
 import { WidgetsContext, widgetsContextValue } from '../../Widgets/Managers/WidgetsManager';
 
@@ -23,13 +24,15 @@ const WorldManager = ({
         <ConnectionsContext.Provider value={connectionsContextValue}>
           <GeneratorsContext.Provider value={generatorsContextValue}>
             <DevicesContext.Provider value={devicesContextValue}>
-              <TransformsContext.Provider value={transformsContextValue}>
-                <WidgetsContext.Provider value={widgetsContextValue}>
-                  <WorldContext.Provider value={worldContextValue}>
-                    {children}
-                  </WorldContext.Provider>
-                </WidgetsContext.Provider>
-              </TransformsContext.Provider>
+              <MediaPlayersContext.Provider value={mediaPlayersContextValue}>
+                <TransformsContext.Provider value={transformsContextValue}>
+                  <WidgetsContext.Provider value={widgetsContextValue}>
+                    <WorldContext.Provider value={worldContextValue}>
+                      {children}
+                    </WorldContext.Provider>
+                  </WidgetsContext.Provider>
+                </TransformsContext.Provider>
+              </MediaPlayersContext.Provider>
             </DevicesContext.Provider>
           </GeneratorsContext.Provider>
         </ConnectionsContext.Provider>

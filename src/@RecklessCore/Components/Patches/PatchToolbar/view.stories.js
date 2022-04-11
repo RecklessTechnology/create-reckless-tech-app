@@ -10,7 +10,7 @@ import PatchToolbar from './view';
 import theme from '../../../../theme';
 
 export default {
-  title: 'Editor/Patches/Components/Patch Toolbar',
+  title: 'Components/Patch/Toolbar',
   component: PatchToolbar.type,
   argTypes: {
     hidePatch: { action: 'clicked' },

@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 
 import { makeStyles } from '@material-ui/core';
 
-import CloseIcon from '@material-ui/icons/Close';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import IconButtonView from '../../../../Components/Buttons/IconButton/view';
 
@@ -27,7 +27,7 @@ const EditorCloseButton = () => {
       className={classes.button}
       disabled={false}
     >
-      <CloseIcon fontSize="small" />
+      <ExpandMoreIcon fontSize="small" />
     </IconButtonView>
   );
 };

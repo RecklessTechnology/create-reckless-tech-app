@@ -12,6 +12,7 @@ export const useStyles = makeStyles(() => ({
   menuButton: {
     // marginRight: theme.spacing(2),
     padding: '10px',
+    pointerEvents: 'all',
   },
 }));
 
@@ -34,7 +35,6 @@ const IconButtonView = ({
         <IconButton
           disabled={disabled}
           size="small"
-          title={label}
           onClick={handeClick}
           // eslint-disable-next-line react/jsx-props-no-spreading
           {...props}

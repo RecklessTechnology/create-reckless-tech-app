@@ -10,7 +10,7 @@ import AddToSceneCloseButton from './index';
 import theme from '../../../../../theme';
 
 export default {
-  title: 'Buttons/Close Add To Scene',
+  title: 'Components/Buttons/Close Add To Scene',
   component: AddToSceneCloseButton.type,
   argTypes: { handleClose: { action: 'clicked' } },
   decorators: [

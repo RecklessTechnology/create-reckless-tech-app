@@ -98,7 +98,6 @@ const AddToSceneToolbarView = ({ closeMenu, value, handleChange }) => {
                   root: classes.tabRoot,
                 }}
                 icon={<FontAwesomeIcon icon={faSquareRootAlt} />}
-                title="transforms"
                 {...{
                   id: 'transforms-tab-4',
                   'aria-controls': 'transforms-tabpanel-4',

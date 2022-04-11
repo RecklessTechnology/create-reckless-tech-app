@@ -4,7 +4,7 @@ import React, { memo } from 'react';
 
 import { makeStyles } from '@material-ui/core';
 
-import CloseIcon from '@material-ui/icons/Close';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 import IconButtonView from '../../../../Components/Buttons/IconButton/view';
 
@@ -25,7 +25,7 @@ const InspectorCloseButtonView = ({ inspectorMenuOpen, setInspectorMenuOpen }) =
       className={classes.button}
       disabled={false}
     >
-      <CloseIcon fontSize="small" />
+      <ChevronRightIcon fontSize="small" />
     </IconButtonView>
   );
 };

@@ -10,7 +10,7 @@ import HelpMenu from './index';
 import theme from '../../../../theme';
 
 export default {
-  title: 'Menus/Help Menu',
+  title: 'Components/Menus/Help Menu',
   component: HelpMenu.type,
   argTypes: { handeClick: { action: 'clicked' } },
   decorators: [

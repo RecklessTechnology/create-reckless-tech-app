@@ -18,7 +18,7 @@ import NodeEditorView from '../../Editor/Components/NodeEditor/view';
 import theme from '../../../theme';
 
 export default {
-  title: 'Editor/Patches/Generator',
+  title: 'Generators/Sinewave/Patch',
   component: Generator.type,
   // argTypes: { onClick: { action: 'clicked' } },
   decorators: [

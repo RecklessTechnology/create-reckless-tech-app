@@ -17,23 +17,26 @@ const TransformsManager = ({
   // Transform Connections
   const [TransformRegistry] = useState(() => new Map());
 
-  const findTransform = useCallback((id) => TransformRegistry.get(id), [TransformRegistry]);
+  const findTransform = useCallback((id) => TransformRegistry
+    .get(id.toLowerCase()), [TransformRegistry]);
 
   const transformRegistryUtils = useMemo(
     () => ({
       findTransform,
       registerTransform(identifier, ref) {
         // register by id
-        TransformRegistry.set(identifier, ref);
+        TransformRegistry.set(identifier.toLowerCase(), ref);
         publish('transforms-list-changed', ref, 'add');
       },
       unregisterTransform(identifier) {
         // unregister by id
-        TransformRegistry.delete(identifier);
+        TransformRegistry.delete(identifier.toLowerCase());
         publish('transforms-list-changed', identifier, 'remove');
       },
       getTransformsArray() {
-        return Array.from(TransformRegistry.keys()).map((id) => TransformRegistry.get(id));
+        return Array.from(
+          TransformRegistry.keys(),
+        ).map((id) => TransformRegistry.get(id.toLowerCase()));
       },
     }),
     [TransformRegistry, publish, findTransform],

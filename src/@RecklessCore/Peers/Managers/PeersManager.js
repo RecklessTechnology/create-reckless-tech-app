@@ -20,13 +20,13 @@ const PeersManager = ({
   // Peer Connections
   const [PeerRegistry] = useState(() => new Map());
 
-  const findPeer = useCallback((id) => PeerRegistry.get(id), [PeerRegistry]);
+  const findPeer = useCallback((id) => PeerRegistry.get(id.toLowerCase()), [PeerRegistry]);
 
   const registerPeer = useCallback((identifier, ref) => {
     let oldRef = {};
     if (oldRef !== undefined) {
       oldRef = findPeer(identifier);
-      PeerRegistry.delete(identifier);
+      PeerRegistry.delete(identifier.toLowerCase());
     }
 
     const newRef = {
@@ -35,7 +35,7 @@ const PeersManager = ({
     };
 
     // register by id
-    PeerRegistry.set(identifier, newRef);
+    PeerRegistry.set(identifier.toLowerCase(), newRef);
 
     publish('peer-modified', newRef);
     publish('peers-list-changed', newRef, 'add');
@@ -43,12 +43,12 @@ const PeersManager = ({
 
   const unregisterPeer = useCallback((identifier) => {
     // unregister by id
-    PeerRegistry.delete(identifier);
+    PeerRegistry.delete(identifier.toLowerCase());
     publish('peers-list-changed', identifier, 'remove');
   }, [PeerRegistry, publish]);
 
   const getPeersArray = useCallback(
-    () => Array.from(PeerRegistry.keys()).map((id) => PeerRegistry.get(id)),
+    () => Array.from(PeerRegistry.keys()).map((id) => PeerRegistry.get(id.toLowerCase())),
     [PeerRegistry],
   );
 

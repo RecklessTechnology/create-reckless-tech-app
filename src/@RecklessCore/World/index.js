@@ -12,6 +12,7 @@ import useAppContext from '../App/Contexts/useAppContext';
 
 import WorldManager from './Managers/WorldManager';
 
+import MediaPlayers from '../MediaPlayers/Providers/index';
 import Generators from '../Generators/Providers/index';
 import Peers from '../Peers/Providers/index';
 import Devices from '../Devices/Providers/index';
@@ -31,7 +32,7 @@ const World = ({
 }) => {
   const { sceneJSON } = useAppContext();
   const {
-    object, camera, generators, peers, devices, transforms,
+    object, camera, generators, peers, devices, transforms, mediaPlayers,
   } = sceneJSON;
 
   const classes = useStyles();
@@ -39,6 +40,7 @@ const World = ({
   if (object === undefined) {
     return (
       <div className={classes.root}>
+        <MediaPlayers {...{ players: mediaPlayers }} />
         <Generators {...{ generators }} />
         <Peers {...{ peers }} />
         <Devices {...{ devices }} />
@@ -62,6 +64,7 @@ const World = ({
             dpr={window.devicePixelRatio}
           >
             <WorldManager>
+              <MediaPlayers {...{ players: mediaPlayers }} />
               <Generators {...{ generators }} />
               <Peers {...{ peers }} />
               <Devices {...{ devices }} />

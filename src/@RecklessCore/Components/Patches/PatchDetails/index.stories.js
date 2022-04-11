@@ -10,7 +10,7 @@ import PatchDetails from './index';
 import theme from '../../../../theme';
 
 export default {
-  title: 'Editor/Patches/Components/Patch Details',
+  title: 'Components/Patch/Details',
   component: PatchDetails.type,
   argTypes: {
     type: {

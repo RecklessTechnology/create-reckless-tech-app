@@ -13,7 +13,7 @@ import InspectorToolbarView from './view';
 import theme from '../../../../../theme';
 
 export default {
-  title: 'Toolbars/Inspector Toolbar',
+  title: 'Components/Toolbars/Inspector Toolbar',
   component: InspectorToolbarView.type,
   argTypes: { handleChange: { action: 'clicked' } },
   decorators: [

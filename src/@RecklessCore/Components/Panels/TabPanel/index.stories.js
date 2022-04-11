@@ -12,6 +12,7 @@ import theme from '../../../../theme';
 export default {
   title: 'Pure Components/TabPanel',
   component: TabPanel.type,
+  actions: { argTypesRegex: '^on.*' },
   decorators: [
     (Story) => (
       <ThemeProvider theme={theme}>

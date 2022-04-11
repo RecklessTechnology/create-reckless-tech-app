@@ -1,42 +1,44 @@
 const EventsManager = () => {
   const events = {};
   const publish = async (name, data) => {
-    if (events[name] === undefined) {
-      events[name] = { name, handlers: [] };
+    if (events[name.toLowerCase()] === undefined) {
+      events[name.toLowerCase()] = { name, handlers: [] };
     }
 
-    events[name].lastData = data;
+    events[name.toLowerCase()].lastData = data;
     // make snapshot of handlers, to prevent inbetween unsubscribe calls
     // from mutating this array.
-    await Promise.all(events[name].handlers.slice().map((handler) => handler(data), 1000));
+    await Promise.all(
+      events[name.toLowerCase()].handlers.slice().map((handler) => handler(data), 1000),
+    );
     return true;
   };
 
   const unsubscribe = (name, handler) => {
-    if (events[name] === undefined) return;
+    if (events[name.toLowerCase()] === undefined) return;
 
-    const index = events[name].handlers.indexOf(handler);
-    events[name].handlers.splice(index, 1);
+    const index = events[name.toLowerCase()].handlers.indexOf(handler);
+    events[name.toLowerCase()].handlers.splice(index, 1);
   };
 
   const subscribe = (name, handler) => {
-    if (events[name] === undefined) {
-      events[name] = { name, handlers: [], lastData: null };
+    if (events[name.toLowerCase()] === undefined) {
+      events[name.toLowerCase()] = { name, handlers: [], lastData: null };
     }
-    events[name].handlers.push(handler);
+    events[name.toLowerCase()].handlers.push(handler);
 
-    if (events[name].lastData !== null) {
-      handler(events[name].lastData);
+    if (events[name.toLowerCase()].lastData !== null) {
+      handler(events[name.toLowerCase()].lastData);
     }
 
     return () => unsubscribe(name, handler);
   };
 
   const hasSubscriptions = (name) => {
-    if (events[name] === undefined) {
+    if (events[name.toLowerCase()] === undefined) {
       return 0;
     }
-    return events[name].handlers.length;
+    return events[name.toLowerCase()].handlers.length;
   };
 
   return {

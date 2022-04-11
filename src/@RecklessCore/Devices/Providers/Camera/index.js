@@ -32,8 +32,13 @@ const CameraDevice = ({ uuid }) => {
     return () => {
       isMounted.current = false;
       unsubscribe(`${uuid}-selected-device-updated`, updateSelected);
+      if (mediaStream) {
+        mediaStream.getTracks().forEach((track) => {
+          track.stop();
+        });
+      }
     };
-  }, [selectedDevice, subscribe, unsubscribe, updateSelected, uuid]);
+  }, [mediaStream, selectedDevice, subscribe, unsubscribe, updateSelected, uuid]);
 
   // eslint-disable-next-line no-undef
   const initCamera = async (config) => navigator.mediaDevices.getUserMedia(config);

@@ -18,20 +18,22 @@ const GeneratorsManager = ({
   const generatorRegistryUtils = useMemo(
     () => ({
       findGenerator(id) {
-        return GeneratorRegistry.get(id);
+        return GeneratorRegistry.get(id.toLowerCase());
       },
       registerGenerator(identifier, ref) {
         // register by id
-        GeneratorRegistry.set(identifier, ref);
+        GeneratorRegistry.set(identifier.toLowerCase(), ref);
         publish('generators-list-changed', ref, 'add');
       },
       unregisterGenerator(identifier) {
         // unregister by id
-        GeneratorRegistry.delete(identifier);
+        GeneratorRegistry.delete(identifier.toLowerCase());
         publish('generators-list-changed', identifier, 'remove');
       },
       getGeneratorsArray() {
-        return Array.from(GeneratorRegistry.keys()).map((id) => GeneratorRegistry.get(id));
+        return Array.from(
+          GeneratorRegistry.keys(),
+        ).map((id) => GeneratorRegistry.get(id.toLowerCase()));
       },
     }),
     [GeneratorRegistry, publish],

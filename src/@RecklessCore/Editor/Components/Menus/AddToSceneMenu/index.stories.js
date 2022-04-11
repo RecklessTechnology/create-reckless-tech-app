@@ -13,7 +13,7 @@ import ConnectionsManager from '../../../../Connections/Managers/ConnectionsMana
 import PeersManager from '../../../../Peers/Managers/PeersManager';
 
 export default {
-  title: 'Menus/Add to Scene',
+  title: 'Components/Menus/Add to Scene',
   component: AddToSceneMenu.type,
   argTypes: { handeClick: { action: 'clicked' } },
   decorators: [

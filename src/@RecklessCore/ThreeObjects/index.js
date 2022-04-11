@@ -9,6 +9,7 @@ import * as THREE from 'three';
 import GLTFObject from './Components/gltf';
 
 import ThreeObjectManager, { DefaultProps } from './Managers/ThreeObjectManager';
+import DataGrid from './Components/DataGrid';
 
 // Recursive function to convert THREE.js Object Scene to @react-three/fiber objects
 // https://github.com/mrdoob/three.js/wiki/JSON-Object-Scene-format-4
@@ -157,8 +158,14 @@ const ThreeObject = ({
     ));
   }
 
-  switch (passedProps.type) {
-    case 'GLTF':
+  switch (passedProps.type.toLowerCase()) {
+    case 'datagrid':
+      return (
+        <ThreeObjectManager key={`rt_${passedProps.uuid}`} {...DefaultProps} type={passedProps.type} {...passedProps}>
+          <DataGrid {...{ ...passedProps }} />
+        </ThreeObjectManager>
+      );
+    case 'gltf':
       return (
         <ThreeObjectManager key={`rt_${passedProps.uuid}`} {...DefaultProps} type={passedProps.type} {...passedProps}>
           <GLTFObject {...{ ...passedProps }} />

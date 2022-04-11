@@ -12,7 +12,7 @@ import theme from '../../../../theme';
 export default {
   title: 'Pure Components/Modal',
   component: BasicModal.type,
-  argTypes: { handeClick: { action: 'clicked' } },
+  actions: { argTypesRegex: '^on.*' },
   decorators: [
     (Story) => (
       <ThemeProvider theme={theme}>

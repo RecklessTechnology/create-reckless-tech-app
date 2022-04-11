@@ -12,7 +12,7 @@ import AppManager from '../../../../App/Managers/AppManager';
 import EditorMenuManager from '../../../Managers/EditorMenuManager';
 
 export default {
-  title: 'Buttons/Close Editor',
+  title: 'Components/Buttons/Close Editor',
   component: EditorCloseButton.type,
   argTypes: { handleClose: { action: 'clicked' } },
   decorators: [

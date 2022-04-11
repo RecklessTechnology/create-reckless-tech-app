@@ -11,7 +11,7 @@ import theme from '../../../../../theme';
 import AppManager from '../../../../App/Managers/AppManager';
 
 export default {
-  title: 'Buttons/Download Scene',
+  title: 'Components/Buttons/Download Scene',
   component: SceneDownloadButton.type,
   argTypes: { handleClose: { action: 'clicked' } },
   decorators: [

@@ -14,7 +14,7 @@ import theme from '../../../../theme';
 export default {
   title: 'Pure Components/Icon Button',
   component: IconButtonView.type,
-  argTypes: { handeClick: { action: 'clicked' } },
+  actions: { argTypesRegex: '^on.*' },
   decorators: [
     (Story) => (
       <ThemeProvider theme={theme}>
@@ -47,6 +47,7 @@ Default.args = {
   label: 'Close',
   disabled: false,
   className: 'iconButton',
+  handeClick: () => {},
 };
 
 export const Disabled = Template.bind({});
@@ -54,4 +55,5 @@ Disabled.args = {
   label: 'Disabled',
   disabled: true,
   className: 'iconButton',
+  handeClick: () => {},
 };

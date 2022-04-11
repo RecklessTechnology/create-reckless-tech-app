@@ -6,10 +6,17 @@ import TransformManager, { DefaultProps } from '../Managers/TransformManager';
 
 import CalculatorTransform from './Calculator/index';
 import TensorflowTransform from './Tensorflow/index';
+import AudioAnalyzer from './AudioAnalyzer/index';
 
 const TransformsView = ({ uuid, type, ...props }) => {
   switch (type.toLowerCase()) {
     default:
+    case 'audioanalyzer':
+      return (
+        <TransformManager {...DefaultProps} uuid={uuid} type={type} {...props}>
+          <AudioAnalyzer uuid={uuid} type={type} {...props} />
+        </TransformManager>
+      );
     case 'tensorflow':
       return (
         <TransformManager {...DefaultProps} uuid={uuid} type={type} {...props}>

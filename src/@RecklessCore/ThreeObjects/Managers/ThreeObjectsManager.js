@@ -40,7 +40,7 @@ const ThreeObjectsManager = ({
     () => ({
       registerThreeObject(identifier, ref) {
       // register by id
-        ThreeObjectRegistry.set(identifier, ref);
+        ThreeObjectRegistry.set(identifier.toLowerCase(), ref);
         // register by name
         ThreeObjectRegistryByName.set(ref.name, ref);
         // register by position
@@ -54,7 +54,7 @@ const ThreeObjectsManager = ({
       },
       unregisterThreeObject(identifier, ref) {
       // unregister by id
-        ThreeObjectRegistry.delete(identifier);
+        ThreeObjectRegistry.delete(identifier.toLowerCase());
         // unregister by name
         ThreeObjectRegistryByName.delete(ref.name);
         // unregister by position
@@ -66,7 +66,7 @@ const ThreeObjectsManager = ({
         publish('threeObjects-list-changed', identifier, 'remove');
       },
       findThreeObject(id) {
-        return ThreeObjectRegistry.get(id);
+        return ThreeObjectRegistry.get(id.toLowerCase());
       },
       findThreeObjectByName(name) {
         return ThreeObjectRegistryByName.get(name);
