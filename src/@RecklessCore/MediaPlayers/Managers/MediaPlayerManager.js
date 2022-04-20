@@ -16,6 +16,7 @@ import useAppContext from '../../App/Contexts/useAppContext';
 import DefaultTrackList from '../Providers/MusicPlayer/DefaultTrackList';
 
 export const MediaPlayerContext = createContext(null);
+MediaPlayerContext.displayName = 'Media Player Context';
 
 // const DefaultTrack = {
 //   title: '',
@@ -38,6 +39,7 @@ export const DefaultProps = {
 };
 
 const MediaPlayerManager = ({
+  connections,
   children,
   uuid: passedUUID,
   name: passedName,
@@ -52,18 +54,21 @@ const MediaPlayerManager = ({
   active: passedActive,
 }) => {
   const {
-    sceneJSON, subscribe, unsubscribe, publish,
+    subscribe, unsubscribe, publish,
   } = useAppContext();
-  const { connections } = sceneJSON;
 
-  const identifier = useRef(Symbol('mediaPlayer'));
-  const node = useRef(null);
-  const audioRef = useRef(null);
+  // eslint-disable-next-line no-undef
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+
+  const context = useRef(new AudioContext());
 
   const [uuid] = useState(passedUUID || DefaultProps.uuid);
   const [name] = useState(passedName || DefaultProps.name);
 
   const [type, setType] = useState(passedType || DefaultProps.type);
+
+  const identifier = useRef(Symbol(`${type}-${uuid}`));
+  const node = useRef(null);
 
   const [audio, setAudio] = useState(passedAudio || DefaultProps.audio);
 
@@ -84,6 +89,8 @@ const MediaPlayerManager = ({
   const updateFromInput = (prop, val) => {
     switch (prop.toLowerCase()) {
       default:
+        // eslint-disable-next-line no-console
+        console.log(`Unknown Prop Sent to MediaPlayerMananger: ${prop}`);
         break;
       case 'isplaying':
         setIsPlaying(val);
@@ -112,7 +119,7 @@ const MediaPlayerManager = ({
   }, [connections, uuid, subscribe, unsubscribe]);
 
   // Outputs
-  useEffect(() => { audioRef.current = audio; publish(`${uuid}-audio-updated`, audio); }, [uuid, audio, publish]);
+  useEffect(() => { publish(`${uuid}-audio-updated`, audio); }, [uuid, audio, publish]);
 
   useEffect(() => { publish(`${uuid}-isplaying-updated`, isPlaying); }, [uuid, isPlaying, publish, audio]);
   useEffect(() => { publish(`${uuid}-trackprogress-updated`, trackProgress); }, [uuid, trackProgress, publish]);
@@ -147,6 +154,8 @@ const MediaPlayerManager = ({
     setTrackIndex,
     tracks,
     setTracks,
+
+    context,
   }), [
     uuid,
     name,
@@ -158,6 +167,8 @@ const MediaPlayerManager = ({
     trackProgress, setTrackProgress,
     trackIndex, setTrackIndex,
     tracks, setTracks,
+
+    context,
   ]);
 
   // Callback to fetch properties of object
@@ -197,6 +208,7 @@ const MediaPlayerManager = ({
 MediaPlayerManager.whyDidYouRender = (process.env.NODE_ENV === 'development');
 
 MediaPlayerManager.propTypes = {
+  connections: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   children: PropTypes.node.isRequired,
   uuid: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,

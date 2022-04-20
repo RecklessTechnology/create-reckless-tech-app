@@ -12,7 +12,7 @@ import CameraPreviewView from './view';
 import useWidgetsContext from '../../../Widgets/Contexts/useWidgetsContext';
 
 const CameraPreview = ({
-  connection,
+  connections,
   uuid,
   ...props
 }) => {
@@ -22,7 +22,7 @@ const CameraPreview = ({
 
   const isMounted = useRef(false);
 
-  const { from } = connection;
+  const { from } = connections.filter((c) => (c.to === uuid))[0];
   const deviceObj = findDevice(from);
   const widgetObj = findWidget(uuid);
 
@@ -38,6 +38,8 @@ const CameraPreview = ({
     if (isMounted.current) {
       switch (prop.toLowerCase()) {
         default:
+          // eslint-disable-next-line no-console
+          console.log(`Unknown Prop Sent to CameraPreview: ${prop}`);
           break;
         case 'size':
           setWindowSize(val);
@@ -110,10 +112,7 @@ const CameraPreview = ({
 
 CameraPreview.propTypes = {
   uuid: PropTypes.string.isRequired,
-  connection: PropTypes.shape({
-    to: PropTypes.string,
-    from: PropTypes.string,
-  }).isRequired,
+  connections: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 export default CameraPreview;

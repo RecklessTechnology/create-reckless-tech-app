@@ -9,15 +9,26 @@ import { Drawer, Divider } from '@material-ui/core';
 import NodeEditor from './Components/NodeEditor';
 import EditorToolbar from './Components/Toolbars/EditorToolbar';
 
-const useStyles = makeStyles(() => ({
-  root: {
+const useStyles = makeStyles((theme) => ({
+  drawer: {
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
     width: '100%',
     height: (props) => props.editorMenuHeight,
-    position: 'fixed',
+    // height: (props) => (`calc(100% - ${(props.editorMenuOpen ? props.editorMenuHeight : 0)}px)`),
+    // width: (props) => (props.inspectorMenuWidth),
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    zIndex: 1300,
+    pointerEvents: 'all',
   },
-  paper: {
+  drawerPaper: {
+    position: 'relative',
+    height: '100%',
     width: '100%',
-    height: (props) => props.editorMenuHeight,
   },
 }));
 
@@ -26,12 +37,12 @@ const EditorMenuView = ({ editorMenuOpen, editorMenuHeight, setEditorMenuOpen })
 
   return (
     <Drawer
+      className={classes.drawer}
       variant="persistent"
       anchor="bottom"
       open={editorMenuOpen}
       classes={{
-        root: classes.root,
-        paper: classes.paper,
+        paper: classes.drawerPaper,
       }}
     >
       <EditorToolbar />

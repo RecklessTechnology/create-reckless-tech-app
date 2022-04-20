@@ -1,0 +1,8 @@
+{
+  "uuid": "default-native-audio-analyzer-widget-uuid",
+  "type": "nativeAudioAnalyzer",
+  "name": "Default Native Audio Analyzer",
+  "userData": {
+    "isPatchHidden": false
+  }
+}

@@ -6,10 +6,13 @@ import { rtSceneToFlow } from '../../../Utils/toFlow';
 import Scene from '../../../Scenes/Patches';
 import ThreeObject from '../../../ThreeObjects/Patches';
 
+import MediaPlayer from '../../../MediaPlayers/Patches';
+
 import Device from '../../../Devices/Patches';
 import Transform from '../../../Transforms/Patches';
 import Generator from '../../../Generators/Patches';
 import Peer from '../../../Peers/Patches';
+
 import Widget from '../../../Widgets/Patches';
 
 import CustomEdge from '../../../Components/Patches/Edges/CustomEdge';
@@ -21,16 +24,20 @@ const NodeEditor = () => {
   const [elements, setElements] = useState([]);
   const { sceneJSON, updateConnection, addConnection } = useAppContext();
 
+  const { metadata } = sceneJSON;
+  const { editorInteractive } = metadata;
+
   useMemo(() => { setElements(rtSceneToFlow(sceneJSON)); }, [sceneJSON]);
 
   const nodeTypes = {
     Scene,
-    threeObj: ThreeObject,
+    threeobj: ThreeObject,
     device: Device,
     transform: Transform,
     generator: Generator,
     peer: Peer,
     widget: Widget,
+    mediaPlayer: MediaPlayer,
   };
 
   const edgeTypes = {
@@ -45,8 +52,8 @@ const NodeEditor = () => {
       edgeTypes,
       updateConnection,
       addConnection,
-      showControls: true,
-      interactive: true,
+      showControls: editorInteractive,
+      interactive: editorInteractive,
     }}
     />
   );

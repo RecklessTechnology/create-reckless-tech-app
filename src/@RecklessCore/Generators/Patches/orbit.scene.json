@@ -1,0 +1,61 @@
+{
+  "metadata": {
+    "version": "4.5",
+    "type": "Object",
+    "generator": "Object3D.toJSON",
+    "editorInteractive": true
+  },
+  "camera": {
+    "position": [
+      0,
+      4,
+      5
+    ],
+    "fov": 75
+  },
+  "geometries": [],
+  "materials": [],
+  "mediaPlayers": [],
+  "transforms": [],
+  "connections": [],
+  "widgets": [],
+  "generators": [
+    {
+      "uuid": "default-orbit-uuid",
+      "type": "default-orbit-type",
+      "name": "Default orbit Name",
+      "resolution": 32,
+      "rpm": 30
+    }
+  ],
+  "peers": [],
+  "devices": [],
+  "object": {
+    "uuid": "basic_scene",
+    "type": "Scene",
+    "name": "Test Scene",
+    "userData": {
+      "isPatchHidden": false
+    },
+    "layers": 1,
+    "matrix": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "children": []
+  }
+}

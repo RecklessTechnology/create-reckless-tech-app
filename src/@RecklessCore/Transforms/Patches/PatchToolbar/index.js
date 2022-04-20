@@ -6,10 +6,15 @@ import useAppContext from '../../../App/Contexts/useAppContext';
 import PatchToolbarView from '../../../Components/Patches/PatchToolbar/view';
 
 const PatchToolbar = ({ uuid }) => {
-  const { removeTransform } = useAppContext();
+  const { removeTransform, hideTransform, sceneJSON } = useAppContext();
+  const { metadata } = sceneJSON;
+  const { editorInteractive } = metadata;
   return (
     <PatchToolbarView {...{
-      uuid, removeObj: removeTransform, hidePatch: () => {},
+      disabled: !editorInteractive,
+      uuid,
+      removeObj: removeTransform,
+      hidePatch: hideTransform,
     }}
     />
   );

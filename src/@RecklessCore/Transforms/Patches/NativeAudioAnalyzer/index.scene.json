@@ -1,0 +1,112 @@
+{
+  "metadata": {
+    "version": "4.5",
+    "type": "Object",
+    "generator": "Object3D.toJSON",
+    "editorInteractive": false
+  },
+  "camera": {
+    "position": [
+      0,
+      4,
+      5
+    ],
+    "fov": 75
+  },
+  "geometries": [],
+  "materials": [],
+  "mediaPlayers": [
+    {
+      "uuid": "test-musicPlayer-1",
+      "type": "musicPlayer",
+      "name": "Music Player",
+      "isPlaying": false,
+      "trackProgress": 0,
+      "trackIndex": 0,
+      "tracks": []
+    }
+  ],
+  "transforms": [
+    {
+      "uuid": "test-audioAnalyzer-1",
+      "type": "nativeaudioanalyzer",
+      "name": "Native Audio Analyzer"
+    }
+  ],
+  "connections": [
+    {
+      "uuid": "test-musicPlayer-1-connection-to-test-audioAnalyzer-1",
+      "from": "test-musicPlayer-1",
+      "fromProp": "audio",
+      "to": "test-audioAnalyzer-1",
+      "toProp": "audio"
+    },
+    {
+      "uuid": "test-musicPlayer-1-connection-to-test-musicControls-1",
+      "from": "test-musicPlayer-1",
+      "fromProp": "audio",
+      "to": "test-musicControls-1",
+      "toProp": "audio"
+    },
+    {
+      "uuid": "test-audioAnalyzer-1-connection-to-test-audioVisualizer-1",
+      "from": "test-audioAnalyzer-1",
+      "fromProp": "freqs",
+      "to": "test-audioVisualizer-1",
+      "toProp": "freqs"
+    }
+  ],
+  "widgets": [
+    {
+      "uuid": "test-musicControls-1",
+      "type": "musicControls",
+      "name": "Music Controls",
+      "size": 1,
+      "location": 0,
+      "userData": {
+        "isPatchHidden": false
+      }
+    },
+    {
+      "uuid": "test-audioVisualizer-1",
+      "type": "audioVisualizer",
+      "name": "Audio Visualizer",
+      "size": 1,
+      "location": 1,
+      "userData": {
+        "isPatchHidden": false
+      }
+    }
+  ],
+  "generators": [],
+  "peers": [],
+  "devices": [],
+  "object": {
+    "uuid": "basic_scene",
+    "type": "Scene",
+    "name": "Test Scene",
+    "userData": {
+      "isPatchHidden": false
+    },
+    "layers": 1,
+    "matrix": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "children": []
+  }
+}

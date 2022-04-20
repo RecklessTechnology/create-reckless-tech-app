@@ -1,35 +1,30 @@
 import React from 'react';
-
 import 'typeface-roboto-material';
 
-import { ThemeProvider } from '@material-ui/styles';
-import { CssBaseline } from '@material-ui/core';
+// Import Reckless Tech app framework and chrome.
+import CoreDecorators from '../../../../stories/CoreDecorators';
 
-import AppManager from '../../../App/Managers/AppManager';
-import DevicesManager from '../../Managers/DevicesManager';
-import WidgetsManager from '../../../Widgets/Managers/WidgetsManager';
-import WidgetManager, { DefaultProps as DefaultWidgetProps } from '../../../Widgets/Managers/WidgetManager';
+// Import companion elements needed for story.
+// import MusicControlsComponent from '../../../MediaPlayers/Widgets/MusicControls';
+import WidgetManager from '../../../Widgets/Managers/WidgetManager';
+import DefaultWidgetProps from '../../../Widgets/DefaultProps.json';
 
-import Component from './index';
-import Provider from '../../Providers';
+// Import scene definition with everything but story elements.
+import testScene from './view.scene.json';
 
-import theme from '../../../../theme';
+// Impoer story elements.
+import CameraPreview from './index';
+import DefaultProps from './DefaultProps.json';
 
 export default {
-  title: 'Devices/Camera/Widget',
-  component: Component.type,
+  title: 'Widgets/Camera Preview Widget',
+  component: CameraPreview.type,
   decorators: [
     (Story) => (
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <AppManager>
-          <DevicesManager>
-            <WidgetsManager>
-              <Story />
-            </WidgetsManager>
-          </DevicesManager>
-        </AppManager>
-      </ThemeProvider>
+      // Builds Reckless Tech app framework around story.
+      <CoreDecorators sceneJSON={testScene}>
+        <Story />
+      </CoreDecorators>
     ),
   ],
   argTypes: {
@@ -37,75 +32,29 @@ export default {
   },
 };
 
-const Template = ({ uuid, type, ...props }) => (
-  <div style={{
-    position: 'relative',
-    minHeight: '500px',
-  }}
-  >
-    <Provider
-      devices={[
-        {
-          uuid: 'yyy',
-          type: 'camera',
-          name: 'Default Camera',
-          userData: {
-            isPatchHidden: false,
-          },
-        },
-      ]}
-    />
-    <WidgetManager {...DefaultWidgetProps} {...props}>
-      <Component
-        uuid={uuid}
-        type={type}
-        {...{ props }}
-        connection={{
-          uuid: 'zzz',
-          from: 'yyy',
-          fromProp: 'mediastream',
-          to: 'xxx',
-          toProp: 'mediastream',
-        }}
+const Template = (props) => {
+  const { connections } = testScene;
+  return (
+    <WidgetManager
+      {...props}
+      connections={connections}
+    >
+      <CameraPreview
+        {...props}
+        connections={connections}
       />
     </WidgetManager>
-  </div>
-);
+  );
+};
 
-Template.propTypes = Component.propTypes;
+Template.propTypes = CameraPreview.propTypes;
 
-export const Small = Template.bind({});
-Small.args = {
-  uuid: 'xxx',
-  type: 'preview',
-  name: 'new preview',
-  userData: {
-    isPatchHidden: false,
-  },
+export const Default = Template.bind({});
+Default.args = {
+  ...DefaultWidgetProps,
+  ...DefaultProps,
+  uuid: 'test-cameraPreview-1',
+  name: 'Camera Preview',
+  location: 0,
   size: 0,
-  location: 0,
-};
-
-export const Medium = Template.bind({});
-Medium.args = {
-  uuid: 'xxx',
-  type: 'preview',
-  name: 'new preview',
-  userData: {
-    isPatchHidden: false,
-  },
-  size: 1,
-  location: 0,
-};
-
-export const Large = Template.bind({});
-Large.args = {
-  uuid: 'xxx',
-  type: 'preview',
-  name: 'new preview',
-  userData: {
-    isPatchHidden: false,
-  },
-  size: 2,
-  location: 0,
 };

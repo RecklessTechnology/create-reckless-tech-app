@@ -16,9 +16,16 @@ import useAppContext from '../../App/Contexts/useAppContext';
 import ThreeObjectView from '../view';
 
 export const ThreeObjectContext = createContext(null);
+ThreeObjectContext.displayName = 'Three Object Context';
+
 export const ThreeObjectPositionContext = createContext(null);
+ThreeObjectPositionContext.displayName = 'Three Object Position Context';
+
 export const ThreeObjectRotationContext = createContext(null);
+ThreeObjectRotationContext.displayName = 'Three Object Rotation Context';
+
 export const ThreeObjectScaleContext = createContext(null);
+ThreeObjectScaleContext.displayName = 'Three Object Scale Context';
 
 export const DefaultProps = {
   uuid: 'xxx',
@@ -32,6 +39,7 @@ export const DefaultProps = {
 };
 
 const ThreeObjectManager = ({
+  connections,
   name,
   type,
   children,
@@ -40,12 +48,8 @@ const ThreeObjectManager = ({
   const isMounted = useRef(false);
 
   const {
-    sceneJSON, subscribe, unsubscribe, publish,
+    subscribe, unsubscribe, publish,
   } = useAppContext();
-  const { connections } = sceneJSON;
-
-  const identifier = useRef(Symbol('ThreeObject'));
-  const node = useRef(null);
 
   const [uuid] = useState(props.uuid);
 
@@ -56,10 +60,20 @@ const ThreeObjectManager = ({
   const [rotation, setRotation] = useState(props.rotation || [0, 0, 0]);
   const [scale, setScale] = useState(props.scale || [1, 1, 1]);
 
+  const [freqs, setFreqs] = useState([]);
+
+  const identifier = useRef(Symbol(`${type}-${uuid}`));
+  const node = useRef(null);
+
   // Inputs
   const updateFromInput = (prop, val) => {
     switch (prop.toLowerCase()) {
       default:
+        // eslint-disable-next-line no-console
+        console.log(`Unknown Prop Sent to ThreeObjectManager: ${prop}`);
+        break;
+      case 'freqs':
+        setFreqs(val);
         break;
       case 'position':
         setPosition(val);
@@ -119,6 +133,12 @@ const ThreeObjectManager = ({
     }
   }, [scale, publish, uuid]);
 
+  useEffect(() => {
+    if (isMounted.current) {
+      publish(`${uuid}-freqs-updated`, freqs);
+    }
+  }, [freqs, publish, uuid]);
+
   const { registerThreeObject, unregisterThreeObject } = useThreeObjectsContext();
   const forceUpdate = useForceUpdate();
 
@@ -142,6 +162,9 @@ const ThreeObjectManager = ({
       setRotation,
       scale,
       setScale,
+
+      freqs,
+      setFreqs,
     }),
     [
       uuid,
@@ -153,6 +176,8 @@ const ThreeObjectManager = ({
       position, setPosition,
       rotation, setRotation,
       scale, setScale,
+
+      freqs, setFreqs,
     ],
   );
 
@@ -186,6 +211,9 @@ const ThreeObjectManager = ({
     setRotation,
     setScale,
 
+    freqs,
+    setFreqs,
+
     forceUpdate,
   }), [
     uuid,
@@ -198,6 +226,8 @@ const ThreeObjectManager = ({
     setPosition,
     setRotation,
     setScale,
+    freqs,
+    setFreqs,
     forceUpdate,
   ]);
 
@@ -230,6 +260,7 @@ const ThreeObjectManager = ({
 ThreeObjectManager.whyDidYouRender = (process.env.NODE_ENV === 'development');
 
 ThreeObjectManager.propTypes = {
+  connections: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   children: PropTypes.node.isRequired,
   uuid: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,

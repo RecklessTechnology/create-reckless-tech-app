@@ -18,13 +18,12 @@ import Editor from '../Editor';
 import IconButtonView from '../Components/Buttons/IconButton/view';
 import WelcomeModal from '../Help/Modals/Welcome';
 
-import Widgets from '../Widgets';
+import WidgetsProvider from '../Widgets/Providers';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     height: '100%',
-    overflow: 'scroll',
     pointerEvents: 'none',
     position: 'relative',
   },
@@ -93,6 +92,7 @@ const useStyles = makeStyles((theme) => ({
     background: 'none',
     boxShadow: 'none',
     pointerEvents: 'none',
+    position: 'absolute',
   },
   bottomToolbar: {
     width: '100%',
@@ -108,6 +108,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AppView = ({
+  sceneJSON,
   children,
   editorMenuOpen,
   editorMenuHeight,
@@ -123,7 +124,8 @@ const AppView = ({
     inspectorMenuOpen,
     inspectorMenuWidth,
   });
-
+  const { widgets, connections, metadata } = sceneJSON;
+  const { editorInteractive } = metadata;
   return (
     <div
       className={clsx(classes.root, {
@@ -135,8 +137,10 @@ const AppView = ({
           [classes.renderAreaShiftRight]: inspectorMenuOpen,
         })}
       >
-        <Widgets
+        <WidgetsProvider
           {...{
+            connections,
+            widgets,
             editorMenuOpen,
             editorMenuHeight,
             inspectorMenuOpen,
@@ -172,13 +176,13 @@ const AppView = ({
             {inspectorMenuOpen !== true ? (
               <IconButtonView
                 {...{
+                  disabled: !editorInteractive,
                   label: 'Inspect',
                   handeClick: () => {
                     setInspectorMenuOpen(!inspectorMenuOpen);
                   },
                 }}
                 className={classes.inspectorButton}
-                disabled={false}
               >
                 <InfoOutlinedIcon fontSize="small" />
               </IconButtonView>
@@ -196,6 +200,13 @@ const AppView = ({
 AppView.whyDidYouRender = (process.env.NODE_ENV === 'development');
 
 AppView.propTypes = {
+  sceneJSON: PropTypes.shape({
+    connections: PropTypes.arrayOf(PropTypes.shape({})),
+    widgets: PropTypes.arrayOf(PropTypes.shape({})),
+    metadata: PropTypes.shape({
+      editorInteractive: PropTypes.bool,
+    }),
+  }).isRequired,
   children: PropTypes.node.isRequired,
   editorMenuOpen: PropTypes.bool.isRequired,
   editorMenuHeight: PropTypes.number.isRequired,

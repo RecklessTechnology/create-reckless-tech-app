@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React, { createContext, useMemo, useState } from 'react';
 
 export const InspectorMenuContext = createContext(null);
+InspectorMenuContext.displayName = 'Inspector Menu Context';
 
 const InspectorMenuManager = ({
   children,

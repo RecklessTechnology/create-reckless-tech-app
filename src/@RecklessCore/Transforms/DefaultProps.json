@@ -1,0 +1,8 @@
+{
+  "uuid": "default-transform-uuid",
+  "type": "default-transform-type",
+  "name": "Default transform Name",
+  "userData": {
+    "isPatchHidden": false
+  }
+}

@@ -13,6 +13,8 @@ import { TransformsContext, transformsContextValue } from '../../Transforms/Mana
 import { WidgetsContext, widgetsContextValue } from '../../Widgets/Managers/WidgetsManager';
 
 export const WorldContext = createContext(null);
+WorldContext.displayName = 'World Context';
+
 export const worldContextValue = {};
 
 const WorldManager = ({

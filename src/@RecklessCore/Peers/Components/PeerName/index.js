@@ -6,11 +6,16 @@ import PeerNameView from './view';
 import PeerNameEdit from './edit';
 
 const PeerName = ({ peerInfo, onNameUpdate }) => {
+  // eslint-disable-next-line no-console
+  console.log(peerInfo);
   const {
-    mode, name, uuid, isMe, connectionId,
+    mode = '', name, uuid, isMe, connectionId,
   } = peerInfo;
   switch (mode.toLowerCase()) {
     default:
+      // eslint-disable-next-line no-console
+      console.log(`PeerName Mode Not found: ${mode} - ${uuid}`);
+      return null;
     case 'waiting':
       return <PeerNameView {...{ primary: '...loading', secondary: '' }} />;
     case 'view':

@@ -70,6 +70,8 @@ const App = () => {
     };
   }, [isMounted, updateScene, subscribe, unsubscribe, sceneJSON]);
 
+  // eslint-disable-next-line no-console
+  console.log(sceneJSON);
   return (
     <AppView {...{
       editorMenuOpen,
@@ -78,6 +80,7 @@ const App = () => {
       inspectorMenuOpen,
       inspectorMenuWidth,
       setInspectorMenuOpen,
+      sceneJSON,
     }}
     >
       <World {...{ sceneJSON }}>

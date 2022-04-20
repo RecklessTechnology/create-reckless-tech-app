@@ -16,6 +16,8 @@ const PatchValueView = ({ value }) => {
   const classes = useStyles();
   switch (true) {
     default:
+      // eslint-disable-next-line no-console
+      console.log(`Unknown patch value type: ${value}`);
       return <Typography className={classes.propText}>{`${value}`}</Typography>;
     case Array.isArray(value):
       // eslint-disable-next-line react/prop-types

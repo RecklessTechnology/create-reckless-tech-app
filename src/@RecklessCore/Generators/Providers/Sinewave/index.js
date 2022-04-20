@@ -23,7 +23,10 @@ const SinewaveGenerator = ({ toProp }) => {
   const points = useMemo(() => {
     switch (type.toLowerCase()) {
       default:
-      case 'sine':
+        // eslint-disable-next-line no-console
+        console.log(`Unknown Shape: ${type}`);
+        return [];
+      case 'sinewave':
         return DrawSine(resolution);
     }
   }, [type, resolution]);

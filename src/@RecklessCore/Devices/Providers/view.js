@@ -10,30 +10,33 @@ import CameraDevice from './Camera';
 import AccelDevice from './Accel';
 
 // eslint-disable-next-line react/prop-types
-const DevicesView = ({ connection, type, ...props }) => {
+const DevicesView = ({ connections, type, ...props }) => {
   switch (type.toLowerCase()) {
     default:
+      // eslint-disable-next-line no-console
+      console.log(`Unknown Device Type: ${type}`);
+      return null;
     case 'mouse':
       return (
-        <DeviceManager {...DefaultProps} type={type} {...props}>
+        <DeviceManager connections={connections} {...DefaultProps} type={type} {...props}>
           <MouseDevice {...props} />
         </DeviceManager>
       );
     case 'keyboard':
       return (
-        <DeviceManager {...DefaultProps} type={type} {...props}>
+        <DeviceManager connections={connections} {...DefaultProps} type={type} {...props}>
           <KeyboardDevice {...props} />
         </DeviceManager>
       );
     case 'accel':
       return (
-        <DeviceManager {...DefaultProps} type={type} {...props}>
+        <DeviceManager connections={connections} {...DefaultProps} type={type} {...props}>
           <AccelDevice {...props} />
         </DeviceManager>
       );
     case 'camera':
       return (
-        <DeviceManager {...DefaultProps} type={type} {...props}>
+        <DeviceManager connections={connections} {...DefaultProps} type={type} {...props}>
           <CameraDevice {...props} />
         </DeviceManager>
       );

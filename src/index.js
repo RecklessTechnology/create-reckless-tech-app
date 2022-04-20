@@ -28,11 +28,15 @@ import EditorMenuManager from './@RecklessCore/Editor/Managers/EditorMenuManager
 
 import theme from './theme';
 
+import DefaultSceneJSON from './scenes/AudioAnalyzerScene.json';
+// import DefaultSceneJSONClient from './scenes/LogoScene.json';
+import { isHost } from './@RecklessCore/Utils/userCheck';
+
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppManager>
+      <AppManager sceneJSON={(isHost()) ? DefaultSceneJSON : DefaultSceneJSON}>
         <ThreeObjectsManager>
           <PeersManager>
             <ConnectionsManager>

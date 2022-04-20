@@ -59,6 +59,9 @@ const WidgetChrome = ({
   const getWidth = (s) => {
     switch (s) {
       default:
+        // eslint-disable-next-line no-console
+        console.log(`Widget Width Not Found: ${s}`);
+        return '0px';
       case 0:
         return `${150}px`;
       case 1:
@@ -71,6 +74,9 @@ const WidgetChrome = ({
   const getHeight = (s) => {
     switch (s) {
       default:
+        // eslint-disable-next-line no-console
+        console.log(`Widget Height Not Found: ${s}`);
+        return '0px';
       case 0:
         return `${50}px`;
       case 1:
@@ -82,10 +88,10 @@ const WidgetChrome = ({
 
   const positionSpring = useSpring({
     config: { friction: 10 },
-    top: (location === 0 || location === 1) ? theme.spacing(3) : 'auto',
-    right: (location === 1 || location === 2) ? theme.spacing(3) : 'auto',
-    bottom: (location === 2 || location === 3) ? theme.spacing(3) : 'auto',
-    left: (location === 3 || location === 0) ? theme.spacing(3) : 'auto',
+    top: (location === 0 || location === 1) ? theme.spacing(4) : 'auto',
+    right: (location === 1 || location === 2) ? theme.spacing(4) : 'auto',
+    bottom: (location === 2 || location === 3) ? theme.spacing(4) : 'auto',
+    left: (location === 3 || location === 0) ? theme.spacing(4) : 'auto',
   });
 
   const widgetSizeSpring = useSpring({

@@ -3,6 +3,8 @@ import React from 'react';
 import PersonIcon from '@material-ui/icons/Person';
 import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
 import ImageIcon from '@material-ui/icons/Image';
+import MusicNoteIcon from '@material-ui/icons/MusicNote';
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -11,6 +13,7 @@ import {
   faMouse, faKeyboard, faVideo,
   faCalculator,
   faPlus, faMinus, faTimes, faDivide, faThLarge,
+  faRobot, faBorderNone,
 } from '@fortawesome/free-solid-svg-icons';
 
 import GLTF_ICON from '../ThreeObjects/Assets/gltf_file.png';
@@ -21,7 +24,20 @@ const getIconByType = (type) => {
   }
   switch (type.toLowerCase()) {
     default:
+      // eslint-disable-next-line no-console
+      console.log(`Unknown Icon Type: ${type}`);
       return <FontAwesomeIcon title={type} icon={faQuestion} />;
+    case 'datagrid':
+      return <FontAwesomeIcon icon={faBorderNone} />;
+    case 'nativeaudioanalyzer':
+    case 'audiomotionanalyzer':
+      return <FontAwesomeIcon icon={faRobot} />;
+    case 'musicplayer':
+      return <MusicNoteIcon title={type} fontSize="small" />;
+    case 'musiccontrols':
+      return <PlayCircleOutlineIcon title={type} fontSize="small" />;
+    case 'audiovisualizer':
+      return <FontAwesomeIcon icon={faWaveSquare} />;
     case 'gltf':
       return (
         <img

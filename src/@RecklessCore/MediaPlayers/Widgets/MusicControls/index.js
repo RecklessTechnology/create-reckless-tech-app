@@ -12,7 +12,7 @@ import MusicControlsView from './view';
 import useWidgetsContext from '../../../Widgets/Contexts/useWidgetsContext';
 
 const MusicControls = ({
-  connection,
+  connections,
   uuid,
   ...props
 }) => {
@@ -22,8 +22,8 @@ const MusicControls = ({
 
   const isMounted = useRef(false);
 
-  const { from } = connection;
-  const mediaPlayerObj = findMediaPlayer(from);
+  const [from, setFrom] = useState();
+  const [mediaPlayerObj, setMediaPlayerObj] = useState();
   const widgetObj = findWidget(uuid);
 
   const [mediaPlayer, setMediaPlayer] = useState();
@@ -42,6 +42,8 @@ const MusicControls = ({
     if (isMounted.current) {
       switch (prop.toLowerCase()) {
         default:
+          // eslint-disable-next-line no-console
+          console.log(`Unknown Prop Sent to Music Controls: ${prop}`);
           break;
         case 'size':
           setWindowSize(val);
@@ -70,17 +72,21 @@ const MusicControls = ({
 
   useEffect(() => {
     isMounted.current = true;
+    // Widget
     subscribe(`${uuid}-location-updated`, (val) => updateProp(val, 'location'));
     subscribe(`${uuid}-size-updated`, (val) => updateProp(val, 'size'));
-    subscribe(`${from}-audio-updated`, (val) => updateProp(val, 'audio'));
+    // Music Player
+    subscribe(`${from}-audio-updated`, (val) => updateProp(val, 'audio'), 'Music Controls');
     subscribe(`${from}-isplaying-updated`, (val) => updateProp(val, 'isPlaying'));
     subscribe(`${from}-trackprogress-updated`, (val) => updateProp(val, 'trackProgress'));
     subscribe(`${from}-trackindex-updated`, (val) => updateProp(val, 'trackIndex'));
     subscribe(`${from}-tracks-updated`, (val) => updateProp(val, 'tracks'));
     return () => {
       isMounted.current = false;
+      // Widget
       unsubscribe(`${uuid}-location-updated`, (val) => updateProp(val, 'location'));
       unsubscribe(`${uuid}-size-updated`, (val) => updateProp(val, 'size'));
+      // Music Player
       unsubscribe(`${from}-audio-updated`, (val) => updateProp(val, 'audio'));
       unsubscribe(`${from}-isplaying-updated`, (val) => updateProp(val, 'isPlaying'));
       unsubscribe(`${from}-trackprogress-updated`, (val) => updateProp(val, 'trackProgress'));
@@ -96,6 +102,17 @@ const MusicControls = ({
   }, [track, trackIndex, tracks]);
 
   useEffect(() => {
+    if (connections !== undefined) {
+      const conns = connections.filter((c) => (c.to === uuid));
+      if (conns.length > 0) {
+        const { from: f } = conns[0];
+        setFrom(f);
+        setMediaPlayerObj(findMediaPlayer(f));
+      }
+    }
+  }, [connections, setMediaPlayerObj, findMediaPlayer, uuid, from]);
+
+  useEffect(() => {
     if (mediaPlayerObj !== undefined) {
       setMediaPlayer(mediaPlayerObj);
     }
@@ -109,7 +126,7 @@ const MusicControls = ({
     }
     return () => {
     };
-  }, [uuid, mediaPlayerObj, widgetObj]);
+  }, [uuid, mediaPlayerObj, widgetObj, from]);
 
   const changeSize = useCallback((val) => {
     if (widget !== undefined) {
@@ -128,6 +145,7 @@ const MusicControls = ({
       mediaPlayer.setIsPlaying(!isPlaying);
       if (audio) {
         if (!isPlaying) {
+          audio.context.resume();
           audio.play();
         } else {
           audio.pause();
@@ -190,10 +208,7 @@ const MusicControls = ({
 
 MusicControls.propTypes = {
   uuid: PropTypes.string.isRequired,
-  connection: PropTypes.shape({
-    to: PropTypes.string,
-    from: PropTypes.string,
-  }).isRequired,
+  connections: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 export default MusicControls;

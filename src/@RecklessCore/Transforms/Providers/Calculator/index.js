@@ -3,17 +3,18 @@ import { useCallback, useEffect } from 'react';
 import useAppContext from '../../../App/Contexts/useAppContext';
 import useTransformContext from '../../Contexts/useTransformContext';
 
-const CalculatorTransform = () => {
+const CalculatorTransform = ({ connections }) => {
   const {
     uuid, setValue: setTransValue, amount, operator,
   } = useTransformContext();
-  const { sceneJSON, subscribe, unsubscribe } = useAppContext();
-
-  const { connections } = sceneJSON;
+  const { subscribe, unsubscribe } = useAppContext();
 
   const calculate = useCallback((v) => {
     switch (operator.toLowerCase()) {
       default:
+        // eslint-disable-next-line no-console
+        console.log(`Unknown Operator Used: ${operator}`);
+        return v;
       case 'add':
         return (v + amount);
       case 'subtract':
@@ -30,6 +31,8 @@ const CalculatorTransform = () => {
     const updateFromInput = (prop, val) => {
       switch (prop.toLowerCase()) {
         default:
+          // eslint-disable-next-line no-console
+          console.log(`Unknown Prop Sent to Calculator: ${prop}`);
           break;
         case 'value':
           setTransValue(val.map(calculate));

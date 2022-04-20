@@ -2,35 +2,23 @@ import React from 'react';
 
 import 'typeface-roboto-material';
 
-import { ThemeProvider } from '@material-ui/styles';
-import { CssBaseline } from '@material-ui/core';
-
-import AppManager from '../../App/Managers/AppManager';
-import GeneratorsManager from '../Managers/GeneratorsManager';
+import CoreDecorators from '../../../stories/CoreDecorators';
 
 import Generator from './index';
-import Provider from '../Providers/view';
 
-import { generatorsToFlow } from '../../Utils/toFlow';
-
-import NodeEditorView from '../../Editor/Components/NodeEditor/view';
-
-import theme from '../../../theme';
+import DefaultGeneratorProps from '../DefaultProps.json';
+import DefaultProps from './DefaultProps.json';
+import testScene from './orbit.scene.json';
 
 export default {
   title: 'Generators/Orbit/Patch',
   component: Generator.type,
-  // argTypes: { onClick: { action: 'clicked' } },
   decorators: [
     (Story) => (
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <AppManager>
-          <GeneratorsManager>
-            <Story />
-          </GeneratorsManager>
-        </AppManager>
-      </ThemeProvider>
+      // Builds Reckless Tech app framework around story.
+      <CoreDecorators sceneJSON={testScene}>
+        <Story />
+      </CoreDecorators>
     ),
   ],
   argTypes: {
@@ -38,48 +26,14 @@ export default {
   },
 };
 
-const Template = (data) => {
-  const elements = generatorsToFlow([data], [], 1);
-  const nodeTypes = {
-    generator: Generator,
-  };
-
-  return (
-    <div style={{
-      display: 'block',
-      width: '100vh',
-      height: '50vh',
-    }}
-    >
-      <Provider connection={{}} {...data} />
-      <NodeEditorView {...{
-        elements: [
-          ...elements,
-        ],
-        nodeTypes,
-        edgeTypes: {},
-        updateConnection: () => {},
-        addConnection: () => {},
-        showControls: false,
-        interactive: false,
-      }}
-      />
-    </div>
-  );
-};
+const Template = () => null;
 
 Template.propTypes = Generator.propTypes;
 
-export const Orbit = Template.bind({});
-Orbit.args = {
-  name: 'Orbit',
-  type: 'orbit',
-  resolution: 32,
-  rpm: 30,
-  looped: true,
-  paused: false,
-  uuid: 'xxx',
-  userData: {
-    isPatchHidden: false,
-  },
+export const Calculator = Template.bind({});
+Calculator.args = {
+  ...DefaultGeneratorProps,
+  ...DefaultProps,
+  uuid: 'test-orbit-1',
+  name: 'Orbit Generator',
 };

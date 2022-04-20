@@ -161,19 +161,21 @@ const ThreeObject = ({
   switch (passedProps.type.toLowerCase()) {
     case 'datagrid':
       return (
-        <ThreeObjectManager key={`rt_${passedProps.uuid}`} {...DefaultProps} type={passedProps.type} {...passedProps}>
-          <DataGrid {...{ ...passedProps }} />
+        <ThreeObjectManager key={`rt_${passedProps.uuid}`} connections={connections} {...DefaultProps} type={passedProps.type} {...passedProps}>
+          <DataGrid connections={connections} {...{ ...passedProps }} />
         </ThreeObjectManager>
       );
     case 'gltf':
       return (
-        <ThreeObjectManager key={`rt_${passedProps.uuid}`} {...DefaultProps} type={passedProps.type} {...passedProps}>
+        <ThreeObjectManager key={`rt_${passedProps.uuid}`} connections={connections} {...DefaultProps} type={passedProps.type} {...passedProps}>
           <GLTFObject {...{ ...passedProps }} />
         </ThreeObjectManager>
       );
     default:
+      // eslint-disable-next-line no-console
+      console.log(`Custom Three Object Not Found. Using default ${passedProps.type}.`);
       return (
-        <ThreeObjectManager key={`rt_${passedProps.uuid}`} {...DefaultProps} type={passedProps.type} {...passedProps}>
+        <ThreeObjectManager key={`rt_${passedProps.uuid}`} connections={connections} {...DefaultProps} type={passedProps.type} {...passedProps}>
           {createElement(
             passedProps.type,
             objProps,

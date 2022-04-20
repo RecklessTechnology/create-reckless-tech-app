@@ -6,18 +6,21 @@ import OrbitGenerator from './Orbit/index';
 import SinewaveGenerator from './Sinewave/index';
 import GeneratorManager, { DefaultProps } from '../Managers/GeneratorManager';
 
-const GeneratorsView = ({ type, ...props }) => {
+const GeneratorsView = ({ connections, type, ...props }) => {
   switch (type.toLowerCase()) {
     default:
+      // eslint-disable-next-line no-console
+      console.log(`Unknown Generator: ${type}`);
+      return null;
     case 'orbit':
       return (
-        <GeneratorManager {...DefaultProps} type={type} {...props}>
+        <GeneratorManager connections={connections} {...DefaultProps} type={type} {...props}>
           <OrbitGenerator />
         </GeneratorManager>
       );
     case 'sinewave':
       return (
-        <GeneratorManager {...DefaultProps} type={type} {...props}>
+        <GeneratorManager connections={connections} {...DefaultProps} type={type} {...props}>
           <SinewaveGenerator toProp="value" />
         </GeneratorManager>
       );
@@ -27,6 +30,7 @@ const GeneratorsView = ({ type, ...props }) => {
 GeneratorsView.whyDidYouRender = (process.env.NODE_ENV === 'development');
 
 GeneratorsView.propTypes = {
+  connections: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   type: PropTypes.string.isRequired,
 };
 

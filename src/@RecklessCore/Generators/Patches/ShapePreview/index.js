@@ -99,6 +99,9 @@ const ShapePreview = ({ uuid, propName }) => {
     if (generator) {
       switch (generator.type.toLowerCase()) {
         default:
+          // eslint-disable-next-line no-console
+          console.log(`Unknown shape: ${generator.type}`);
+          break;
         case 'sinewave':
           setShape(DrawSine(generator.resolution));
           break;

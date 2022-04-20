@@ -20,6 +20,7 @@ const useStyles = makeStyles(() => ({
   },
   propText: {
     whiteSpace: 'nowrap',
+    overflow: 'hidden',
   },
 }));
 

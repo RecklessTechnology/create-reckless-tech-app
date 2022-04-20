@@ -10,24 +10,18 @@ import React, {
 import { v4 as uuidv4 } from 'uuid';
 
 import EventsManager from '../../Events/Managers/EventsManager';
-import DefaultSceneJSON from '../../../scenes/AudioAnalyzerScene.json';
-import DefaultSceneJSONClient from '../../../scenes/PosenetScene.json';
-import { isHost } from '../../Utils/userCheck';
 
 export const AppContext = createContext(null);
+AppContext.displayName = 'App Context';
 
 // eslint-disable-next-line import/no-mutable-exports
 export let appContextValue = {};
 
 const AppManager = ({
+  sceneJSON: passedScene,
   children,
 }) => {
-  const [sceneJSON, setSceneJSON] = useState(() => {
-    if (isHost()) {
-      return DefaultSceneJSON;
-    }
-    return DefaultSceneJSONClient;
-  });
+  const [sceneJSON, setSceneJSON] = useState(passedScene);
 
   const [paused, setPaused] = useState(false);
 
@@ -94,6 +88,118 @@ const AppManager = ({
 
   // Add, remove, and update objects from the scene json
   const sceneUtils = useMemo(() => ({
+    // Media Players
+    hideMediaPlayer(uuid) {
+      setSceneJSON({
+        ...sceneJSON,
+        mediaPlayers: [
+          ...sceneJSON.mediaPlayers.filter((d) => (d.uuid !== uuid)),
+          {
+            ...sceneJSON.mediaPlayers.filter((d) => (d.uuid === uuid))[0],
+            userData: {
+              ...sceneJSON.mediaPlayers.filter((d) => (d.uuid === uuid))[0].userData,
+              isPatchHidden: true,
+            },
+          },
+        ],
+      });
+    },
+    removeMediaPlayer(uuid) {
+      setSceneJSON({
+        ...sceneJSON,
+        mediaPlayers: [
+          ...sceneJSON.mediaPlayers.filter((d) => (d.uuid !== uuid)),
+        ],
+        connections: [
+          ...sceneJSON.connections.filter(
+            (c) => (c.from !== uuid && c.to !== uuid),
+          ),
+        ],
+      });
+    },
+    addMediaPlayer(type) {
+      setSceneJSON({
+        ...sceneJSON,
+        mediaPlayers: [
+          ...sceneJSON.mediaPlayers,
+          {
+            uuid: uuidv4(),
+            type,
+            name: `new ${type}`,
+            isPlaying: false,
+            trackProgress: 0,
+            trackIndex: 0,
+            tracks: [],
+            userData: {
+              isPatchHidden: false,
+            },
+          },
+        ],
+      });
+    },
+    // Widgets
+    hideWidget(uuid) {
+      setSceneJSON({
+        ...sceneJSON,
+        widgets: [
+          ...sceneJSON.widgets.filter((d) => (d.uuid !== uuid)),
+          {
+            ...sceneJSON.widgets.filter((d) => (d.uuid === uuid))[0],
+            userData: {
+              ...sceneJSON.widgets.filter((d) => (d.uuid === uuid))[0].userData,
+              isPatchHidden: true,
+            },
+          },
+        ],
+      });
+    },
+    removeWidget(uuid) {
+      setSceneJSON({
+        ...sceneJSON,
+        widgets: [
+          ...sceneJSON.widgets.filter((d) => (d.uuid !== uuid)),
+        ],
+        connections: [
+          ...sceneJSON.connections.filter(
+            (c) => (c.from !== uuid && c.to !== uuid),
+          ),
+        ],
+      });
+    },
+    addWidget(type) {
+      setSceneJSON({
+        ...sceneJSON,
+        widgets: [
+          ...sceneJSON.widgets,
+          {
+            uuid: uuidv4(),
+            type,
+            name: `new ${type}`,
+            size: 0,
+            location: 0,
+            userData: {
+              isPatchHidden: false,
+            },
+          },
+        ],
+      });
+    },
+    // Transforms
+    hideTransform(uuid) {
+      setSceneJSON({
+        ...sceneJSON,
+        transforms: [
+          ...sceneJSON.transforms.filter((d) => (d.uuid !== uuid)),
+          {
+            ...sceneJSON.transforms.filter((d) => (d.uuid === uuid))[0],
+            userData: {
+              ...sceneJSON.transforms.filter((d) => (d.uuid === uuid))[0].userData,
+              isPatchHidden: true,
+            },
+          },
+        ],
+      });
+    },
     removeTransform(uuid) {
       const obj = {
         ...sceneJSON,
@@ -125,16 +231,19 @@ const AppManager = ({
         ],
       });
     },
-    removeWidget(uuid) {
+    // Devices
+    hideDevice(uuid) {
       setSceneJSON({
         ...sceneJSON,
-        widgets: [
-          ...sceneJSON.widgets.filter((d) => (d.uuid !== uuid)),
-        ],
-        connections: [
-          ...sceneJSON.connections.filter(
-            (c) => (c.from !== uuid && c.to !== uuid),
-          ),
+        devices: [
+          ...sceneJSON.devices.filter((d) => (d.uuid !== uuid)),
+          {
+            ...sceneJSON.devices.filter((d) => (d.uuid === uuid))[0],
+            userData: {
+              ...sceneJSON.devices.filter((d) => (d.uuid === uuid))[0].userData,
+              isPatchHidden: true,
+            },
+          },
         ],
       });
     },
@@ -199,6 +308,22 @@ const AppManager = ({
       }
       setSceneJSON(newJSON);
     },
+    // Generators
+    hideGenerator(uuid) {
+      setSceneJSON({
+        ...sceneJSON,
+        generators: [
+          ...sceneJSON.generators.filter((d) => (d.uuid !== uuid)),
+          {
+            ...sceneJSON.generators.filter((d) => (d.uuid === uuid))[0],
+            userData: {
+              ...sceneJSON.generators.filter((d) => (d.uuid === uuid))[0].userData,
+              isPatchHidden: true,
+            },
+          },
+        ],
+      });
+    },
     removeGenerator(uuid) {
       setSceneJSON({
         ...sceneJSON,
@@ -232,6 +357,7 @@ const AppManager = ({
         ],
       });
     },
+    // ThreeObj
     hideThreeObjPatch(uuid, val) {
       const filterdChildren = sceneJSON.object.children;
       hideChild(filterdChildren, uuid, val, () => {
@@ -295,6 +421,21 @@ const AppManager = ({
       });
     },
     // Peers
+    hidePeer(uuid) {
+      setSceneJSON({
+        ...sceneJSON,
+        peers: [
+          ...sceneJSON.peers.filter((d) => (d.uuid !== uuid)),
+          {
+            ...sceneJSON.peers.filter((d) => (d.uuid === uuid))[0],
+            userData: {
+              ...sceneJSON.peers.filter((d) => (d.uuid === uuid))[0].userData,
+              isPatchHidden: true,
+            },
+          },
+        ],
+      });
+    },
     removePeer(uuid) {
       setSceneJSON({
         ...sceneJSON,
@@ -404,6 +545,20 @@ const AppManager = ({
 };
 
 AppManager.propTypes = {
+  sceneJSON: PropTypes.shape({
+    object: PropTypes.shape({
+      children: PropTypes.arrayOf(PropTypes.shape({})),
+    }),
+    transforms: PropTypes.arrayOf(PropTypes.shape({})),
+    connections: PropTypes.arrayOf(PropTypes.shape({})),
+    mediaPlayers: PropTypes.arrayOf(PropTypes.shape({})),
+    widgets: PropTypes.arrayOf(PropTypes.shape({})),
+    devices: PropTypes.arrayOf(PropTypes.shape({})),
+    generators: PropTypes.arrayOf(PropTypes.shape({})),
+    geometries: PropTypes.arrayOf(PropTypes.shape({})),
+    materials: PropTypes.arrayOf(PropTypes.shape({})),
+    peers: PropTypes.arrayOf(PropTypes.shape({})),
+  }).isRequired,
   children: PropTypes.node.isRequired,
 };
 

@@ -1,0 +1,10 @@
+{
+  "uuid": "default-music-controls-widget-uuid",
+  "type": "musicControls",
+  "name": "Default Music Controls",
+  "size": 0,
+  "location": 0,
+  "userData": {
+    "isPatchHidden": false
+  }
+}

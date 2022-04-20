@@ -27,11 +27,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EditorToolbarView = ({ sceneJSON }) => {
+const EditorToolbarView = ({ name }) => {
   const classes = useStyles();
-
-  const { object } = sceneJSON;
-  const { name } = object;
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -52,11 +49,7 @@ const EditorToolbarView = ({ sceneJSON }) => {
 };
 
 EditorToolbarView.propTypes = {
-  sceneJSON: PropTypes.shape({
-    object: PropTypes.shape({
-      name: PropTypes.string,
-    }),
-  }).isRequired,
+  name: PropTypes.string.isRequired,
 };
 
 export default memo(EditorToolbarView);

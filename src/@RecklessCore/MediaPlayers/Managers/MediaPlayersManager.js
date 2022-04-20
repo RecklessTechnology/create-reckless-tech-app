@@ -5,6 +5,8 @@ import React, { createContext, useMemo, useState } from 'react';
 import useAppContext from '../../App/Contexts/useAppContext';
 
 export const MediaPlayersContext = createContext(null);
+MediaPlayersContext.displayName = 'Media Players Context';
+
 // eslint-disable-next-line import/no-mutable-exports
 export let mediaPlayersContextValue = {};
 

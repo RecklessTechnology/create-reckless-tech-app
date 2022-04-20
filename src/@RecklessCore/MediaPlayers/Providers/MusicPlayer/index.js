@@ -7,22 +7,24 @@ const MusicPlayer = () => {
 
   const { getRef } = useMediaPlayerContext();
   const {
-    tracks, trackIndex, setAudio, isPlaying,
+    tracks, trackIndex, setAudio, isPlaying, context,
   } = getRef();
 
   useEffect(() => {
     if (!audioRef.current) {
       // eslint-disable-next-line no-undef
       audioRef.current = new Audio(tracks[trackIndex].audioSrc);
+      audioRef.current.context = context.current;
     } else {
       audioRef.current.setAttribute('src', tracks[trackIndex].audioSrc);
       audioRef.current.load();
       if (isPlaying) {
         audioRef.current.play();
+        audioRef.current.context.resume();
       }
     }
     setAudio(audioRef.current);
-  }, [isPlaying, setAudio, trackIndex, tracks]);
+  }, [context, isPlaying, setAudio, trackIndex, tracks]);
 
   return null;
 };

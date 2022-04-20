@@ -8,12 +8,15 @@ import MediaPlayerManager, { DefaultProps } from '../Managers/MediaPlayerManager
 import MusicPlayer from './MusicPlayer';
 
 // eslint-disable-next-line react/prop-types
-const MediaPlayersView = ({ connection, type, ...props }) => {
+const MediaPlayersView = ({ connections, type, ...props }) => {
   switch (type.toLowerCase()) {
     default:
+      // eslint-disable-next-line no-console
+      console.log(`Unknown Media Player: ${type}`);
+      return null;
     case 'musicplayer':
       return (
-        <MediaPlayerManager {...DefaultProps} type={type} {...props}>
+        <MediaPlayerManager connections={connections} {...DefaultProps} type={type} {...props}>
           <MusicPlayer {...props} />
         </MediaPlayerManager>
       );

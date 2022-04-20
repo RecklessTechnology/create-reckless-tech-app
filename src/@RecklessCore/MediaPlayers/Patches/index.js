@@ -23,7 +23,10 @@ const DevicePatch = ({
   const { type: t } = data;
   switch (t.toLowerCase()) {
     default:
-    case 'musicPlayer':
+      // eslint-disable-next-line no-console
+      console.log(`Unknown Media Player Patch: ${t}`);
+      return null;
+    case 'musicplayer':
       return (<MusicPlayer {...{ data }} />);
   }
 };

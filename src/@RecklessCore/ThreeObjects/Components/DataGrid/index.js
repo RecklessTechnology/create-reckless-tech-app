@@ -20,13 +20,11 @@ function getValueForNormalizedCoord(bars, normalizedCoord) {
   return valueBelow + (rawIdx % 1) * (valueAbove - valueBelow);
 }
 
-const DataGrid = ({ uuid }) => {
+const DataGrid = ({ connections, uuid }) => {
   const amplitude = 3.0;
   const {
-    sceneJSON, subscribe, unsubscribe,
+    subscribe, unsubscribe,
   } = useAppContext();
-
-  const { connections } = sceneJSON;
 
   const [freqs, setFreqs] = useState([]);
 
@@ -35,6 +33,8 @@ const DataGrid = ({ uuid }) => {
     const updateFromInput = (prop, val) => {
       switch (prop.toLowerCase()) {
         default:
+          // eslint-disable-next-line no-console
+          console.log(`Unknown Prop Sent to DataGrid: ${prop}`);
           break;
         case 'freqs':
           setFreqs(val);
@@ -82,7 +82,9 @@ const DataGrid = ({ uuid }) => {
         normRadialOffset = Math.sqrt(
           ((normGridX - 0.5) ** 2) + ((normGridY - 0.5) ** 2),
         ) / normQuadrantHypotenuse;
-        z = amplitude * getValueForNormalizedCoord(freqs, normRadialOffset);
+
+        z = amplitude * (0.0039 * getValueForNormalizedCoord(freqs, normRadialOffset));
+
         tempObj.position.set(x, y, z);
         tempObj.updateMatrix();
         ref.current.setMatrixAt(idx, tempObj.matrix);
@@ -99,6 +101,7 @@ const DataGrid = ({ uuid }) => {
 };
 
 DataGrid.propTypes = {
+  connections: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   uuid: PropTypes.string.isRequired,
 };
 

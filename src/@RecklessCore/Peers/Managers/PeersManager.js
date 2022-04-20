@@ -9,6 +9,8 @@ import moment from 'moment';
 import useAppContext from '../../App/Contexts/useAppContext';
 
 export const PeersContext = createContext(null);
+PeersContext.displayName = 'Peers Context';
+
 // eslint-disable-next-line import/no-mutable-exports
 export let peersContextValue = {};
 

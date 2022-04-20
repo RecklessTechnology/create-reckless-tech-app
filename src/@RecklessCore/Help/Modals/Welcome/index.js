@@ -20,7 +20,13 @@ const useStyles = makeStyles(() => ({
 const WelcomeModal = () => {
   const classes = useStyles();
   return (
-    <BasicModal>
+    <BasicModal defaultOpen={
+      // eslint-disable-next-line no-undef
+      (window.location.hostname !== 'localhost'
+      // eslint-disable-next-line no-undef
+      && window.location.hostname !== 'docs.reckless.technology')
+    }
+    >
       <List
         dense
         className={classes.listRoot}

@@ -21,15 +21,13 @@ const createDetector = async (model, config) => posedetection.createDetector(
   config,
 );
 
-const TensorflowTransform = () => {
+const TensorflowTransform = ({ connections }) => {
   const {
     uuid,
   } = useTransformContext();
   const {
-    sceneJSON, subscribe, unsubscribe, publish,
+    subscribe, unsubscribe, publish,
   } = useAppContext();
-
-  const { connections } = sceneJSON;
 
   const [detector, setDetector] = useState(null);
   const [mediaStream, setMediaStream] = useState(null);
@@ -78,6 +76,8 @@ const TensorflowTransform = () => {
     const updateFromInput = (prop, val) => {
       switch (prop.toLowerCase()) {
         default:
+          // eslint-disable-next-line no-console
+          console.log(`Unknown Prop Sent to Tensorflow: ${prop}`);
           break;
         case 'mediastream':
           setMediaStream(val);

@@ -5,7 +5,7 @@
 
 // Default size of patches
 const width = 150;
-const height = 245;
+const height = 150;
 
 // Limit depth of parent / child render
 const limit = 2;
@@ -23,7 +23,9 @@ const dimensionsLookup = (type) => {
 const typeLookup = (props) => {
   switch (props.type.toLowerCase()) {
     default:
-      return 'threeObj';
+      // eslint-disable-next-line no-console
+      console.log(`'${props.type}' type not found. Using 'threeobj'`);
+      return 'threeobj';
     case 'scene':
       return props.type;
     case 'orbit':
@@ -109,6 +111,8 @@ const widgetsToFlow = (widgets) => widgets.map((props) => makeFlowProps(props, '
 
 const transformsToFlow = (transforms) => transforms.map((props) => makeFlowProps(props, 'scene', false, false, 'transform'));
 
+const mediaPlayersToFlow = (mediaPlayers) => mediaPlayers.map((props) => makeFlowProps(props, 'scene', false, false, 'mediaPlayer'));
+
 const rtSceneToFlow = (rtScene) => [
   ...widgetsToFlow(rtScene.widgets),
 
@@ -124,6 +128,7 @@ const rtSceneToFlow = (rtScene) => [
   ...sceneGraphToFlow([rtScene.object], [], 1),
   ...sceneConnectionsToFlow(sceneGraphToFlow([rtScene.object], [], 1)),
 
+  ...mediaPlayersToFlow(rtScene.mediaPlayers),
 ];
 
 export {
@@ -136,4 +141,5 @@ export {
   generatorsToFlow,
   transformsToFlow,
   connectionsToFlow,
+  mediaPlayersToFlow,
 };

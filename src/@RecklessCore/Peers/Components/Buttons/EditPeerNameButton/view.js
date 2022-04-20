@@ -23,6 +23,9 @@ const EditPeerNameButtonView = ({ peerInfo, updateConnectionInfo }) => {
 
   switch (peerInfo.mode.toLowerCase()) {
     default:
+      // eslint-disable-next-line no-console
+      console.log(`Unknown Mode: ${peerInfo.mode}`);
+      return null;
     case 'view':
       return (
         <IconButtonView

@@ -5,6 +5,8 @@ import React, { createContext, useMemo, useState } from 'react';
 import useAppContext from '../../App/Contexts/useAppContext';
 
 export const DevicesContext = createContext(null);
+DevicesContext.displayName = 'Devices Context';
+
 // eslint-disable-next-line import/no-mutable-exports
 export let devicesContextValue = {};
 

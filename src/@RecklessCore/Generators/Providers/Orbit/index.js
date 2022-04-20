@@ -6,6 +6,7 @@ import { useSpring } from '@react-spring/core';
 import useGeneratorContext from '../../Contexts/useGeneratorContext';
 
 import DrawCircle from '../../../Shapes/drawCircle';
+import DrawSine from '../../../Shapes/drawSine';
 
 const OrbitGenerator = ({ toProp }) => {
   const {
@@ -17,7 +18,12 @@ const OrbitGenerator = ({ toProp }) => {
   const points = useMemo(() => {
     switch (type.toLowerCase()) {
       default:
-      case 'sine':
+        // eslint-disable-next-line no-console
+        console.log(`Unknown Shape: ${type}`);
+        return [];
+      case 'sinewave':
+        return DrawSine(resolution);
+      case 'orbit':
         return DrawCircle(resolution);
     }
   }, [type, resolution]);

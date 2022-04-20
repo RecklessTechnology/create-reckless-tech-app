@@ -27,7 +27,7 @@ const PatchValue = ({ uuid, propName }) => {
   useEffect(() => {
     if (transformObj !== undefined) {
       isMounted.current = true;
-      subscribe(`${uuid}-${propName}-updated`, updateProp);
+      subscribe(`${uuid}-${propName}-updated`, updateProp.apply);
     }
     return () => {
       isMounted.current = false;

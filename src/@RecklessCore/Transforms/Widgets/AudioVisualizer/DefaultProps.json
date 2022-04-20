@@ -1,0 +1,10 @@
+{
+  "uuid": "default-audio-visualizer-widget-uuid",
+  "type": "audioVisualizer",
+  "name": "Default Audio Visualizer",
+  "size": 0,
+  "location": 0,
+  "userData": {
+    "isPatchHidden": false
+  }
+}

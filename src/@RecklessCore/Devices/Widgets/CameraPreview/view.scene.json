@@ -1,0 +1,81 @@
+{
+  "metadata": {
+    "version": "4.5",
+    "type": "Object",
+    "generator": "Object3D.toJSON",
+    "editorInteractive": false
+  },
+  "camera": {
+    "position": [
+      0,
+      4,
+      5
+    ],
+    "fov": 75
+  },
+  "geometries": [],
+  "materials": [],
+  "mediaPlayers": [],
+  "transforms": [],
+  "connections": [
+    {
+      "uuid": "test-camera-1-connection-to-test-cameraPreview-1",
+      "from": "test-camera-1",
+      "fromProp": "mediaStream",
+      "to": "test-cameraPreview-1",
+      "toProp": "audio"
+    }
+  ],
+  "widgets": [
+    {
+      "uuid": "test-cameraPreview-1",
+      "type": "cameraPreview",
+      "name": "Camera Preview",
+      "size": 1,
+      "location": 0,
+      "userData": {
+        "isPatchHidden": false
+      }
+    }
+  ],
+  "generators": [],
+  "peers": [],
+  "devices": [
+    {
+      "uuid": "test-camera-1",
+      "type": "camera",
+      "name": "Camera",
+      "userData": {
+        "isPatchHidden": false
+      }
+    }
+  ],
+  "object": {
+    "uuid": "basic_scene",
+    "type": "Scene",
+    "name": "Test Scene",
+    "userData": {
+      "isPatchHidden": false
+    },
+    "layers": 1,
+    "matrix": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "children": []
+  }
+}

@@ -8,9 +8,10 @@ import { CssBaseline } from '@material-ui/core';
 import EditorToolbarView from './view';
 
 import theme from '../../../../../theme';
-import useAppContext from '../../../../App/Contexts/useAppContext';
 import AppManager from '../../../../App/Managers/AppManager';
 import EditorMenuManager from '../../../Managers/EditorMenuManager';
+
+import testScene from './view.scene.json';
 
 export default {
   title: 'Components/Toolbars/Editor Toolbar',
@@ -20,7 +21,7 @@ export default {
     (Story) => (
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <AppManager>
+        <AppManager sceneJSON={testScene}>
           <EditorMenuManager>
             <Story />
           </EditorMenuManager>
@@ -30,14 +31,11 @@ export default {
   ],
 };
 
-const Template = () => {
-  const { sceneJSON } = useAppContext();
-  return (
-    <EditorToolbarView
-      {...{ sceneJSON }}
-    />
-  );
-};
+const Template = () => (
+  <EditorToolbarView
+    {...{ sceneJSON: testScene }}
+  />
+);
 
 Template.propTypes = EditorToolbarView.propTypes;
 

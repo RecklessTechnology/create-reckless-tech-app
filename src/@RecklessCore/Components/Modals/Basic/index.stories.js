@@ -24,7 +24,7 @@ export default {
 };
 
 const Template = () => (
-  <BasicModal>
+  <BasicModal defaultOpen>
     Hello
   </BasicModal>
 );

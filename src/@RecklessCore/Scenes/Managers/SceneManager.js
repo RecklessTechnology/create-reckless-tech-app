@@ -8,6 +8,7 @@ import useAppContext from '../../App/Contexts/useAppContext';
 import waitForMs from '../../Utils/waitForMs';
 
 export const SceneManagerContext = createContext(null);
+SceneManagerContext.displayName = 'Scene Manager Context';
 
 export const sceneContextValue = {};
 

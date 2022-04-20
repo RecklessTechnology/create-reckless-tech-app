@@ -6,6 +6,8 @@ import React, {
 import useAppContext from '../../App/Contexts/useAppContext';
 
 export const ThreeObjectsContext = createContext(null);
+ThreeObjectsContext.displayName = 'Three Objects Context';
+
 // eslint-disable-next-line import/no-mutable-exports
 export let threeObjectsContextValue = {};
 

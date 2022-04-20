@@ -1,0 +1,12 @@
+{
+  "uuid": "default-generator-uuid",
+  "type": "default-generator-type",
+  "name": "Default generator Name",
+  "resolution": 32,
+  "rpm": 30,
+  "looped": true,
+  "paused": false,
+  "userData": {
+    "isPatchHidden": false
+  }
+}

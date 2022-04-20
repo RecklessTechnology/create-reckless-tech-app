@@ -17,6 +17,8 @@ import NodeEditorView from '../../Editor/Components/NodeEditor/view';
 
 import theme from '../../../theme';
 
+import testScene from './orbit.scene.json';
+
 export default {
   title: 'Generators/Sinewave/Patch',
   component: Generator.type,
@@ -25,7 +27,7 @@ export default {
     (Story) => (
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <AppManager>
+        <AppManager sceneJSON={testScene}>
           <GeneratorsManager>
             <Story />
           </GeneratorsManager>
@@ -51,7 +53,7 @@ const Template = (data) => {
       height: '50vh',
     }}
     >
-      <Provider connection={{}} {...data} />
+      <Provider connections={[{}]} {...data} />
       <NodeEditorView {...{
         elements: [
           ...elements,

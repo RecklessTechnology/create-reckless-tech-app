@@ -16,6 +16,7 @@ import useConnectionsContext from '../../Connections/Contexts/useConnectionsCont
 import usePeersContext from '../Contexts/usePeersContext';
 
 export const PeerContext = createContext(null);
+PeerContext.displayName = 'Peer Context';
 
 export const DefaultProps = {
   name: 'unnamed',
@@ -23,13 +24,13 @@ export const DefaultProps = {
 };
 
 const PeerManager = ({
+  connections,
   children = node,
   ...props
 }) => {
   const {
-    sceneJSON, subscribe, unsubscribe, publish,
+    subscribe, unsubscribe, publish,
   } = useAppContext();
-  const { connections } = sceneJSON;
 
   const { registerPeer, unregisterPeer } = usePeersContext();
   const { getMe, findConnection } = useConnectionsContext();
@@ -55,6 +56,8 @@ const PeerManager = ({
     // findConnection();
     switch (prop.toLowerCase()) {
       default:
+        // eslint-disable-next-line no-console
+        console.log(`Unknown Prop Sent to PeerManager: ${prop}`);
         break;
       case 'data':
         if (connection !== undefined) {
@@ -149,6 +152,7 @@ const PeerManager = ({
 PeerManager.whyDidYouRender = (process.env.NODE_ENV === 'development');
 
 PeerManager.propTypes = {
+  connections: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   children: PropTypes.node.isRequired,
   uuid: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,

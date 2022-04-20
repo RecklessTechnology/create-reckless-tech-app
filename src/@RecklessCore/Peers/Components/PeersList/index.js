@@ -60,6 +60,8 @@ const PeersList = () => {
 
   if (connections.length === 0) { return null; }
 
+  // eslint-disable-next-line no-console
+  console.log(connections);
   return (
     <ListItem dense className={classes.listItem}>
       <Grid spacing={0} container>
@@ -68,7 +70,7 @@ const PeersList = () => {
         </Grid>
         <Grid item xs={12}>
           <List dense className={classes.list}>
-            {connections.map((peer) => <PeerInfo key={peer.connectionId} peerInfo={peer} />)}
+            {connections.map((peer) => <PeerInfo key={`peers_list_${peer.connectionId}`} peerInfo={peer} />)}
           </List>
         </Grid>
       </Grid>

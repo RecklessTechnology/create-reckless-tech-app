@@ -1,0 +1,7 @@
+{
+  "uuid": "default-orbit-uuid",
+  "type": "default-orbit-type",
+  "name": "Default orbit Name",
+  "resolution": 32,
+  "rpm": 30
+}

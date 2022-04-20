@@ -57,7 +57,7 @@ const CameraDevice = ({ uuid }) => {
       })
       .catch((e) => {
         // eslint-disable-next-line no-console
-        console.log(e);
+        console.log('Problem Loading Cameras', e);
       });
   }, [setDeviceList, selected]);
 
@@ -78,7 +78,7 @@ const CameraDevice = ({ uuid }) => {
         })
         .catch((e) => {
           // eslint-disable-next-line no-console
-          console.log(e);
+          console.log('Problem Initializing Camera ', e);
         });
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps

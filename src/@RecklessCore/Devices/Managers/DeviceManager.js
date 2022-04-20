@@ -15,6 +15,7 @@ import useDevicesContext from '../Contexts/useDevicesContext';
 import useAppContext from '../../App/Contexts/useAppContext';
 
 export const DeviceContext = createContext(null);
+DeviceContext.displayName = 'Device Context';
 
 export const DefaultProps = {
   uuid: 'xxx',
@@ -35,14 +36,11 @@ const DeviceManager = ({
   active: passedActive,
   deviceList: passedDeviceList,
   selectedDevice: passedSelectedDevice,
+  connections,
 }) => {
   const {
-    sceneJSON, subscribe, unsubscribe, publish,
+    subscribe, unsubscribe, publish,
   } = useAppContext();
-  const { connections } = sceneJSON;
-
-  const identifier = useRef(Symbol('device'));
-  const node = useRef(null);
 
   const [uuid] = useState(passedUUID);
   const [name] = useState(passedName);
@@ -50,6 +48,9 @@ const DeviceManager = ({
   const [type, setType] = useState(passedType || '');
   const [position, setPosition] = useState(passedPosition || [0, 0, 0]);
   const [mediaStream, setMediaStream] = useState();
+
+  const identifier = useRef(Symbol(`${type}-${uuid}`));
+  const node = useRef(null);
 
   const [active, setActive] = useState(passedActive || false);
   const [deviceList, setDeviceList] = useState(passedDeviceList || []);
@@ -59,6 +60,8 @@ const DeviceManager = ({
   const updateFromInput = (prop, val) => {
     switch (prop.toLowerCase()) {
       default:
+        // eslint-disable-next-line no-console
+        console.log(`Unknown Prop Sent to DeviceManager: ${prop}`);
         break;
       case 'position':
         setPosition(val);
@@ -191,6 +194,7 @@ const DeviceManager = ({
 DeviceManager.whyDidYouRender = (process.env.NODE_ENV === 'development');
 
 DeviceManager.propTypes = {
+  connections: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   children: PropTypes.node.isRequired,
   uuid: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,

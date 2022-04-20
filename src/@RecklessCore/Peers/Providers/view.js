@@ -4,14 +4,22 @@ import React, { memo } from 'react';
 
 import PeerManager, { DefaultProps } from '../Managers/PeerManager';
 
-const PeerView = ({ type, ...props }) => (
-  <PeerManager {...DefaultProps} type={type} {...props}><div /></PeerManager>
+const PeersView = ({ connections, type, ...props }) => (
+  <PeerManager
+    connections={connections}
+    {...DefaultProps}
+    type={type}
+    {...props}
+  >
+    <div />
+  </PeerManager>
 );
 
-PeerView.whyDidYouRender = (process.env.NODE_ENV === 'development');
+PeersView.whyDidYouRender = (process.env.NODE_ENV === 'development');
 
-PeerView.propTypes = {
+PeersView.propTypes = {
+  connections: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   type: PropTypes.string.isRequired,
 };
 
-export default memo(PeerView);
+export default memo(PeersView);

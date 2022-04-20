@@ -14,6 +14,7 @@ import useAppContext from '../../App/Contexts/useAppContext';
 import useTransformsContext from '../Contexts/useTransformsContext';
 
 export const TransformContext = createContext(null);
+TransformContext.displayName = 'Transform Context';
 
 export const DefaultProps = {
   uuid: 'xxx',
@@ -26,30 +27,40 @@ export const DefaultProps = {
 };
 
 const TransformManager = ({
+  connections,
   children,
   ...props
 }) => {
   const {
-    sceneJSON, subscribe, unsubscribe, publish,
+    subscribe, unsubscribe, publish,
   } = useAppContext();
-  const { connections } = sceneJSON;
-
-  const identifier = useRef(Symbol('Transform'));
-  const node = useRef(null);
 
   const [uuid] = useState(props.uuid);
   const [name] = useState(props.name);
   const [displayName] = useState(props.displayName);
   const [type, setType] = useState(props.type || 'calculator');
 
+  const identifier = useRef(Symbol(`${type}-${uuid}`));
+  const node = useRef(null);
+
   const [amount, setAmount] = useState(props.amount || 1);
   const [value, setValue] = useState(props.value || [0, 0, 0]);
   const [operator, setOperator] = useState(props.operator || 'Add');
+
+  const [audio, setAudio] = useState(null);
 
   // Inputs
   const updateFromInput = useCallback((prop, val) => {
     switch (prop.toLowerCase()) {
       default:
+        // eslint-disable-next-line no-console
+        console.log(`Unknown Prop Sent to TransformManager: ${prop}`);
+        break;
+      case 'value':
+        setValue(val);
+        break;
+      case 'audio':
+        setAudio(val);
         break;
       case 'data':
         setValue(val);
@@ -71,6 +82,7 @@ const TransformManager = ({
   useEffect(() => { publish(`${uuid}-value-updated`, value); }, [value, publish, uuid]);
   useEffect(() => { publish(`${uuid}-amount-updated`, amount); }, [amount, publish, uuid]);
   useEffect(() => { publish(`${uuid}-operator-updated`, operator); }, [operator, publish, uuid]);
+  useEffect(() => { publish(`${uuid}-audio-updated`, audio); }, [audio, publish, uuid]);
 
   const { registerTransform, unregisterTransform } = useTransformsContext();
   const forceUpdate = useForceUpdate();
@@ -94,6 +106,9 @@ const TransformManager = ({
 
     operator,
     setOperator,
+
+    audio,
+    setAudio,
   }), [
     uuid,
     name, displayName,
@@ -103,6 +118,8 @@ const TransformManager = ({
     value, setValue,
     amount, setAmount,
     operator, setOperator,
+
+    audio, setAudio,
   ]);
 
   // Callback to fetch properties of object
@@ -135,6 +152,9 @@ const TransformManager = ({
     operator,
     setOperator,
 
+    audio,
+    setAudio,
+
     forceUpdate,
   }),
   [
@@ -148,6 +168,8 @@ const TransformManager = ({
     value, setValue,
     amount, setAmount,
     operator, setOperator,
+
+    audio, setAudio,
 
     forceUpdate,
   ]);
@@ -166,6 +188,7 @@ TransformManager.propTypes = {
 };
 
 TransformManager.propTypes = {
+  connections: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   children: PropTypes.node.isRequired,
   uuid: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,

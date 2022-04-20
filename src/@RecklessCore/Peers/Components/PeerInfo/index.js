@@ -38,6 +38,9 @@ const PeerInfo = ({ peerInfo }) => {
   const updateInfo = useCallback((id, type, val) => {
     switch (type.toLowerCase()) {
       default:
+        // eslint-disable-next-line no-console
+        console.log(`UpdateInfo Not found: ${type} - ${id}`);
+        break;
       case 'cancel':
         updateConnectionInfo(id, val);
         break;

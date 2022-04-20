@@ -29,7 +29,14 @@ const DynamicScene = ({ sceneJSON }) => {
 DynamicScene.whyDidYouRender = (process.env.NODE_ENV === 'development');
 
 DynamicScene.propTypes = {
-  sceneJSON: PropTypes.shape().isRequired,
+  sceneJSON: PropTypes.shape({
+    object: PropTypes.shape({}),
+    geometries: PropTypes.arrayOf(PropTypes.shape({})),
+    materials: PropTypes.arrayOf(PropTypes.shape({})),
+    devices: PropTypes.arrayOf(PropTypes.shape({})),
+    generators: PropTypes.arrayOf(PropTypes.shape({})),
+    connections: PropTypes.arrayOf(PropTypes.shape({})),
+  }).isRequired,
 };
 
 export default memo(DynamicScene);

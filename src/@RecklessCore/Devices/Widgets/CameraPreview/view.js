@@ -11,7 +11,7 @@ import {
   Card, CardContent,
 } from '@material-ui/core';
 
-import VideoPlayer from './VideoPlayer';
+import VideoPlayer from '../../../Components/VideoPlayer';
 
 const useStyles = makeStyles(() => ({
   root: {

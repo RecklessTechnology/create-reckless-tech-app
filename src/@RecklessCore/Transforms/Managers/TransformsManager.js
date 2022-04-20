@@ -7,6 +7,8 @@ import React, {
 import useAppContext from '../../App/Contexts/useAppContext';
 
 export const TransformsContext = createContext(null);
+TransformsContext.displayName = 'Transforms Context';
+
 // eslint-disable-next-line import/no-mutable-exports
 export let transformsContextValue = {};
 

@@ -14,15 +14,27 @@ const ScenePatch = ({ data }) => {
   } = data;
   const { hideThreeObjPatch } = useAppContext();
 
-  return (
-    <PatchRoot {...{ width }}>
-      <PatchDetails {...{ name: `${label}`, uuid: `${uuid}`, type: 'scene' }} />
-      <ParentChildProp {...{
-        children, isChildHidden, type, uuid, isHidden, hidePatch: hideThreeObjPatch,
-      }}
-      />
-    </PatchRoot>
-  );
+  // Don't show if scene patch if has no children.
+  if (children === undefined || children.length === 0) {
+    return null;
+  }
+
+  switch (type.toLowerCase()) {
+    default:
+      // eslint-disable-next-line no-console
+      console.log(`Unknown Scene Patch: ${type}`);
+      return null;
+    case 'scene':
+      return (
+        <PatchRoot {...{ width }}>
+          <PatchDetails {...{ name: `${label}`, uuid: `${uuid}`, type: 'scene' }} />
+          <ParentChildProp {...{
+            children, isChildHidden, type, uuid, isHidden, hidePatch: hideThreeObjPatch,
+          }}
+          />
+        </PatchRoot>
+      );
+  }
 };
 
 ScenePatch.propTypes = {

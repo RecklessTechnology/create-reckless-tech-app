@@ -15,6 +15,7 @@ import useAppContext from '../../App/Contexts/useAppContext';
 import useGeneratorsContext from '../Contexts/useGeneratorsContext';
 
 export const GeneratorContext = createContext(null);
+GeneratorContext.displayName = 'Generator Context';
 
 export const DefaultProps = {
   name: 'unnamed',
@@ -27,9 +28,6 @@ const GeneratorManager = ({
 }) => {
   const { publish } = useAppContext();
 
-  const identifier = useRef(Symbol('Generator'));
-  const node = useRef(null);
-
   const [uuid] = useState(props.uuid);
   const [name] = useState(props.name);
   const [type, setType] = useState(props.type || '');
@@ -37,6 +35,9 @@ const GeneratorManager = ({
   const [rpm, setRpm] = useState(parseInt(props.rpm, 10) || 1000);
   const [looped, setLooped] = useState(props.looped || true);
   const [paused, setPaused] = useState(props.paused || false);
+
+  const identifier = useRef(Symbol(`${type}-${uuid}`));
+  const node = useRef(null);
 
   const [position, setPosition] = useState([0, 0, 0]);
 

@@ -16,7 +16,7 @@ const MusicPlayerPatch = ({ data }) => {
 
   const patchProps = [
     {
-      uuid, propName: 'position', disableInput: true, disableOutput: false,
+      uuid, propName: 'audio', disableInput: true, disableOutput: false,
     },
   ];
 

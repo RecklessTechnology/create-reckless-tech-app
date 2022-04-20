@@ -51,13 +51,18 @@ const PeerPatch = ({
 
   if (peer === null) { return null; }
 
-  return (
-    <PatchRoot {...{ width }}>
-      <PatchDetails {...{ name: `${peer.name}`, uuid: `${peer.uuid}`, type: 'Peer' }} />
-      {patchProps.map((p) => (<PropListItem key={`${peer.uuid}-${p.propName}-prop`} {...p}><PatchValue {...{ uuid: peer.uuid, propName: p.propName }} /></PropListItem>))}
-      <PatchToolbar uuid={peer.uuid} />
-    </PatchRoot>
-  );
+  switch (type.toLowerCase()) {
+    default:
+      // eslint-disable-next-line no-console
+      console.log(`Unknown Peer Patch: ${type}`);
+      return (
+        <PatchRoot {...{ width }}>
+          <PatchDetails {...{ name: `${peer.name}`, uuid: `${peer.uuid}`, type: 'Peer' }} />
+          {patchProps.map((p) => (<PropListItem key={`${peer.uuid}-${p.propName}-prop`} {...p}><PatchValue {...{ uuid: peer.uuid, propName: p.propName }} /></PropListItem>))}
+          <PatchToolbar uuid={peer.uuid} />
+        </PatchRoot>
+      );
+  }
 };
 
 PeerPatch.propTypes = {

@@ -76,6 +76,9 @@ const MeInfo = () => {
   const updateMeInfo = useCallback((id, type, val) => {
     switch (type.toLowerCase()) {
       default:
+        // eslint-disable-next-line no-console
+        console.log(`UpdateMe Action Not found: ${type} - ${id}`);
+        break;
       case 'cancel':
         updateConnectionInfo(id, val);
         break;

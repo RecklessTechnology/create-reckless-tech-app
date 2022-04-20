@@ -55,9 +55,12 @@ Fade.propTypes = {
   onExited: PropTypes.func,
 };
 
-const BasicModal = ({ children }) => {
+const BasicModal = ({
+  defaultOpen = false,
+  children,
+}) => {
   const classes = useStyles();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(defaultOpen);
 
   const handleClose = () => {
     setOpen(false);
@@ -89,6 +92,7 @@ const BasicModal = ({ children }) => {
 };
 
 BasicModal.propTypes = {
+  defaultOpen: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
 };
 

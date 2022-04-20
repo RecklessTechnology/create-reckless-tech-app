@@ -37,20 +37,27 @@ const Generator = ({
 }) => {
   const { uuid: uid, label, width } = data;
 
-  return (
-    <PatchRoot {...{ width }}>
-      <PatchDetails {...{ name: `${label}`, uuid: `${uid}`, type: 'Generator' }} />
-      <ShapePreview {...{ uuid: uid, propName: 'position' }} />
-      <GeneratorSettings uuid={uid} />
-      <PropListItem {...{
-        uuid: uid, propName: 'position', disableInput: true, disableOutput: false,
-      }}
-      >
-        <PatchValue {...{ uuid: uid, propName: 'position' }} />
-      </PropListItem>
-      <PatchToolbar uuid={uid} />
-    </PatchRoot>
-  );
+  switch (type.toLowerCase()) {
+    default:
+      // eslint-disable-next-line no-console
+      console.log(`Unknown Generator Patch: ${type}`);
+      return null;
+    case 'generator':
+      return (
+        <PatchRoot {...{ width }}>
+          <PatchDetails {...{ name: `${label}`, uuid: `${uid}`, type }} />
+          <ShapePreview {...{ uuid: uid, propName: 'position' }} />
+          <GeneratorSettings uuid={uid} />
+          <PropListItem {...{
+            uuid: uid, propName: 'position', disableInput: true, disableOutput: false,
+          }}
+          >
+            <PatchValue {...{ uuid: uid, propName: 'position' }} />
+          </PropListItem>
+          <PatchToolbar uuid={uid} />
+        </PatchRoot>
+      );
+  }
 };
 
 Generator.whyDidYouRender = (process.env.NODE_ENV === 'development');

@@ -17,6 +17,8 @@ import NodeEditorView from '../../Editor/Components/NodeEditor/view';
 
 import theme from '../../../theme';
 
+import testScene from './keyboard.scene.json';
+
 export default {
   title: 'Devices/Keyboard/Patch',
   component: Device.type,
@@ -24,7 +26,7 @@ export default {
     (Story) => (
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <AppManager>
+        <AppManager sceneJSON={testScene}>
           <DevicesManager>
             <Story />
           </DevicesManager>
@@ -50,7 +52,7 @@ const Template = (data) => {
       height: '50vh',
     }}
     >
-      <Provider connection={{}} {...data} />
+      <Provider connections={[{}]} {...data} />
       <NodeEditorView {...{
         elements: [
           ...elements,

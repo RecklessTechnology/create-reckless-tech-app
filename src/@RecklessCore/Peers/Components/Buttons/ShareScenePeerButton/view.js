@@ -56,6 +56,9 @@ const ShareScenePeerButtonView = ({ me, peerInfo }) => {
     let json = {};
     switch (menuValue.toLowerCase()) {
       default:
+        // eslint-disable-next-line no-console
+        console.log(`Menu Selection Not Found: ${menuValue}`);
+        break;
       case 'my':
         json = sceneJSON;
         break;

@@ -1,0 +1,10 @@
+{
+  "uuid": "default-widget-uuid",
+  "type": "default-widget-type",
+  "name": "Default Widget Name",
+  "size": 0,
+  "location": 0,
+  "userData": {
+    "isPatchHidden": false
+  }
+}

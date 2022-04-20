@@ -12,12 +12,14 @@ import { createPortal } from '@react-three/fiber';
 import useSceneManager from './Contexts/useSceneManagerContext';
 
 const SceneContext = createContext(null);
+SceneContext.displayName = 'Scene Context';
 
 export function useScene() {
   return useContext(SceneContext);
 }
 
 export const LevelContext = createContext(null);
+LevelContext.displayName = 'Level Context';
 
 export function useLevel() {
   return useContext(LevelContext);

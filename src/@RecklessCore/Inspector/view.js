@@ -5,7 +5,7 @@ import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import {
-  Drawer,
+  Drawer, Divider,
 } from '@material-ui/core';
 
 import RoomMenu from '../Room';
@@ -21,10 +21,11 @@ const useStyles = makeStyles((theme) => ({
     }),
     height: (props) => (`calc(100% - ${(props.editorMenuOpen ? props.editorMenuHeight : 0)}px)`),
     width: (props) => (props.inspectorMenuWidth),
-    position: 'fixed',
+    position: 'absolute',
     right: 0,
     top: 0,
     zIndex: 1300,
+    pointerEvents: 'all',
   },
   drawerPaper: {
     position: 'relative',
@@ -66,6 +67,7 @@ const InspectorView = ({
       }}
     >
       <InspectorToolbar {...{ handleChange: setInspectorMenuTab, value: inspectorMenuTab }} />
+      <Divider />
       {inspectorMenuTab === 0 ? <RoomMenu /> : null}
       {inspectorMenuTab === 1 ? <PeersMenu /> : null}
       {inspectorMenuTab === 2 ? <HelpMenu /> : null}

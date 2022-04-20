@@ -1,0 +1,10 @@
+{
+  "uuid": "default-camear-preview-widget-uuid",
+  "type": "cameraPrevew",
+  "name": "Default Camera Preview",
+  "size": 0,
+  "location": 0,
+  "userData": {
+    "isPatchHidden": false
+  }
+}

@@ -51,6 +51,7 @@ const useStyles = makeStyles(() => ({
  * Bottom Toolbar for Patches
  */
 const PatchToolbarView = ({
+  disabled = false,
   uuid = 'xxx',
   // eslint-disable-next-line no-unused-vars
   removeObj = (event) => {},
@@ -72,14 +73,14 @@ const PatchToolbarView = ({
                 ? (
                   <IconButtonView
                     {...{
-                      disabled: false,
+                      disabled,
                       label: 'Hide Patch',
                       handeClick: () => {
                         hidePatch(uuid, true);
                       },
                     }}
                     className={classes.button}
-                    disabled={false}
+                    disabled={disabled}
                   >
                     <FontAwesomeIcon icon={faSignInAlt} />
                   </IconButtonView>
@@ -89,13 +90,14 @@ const PatchToolbarView = ({
             <Grid item xs={4}>
               <IconButtonView
                 {...{
+                  disabled,
                   label: 'Delete',
                   handeClick: () => {
                     removeObj(uuid);
                   },
                 }}
                 className={classes.button}
-                disabled={false}
+                disabled={disabled}
               >
                 <FontAwesomeIcon icon={faTrashAlt} />
               </IconButtonView>
@@ -108,6 +110,10 @@ const PatchToolbarView = ({
 };
 
 PatchToolbarView.propTypes = {
+  /**
+   * Disables Toolbar Buttons.
+   */
+  disabled: PropTypes.bool.isRequired,
   /**
    * Deletes Patch.
    */

@@ -1,36 +1,30 @@
 import React from 'react';
-
 import 'typeface-roboto-material';
 
-import { ThemeProvider } from '@material-ui/styles';
-import { CssBaseline } from '@material-ui/core';
+// Import Reckless Tech app framework and chrome.
+import CoreDecorators from '../../../../stories/CoreDecorators';
 
-import AppManager from '../../../App/Managers/AppManager';
-import MediaPlayersManager from '../../Managers/MediaPlayersManager';
-import WidgetsManager from '../../../Widgets/Managers/WidgetsManager';
-import WidgetManager, { DefaultProps as DefaultWidgetProps } from '../../../Widgets/Managers/WidgetManager';
+// Import companion elements needed for story.
+// import MusicControlsComponent from '../../../MediaPlayers/Widgets/MusicControls';
+import WidgetManager from '../../../Widgets/Managers/WidgetManager';
+import DefaultWidgetProps from '../../../Widgets/DefaultProps.json';
 
-import Component from './index';
-import Provider from '../../Providers';
-import DefaultTrackList from '../../Providers/MusicPlayer/DefaultTrackList';
+// Import scene definition with everything but story elements.
+import testScene from './view.scene.json';
 
-import theme from '../../../../theme';
+// Impoer story elements.
+import MusicControls from './index';
+import DefaultProps from './DefaultProps.json';
 
 export default {
-  title: 'MediaPlayers/Music/Widget',
-  component: Component.type,
+  title: 'Widgets/Music Controls Widget',
+  component: MusicControls.type,
   decorators: [
     (Story) => (
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <AppManager>
-          <MediaPlayersManager>
-            <WidgetsManager>
-              <Story />
-            </WidgetsManager>
-          </MediaPlayersManager>
-        </AppManager>
-      </ThemeProvider>
+      // Builds Reckless Tech app framework around story.
+      <CoreDecorators sceneJSON={testScene}>
+        <Story />
+      </CoreDecorators>
     ),
   ],
   argTypes: {
@@ -38,77 +32,29 @@ export default {
   },
 };
 
-const Template = ({ uuid, type, ...props }) => (
-  <div style={{
-    position: 'relative',
-    width: '100%',
-    minHeight: '500px',
-  }}
-  >
-    <Provider
-      players={[
-        {
-          uuid: 'yyy',
-          type: 'musicPlayer',
-          name: 'Music Player',
-          isPlaying: false,
-          trackProgress: 0,
-          trackIndex: 0,
-          tracks: DefaultTrackList,
-        },
-      ]}
-    />
-    <WidgetManager {...DefaultWidgetProps} {...props}>
-      <Component
-        uuid={uuid}
-        type={type}
-        {...{ props }}
-        connection={{
-          uuid: 'zzz',
-          from: 'yyy',
-          fromProp: 'audio',
-          to: 'xxx',
-          toProp: 'audio',
-        }}
+const Template = (props) => {
+  const { connections } = testScene;
+  return (
+    <WidgetManager
+      {...props}
+      connections={connections}
+    >
+      <MusicControls
+        {...props}
+        connections={connections}
       />
     </WidgetManager>
-  </div>
-);
-
-Template.propTypes = Component.propTypes;
-
-export const Small = Template.bind({});
-Small.args = {
-  uuid: 'xxx',
-  type: 'musicControls',
-  name: 'Music Controls',
-  size: 0,
-  location: 0,
-  userData: {
-    isPatchHidden: false,
-  },
+  );
 };
 
-export const Medium = Template.bind({});
-Medium.args = {
-  uuid: 'xxx',
-  type: 'musicControls',
+Template.propTypes = MusicControls.propTypes;
+
+export const Default = Template.bind({});
+Default.args = {
+  ...DefaultWidgetProps,
+  ...DefaultProps,
+  uuid: 'test-musicControls-1',
   name: 'Music Controls',
+  location: 1,
   size: 1,
-  location: 0,
-  userData: {
-    isPatchHidden: false,
-  },
-};
-
-export const Large = Template.bind({});
-Large.args = {
-  uuid: 'xxx',
-  type: 'musicControls',
-  name: 'Music Controls',
-  size: 2,
-  location: 0,
-  userData: {
-    isPatchHidden: false,
-  },
 };

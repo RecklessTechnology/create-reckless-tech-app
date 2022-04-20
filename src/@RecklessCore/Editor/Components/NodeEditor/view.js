@@ -21,7 +21,7 @@ const onLoad = () => {
 };
 
 const nodeWidth = 150;
-const nodeHeight = 200;
+const nodeHeight = 100;
 
 const NodeEditorView = ({
   elements,
@@ -41,11 +41,11 @@ const NodeEditorView = ({
       align: 'DL',
       // ranker: 'tight-tree',
       // acyclicer: 'greedy',
-      nodesep: 50,
-      edgesep: 0,
-      ranksep: 50,
-      marginx: 20,
-      marginy: 20,
+      nodesep: 40,
+      edgesep: 40,
+      ranksep: 40,
+      marginx: 40,
+      marginy: 40,
     });
 
     elems.forEach((el) => {
@@ -89,7 +89,7 @@ const NodeEditorView = ({
         zoomOnScroll={interactive}
         panOnScroll={interactive}
         zoomOnDoubleClick={interactive}
-        paneMoveable={interactive}
+        // paneMoveable={interactive}
         elements={layoutedElements}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}

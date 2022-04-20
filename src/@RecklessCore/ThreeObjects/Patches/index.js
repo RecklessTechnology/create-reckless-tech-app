@@ -9,14 +9,14 @@ import ParentChildProp from '../../Components/Patches/ParentChildProp/index';
 import PatchToolbar from './PatchToolbar/index';
 import PatchRoot from '../../Components/Patches/PatchRoot';
 
-// import useAppContext from '../../App/Contexts/useAppContext';
+import useAppContext from '../../App/Contexts/useAppContext';
 
 const ThreeObjectPatch = ({ data }) => {
   const {
     uuid, label, type, width, isChildHidden, isHidden, children,
   } = data;
 
-  // const { hideThreeObjPatch } = useAppContext();
+  const { hideThreeObjPatch } = useAppContext();
 
   const patchProps = [
     {
@@ -28,23 +28,31 @@ const ThreeObjectPatch = ({ data }) => {
     {
       uuid, propName: 'scale', disableInput: false, disableOutput: true,
     },
+    {
+      uuid, propName: 'freqs', disableInput: false, disableOutput: true,
+    },
   ];
 
-  return (
-    <PatchRoot {...{ width }}>
-      <PatchDetails {...{ name: `${label}`, uuid: `${uuid}`, type }} />
-      <ParentChildProp {...{
-        children, isChildHidden, type, uuid, isHidden, hidePatch: false,
-      }}
-      />
-      {
-        patchProps.map((p) => (
-          <PropListItem key={`${p.uuid}-${p.propName}-prop`} {...p}><PatchValue {...{ uuid: p.uuid, propName: p.propName }} /></PropListItem>
-        ))
-      }
-      <PatchToolbar uuid={uuid} />
-    </PatchRoot>
-  );
+  switch (type.toLowerCase()) {
+    default:
+      // eslint-disable-next-line no-console
+      console.log(`Unknown Three Object Patch: ${type}`);
+      return (
+        <PatchRoot {...{ width }}>
+          <PatchDetails {...{ name: `${label}`, uuid: `${uuid}`, type }} />
+          <ParentChildProp {...{
+            children, isChildHidden, type, uuid, isHidden, hidePatch: hideThreeObjPatch,
+          }}
+          />
+          {
+            patchProps.map((p) => (
+              <PropListItem key={`${p.uuid}-${p.propName}-prop`} {...p}><PatchValue {...{ uuid: p.uuid, propName: p.propName }} /></PropListItem>
+            ))
+          }
+          <PatchToolbar uuid={uuid} />
+        </PatchRoot>
+      );
+  }
 };
 
 ThreeObjectPatch.propTypes = {
@@ -55,7 +63,7 @@ ThreeObjectPatch.propTypes = {
     width: PropTypes.number,
     isChildHidden: PropTypes.bool,
     isHidden: PropTypes.bool,
-    children: PropTypes.node,
+    children: PropTypes.arrayOf(PropTypes.shape({})),
   }).isRequired,
 };
 

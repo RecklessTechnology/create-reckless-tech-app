@@ -185,8 +185,8 @@ const ParentChildProp = ({
 ParentChildProp.propTypes = {
   type: PropTypes.string.isRequired,
   uuid: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-  hidePatch: PropTypes.bool.isRequired,
+  children: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  hidePatch: PropTypes.func.isRequired,
 };
 
 export default memo(ParentChildProp);

@@ -1,0 +1,8 @@
+{
+  "uuid": "default-audio-motion-analyzer-uuid",
+  "type": "audioMotionAnalyzer",
+  "name": "Default Audio Motion Analyzer",
+  "userData": {
+    "isPatchHidden": false
+  }
+}

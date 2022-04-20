@@ -14,27 +14,18 @@ import useForceUpdate from '../../Utils/useForceUpdate';
 import useWidgetsContext from '../Contexts/useWidgetsContext';
 import useAppContext from '../../App/Contexts/useAppContext';
 
+import DefaultProps from '../DefaultProps.json';
+
 export const WidgetContext = createContext(null);
 
-export const DefaultProps = {
-  uuid: 'xxx',
-  name: 'unnamed',
-  type: 'widget',
-  size: 3,
-  location: 0,
-};
-
 const WidgetManager = ({
+  connections,
   children,
   ...props
 }) => {
   const {
-    sceneJSON, subscribe, unsubscribe, publish,
+    subscribe, unsubscribe, publish,
   } = useAppContext();
-  const { connections } = sceneJSON;
-
-  const identifier = useRef(Symbol('device'));
-  const node = useRef(null);
 
   const [uuid] = useState(props.uuid || DefaultProps.uuid);
   const [name] = useState(props.name || DefaultProps.name);
@@ -42,13 +33,25 @@ const WidgetManager = ({
   const [size, setSize] = useState(props.size || DefaultProps.size);
   const [location, setLocation] = useState(props.location || DefaultProps.location);
 
+  const identifier = useRef(Symbol(`${type}-${uuid}`));
+  const node = useRef(null);
+
   const [previewStream, setPreviewStream] = useState();
   const [poses, setPoses] = useState();
-
+  const [audio, setAudio] = useState(null);
+  const [freqs, setFreqs] = useState([]);
   // Inputs
   const updateFromInput = (prop, val) => {
     switch (prop.toLowerCase()) {
       default:
+        // eslint-disable-next-line no-console
+        console.log(`Unknown Prop Sent to WidgetManager: ${prop}`);
+        break;
+      case 'freqs':
+        setFreqs(val);
+        break;
+      case 'audio':
+        setAudio(val);
         break;
       case 'size':
         setSize(val);
@@ -81,6 +84,8 @@ const WidgetManager = ({
   useEffect(() => { publish(`${uuid}-poses-updated`, poses); }, [uuid, poses, publish]);
   useEffect(() => { publish(`${uuid}-size-updated`, size); }, [uuid, size, publish]);
   useEffect(() => { publish(`${uuid}-location-updated`, location); }, [uuid, location, publish]);
+  useEffect(() => { publish(`${uuid}-audio-updated`, audio); }, [uuid, audio, publish]);
+  useEffect(() => { publish(`${uuid}-freqs-updated`, freqs); }, [uuid, freqs, publish]);
 
   const { registerWidget, unregisterWidget } = useWidgetsContext();
   const forceUpdate = useForceUpdate();
@@ -103,6 +108,12 @@ const WidgetManager = ({
 
     previewStream,
     setPreviewStream,
+
+    audio,
+    setAudio,
+
+    freqs,
+    setFreqs,
   }), [
     uuid,
     name,
@@ -113,6 +124,10 @@ const WidgetManager = ({
     location, setLocation,
 
     previewStream, setPreviewStream,
+
+    audio, setAudio,
+
+    freqs, setFreqs,
   ]);
 
   // Callback to fetch properties of object
@@ -174,6 +189,7 @@ const WidgetManager = ({
 WidgetManager.whyDidYouRender = (process.env.NODE_ENV === 'development');
 
 WidgetManager.propTypes = {
+  connections: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   children: PropTypes.node.isRequired,
   uuid: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,

@@ -26,6 +26,9 @@ const DevicePatch = ({
   const { type: t } = data;
   switch (t.toLowerCase()) {
     default:
+      // eslint-disable-next-line no-console
+      console.log(`Unknown Device Patch: ${t}`);
+      return null;
     case 'mouse':
       return (<MousePatch {...{ data }} />);
     case 'keyboard':

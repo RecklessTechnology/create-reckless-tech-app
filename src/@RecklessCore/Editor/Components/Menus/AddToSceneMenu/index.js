@@ -57,7 +57,11 @@ const AddToSceneMenu = () => {
   const {
     addThreeObj, addGenerator,
     addDevice, addTransform,
+    sceneJSON,
   } = useAppContext();
+
+  const { metadata } = sceneJSON;
+  const { editorInteractive } = metadata;
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -79,6 +83,7 @@ const AddToSceneMenu = () => {
     <div>
       <IconButtonView
         {...{
+          disabled: !editorInteractive,
           label: 'Add',
           handeClick: (evt) => {
             openMenu(evt);
@@ -86,7 +91,6 @@ const AddToSceneMenu = () => {
         }}
         title="Add"
         className={classes.button}
-        disabled={false}
       >
         <AddIcon fontSize="small" />
       </IconButtonView>

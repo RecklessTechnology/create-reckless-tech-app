@@ -30,12 +30,16 @@ const IconButtonView = ({
 }) => {
   const classes = useStyles();
   return (
-    <Tooltip title={label}>
+    <Tooltip title={disabled ? 'Disabled' : label}>
       <span>
         <IconButton
           disabled={disabled}
           size="small"
-          onClick={handeClick}
+          onClick={(evt) => {
+            if (!disabled) {
+              handeClick(evt);
+            }
+          }}
           // eslint-disable-next-line react/jsx-props-no-spreading
           {...props}
           className={clsx(classes.menuButton, className)}

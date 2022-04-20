@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React, { createContext, useMemo, useState } from 'react';
 
 export const EditorMenuContext = createContext(null);
+EditorMenuContext.displayName = 'Editor Menu Context';
 
 const EditorMenuManager = ({
   children,

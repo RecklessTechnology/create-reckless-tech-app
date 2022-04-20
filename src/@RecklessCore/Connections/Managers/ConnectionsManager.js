@@ -16,6 +16,7 @@ import { restoreData, persistData } from '../../Utils/PersistantStorage';
 import { isHost } from '../../Utils/userCheck';
 
 export const ConnectionsContext = createContext(null);
+ConnectionsContext.displayName = 'Connections Context';
 // eslint-disable-next-line import/no-mutable-exports
 export let connectionsContextValue = {};
 
@@ -41,19 +42,19 @@ const ConnectionsManager = ({ children }) => {
 
   const getMe = useCallback(
     () => Array.from(ConnectionRegistry.keys())
-      .map((id) => ConnectionRegistry.get(id.toLowerCase())).filter((p) => p.isMe === true)[0],
+      .map((id) => ConnectionRegistry.get(id)).filter((p) => p.isMe === true)[0],
     [ConnectionRegistry],
   );
 
   const getHost = useCallback(
     () => Array.from(ConnectionRegistry.keys())
-      .map((id) => ConnectionRegistry.get(id.toLowerCase())).filter((p) => p.isHost === true)[0],
+      .map((id) => ConnectionRegistry.get(id)).filter((p) => p.isHost === true)[0],
     [ConnectionRegistry],
   );
 
   const getByUUID = useCallback(
     (uuid) => Array.from(ConnectionRegistry.keys())
-      .map((id) => ConnectionRegistry.get(id.toLowerCase())).filter((p) => p.uuid === uuid)[0],
+      .map((id) => ConnectionRegistry.get(id)).filter((p) => p.uuid === uuid)[0],
     [ConnectionRegistry],
   );
 
@@ -95,11 +96,11 @@ const ConnectionsManager = ({ children }) => {
   }, [ConnectionRegistry, publish]);
 
   const findConnection = useCallback((id) => ConnectionRegistry
-    .get(id.toLowerCase()), [ConnectionRegistry]);
+    .get(id), [ConnectionRegistry]);
 
   const registerConnection = useCallback((identifier, ref) => {
     // register by id
-    ConnectionRegistry.set(identifier.toLowerCase(), ref);
+    ConnectionRegistry.set(identifier, ref);
 
     if (ref.isMe) {
       persistData('me', ref);
@@ -118,13 +119,13 @@ const ConnectionsManager = ({ children }) => {
 
   const unregisterConnection = useCallback((identifier) => {
     // unregister by id
-    ConnectionRegistry.delete(identifier.toLowerCase());
+    ConnectionRegistry.delete(identifier);
     publish('connections-list-changed', identifier, 'remove');
   }, [ConnectionRegistry, publish]);
 
   const getConnectionsArray = useCallback(
     () => Array.from(ConnectionRegistry.keys())
-      .map((id) => ConnectionRegistry.get(id.toLowerCase())),
+      .map((id) => ConnectionRegistry.get(id)),
     [ConnectionRegistry],
   );
 
@@ -212,7 +213,12 @@ const ConnectionsManager = ({ children }) => {
   // Create peer to peer room
   useEffect(() => {
     if (room === null && roomInfo !== null) {
-      setRoom(joinRoom({ appId: `Reckless Technology room ${roomInfo.id}` }, roomInfo.id));
+      try {
+        setRoom(joinRoom({ appId: `Reckless Technology room ${roomInfo.id}` }, roomInfo.id));
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.log('Problem Joining Room', e);
+      }
     }
   }, [setRoom, room, roomInfo]);
 
@@ -304,6 +310,8 @@ const ConnectionsManager = ({ children }) => {
         const peer = findPeer(data.uuid);
         switch (data.type.toLowerCase()) {
           default:
+            // eslint-disable-next-line no-console
+            console.log(`Unknown peer data type: ${data.type}`);
             if (peer !== undefined && typeof peer.setData === 'function') {
               peer.setData(data.payload);
             }

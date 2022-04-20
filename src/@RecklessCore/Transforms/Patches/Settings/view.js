@@ -77,6 +77,9 @@ const TransformSettingsView = ({
 
   switch (type.toLowerCase()) {
     default:
+      // eslint-disable-next-line no-console
+      console.log(`Unknown Setting Type: ${type}`);
+      return null;
     case 'input':
       return (
         <ListItem dense className={classes.propItem}>
