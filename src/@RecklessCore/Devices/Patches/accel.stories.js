@@ -15,7 +15,7 @@ import { devicesToFlow } from '../../Utils/toFlow';
 
 import NodeEditorView from '../../Editor/Components/NodeEditor/view';
 
-import theme from '../../../theme';
+import darkTheme from '../../Themes/dark';
 
 import testScene from './accel.scene.json';
 
@@ -24,7 +24,7 @@ export default {
   component: Device.type,
   decorators: [
     (Story) => (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <AppManager sceneJSON={testScene}>
           <DevicesManager>

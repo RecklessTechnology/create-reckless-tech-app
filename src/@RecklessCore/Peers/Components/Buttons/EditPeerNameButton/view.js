@@ -31,7 +31,7 @@ const EditPeerNameButtonView = ({ peerInfo, updateConnectionInfo }) => {
         <IconButtonView
           {...{
             label: 'Edit',
-            handeClick: () => {
+            handleClick: () => {
               updateConnectionInfo(peerInfo.uuid, 'cancel', { mode: 'edit' });
             },
           }}
@@ -47,7 +47,7 @@ const EditPeerNameButtonView = ({ peerInfo, updateConnectionInfo }) => {
           <IconButtonView
             {...{
               label: 'Cancel',
-              handeClick: () => {
+              handleClick: () => {
                 updateConnectionInfo(peerInfo.uuid, 'cancel', { mode: 'view' });
               },
             }}
@@ -59,7 +59,7 @@ const EditPeerNameButtonView = ({ peerInfo, updateConnectionInfo }) => {
           <IconButtonView
             {...{
               label: 'Save',
-              handeClick: () => {
+              handleClick: () => {
                 updateConnectionInfo(peerInfo.uuid, 'save', { mode: 'view' });
               },
             }}

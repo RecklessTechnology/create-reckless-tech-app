@@ -9,7 +9,7 @@ import AppManager from '../../../../App/Managers/AppManager';
 
 import WidgetToolbarView from './view';
 
-import theme from '../../../../../theme';
+import darkTheme from '../../../../Themes/dark';
 
 export default {
   title: 'Components/Toolbars/Widget Toolbar',
@@ -17,7 +17,7 @@ export default {
   argTypes: { handleChange: { action: 'clicked' } },
   decorators: [
     (Story) => (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <AppManager>
           <Story />

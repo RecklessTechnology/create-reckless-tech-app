@@ -4,9 +4,7 @@ import React from 'react';
 
 import 'typeface-roboto-material';
 
-import { ThemeProvider } from '@material-ui/styles';
-import { CssBaseline } from '@material-ui/core';
-
+import ThemesManager from '../@RecklessCore/Themes/Managers/ThemesManager';
 import AppManager from '../@RecklessCore/App/Managers/AppManager';
 import ThreeObjectsManager from '../@RecklessCore/ThreeObjects/Managers/ThreeObjectsManager';
 import PeersManager from '../@RecklessCore/Peers/Managers/PeersManager';
@@ -20,8 +18,6 @@ import WidgetsManager from '../@RecklessCore/Widgets/Managers/WidgetsManager';
 
 import InspectorMenuManager from '../@RecklessCore/Inspector/Managers/InspectorMenuManager';
 import EditorMenuManager from '../@RecklessCore/Editor/Managers/EditorMenuManager';
-
-import theme from '../theme';
 
 import AppView from '../@RecklessCore/App/view';
 import World from '../@RecklessCore/World';
@@ -64,10 +60,9 @@ const AppContent = ({ sceneJSON, children }) => {
   );
 };
 
-const CoreDecorators = ({ sceneJSON, children }) => (
-  <ThemeProvider {...{ theme }}>
-    <CssBaseline />
-    <AppManager {...{ sceneJSON }}>
+const CoreDecorators = ({ sceneJSON, scenes, children }) => (
+  <ThemesManager theme="Default">
+    <AppManager {...{ sceneJSON, scenes }}>
       <ThreeObjectsManager>
         <PeersManager>
           <ConnectionsManager>
@@ -92,12 +87,13 @@ const CoreDecorators = ({ sceneJSON, children }) => (
         </PeersManager>
       </ThreeObjectsManager>
     </AppManager>
-  </ThemeProvider>
+  </ThemesManager>
 );
 
 CoreDecorators.propTypes = {
   children: PropTypes.node.isRequired,
   sceneJSON: PropTypes.shape({}).isRequired,
+  scenes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 export default CoreDecorators;

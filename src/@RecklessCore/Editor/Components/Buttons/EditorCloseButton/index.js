@@ -20,7 +20,7 @@ const EditorCloseButton = () => {
     <IconButtonView
       {...{
         label: 'Close',
-        handeClick: () => {
+        handleClick: () => {
           setEditorMenuOpen(!editorMenuOpen);
         },
       }}

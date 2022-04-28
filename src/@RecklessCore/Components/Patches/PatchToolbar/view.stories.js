@@ -7,7 +7,7 @@ import { CssBaseline } from '@material-ui/core';
 
 import PatchToolbar from './view';
 
-import theme from '../../../../theme';
+import darkTheme from '../../../Themes/dark';
 
 export default {
   title: 'Components/Patch/Toolbar',
@@ -18,7 +18,7 @@ export default {
   },
   decorators: [
     (Story) => (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <Story />
       </ThemeProvider>

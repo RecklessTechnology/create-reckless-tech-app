@@ -8,18 +8,42 @@ import {
   PRIMARY_STORY,
 } from '@storybook/addon-docs';
 
-import theme from '../src/theme';
+import { withTests } from '@storybook/addon-jest';
+import { withDesign } from 'storybook-addon-designs'
+
+import ThemesManager from '../src/@RecklessCore/Themes/Managers/ThemesManager';
+
+import results from '../src/tests/jest-test-results.json';
+
+export const globalTypes = {
+  theme: {
+    name: 'Theme',
+    description: 'Global theme for components.',
+    defaultValue: 'Dark',
+    toolbar: {
+      icon: 'circlehollow',
+      items: ['Light', 'Dark', 'RetroWave', 'Garden'],
+      showName: true,
+    },
+  },
+};
+
+const withThemeProvider = (Story, {globals}) => {
+  const { theme } = globals;
+  return (
+    <ThemesManager theme={theme}><Story /></ThemesManager>
+  );
+};
+
+export const decorators = [
+  withThemeProvider,
+  withDesign,
+  withTests({
+    results,
+  }),
+];
 
 export const parameters = {
-  backgrounds: {
-    default: 'default',
-    values: [
-      {
-        name: 'default',
-        value: theme.palette.background.default,
-      },
-    ],
-  },
   controls: {
     matchers: {
       color: /(background|color)$/i,
@@ -46,5 +70,5 @@ export const parameters = {
       </>
     ),
   },
-  actions: { argTypesRegex: '^on.*' },
+  actions: { argTypesRegex: '^on[A-Z].*' },
 }

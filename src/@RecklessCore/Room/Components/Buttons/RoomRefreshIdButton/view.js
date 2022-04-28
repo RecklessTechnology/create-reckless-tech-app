@@ -22,7 +22,7 @@ const RoomRefreshIdButtonView = ({ setRoomInfo }) => {
     <IconButtonView
       {...{
         label: 'Refresh Room ID',
-        handeClick: () => {
+        handleClick: () => {
           setRoomInfo({
             id: generateRoomId(),
           });

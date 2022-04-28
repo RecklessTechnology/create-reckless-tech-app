@@ -158,7 +158,7 @@ const ParentChildProp = ({
                       <IconButtonView
                         {...{
                           label: 'Pop Out',
-                          handeClick: () => {
+                          handleClick: () => {
                             hidePatch(c.uuid, false);
                           },
                         }}

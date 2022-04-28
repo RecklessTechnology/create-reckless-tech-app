@@ -5,6 +5,7 @@ import React, {
   useMemo,
   useState,
   useCallback,
+  useEffect,
 } from 'react';
 
 import { v4 as uuidv4 } from 'uuid';
@@ -19,6 +20,8 @@ export let appContextValue = {};
 
 const AppManager = ({
   sceneJSON: passedScene,
+  // eslint-disable-next-line react/prop-types
+  scenes: passedScenes,
   children,
 }) => {
   const [sceneJSON, setSceneJSON] = useState(passedScene);
@@ -26,6 +29,46 @@ const AppManager = ({
   const [paused, setPaused] = useState(false);
 
   const [events] = useState(() => EventsManager());
+
+  const [SceneRegistry] = useState(() => new Map());
+
+  const sceneRegistryUtils = useMemo(
+    () => ({
+      findScene(id) {
+        return SceneRegistry.get(id);
+      },
+      registerScene(identifier, ref) {
+        // register by id
+        SceneRegistry.set(identifier, ref);
+        events.publish('devices-list-changed', ref, 'add');
+      },
+      unregisterScene(identifier) {
+        // unregister by id
+        SceneRegistry.delete(identifier);
+        events.publish('scenes-list-changed', identifier, 'remove');
+      },
+      getSceneKeys() {
+        return Array.from(SceneRegistry.keys());
+      },
+      getSceneNames() {
+        return Array.from(SceneRegistry.entries(), (uuid, scene) => ({
+          uuid,
+          name: scene.object.name,
+        }));
+        // return Array.from(SceneRegistry.keys()).map((id) => SceneRegistry.get(id).object.name);
+      },
+      getScenesArray() {
+        return Array.from(SceneRegistry.keys()).map((id) => SceneRegistry.get(id));
+      },
+    }),
+    [SceneRegistry, events],
+  );
+
+  useEffect(() => {
+    passedScenes.forEach((scene) => {
+      sceneRegistryUtils.registerScene(uuidv4(), scene);
+    });
+  }, [passedScenes, sceneRegistryUtils]);
 
   const getDefaultGeo = (geoUUID, type) => ({
     uuid: geoUUID,
@@ -534,11 +577,13 @@ const AppManager = ({
     setSceneJSON,
     ...events,
     ...sceneUtils,
+    ...sceneRegistryUtils,
   }), [
     paused, setPaused,
     sceneJSON, setSceneJSON,
     events,
     sceneUtils,
+    sceneRegistryUtils,
   ]);
 
   return (<AppContext.Provider value={appContextValue}>{children}</AppContext.Provider>);

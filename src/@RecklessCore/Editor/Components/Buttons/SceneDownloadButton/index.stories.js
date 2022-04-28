@@ -7,7 +7,7 @@ import { CssBaseline } from '@material-ui/core';
 
 import SceneDownloadButton from './index';
 
-import theme from '../../../../../theme';
+import darkTheme from '../../../../Themes/dark';
 import AppManager from '../../../../App/Managers/AppManager';
 
 export default {
@@ -16,7 +16,7 @@ export default {
   argTypes: { handleClose: { action: 'clicked' } },
   decorators: [
     (Story) => (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <AppManager>
           <Story />

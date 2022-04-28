@@ -7,7 +7,7 @@ import { CssBaseline } from '@material-ui/core';
 
 import AddToSceneMenu from './index';
 
-import theme from '../../../../../theme';
+import darkTheme from '../../../../Themes/dark';
 import AppManager from '../../../../App/Managers/AppManager';
 import ConnectionsManager from '../../../../Connections/Managers/ConnectionsManager';
 import PeersManager from '../../../../Peers/Managers/PeersManager';
@@ -15,10 +15,10 @@ import PeersManager from '../../../../Peers/Managers/PeersManager';
 export default {
   title: 'Components/Menus/Add to Scene',
   component: AddToSceneMenu.type,
-  argTypes: { handeClick: { action: 'clicked' } },
+  argTypes: { handleClick: { action: 'clicked' } },
   decorators: [
     (Story) => (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <AppManager>
           <PeersManager>

@@ -68,7 +68,7 @@ const WidgetToolbarView = ({
                 <IconButtonView
                   {...{
                     label: 'Settings',
-                    handeClick: () => {},
+                    handleClick: () => {},
                   }}
                   disabled={false}
                   className={classes.settingsButton}
@@ -94,7 +94,7 @@ const WidgetToolbarView = ({
                         <IconButtonView
                           {...{
                             label: 'Small',
-                            handeClick: () => {
+                            handleClick: () => {
                               handleSizeChange(0);
                               popupState.close();
                             },
@@ -107,7 +107,7 @@ const WidgetToolbarView = ({
                         <IconButtonView
                           {...{
                             label: 'Medium',
-                            handeClick: () => {
+                            handleClick: () => {
                               handleSizeChange(1);
                               popupState.close();
                             },
@@ -120,7 +120,7 @@ const WidgetToolbarView = ({
                         <IconButtonView
                           {...{
                             label: 'Large',
-                            handeClick: () => {
+                            handleClick: () => {
                               handleSizeChange(2);
                               popupState.close();
                             },
@@ -138,7 +138,7 @@ const WidgetToolbarView = ({
                         <IconButtonView
                           {...{
                             label: 'Top Left',
-                            handeClick: () => {
+                            handleClick: () => {
                               handleLocationChange(0);
                               popupState.close();
                             },
@@ -151,7 +151,7 @@ const WidgetToolbarView = ({
                         <IconButtonView
                           {...{
                             label: 'Top Right',
-                            handeClick: () => {
+                            handleClick: () => {
                               handleLocationChange(1);
                               popupState.close();
                             },
@@ -164,7 +164,7 @@ const WidgetToolbarView = ({
                         <IconButtonView
                           {...{
                             label: 'Bottom Right',
-                            handeClick: () => {
+                            handleClick: () => {
                               handleLocationChange(2);
                               popupState.close();
                             },
@@ -177,7 +177,7 @@ const WidgetToolbarView = ({
                         <IconButtonView
                           {...{
                             label: 'Bottom Left',
-                            handeClick: () => {
+                            handleClick: () => {
                               handleLocationChange(3);
                               popupState.close();
                             },

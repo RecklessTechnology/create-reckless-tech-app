@@ -18,7 +18,7 @@ const EditorCloseButtonView = ({ editorMenuOpen, setEditorMenuOpen }) => {
     <IconButtonView
       {...{
         label: 'Close',
-        handeClick: () => {
+        handleClick: () => {
           setEditorMenuOpen(!editorMenuOpen);
         },
       }}

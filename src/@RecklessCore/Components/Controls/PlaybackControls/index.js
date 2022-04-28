@@ -34,7 +34,7 @@ const PlaybackControls = ({
       <IconButtonView
         {...{
           label: 'Previous Track',
-          handeClick: prevTrack,
+          handleClick: prevTrack,
         }}
         className=""
         disabled={false}
@@ -44,7 +44,7 @@ const PlaybackControls = ({
       <IconButtonView
         {...{
           label: 'Play / Pause',
-          handeClick: playPause,
+          handleClick: playPause,
         }}
         className=""
         disabled={false}
@@ -56,7 +56,7 @@ const PlaybackControls = ({
       <IconButtonView
         {...{
           label: 'Next Track',
-          handeClick: nextTrack,
+          handleClick: nextTrack,
         }}
         className=""
         disabled={false}

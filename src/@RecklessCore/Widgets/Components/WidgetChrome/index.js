@@ -14,7 +14,7 @@ import {
 import { useSpring, animated } from 'react-spring';
 
 import WidgetToolbar from '../Toolbars/WidgetToolbar';
-import theme from '../../../../theme';
+import darkTheme from '../../../Themes/dark';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -88,10 +88,10 @@ const WidgetChrome = ({
 
   const positionSpring = useSpring({
     config: { friction: 10 },
-    top: (location === 0 || location === 1) ? theme.spacing(4) : 'auto',
-    right: (location === 1 || location === 2) ? theme.spacing(4) : 'auto',
-    bottom: (location === 2 || location === 3) ? theme.spacing(4) : 'auto',
-    left: (location === 3 || location === 0) ? theme.spacing(4) : 'auto',
+    top: (location === 0 || location === 1) ? darkTheme.spacing(4) : 'auto',
+    right: (location === 1 || location === 2) ? darkTheme.spacing(4) : 'auto',
+    bottom: (location === 2 || location === 3) ? darkTheme.spacing(4) : 'auto',
+    left: (location === 3 || location === 0) ? darkTheme.spacing(4) : 'auto',
   });
 
   const widgetSizeSpring = useSpring({

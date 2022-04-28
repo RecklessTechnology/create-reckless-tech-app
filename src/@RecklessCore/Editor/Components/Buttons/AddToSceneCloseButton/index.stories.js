@@ -7,7 +7,7 @@ import { CssBaseline } from '@material-ui/core';
 
 import AddToSceneCloseButton from './index';
 
-import theme from '../../../../../theme';
+import darkTheme from '../../../../Themes/dark';
 
 export default {
   title: 'Components/Buttons/Close Add To Scene',
@@ -15,7 +15,7 @@ export default {
   argTypes: { handleClose: { action: 'clicked' } },
   decorators: [
     (Story) => (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <Story />
       </ThemeProvider>

@@ -20,7 +20,7 @@ const RoomCopyUrlButtonView = ({ url }) => {
     <IconButtonView
       {...{
         label: 'Copy URL',
-        handeClick: () => {
+        handleClick: () => {
           // eslint-disable-next-line no-undef
           navigator.clipboard.writeText(url).then();
         },

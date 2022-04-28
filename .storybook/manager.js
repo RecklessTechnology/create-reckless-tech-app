@@ -5,7 +5,7 @@ import theme from '../src/stories/theme';
 
 addons.setConfig({
   theme: theme,
-  panelPosition: 'right',
+  panelPosition: 'bottom',
   isToolshown: true,
   sidebar: {
     collapsedRoots: ['devices', 'mediaplayers', 'transforms', '3d-objects', 'generators', 'components', 'pure-components'],

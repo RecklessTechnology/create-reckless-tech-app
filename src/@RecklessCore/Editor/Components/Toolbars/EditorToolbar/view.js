@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
+import {
+  AppBar, Toolbar,
+  Tabs, Tab, Tooltip,
+} from '@material-ui/core';
+
+import SceneSettingsMenu from './sceneSettings';
 
 import EditorCloseButton from '../../Buttons/EditorCloseButton';
 import SceneDownloadButtton from '../../Buttons/SceneDownloadButton';
@@ -25,9 +30,14 @@ const useStyles = makeStyles((theme) => ({
   spacer: {
     flexGrow: 1,
   },
+  sceneTabSettings: {},
 }));
 
-const EditorToolbarView = ({ name }) => {
+const EditorToolbarView = ({
+  sceneNames,
+  activeScene,
+  onSetActiveScene,
+}) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -36,9 +46,35 @@ const EditorToolbarView = ({ name }) => {
           variant="dense"
         >
           <EditorCloseButton />
-          <Typography variant="h6" className={classes.title}>
-            {name}
-          </Typography>
+          <Tabs
+            value={activeScene}
+            onChange={(evt, val) => { onSetActiveScene(val); }}
+            aria-label="Scene Tabs"
+          >
+            {sceneNames.map((scene) => (
+              <Tooltip
+                title={scene.name}
+                key={scene.uuid}
+                value={scene.uuid}
+              >
+                <Tab
+                  classes={{
+                    root: classes.tabRoot,
+                  }}
+                  label={(
+                    <span>
+                      {scene.name}
+                      {(activeScene === scene.uuid) ? <SceneSettingsMenu /> : null}
+                    </span>
+                )}
+                  {...{
+                    id: `${scene.uuid}-tab`,
+                    'aria-controls': `${scene.uuids}-tabpanel`,
+                  }}
+                />
+              </Tooltip>
+            ))}
+          </Tabs>
           <SceneDownloadButtton />
           <div className={classes.spacer} />
           <AddToSceneMenu />
@@ -49,7 +85,21 @@ const EditorToolbarView = ({ name }) => {
 };
 
 EditorToolbarView.propTypes = {
-  name: PropTypes.string.isRequired,
+  /**
+   * Array of uuid and name pairs for each scene.
+   */
+  sceneNames: PropTypes.arrayOf(PropTypes.shape({
+    uuid: PropTypes.string,
+    name: PropTypes.string,
+  })).isRequired,
+  /**
+   * UUID of active scene.
+   */
+  activeScene: PropTypes.string.isRequired,
+  /**
+   * Callback to send selected scene to manager.
+   */
+  onSetActiveScene: PropTypes.func.isRequired,
 };
 
 export default memo(EditorToolbarView);

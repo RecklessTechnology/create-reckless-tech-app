@@ -7,7 +7,7 @@ import { CssBaseline } from '@material-ui/core';
 
 import RTSelectWithIcon from './index';
 
-import theme from '../../../../theme';
+import darkTheme from '../../../Themes/dark';
 
 export default {
   title: 'Pure Components/Select with Icons',
@@ -15,7 +15,7 @@ export default {
   actions: { argTypesRegex: '^on.*' },
   decorators: [
     (Story) => (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <Story />
       </ThemeProvider>

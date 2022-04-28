@@ -7,7 +7,7 @@ import { CssBaseline } from '@material-ui/core';
 
 import PatchDetails from './index';
 
-import theme from '../../../../theme';
+import darkTheme from '../../../Themes/dark';
 
 export default {
   title: 'Components/Patch/Details',
@@ -20,7 +20,7 @@ export default {
   },
   decorators: [
     (Story) => (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <Story />
       </ThemeProvider>

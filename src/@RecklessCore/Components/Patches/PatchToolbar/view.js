@@ -75,7 +75,7 @@ const PatchToolbarView = ({
                     {...{
                       disabled,
                       label: 'Hide Patch',
-                      handeClick: () => {
+                      handleClick: () => {
                         hidePatch(uuid, true);
                       },
                     }}
@@ -92,7 +92,7 @@ const PatchToolbarView = ({
                 {...{
                   disabled,
                   label: 'Delete',
-                  handeClick: () => {
+                  handleClick: () => {
                     removeObj(uuid);
                   },
                 }}

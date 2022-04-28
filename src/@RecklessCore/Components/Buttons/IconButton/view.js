@@ -25,7 +25,7 @@ const IconButtonView = ({
   className = '',
   disabled = false,
   // eslint-disable-next-line no-unused-vars
-  handeClick = (event) => {},
+  onClick = (event) => {},
   ...props
 }) => {
   const classes = useStyles();
@@ -37,7 +37,7 @@ const IconButtonView = ({
           size="small"
           onClick={(evt) => {
             if (!disabled) {
-              handeClick(evt);
+              onClick(evt);
             }
           }}
           // eslint-disable-next-line react/jsx-props-no-spreading
@@ -61,7 +61,7 @@ IconButtonView.propTypes = {
   /**
     Do something on click.
   */
-  handeClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
   /**
     Disable button.
   */

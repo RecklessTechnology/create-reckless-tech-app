@@ -17,7 +17,7 @@ const ModalCloseButtonView = ({ editorMenuOpen, setEditorMenuOpen }) => {
     <IconButtonView
       {...{
         label: 'Close',
-        handeClick: () => {
+        handleClick: () => {
           setEditorMenuOpen(!editorMenuOpen);
         },
       }}

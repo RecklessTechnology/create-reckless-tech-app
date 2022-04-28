@@ -15,7 +15,7 @@ import { generatorsToFlow } from '../../Utils/toFlow';
 
 import NodeEditorView from '../../Editor/Components/NodeEditor/view';
 
-import theme from '../../../theme';
+import darkTheme from '../../Themes/dark';
 
 import testScene from './orbit.scene.json';
 
@@ -25,7 +25,7 @@ export default {
   // argTypes: { onClick: { action: 'clicked' } },
   decorators: [
     (Story) => (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <AppManager sceneJSON={testScene}>
           <GeneratorsManager>

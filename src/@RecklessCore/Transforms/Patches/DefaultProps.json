@@ -1,0 +1,10 @@
+{
+  "uuid": "default-calculator-uuid",
+  "type": "default-calculator-type",
+  "name": "Default calculator Name",
+  "amount": 2,
+  "operator": "multiply",
+  "userData": {
+    "isPatchHidden": false
+  }
+}

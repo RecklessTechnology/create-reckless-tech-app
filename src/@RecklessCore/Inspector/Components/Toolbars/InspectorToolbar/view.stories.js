@@ -10,7 +10,7 @@ import InspectorMenuManager from '../../../Managers/InspectorMenuManager';
 
 import InspectorToolbarView from './view';
 
-import theme from '../../../../../theme';
+import darkTheme from '../../../../Themes/dark';
 
 export default {
   title: 'Components/Toolbars/Inspector Toolbar',
@@ -18,9 +18,9 @@ export default {
   argTypes: { handleChange: { action: 'clicked' } },
   decorators: [
     (Story) => (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={darkTheme}>
         <CssBaseline />
-        <AppManager>
+        <AppManager sceneJSON={{}}>
           <InspectorMenuManager>
             <Story />
           </InspectorMenuManager>

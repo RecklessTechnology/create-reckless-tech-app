@@ -5,9 +5,6 @@ import ReactDOM from 'react-dom';
 
 import 'typeface-roboto-material';
 
-import { ThemeProvider } from '@material-ui/styles';
-import { CssBaseline } from '@material-ui/core';
-
 import App from './@RecklessCore/App';
 
 import AppManager from './@RecklessCore/App/Managers/AppManager';
@@ -26,17 +23,18 @@ import EditorMenuManager from './@RecklessCore/Editor/Managers/EditorMenuManager
 
 // import reportWebVitals from './reportWebVitals';
 
-import theme from './theme';
-
 import DefaultSceneJSON from './scenes/AudioAnalyzerScene.json';
 // import DefaultSceneJSONClient from './scenes/LogoScene.json';
 import { isHost } from './@RecklessCore/Utils/userCheck';
+import ThemesManager from './@RecklessCore/Themes/Managers/ThemesManager';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <AppManager sceneJSON={(isHost()) ? DefaultSceneJSON : DefaultSceneJSON}>
+    <ThemesManager theme="Dark">
+      <AppManager
+        scenes={[DefaultSceneJSON]}
+        sceneJSON={(isHost()) ? DefaultSceneJSON : DefaultSceneJSON}
+      >
         <ThreeObjectsManager>
           <PeersManager>
             <ConnectionsManager>
@@ -59,7 +57,7 @@ ReactDOM.render(
           </PeersManager>
         </ThreeObjectsManager>
       </AppManager>
-    </ThemeProvider>
+    </ThemesManager>
   </React.StrictMode>,
   // eslint-disable-next-line no-undef
   document.getElementById('root'),

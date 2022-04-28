@@ -7,15 +7,15 @@ import { CssBaseline } from '@material-ui/core';
 
 import WelcomeModal from './index';
 
-import theme from '../../../../theme';
+import darkTheme from '../../../Themes/dark';
 
 export default {
   title: 'Components/Modals/Welcome Modal',
   component: WelcomeModal.type,
-  argTypes: { handeClick: { action: 'clicked' } },
+  argTypes: { handleClick: { action: 'clicked' } },
   decorators: [
     (Story) => (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <Story />
       </ThemeProvider>

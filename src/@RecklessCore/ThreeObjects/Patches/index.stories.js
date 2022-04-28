@@ -14,7 +14,7 @@ import { sceneGraphToFlow } from '../../Utils/toFlow';
 
 import NodeEditorView from '../../Editor/Components/NodeEditor/view';
 
-import theme from '../../../theme';
+import darkTheme from '../../Themes/dark';
 
 export default {
   title: '3D Objects/Patch',
@@ -22,7 +22,7 @@ export default {
   // argTypes: { onClick: { action: 'clicked' } },
   decorators: [
     (Story) => (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <AppManager>
           <ThreeObjectsManager>

@@ -7,7 +7,7 @@ import { CssBaseline } from '@material-ui/core';
 
 import EditorCloseButton from './index';
 
-import theme from '../../../../../theme';
+import darkTheme from '../../../../Themes/dark';
 import AppManager from '../../../../App/Managers/AppManager';
 import EditorMenuManager from '../../../Managers/EditorMenuManager';
 
@@ -17,7 +17,7 @@ export default {
   argTypes: { handleClose: { action: 'clicked' } },
   decorators: [
     (Story) => (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <AppManager>
           <EditorMenuManager>

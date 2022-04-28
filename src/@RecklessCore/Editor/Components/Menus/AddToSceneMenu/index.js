@@ -85,7 +85,7 @@ const AddToSceneMenu = () => {
         {...{
           disabled: !editorInteractive,
           label: 'Add',
-          handeClick: (evt) => {
+          handleClick: (evt) => {
             openMenu(evt);
           },
         }}

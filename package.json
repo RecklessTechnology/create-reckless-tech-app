@@ -52,10 +52,24 @@
     "uuid": "^8.3.2",
     "web-vitals": "^1.0.1"
   },
+  "jest": {
+    "modulePathIgnorePatterns": [
+      "node_modules",
+      "src/tests/jest-test-results.json"
+    ],
+    "setupTestFrameworkScriptFile": "<rootDir>/src/tests/jest-config.js"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ]
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:generate-output": "jest --watch --json --outputFile=src/tests/jest-test-results.json || true",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
@@ -109,19 +123,29 @@
   },
   "devDependencies": {
     "@storybook/addon-a11y": "^6.4.9",
-    "@storybook/addon-actions": "^6.4.9",
+    "@storybook/addon-actions": "^6.4.22",
     "@storybook/addon-essentials": "^6.4.9",
+    "@storybook/addon-interactions": "^6.4.22",
+    "@storybook/addon-jest": "^6.4.22",
     "@storybook/addon-links": "^6.4.9",
+    "@storybook/addon-toolbars": "^6.4.22",
+    "@storybook/jest": "^0.0.10",
     "@storybook/node-logger": "^6.4.9",
     "@storybook/preset-create-react-app": "^3.2.0",
     "@storybook/react": "^6.4.9",
+    "@storybook/testing-library": "^0.0.11",
     "@types/uuid": "^8.3.3",
     "chromatic": "^6.3.4",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.24.0",
-    "eslint-plugin-react-hooks": "^4.2.0"
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "sinon": "^13.0.2",
+    "storybook-addon-designs": "^6.2.1",
+    "storybook-addon-material-ui": "^0.9.0-alpha.24"
   },
   "resolutions": {
     "babel-loader": "8.1.0"
