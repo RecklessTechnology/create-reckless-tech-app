@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core';
 
 import CloseIcon from '@material-ui/icons/Close';
 
-import IconButtonView from '../../../Components/Buttons/IconButton/view';
+import IconButtonView from '../../../../Components/Buttons/IconButton/view';
 
 const useStyles = makeStyles(() => ({
   button: {},
@@ -18,7 +18,7 @@ const EditorCloseButtonView = ({ editorMenuOpen, setEditorMenuOpen }) => {
     <IconButtonView
       {...{
         label: 'Close',
-        handleClick: () => {
+        onClick: () => {
           setEditorMenuOpen(!editorMenuOpen);
         },
       }}

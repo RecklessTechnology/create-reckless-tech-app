@@ -21,7 +21,7 @@ const RoomOpenUrlButtonView = ({ url }) => {
       <IconButtonView
         {...{
           label: 'Open URL',
-          handleClick: () => {
+          onClick: () => {
           },
         }}
         className={classes.iconButton}

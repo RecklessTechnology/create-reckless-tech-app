@@ -28,7 +28,7 @@ const SceneSettings = () => {
           <IconButtonView
             {...{
               label: 'Settings',
-              handleClick: () => {},
+              onClick: () => {},
             }}
             disabled={false}
             className=""
@@ -53,7 +53,7 @@ const SceneSettings = () => {
                   <IconButtonView
                     {...{
                       label: 'Small',
-                      handleClick: () => {
+                      onClick: () => {
                         // handleSizeChange(0);
                         popupState.close();
                       },

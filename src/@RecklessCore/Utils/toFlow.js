@@ -24,7 +24,7 @@ const typeLookup = (props) => {
   switch (props.type.toLowerCase()) {
     default:
       // eslint-disable-next-line no-console
-      console.log(`'${props.type}' type not found. Using 'threeobj'`);
+      // console.log(`'${props.type}' type not found. Using 'threeobj'`);
       return 'threeobj';
     case 'scene':
       return props.type;

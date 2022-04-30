@@ -18,7 +18,7 @@ const ModalCloseButton = ({ handleClose }) => {
     <IconButtonView
       {...{
         label: 'Close',
-        handleClick: () => {
+        onClick: () => {
           handleClose();
         },
       }}

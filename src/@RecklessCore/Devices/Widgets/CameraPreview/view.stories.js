@@ -5,7 +5,6 @@ import 'typeface-roboto-material';
 import CoreDecorators from '../../../../stories/CoreDecorators';
 
 // Import companion elements needed for story.
-// import MusicControlsComponent from '../../../MediaPlayers/Widgets/MusicControls';
 import WidgetManager from '../../../Widgets/Managers/WidgetManager';
 import DefaultWidgetProps from '../../../Widgets/DefaultProps.json';
 

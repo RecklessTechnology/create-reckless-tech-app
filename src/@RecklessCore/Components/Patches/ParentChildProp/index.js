@@ -79,12 +79,12 @@ const useStyles = makeStyles(() => ({
     overflow: 'hidden',
     position: 'relative',
   },
-  handleGridLeft: {
+  onGridLeft: {
     padding: 0,
     paddingLeft: 9,
     paddingTop: 15,
   },
-  handleGridRight: {
+  onGridRight: {
     padding: 0,
     paddingRight: 9,
     paddingTop: 15,
@@ -119,7 +119,7 @@ const ParentChildProp = ({
   return (
     <ListItem dense className={classes.propItem}>
       <Grid spacing={0} container className={classes.propGrid}>
-        <Grid item xs={1} className={classes.handleGridLeft}>
+        <Grid item xs={1} className={classes.onGridLeft}>
           <InputHandle {...{ uuid, propName: 'children' }} />
         </Grid>
         <Grid item xs={10}>
@@ -158,7 +158,7 @@ const ParentChildProp = ({
                       <IconButtonView
                         {...{
                           label: 'Pop Out',
-                          handleClick: () => {
+                          onClick: () => {
                             hidePatch(c.uuid, false);
                           },
                         }}
@@ -174,7 +174,7 @@ const ParentChildProp = ({
             </List>
           </PropAccordianView>
         </Grid>
-        <Grid item xs={1} className={classes.handleGridRight}>
+        <Grid item xs={1} className={classes.onGridRight}>
           {type.toLowerCase() !== 'scene' ? <OutputHandle {...{ uuid, propName: 'parent' }} /> : null}
         </Grid>
       </Grid>

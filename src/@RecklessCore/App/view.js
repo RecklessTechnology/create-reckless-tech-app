@@ -163,7 +163,7 @@ const AppView = ({
               <IconButtonView
                 {...{
                   label: 'Edit',
-                  handleClick: () => {
+                  onClick: () => {
                     setEditorMenuOpen(!editorMenuOpen);
                   },
                 }}
@@ -178,7 +178,7 @@ const AppView = ({
                 {...{
                   disabled: !editorInteractive,
                   label: 'Inspect',
-                  handleClick: () => {
+                  onClick: () => {
                     setInspectorMenuOpen(!inspectorMenuOpen);
                   },
                 }}

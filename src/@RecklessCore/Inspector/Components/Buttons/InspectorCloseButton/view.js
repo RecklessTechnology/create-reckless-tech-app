@@ -18,7 +18,7 @@ const InspectorCloseButtonView = ({ inspectorMenuOpen, setInspectorMenuOpen }) =
     <IconButtonView
       {...{
         label: 'Close',
-        handleClick: () => {
+        onClick: () => {
           setInspectorMenuOpen(!inspectorMenuOpen);
         },
       }}

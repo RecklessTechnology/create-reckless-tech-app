@@ -28,8 +28,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
   paper: {
-    // width: '375px',
-    // height: '485px',
   },
   list: {
     width: '100%',
@@ -50,7 +48,7 @@ const AddToSceneMenu = () => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
+  const onChange = (event, newValue) => {
     setValue(newValue);
   };
 
@@ -85,7 +83,7 @@ const AddToSceneMenu = () => {
         {...{
           disabled: !editorInteractive,
           label: 'Add',
-          handleClick: (evt) => {
+          onClick: (evt) => {
             openMenu(evt);
           },
         }}
@@ -115,7 +113,7 @@ const AddToSceneMenu = () => {
         }}
       >
         <div className={classes.root}>
-          <AddToSceneToolbar {...{ value, handleChange, closeMenu }} />
+          <AddToSceneToolbar {...{ value, onChange, closeMenu }} />
           <TabPanel value={value} index={0}>
             <ul className={classes.itemList}>
               <ListSubheader>Import</ListSubheader>

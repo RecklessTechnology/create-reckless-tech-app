@@ -83,7 +83,7 @@ const CustomLineageEdge = ({
         <IconButtonView
           {...{
             label: 'Emancipate',
-            handleClick: () => {
+            onClick: () => {
               removeFromParent(source);
             },
           }}

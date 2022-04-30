@@ -22,7 +22,6 @@ import testScene from './orbit.scene.json';
 export default {
   title: 'Generators/Sinewave/Patch',
   component: Generator.type,
-  // argTypes: { onClick: { action: 'clicked' } },
   decorators: [
     (Story) => (
       <ThemeProvider theme={darkTheme}>

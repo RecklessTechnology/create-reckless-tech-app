@@ -106,7 +106,4 @@ ButtonView.defaultProps = {
   variant: 'contained',
 };
 
-// eslint-disable-next-line no-console
-console.log(ButtonView.defaultProps);
-
 export default memo(ButtonView);

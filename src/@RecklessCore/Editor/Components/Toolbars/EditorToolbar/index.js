@@ -5,12 +5,12 @@ import useAppContext from '../../../../App/Contexts/useAppContext';
 import EditorToolbarView from './view';
 
 const EditorToolbar = () => {
-  const { getSceneNames } = useAppContext();
+  const { getSceneNames, activeScene, setActiveScene } = useAppContext();
   return (
     <EditorToolbarView {...{
       sceneNames: getSceneNames(),
-      activeScene: {},
-      setActiveScene: () => {},
+      activeScene,
+      onSetActiveScene: setActiveScene,
     }}
     />
   );

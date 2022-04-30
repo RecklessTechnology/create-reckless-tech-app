@@ -20,7 +20,7 @@
   "object": {
     "uuid": "5FC9ACA9-2A93-474D-AA32-FACC76551914",
     "type": "Scene",
-    "name": "Reckless Logo",
+    "name": "Posenet",
     "userData": {
       "isPatchHidden": false
     },
@@ -55,6 +55,7 @@
       "name": "Camera"
     }
   ],
+  "mediaPlayers": [],
   "peers": [],
   "transforms": [
   ],

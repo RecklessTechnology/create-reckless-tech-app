@@ -1,5 +1,5 @@
 import React, {
-  useCallback, useEffect, useRef,
+  useRef,
   Suspense,
   useState,
 } from 'react';
@@ -45,33 +45,12 @@ const LoadingBox = (props) => {
 };
 
 const App = () => {
-  const {
-    subscribe, unsubscribe, sceneJSON, setSceneJSON,
-  } = useAppContext();
+  const { sceneJSON } = useAppContext();
   const { editorMenuHeight, editorMenuOpen, setEditorMenuOpen } = useEditorMenuContext();
   const { inspectorMenuWidth, inspectorMenuOpen, setInspectorMenuOpen } = useInspectorMenuContext();
 
-  const isMounted = useRef(false);
+  if (sceneJSON === undefined) return false;
 
-  const updateScene = useCallback((data) => { // update data only when peer list is modified
-    if (isMounted.current) {
-      setSceneJSON(data);
-    }
-  }, [setSceneJSON]);
-
-  useEffect(() => {
-    if (sceneJSON !== undefined) {
-      isMounted.current = true;
-      subscribe('scene-changed', updateScene);
-    }
-    return () => {
-      isMounted.current = false;
-      unsubscribe('scene-changed', updateScene);
-    };
-  }, [isMounted, updateScene, subscribe, unsubscribe, sceneJSON]);
-
-  // eslint-disable-next-line no-console
-  console.log(sceneJSON);
   return (
     <AppView {...{
       editorMenuOpen,
