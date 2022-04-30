@@ -20,7 +20,7 @@ const SceneDownloadButttonView = ({ sceneJSON }) => {
     <IconButtonView
       {...{
         label: 'Download Scene',
-        handleClick: () => {
+        onClick: () => {
           // eslint-disable-next-line no-undef
           const link = document.createElement('a');
           link.download = 'RT_Scene.json';

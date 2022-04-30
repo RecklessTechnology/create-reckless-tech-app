@@ -82,7 +82,7 @@ const CustomEdge = ({
         <IconButtonView
           {...{
             label: 'Delete',
-            handleClick: () => {
+            onClick: () => {
               removeConnection({ id });
             },
           }}

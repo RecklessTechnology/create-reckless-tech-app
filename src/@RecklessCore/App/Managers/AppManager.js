@@ -19,25 +19,35 @@ AppContext.displayName = 'App Context';
 export let appContextValue = {};
 
 const AppManager = ({
-  sceneJSON: passedScene,
   // eslint-disable-next-line react/prop-types
   scenes: passedScenes,
   children,
 }) => {
-  const [sceneJSON, setSceneJSON] = useState(passedScene);
+  const [sceneJSON, setSceneJSON] = useState();
 
   const [paused, setPaused] = useState(false);
 
   const [events] = useState(() => EventsManager());
 
+  const [activeScene, setActiveScene] = useState();
   const [SceneRegistry] = useState(() => new Map());
 
   const sceneRegistryUtils = useMemo(
     () => ({
+      setActiveScene: (val) => {
+        setActiveScene(val);
+        setSceneJSON(SceneRegistry.get(val));
+      },
+      getActiveScene() {
+        return SceneRegistry.get(activeScene);
+      },
       findScene(id) {
         return SceneRegistry.get(id);
       },
       registerScene(identifier, ref) {
+        if (activeScene === undefined) {
+          setActiveScene(identifier);
+        }
         // register by id
         SceneRegistry.set(identifier, ref);
         events.publish('devices-list-changed', ref, 'add');
@@ -51,24 +61,29 @@ const AppManager = ({
         return Array.from(SceneRegistry.keys());
       },
       getSceneNames() {
-        return Array.from(SceneRegistry.entries(), (uuid, scene) => ({
-          uuid,
-          name: scene.object.name,
-        }));
-        // return Array.from(SceneRegistry.keys()).map((id) => SceneRegistry.get(id).object.name);
+        return Array.from(SceneRegistry.entries(), ([uuid, scene]) => {
+          const { object } = scene;
+          const { name } = object;
+          return {
+            uuid,
+            name,
+          };
+        });
       },
       getScenesArray() {
         return Array.from(SceneRegistry.keys()).map((id) => SceneRegistry.get(id));
       },
     }),
-    [SceneRegistry, events],
+    [SceneRegistry, activeScene, events],
   );
 
   useEffect(() => {
+    setSceneJSON(passedScenes[0]);
     passedScenes.forEach((scene) => {
       sceneRegistryUtils.registerScene(uuidv4(), scene);
     });
-  }, [passedScenes, sceneRegistryUtils]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getDefaultGeo = (geoUUID, type) => ({
     uuid: geoUUID,
@@ -575,12 +590,15 @@ const AppManager = ({
     setPaused,
     sceneJSON,
     setSceneJSON,
+    activeScene,
+    setActiveScene,
     ...events,
     ...sceneUtils,
     ...sceneRegistryUtils,
   }), [
     paused, setPaused,
     sceneJSON, setSceneJSON,
+    activeScene, setActiveScene,
     events,
     sceneUtils,
     sceneRegistryUtils,

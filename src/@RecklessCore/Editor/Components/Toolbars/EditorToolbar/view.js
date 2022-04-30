@@ -5,7 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import {
   AppBar, Toolbar,
-  Tabs, Tab, Tooltip,
+  Tabs, Tab,
+  // Tooltip,
 } from '@material-ui/core';
 
 import SceneSettingsMenu from './sceneSettings';
@@ -50,29 +51,35 @@ const EditorToolbarView = ({
             value={activeScene}
             onChange={(evt, val) => { onSetActiveScene(val); }}
             aria-label="Scene Tabs"
+            TabIndicatorProps={{ children: <span /> }}
           >
-            {sceneNames.map((scene) => (
-              <Tooltip
-                title={scene.name}
-                key={scene.uuid}
-                value={scene.uuid}
-              >
-                <Tab
-                  classes={{
-                    root: classes.tabRoot,
-                  }}
-                  label={(
-                    <span>
-                      {scene.name}
-                      {(activeScene === scene.uuid) ? <SceneSettingsMenu /> : null}
-                    </span>
+            {sceneNames.map(({ uuid, name }) => (
+              // <Tooltip
+              //   title={scene.name}
+              //   key={scene.uuid}
+              //   value={scene.uuid}
+              // >
+              <Tab
+                key={uuid}
+                value={uuid}
+                wrapped
+                classes={{
+                  root: classes.tabRoot,
+                }}
+                label={(
+                  <span>
+                    {name}
+                  </span>
                 )}
-                  {...{
-                    id: `${scene.uuid}-tab`,
-                    'aria-controls': `${scene.uuids}-tabpanel`,
-                  }}
-                />
-              </Tooltip>
+                icon={(
+                  <SceneSettingsMenu />
+                )}
+                {...{
+                  id: `${uuid}-tab`,
+                  'aria-controls': `${uuid}-tabpanel`,
+                }}
+              />
+              // </Tooltip>
             ))}
           </Tabs>
           <SceneDownloadButtton />

@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 
 import 'typeface-roboto-material';
 
-import App from './@RecklessCore/App';
+import ThemesManager from './@RecklessCore/Themes/Managers/ThemesManager';
 
 import AppManager from './@RecklessCore/App/Managers/AppManager';
 import ThreeObjectsManager from './@RecklessCore/ThreeObjects/Managers/ThreeObjectsManager';
@@ -21,19 +21,25 @@ import WidgetsManager from './@RecklessCore/Widgets/Managers/WidgetsManager';
 import InspectorMenuManager from './@RecklessCore/Inspector/Managers/InspectorMenuManager';
 import EditorMenuManager from './@RecklessCore/Editor/Managers/EditorMenuManager';
 
+import App from './@RecklessCore/App';
+
 // import reportWebVitals from './reportWebVitals';
 
-import DefaultSceneJSON from './scenes/AudioAnalyzerScene.json';
-// import DefaultSceneJSONClient from './scenes/LogoScene.json';
-import { isHost } from './@RecklessCore/Utils/userCheck';
-import ThemesManager from './@RecklessCore/Themes/Managers/ThemesManager';
+import AudioAnalyzerScene from './scenes/AudioAnalyzerScene.json';
+import LogoScene from './scenes/LogoScene.json';
+import PosenetScene from './scenes/PosenetScene.json';
+import TestScene from './scenes/TestScene.json';
 
 ReactDOM.render(
   <React.StrictMode>
     <ThemesManager theme="Dark">
       <AppManager
-        scenes={[DefaultSceneJSON]}
-        sceneJSON={(isHost()) ? DefaultSceneJSON : DefaultSceneJSON}
+        scenes={[
+          AudioAnalyzerScene,
+          LogoScene,
+          PosenetScene,
+          TestScene,
+        ]}
       >
         <ThreeObjectsManager>
           <PeersManager>

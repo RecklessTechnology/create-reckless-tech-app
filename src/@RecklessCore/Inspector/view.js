@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     }),
     height: (props) => (`calc(100% - ${(props.editorMenuOpen ? props.editorMenuHeight : 0)}px)`),
     width: (props) => (props.inspectorMenuWidth),
-    position: 'absolute',
+    position: 'relative',
     right: 0,
     top: 0,
     zIndex: 1300,

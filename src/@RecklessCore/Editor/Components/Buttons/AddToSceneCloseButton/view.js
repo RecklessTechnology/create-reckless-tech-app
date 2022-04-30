@@ -18,7 +18,7 @@ const AddToSceneCloseButtonView = ({ handleClose }) => {
     <IconButtonView
       {...{
         label: 'Close',
-        handleClick: (evt) => {
+        onClick: (evt) => {
           handleClose(evt);
         },
       }}

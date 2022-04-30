@@ -82,7 +82,7 @@ const ShareScenePeerButtonView = ({ me, peerInfo }) => {
       <IconButtonView
         {...{
           label: isMe ? 'Share Scene With Everyone' : 'Share Scene',
-          handleClick: (evt) => {
+          onClick: (evt) => {
             openMenu(evt);
           },
         }}
