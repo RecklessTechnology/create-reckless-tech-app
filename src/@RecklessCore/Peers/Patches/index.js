@@ -9,6 +9,7 @@ import useConnectionsContext from '../../Connections/Contexts/useConnectionsCont
 import PatchRoot from '../../Components/Patches/PatchRoot';
 
 import PatchToolbar from './PatchToolbar/index';
+import useAppContext from '../../App/Contexts/useAppContext';
 
 /**
  * Patch for Controlling Peers
@@ -24,8 +25,10 @@ const PeerPatch = ({
   userData = {
     isPatchHidden: false,
   },
+  selected,
   data,
 }) => {
+  const { selectedComponent } = useAppContext();
   const { uuid: uid, width } = data;
   const { findConnection } = useConnectionsContext();
   const [peer, setPeer] = useState(null);
@@ -56,7 +59,12 @@ const PeerPatch = ({
       // eslint-disable-next-line no-console
       console.log(`Unknown Peer Patch: ${type}`);
       return (
-        <PatchRoot {...{ width }}>
+        <PatchRoot
+          {...{
+            width,
+            selected: !!((selectedComponent === uuid || selected === true)),
+          }}
+        >
           <PatchDetails {...{ name: `${peer.name}`, uuid: `${peer.uuid}`, type: 'Peer' }} />
           {patchProps.map((p) => (<PropListItem key={`${peer.uuid}-${p.propName}-prop`} {...p}><PatchValue {...{ uuid: peer.uuid, propName: p.propName }} /></PropListItem>))}
           <PatchToolbar uuid={peer.uuid} />
@@ -88,6 +96,7 @@ PeerPatch.propTypes = {
   userData: PropTypes.shape({
     isPatchHidden: PropTypes.bool,
   }),
+  selected: PropTypes.bool.isRequired,
   data: PropTypes.shape({
     uuid: PropTypes.string,
     width: PropTypes.number,

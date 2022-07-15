@@ -24,8 +24,8 @@ const PeersMenu = () => {
   return (
     <ListItem
       role="tabpanel"
-      id={`full-width-tabpanel-${0}`}
-      title={`full-width-tab-${0}`}
+      id="peers-inspector-tabpanel"
+      aria-labelledby="peers-inspector-tab"
       className={classes.listItem}
     >
       <List dense className={classes.root}>

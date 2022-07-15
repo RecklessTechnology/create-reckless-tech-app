@@ -10,7 +10,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import { getBezierPath, getEdgeCenter } from 'react-flow-renderer';
 
-import IconButtonView from '../../Buttons/IconButton/view';
+import IconButtonView from '../../IconButton/view';
 import useAppContext from '../../../App/Contexts/useAppContext';
 
 const useStyles = makeStyles(() => ({

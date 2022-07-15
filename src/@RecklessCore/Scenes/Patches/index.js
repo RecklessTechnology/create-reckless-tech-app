@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import PatchDetails from '../../Components/Patches/PatchDetails/index';
 import ParentChildProp from '../../Components/Patches/ParentChildProp/index';
@@ -8,11 +8,16 @@ import PatchRoot from '../../Components/Patches/PatchRoot';
 
 import useAppContext from '../../App/Contexts/useAppContext';
 
-const ScenePatch = ({ data }) => {
+const ScenePatch = ({ selected, data }) => {
+  const { selectedComponent, setSelectedComponent } = useAppContext();
   const {
     uuid, label, type, width, isChildHidden, isHidden, children,
   } = data;
   const { hideThreeObjPatch } = useAppContext();
+
+  useEffect(() => {
+    setSelectedComponent({ uuid, label, type });
+  }, [label, selected, setSelectedComponent, type, uuid]);
 
   // Don't show if scene patch if has no children.
   if (children === undefined || children.length === 0) {
@@ -26,7 +31,12 @@ const ScenePatch = ({ data }) => {
       return null;
     case 'scene':
       return (
-        <PatchRoot {...{ width }}>
+        <PatchRoot
+          {...{
+            width,
+            selected: !!((selectedComponent === uuid || selected === true)),
+          }}
+        >
           <PatchDetails {...{ name: `${label}`, uuid: `${uuid}`, type: 'scene' }} />
           <ParentChildProp {...{
             children, isChildHidden, type, uuid, isHidden, hidePatch: hideThreeObjPatch,
@@ -38,6 +48,7 @@ const ScenePatch = ({ data }) => {
 };
 
 ScenePatch.propTypes = {
+  selected: PropTypes.bool.isRequired,
   data: PropTypes.shape({
     uuid: PropTypes.string,
     label: PropTypes.string,

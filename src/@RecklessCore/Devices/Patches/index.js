@@ -21,6 +21,7 @@ const DevicePatch = ({
   userData = {
     isPatchHidden: false,
   },
+  selected,
   data,
 }) => {
   const { type: t } = data;
@@ -30,17 +31,18 @@ const DevicePatch = ({
       console.log(`Unknown Device Patch: ${t}`);
       return null;
     case 'mouse':
-      return (<MousePatch {...{ data }} />);
+      return (<MousePatch {...{ selected, data }} />);
     case 'keyboard':
-      return (<KeyboardPatch {...{ data }} />);
+      return (<KeyboardPatch {...{ selected, data }} />);
     case 'accel':
-      return (<AccelPatch {...{ data }} />);
+      return (<AccelPatch {...{ selected, data }} />);
     case 'camera':
-      return (<CameraPatch {...{ data }} />);
+      return (<CameraPatch {...{ selected, data }} />);
   }
 };
 
 DevicePatch.propTypes = {
+  selected: PropTypes.bool.isRequired,
   data: PropTypes.shape({
     type: PropTypes.string.isRequired,
   }).isRequired,

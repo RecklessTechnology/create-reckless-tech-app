@@ -16,7 +16,7 @@ import testJSON from '../../../../../scenes/TestScene.json';
 import posenetJSON from '../../../../../scenes/PosenetScene.json';
 import useAppContext from '../../../../App/Contexts/useAppContext';
 
-import IconButtonView from '../../../../Components/Buttons/IconButton/view';
+import IconButtonView from '../../../../Components/IconButton/view';
 
 const useStyles = makeStyles(() => ({
   iconButton: {

@@ -1,14 +1,10 @@
-import {
-  unstable_createMuiStrictModeTheme as createMuiTheme,
-} from '@material-ui/core';
-
 import lightGreen from '@material-ui/core/colors/lightGreen';
 import lime from '@material-ui/core/colors/lime';
 import teal from '@material-ui/core/colors/teal';
 import yellow from '@material-ui/core/colors/yellow';
 import deepOrange from '@material-ui/core/colors/deepOrange';
 
-export default createMuiTheme({
+export default {
   themeName: 'Garden',
   palette: {
     primary: lime,
@@ -26,4 +22,4 @@ export default createMuiTheme({
   status: {
     danger: 'orange',
   },
-});
+};

@@ -16,9 +16,7 @@ import {
 import PlaybackControls from '../../../Components/Controls/PlaybackControls';
 import DisplayTextView from '../../../Components/Text/DisplayText/view';
 
-import darkTheme from '../../../Themes/dark';
-
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     pointerEvents: 'all',
     height: '100%',
@@ -49,10 +47,10 @@ const useStyles = makeStyles(() => ({
     clear: 'both',
     width: '100%',
     height: '100%',
-    paddingTop: darkTheme.spacing(1),
-    paddingBottom: darkTheme.spacing(4),
-    paddingLeft: darkTheme.spacing(2),
-    paddingRight: darkTheme.spacing(2),
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(4),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
     position: 'absolute',
   },
   controls: {

@@ -18,6 +18,7 @@ const DevicePatch = ({
   userData = {
     isPatchHidden: false,
   },
+  selected,
   data,
 }) => {
   const { type: t } = data;
@@ -27,11 +28,12 @@ const DevicePatch = ({
       console.log(`Unknown Media Player Patch: ${t}`);
       return null;
     case 'musicplayer':
-      return (<MusicPlayer {...{ data }} />);
+      return (<MusicPlayer {...{ selected, data }} />);
   }
 };
 
 DevicePatch.propTypes = {
+  selected: PropTypes.bool.isRequired,
   data: PropTypes.shape({
     type: PropTypes.string.isRequired,
   }).isRequired,

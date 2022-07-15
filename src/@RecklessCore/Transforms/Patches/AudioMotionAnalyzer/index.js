@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import PatchValue from '../PatchValue/index';
 import PatchToolbar from '../PatchToolbar/index';
@@ -8,13 +8,25 @@ import PatchToolbar from '../PatchToolbar/index';
 import PatchDetails from '../../../Components/Patches/PatchDetails/index';
 import PropListItem from '../../../Components/Patches/PropListItem/index';
 import PatchRoot from '../../../Components/Patches/PatchRoot';
+import useAppContext from '../../../App/Contexts/useAppContext';
 
-const AudioMotionAnalyzerPatch = ({ data }) => {
+const AudioMotionAnalyzerPatch = ({ selected, data }) => {
+  const { selectedComponent, setSelectedComponent } = useAppContext();
   const {
     uuid, label, width, type,
   } = data;
+
+  useEffect(() => {
+    setSelectedComponent({ uuid, label, type });
+  }, [label, selected, setSelectedComponent, type, uuid]);
+
   return (
-    <PatchRoot {...{ width }}>
+    <PatchRoot
+      {...{
+        width,
+        selected: !!((selectedComponent === uuid || selected === true)),
+      }}
+    >
       <PatchDetails {...{ name: `${label}`, uuid: `${uuid}`, type }} />
       <PropListItem {...{
         uuid, propName: 'audio', disableInput: false, disableOutput: true,
@@ -34,6 +46,7 @@ const AudioMotionAnalyzerPatch = ({ data }) => {
 };
 
 AudioMotionAnalyzerPatch.propTypes = {
+  selected: PropTypes.bool.isRequired,
   data: PropTypes.shape({
     uuid: PropTypes.string,
     width: PropTypes.number,

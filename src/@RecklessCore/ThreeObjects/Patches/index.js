@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import PropListItem from '../../Components/Patches/PropListItem/index';
 import PatchValue from './PatchValue/index';
@@ -11,7 +11,8 @@ import PatchRoot from '../../Components/Patches/PatchRoot';
 
 import useAppContext from '../../App/Contexts/useAppContext';
 
-const ThreeObjectPatch = ({ data }) => {
+const ThreeObjectPatch = ({ selected, data }) => {
+  const { selectedComponent, setSelectedComponent } = useAppContext();
   const {
     uuid, label, type, width, isChildHidden, isHidden, children,
   } = data;
@@ -33,12 +34,21 @@ const ThreeObjectPatch = ({ data }) => {
     },
   ];
 
+  useEffect(() => {
+    setSelectedComponent({ uuid, label, type });
+  }, [label, selected, setSelectedComponent, type, uuid]);
+
   switch (type.toLowerCase()) {
     default:
       // eslint-disable-next-line no-console
       console.log(`Unknown Three Object Patch: ${type}`);
       return (
-        <PatchRoot {...{ width }}>
+        <PatchRoot
+          {...{
+            width,
+            selected: !!((selectedComponent === uuid || selected === true)),
+          }}
+        >
           <PatchDetails {...{ name: `${label}`, uuid: `${uuid}`, type }} />
           <ParentChildProp {...{
             children, isChildHidden, type, uuid, isHidden, hidePatch: hideThreeObjPatch,
@@ -56,6 +66,7 @@ const ThreeObjectPatch = ({ data }) => {
 };
 
 ThreeObjectPatch.propTypes = {
+  selected: PropTypes.bool.isRequired,
   data: PropTypes.shape({
     uuid: PropTypes.string,
     label: PropTypes.string,

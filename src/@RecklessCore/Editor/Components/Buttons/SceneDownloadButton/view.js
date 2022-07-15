@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types';
 
-import React, { memo } from 'react';
+import React, { memo, useContext } from 'react';
 
 import { makeStyles } from '@material-ui/core';
 
 import GetAppIcon from '@material-ui/icons/GetApp';
 
-import IconButtonView from '../../../../Components/Buttons/IconButton/view';
+import ButtonView from '../../../../Components/Button/view';
+
+import { RTPopoverContext } from '../../../../Components/Popover';
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
@@ -16,23 +18,25 @@ const useStyles = makeStyles((theme) => ({
 
 const SceneDownloadButttonView = ({ sceneJSON }) => {
   const classes = useStyles();
+  const { close } = useContext(RTPopoverContext);
   return (
-    <IconButtonView
+    <ButtonView
       {...{
-        label: 'Download Scene',
         onClick: () => {
           // eslint-disable-next-line no-undef
           const link = document.createElement('a');
           link.download = 'RT_Scene.json';
           link.href = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(sceneJSON))}`;
           link.click();
+          close();
         },
       }}
       className={classes.menuButton}
       disabled={false}
+      endIcon={<GetAppIcon fontSize="small" />}
     >
-      <GetAppIcon fontSize="small" />
-    </IconButtonView>
+      Download Scene
+    </ButtonView>
   );
 };
 

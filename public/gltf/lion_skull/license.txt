@@ -1,0 +1,8 @@
+Model Information:
+* title:	Lion Skull
+* source:	https://sketchfab.com/3d-models/lion-skull-b7b59f40f37b4ea99a59a16e17d033f9
+* author:	University of Dundee Museum Collections (https://sketchfab.com/uod_museums)
+
+Model License:
+* license type:	CC0-1.0 (http://creativecommons.org/publicdomain/zero/1.0/)
+* requirements:	Credit is not mandatory. Commercial use is allowed.

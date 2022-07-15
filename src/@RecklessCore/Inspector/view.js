@@ -8,9 +8,12 @@ import {
   Drawer, Divider,
 } from '@material-ui/core';
 
+import InspectorToolbar from './Components/Toolbars/InspectorToolbar';
+
+import SelectionMenu from './Menus/SelectionMenu';
 import RoomMenu from '../Room';
 import PeersMenu from '../Peers';
-import InspectorToolbar from './Components/Toolbars/InspectorToolbar';
+import AppMenu from '../App/Menus/AppMenu';
 import HelpMenu from '../Help/Menus/HelpMenu';
 
 const useStyles = makeStyles((theme) => ({
@@ -21,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     }),
     height: (props) => (`calc(100% - ${(props.editorMenuOpen ? props.editorMenuHeight : 0)}px)`),
     width: (props) => (props.inspectorMenuWidth),
-    position: 'relative',
+    position: 'fixed',
     right: 0,
     top: 0,
     zIndex: 1300,
@@ -68,9 +71,11 @@ const InspectorView = ({
     >
       <InspectorToolbar {...{ handleChange: setInspectorMenuTab, value: inspectorMenuTab }} />
       <Divider />
-      {inspectorMenuTab === 0 ? <RoomMenu /> : null}
-      {inspectorMenuTab === 1 ? <PeersMenu /> : null}
-      {inspectorMenuTab === 2 ? <HelpMenu /> : null}
+      {inspectorMenuTab === 0 ? <SelectionMenu /> : null}
+      {inspectorMenuTab === 1 ? <RoomMenu /> : null}
+      {inspectorMenuTab === 2 ? <PeersMenu /> : null}
+      {inspectorMenuTab === 3 ? <AppMenu /> : null}
+      {inspectorMenuTab === 4 ? <HelpMenu /> : null}
     </Drawer>
   );
 };

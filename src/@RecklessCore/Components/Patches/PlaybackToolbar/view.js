@@ -4,12 +4,14 @@ import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import {
-  AppBar, Toolbar, Grid, Button, Tooltip,
+  AppBar, Toolbar, Grid, Tooltip,
 } from '@material-ui/core';
 
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
 import RepeatIcon from '@material-ui/icons/Repeat';
+
+import ButtonView from '../../Button/view';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -59,7 +61,7 @@ const PlaybackToolbarView = ({
         >
           <Grid spacing={0} container>
             <Grid item xs={3}>
-              <Button
+              <ButtonView
                 id="play-button"
                 className={classes.button}
                 onClick={() => {
@@ -77,10 +79,10 @@ const PlaybackToolbarView = ({
                       <PauseIcon fontSize="small" />
                     </Tooltip>
                   )}
-              </Button>
+              </ButtonView>
             </Grid>
             <Grid item xs={3}>
-              <Button
+              <ButtonView
                 id="loop-button"
                 className={classes.buttonLoop}
                 onClick={() => {
@@ -98,7 +100,7 @@ const PlaybackToolbarView = ({
                       <RepeatIcon color="disabled" fontSize="small" />
                     </Tooltip>
                   )}
-              </Button>
+              </ButtonView>
             </Grid>
             <Grid item xs={6} />
           </Grid>

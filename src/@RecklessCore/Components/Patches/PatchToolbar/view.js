@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import {
   Grid,
-  ListItem, Button,
+  ListItem,
   AppBar, Toolbar,
 } from '@material-ui/core';
 
@@ -15,7 +15,9 @@ import {
   faSignInAlt,
 } from '@fortawesome/free-solid-svg-icons';
 
-import IconButtonView from '../../Buttons/IconButton/view';
+import IconButtonView from '../../IconButton/view';
+
+import ButtonView from '../../Button/view';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -85,7 +87,7 @@ const PatchToolbarView = ({
                     <FontAwesomeIcon icon={faSignInAlt} />
                   </IconButtonView>
                 )
-                : <Button className={classes.button} /> }
+                : <ButtonView className={classes.button} /> }
             </Grid>
             <Grid item xs={4}>
               <IconButtonView

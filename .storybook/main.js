@@ -17,6 +17,7 @@ module.exports = {
     "@storybook/addon-interactions",
     "@storybook/addon-jest",
     "storybook-addon-designs",
+    "@react-theming/storybook-addon",
   ],
   "framework": "@storybook/react"
 }

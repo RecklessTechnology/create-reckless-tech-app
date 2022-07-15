@@ -27,7 +27,7 @@ import PropAccordianView from '../PropAccordian/view';
 
 import { getIconByType } from '../../../Utils/iconLookup';
 
-import IconButtonView from '../../Buttons/IconButton/view';
+import IconButtonView from '../../IconButton/view';
 
 const useStyles = makeStyles(() => ({
   propItem: {

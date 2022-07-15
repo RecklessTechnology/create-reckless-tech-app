@@ -5,7 +5,7 @@ import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
-import IconButtonView from '../../../Buttons/IconButton/view';
+import IconButtonView from '../../../IconButton/view';
 
 const useStyles = makeStyles(() => ({
   button: {},

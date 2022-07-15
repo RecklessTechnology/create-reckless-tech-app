@@ -5,14 +5,20 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faUsers, faHome, faQuestion,
+  faUsers, faHome, faQuestion, faMousePointer,
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
-  AppBar, Toolbar, Tabs, Tooltip, Tab,
+  AppBar, Toolbar, Tabs, Tab,
 } from '@material-ui/core';
 
+import SettingsIcon from '@material-ui/icons/Settings';
+
 import InspectorCloseButton from '../../Buttons/InspectorCloseButton';
+
+import IconButtonView from '../../../../Components/IconButton/view';
+
+import useThemesContext from '../../../../Themes/Contexts/useThemesContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 const InspectorToolbarView = ({ value, handleChange }) => {
   const classes = useStyles();
+  const { fontSize, showLabels } = useThemesContext();
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -45,42 +52,126 @@ const InspectorToolbarView = ({ value, handleChange }) => {
             scrollButtons="off"
             title="Inspect"
           >
-            <Tooltip title="Room">
-              <Tab
-                classes={{
-                  root: classes.tabRoot,
-                }}
-                icon={(<FontAwesomeIcon icon={faHome} />)}
-                {...{
-                  id: 'room-tab-0',
-                  'aria-controls': 'room-tabpanel-0',
-                }}
-              />
-            </Tooltip>
-            <Tooltip title="Peers">
-              <Tab
-                classes={{
-                  root: classes.tabRoot,
-                }}
-                icon={<FontAwesomeIcon icon={faUsers} />}
-                {...{
-                  id: 'peers-tab-1',
-                  'aria-controls': 'peers-tabpanel-1',
-                }}
-              />
-            </Tooltip>
-            <Tooltip title="Help">
-              <Tab
-                classes={{
-                  root: classes.tabRoot,
-                }}
-                icon={<FontAwesomeIcon icon={faQuestion} />}
-                {...{
-                  id: 'help-tab-1',
-                  'aria-controls': 'help-tabpanel-1',
-                }}
-              />
-            </Tooltip>
+            <Tab
+              classes={{
+                root: classes.tabRoot,
+              }}
+              label={(
+                <IconButtonView
+                  {...{
+                    label: 'Selection',
+                    onClick: () => {
+                    // setEditorMenuOpen(!editorMenuOpen);
+                    },
+                  }}
+                  className=""
+                  disabled={false}
+                  showLabel={showLabels}
+                >
+                  <FontAwesomeIcon fontSize={fontSize} icon={faMousePointer} />
+                </IconButtonView>
+              )}
+              {...{
+                id: 'selection-inspector-tab',
+                'aria-controls': 'selection-inspector-tabpanel',
+              }}
+            />
+            <Tab
+              classes={{
+                root: classes.tabRoot,
+              }}
+              label={(
+                <IconButtonView
+                  {...{
+                    label: 'Room',
+                    onClick: () => {
+                    // setEditorMenuOpen(!editorMenuOpen);
+                    },
+                  }}
+                  className=""
+                  disabled={false}
+                  showLabel={showLabels}
+                >
+                  <FontAwesomeIcon fontSize={fontSize} icon={faHome} />
+                </IconButtonView>
+              )}
+              {...{
+                id: 'room-inspector-tab',
+                'aria-controls': 'room-inspector-tabpanel',
+              }}
+            />
+            <Tab
+              classes={{
+                root: classes.tabRoot,
+              }}
+              label={(
+                <IconButtonView
+                  {...{
+                    label: 'Peers',
+                    onClick: () => {
+                    // setEditorMenuOpen(!editorMenuOpen);
+                    },
+                  }}
+                  className=""
+                  disabled={false}
+                  showLabel={showLabels}
+                >
+                  <FontAwesomeIcon fontSize={fontSize} icon={faUsers} />
+                </IconButtonView>
+              )}
+              {...{
+                id: 'peers-inspector-tab',
+                'aria-controls': 'peers-inspector-tabpanel',
+              }}
+            />
+            <Tab
+              classes={{
+                root: classes.tabRoot,
+              }}
+              label={(
+                <IconButtonView
+                  {...{
+                    label: 'Settings',
+                    onClick: () => {
+                    // setEditorMenuOpen(!editorMenuOpen);
+                    },
+                  }}
+                  className=""
+                  disabled={false}
+                  showLabel={showLabels}
+                >
+                  <SettingsIcon fontSize={fontSize} />
+                </IconButtonView>
+              )}
+              {...{
+                id: 'settings-inspector-tab',
+                'aria-controls': 'settings-inspector-tabpanel',
+              }}
+            />
+            <Tab
+              classes={{
+                root: classes.tabRoot,
+              }}
+              label={(
+                <IconButtonView
+                  {...{
+                    label: 'Help',
+                    onClick: () => {
+                    // setEditorMenuOpen(!editorMenuOpen);
+                    },
+                  }}
+                  className=""
+                  disabled={false}
+                  showLabel={showLabels}
+                >
+                  <FontAwesomeIcon fontSize={fontSize} icon={faQuestion} />
+                </IconButtonView>
+              )}
+              {...{
+                id: 'help-inspector-tab',
+                'aria-controls': 'help-inspector-tabpanel',
+              }}
+            />
           </Tabs>
         </Toolbar>
       </AppBar>

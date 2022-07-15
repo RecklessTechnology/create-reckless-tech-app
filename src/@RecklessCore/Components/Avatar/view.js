@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import PropTypes from 'prop-types';
 
 import React, { memo } from 'react';
@@ -9,8 +8,6 @@ import { makeStyles } from '@material-ui/styles';
 
 import { Avatar } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
-
-import DefaultProps from './DefaultProps.json';
 
 export const useStyles = makeStyles((theme) => ({
   small: {
@@ -50,6 +47,9 @@ const AvatarView = ({
 AvatarView.whyDidYouRender = (process.env.NODE_ENV === 'development');
 
 AvatarView.propTypes = {
+  /**
+   * Dumb shit
+  */
   loading: PropTypes.bool,
   username: PropTypes.string,
   src: PropTypes.string,
@@ -65,6 +65,12 @@ AvatarView.propTypes = {
   ]),
 };
 
-AvatarView.defaultProps = DefaultProps;
+AvatarView.defaultProps = {
+  loading: false,
+  username: 'loading',
+  src: null,
+  size: 'medium',
+  variant: 'circular',
+};
 
 export default memo(AvatarView);

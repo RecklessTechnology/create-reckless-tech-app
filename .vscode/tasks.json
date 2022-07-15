@@ -1,0 +1,29 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+		{
+			"type": "npm",
+			"script": "start",
+			"problemMatcher": [],
+			"label": "npm: start",
+			"detail": "react-scripts start"
+		},
+		{
+			"type": "npm",
+			"script": "storybook-docs",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: storybook-docs",
+			"detail": "storybook --docs"
+		},
+		{
+			"type": "npm",
+			"script": "test:generate-output",
+			"problemMatcher": [],
+			"label": "npm: test:generate-output",
+			"detail": "jest --watch --json --outputFile=src/tests/jest-test-results.json || true"
+		}
+	]
+}

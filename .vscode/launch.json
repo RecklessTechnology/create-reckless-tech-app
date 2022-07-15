@@ -1,0 +1,33 @@
+{
+  "version": "0.2.0",
+  "compounds": [
+    {
+      "name": "Frontend + Docs + Tests",
+      "configurations": [ "Frontend", "Docs", "Tests" ]
+    }
+  ],
+  "configurations": [
+    {
+      "name": "Frontend",
+      "type":"chrome",
+      "request": "launch",
+      "url": "http://localhost:3000",         //Change to the create-react-app default 3000
+      "webRoot": "${workspaceRoot}/src",
+      "preLaunchTask": "npm: start"
+    },
+    {
+      "name": "Docs",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:6006",         //Change to the create-react-app default 3000
+      "webRoot": "${workspaceRoot}/src",
+      "preLaunchTask": "npm: storybook-docs"
+    },
+    {
+      "name": "Tests",
+      "type": "chrome",
+      "webRoot": "${workspaceRoot}/src",
+      "preLaunchTask": "npm: test:generate-output"
+    },
+  ]
+}

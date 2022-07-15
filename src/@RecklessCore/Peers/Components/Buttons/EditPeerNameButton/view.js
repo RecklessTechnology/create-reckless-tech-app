@@ -8,7 +8,7 @@ import CreateIcon from '@material-ui/icons/Create';
 import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
 
-import IconButtonView from '../../../../Components/Buttons/IconButton/view';
+import IconButtonView from '../../../../Components/IconButton/view';
 
 const useStyles = makeStyles(() => ({
   iconButton: {

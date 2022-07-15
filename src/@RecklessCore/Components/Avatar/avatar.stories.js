@@ -17,7 +17,7 @@ DefaultTemplate.propTypes = AvatarView.propTypes;
 export const Default = DefaultTemplate.bind({});
 
 Default.args = {
-  size: 'large',
+  size: 'medium',
   username: 'Jerknose',
   src: 'https://avatars.githubusercontent.com/u/6080018?v=4',
 };

@@ -6,7 +6,7 @@ import { makeStyles, Link } from '@material-ui/core';
 
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 
-import IconButtonView from '../../../../Components/Buttons/IconButton/view';
+import IconButtonView from '../../../../Components/IconButton/view';
 
 const useStyles = makeStyles(() => ({
   iconButton: {

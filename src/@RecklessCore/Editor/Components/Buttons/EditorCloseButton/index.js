@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import IconButtonView from '../../../../Components/Buttons/IconButton/view';
+import IconButtonView from '../../../../Components/IconButton/view';
 
 import useEditorMenuContext from '../../../Contexts/useEditorMenuContext';
 

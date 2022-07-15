@@ -1,0 +1,227 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 32344,
+      "max": [
+        1.0222469568252563,
+        0.8021770119667053,
+        0.8009780049324036
+      ],
+      "min": [
+        -1.014085054397583,
+        -0.8087109923362732,
+        -0.37542998790740967
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 388128,
+      "componentType": 5126,
+      "count": 32344,
+      "max": [
+        0.999914288520813,
+        0.9999850988388062,
+        0.9999990463256836
+      ],
+      "min": [
+        -0.9999878406524658,
+        -0.999969482421875,
+        -0.9999902248382568
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 32344,
+      "max": [
+        0.9999995827674866,
+        0.9948695302009583,
+        0.9999338984489441,
+        1.0
+      ],
+      "min": [
+        -0.9994586706161499,
+        -0.9988871216773987,
+        -0.9999931454658508,
+        -1.0
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 32344,
+      "max": [
+        0.9306470155715942,
+        0.967706024646759
+      ],
+      "min": [
+        0.032294001430273056,
+        0.042684998363256454
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 192000,
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "Minneapolis Institute of Art (https://sketchfab.com/artsmia)",
+      "license": "CC0-1.0 (http://creativecommons.org/publicdomain/zero/1.0/)",
+      "source": "https://sketchfab.com/3d-models/noh-mask-netsuke-by-kogetsu-64595ba23e57488985c40db7e67abc65",
+      "title": "Noh mask netsuke by Kōgetsu"
+    },
+    "generator": "Sketchfab-12.62.1",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 768000,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 258752,
+      "byteOffset": 768000,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 776256,
+      "byteOffset": 1026752,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 517504,
+      "byteOffset": 1803008,
+      "byteStride": 16,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 2320512,
+      "uri": "scene.bin"
+    }
+  ],
+  "images": [
+    {
+      "uri": "textures/material_0_baseColor.jpeg"
+    },
+    {
+      "uri": "textures/material_0_normal.png"
+    }
+  ],
+  "materials": [
+    {
+      "name": "material_0",
+      "normalTexture": {
+        "index": 1
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicFactor": 0.0,
+        "roughnessFactor": 0.5043826219512195
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Object_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3
+          },
+          "indices": 4,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "matrix": [
+        -3.9533553050620656e-13,
+        0.0701620802283287,
+        2.3723559234877097e-12,
+        0.0,
+        -0.0701620802283287,
+        -5.4527385270929974e-17,
+        2.2311884972442885e-06,
+        0.0,
+        2.2311879867479667e-06,
+        -2.767714822660994e-12,
+        0.0701620802283287,
+        0.0,
+        0.0008138764533214271,
+        0.20869794487953192,
+        -0.2095233798027038,
+        1.0
+      ],
+      "name": "Sketchfab_model"
+    },
+    {
+      "children": [
+        2
+      ],
+      "name": "NohMask2.obj.cleaner.materialmerger.gles"
+    },
+    {
+      "mesh": 0,
+      "name": "Object_2"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    }
+  ]
+}

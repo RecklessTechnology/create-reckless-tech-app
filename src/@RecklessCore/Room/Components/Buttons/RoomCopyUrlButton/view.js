@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core';
 
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 
-import IconButtonView from '../../../../Components/Buttons/IconButton/view';
+import IconButtonView from '../../../../Components/IconButton/view';
 
 const useStyles = makeStyles(() => ({
   iconButton: {

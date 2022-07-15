@@ -29,12 +29,19 @@ const AppManager = ({
 
   const [events] = useState(() => EventsManager());
 
+  const [selectedComponent, setSelectedComponent] = useState(null);
+
   const [activeScene, setActiveScene] = useState();
-  const [SceneRegistry] = useState(() => new Map());
+  const [SceneRegistry] = useState(() => new Map(
+    [...passedScenes.map((s) => ([
+      uuidv4(),
+      s,
+    ]))],
+  ));
 
   const sceneRegistryUtils = useMemo(
     () => ({
-      setActiveScene: (val) => {
+      changeActiveScene: (val) => {
         setActiveScene(val);
         setSceneJSON(SceneRegistry.get(val));
       },
@@ -45,12 +52,9 @@ const AppManager = ({
         return SceneRegistry.get(id);
       },
       registerScene(identifier, ref) {
-        if (activeScene === undefined) {
-          setActiveScene(identifier);
-        }
         // register by id
         SceneRegistry.set(identifier, ref);
-        events.publish('devices-list-changed', ref, 'add');
+        events.publish('scenes-list-changed', ref, 'add');
       },
       unregisterScene(identifier) {
         // unregister by id
@@ -74,16 +78,27 @@ const AppManager = ({
         return Array.from(SceneRegistry.keys()).map((id) => SceneRegistry.get(id));
       },
     }),
-    [SceneRegistry, activeScene, events],
+    [SceneRegistry, events, activeScene, setActiveScene],
   );
 
   useEffect(() => {
-    setSceneJSON(passedScenes[0]);
-    passedScenes.forEach((scene) => {
-      sceneRegistryUtils.registerScene(uuidv4(), scene);
-    });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    // Set defualts
+    if (activeScene === undefined) {
+      setActiveScene(Array.from(SceneRegistry.keys())[0]);
+    }
+    if (sceneJSON === undefined) {
+      setSceneJSON(
+        SceneRegistry.get(Array.from(SceneRegistry.keys())[0]),
+      );
+    }
+    if (selectedComponent === null) {
+      setSelectedComponent({
+        label: SceneRegistry.get(Array.from(SceneRegistry.keys())[0]).object.name,
+        type: SceneRegistry.get(Array.from(SceneRegistry.keys())[0]).object.type,
+        uuid: SceneRegistry.get(Array.from(SceneRegistry.keys())[0]).object.uuid,
+      });
+    }
+  }, [SceneRegistry, activeScene, sceneJSON, selectedComponent]);
 
   const getDefaultGeo = (geoUUID, type) => ({
     uuid: geoUUID,
@@ -592,6 +607,8 @@ const AppManager = ({
     setSceneJSON,
     activeScene,
     setActiveScene,
+    selectedComponent,
+    setSelectedComponent,
     ...events,
     ...sceneUtils,
     ...sceneRegistryUtils,
@@ -599,6 +616,7 @@ const AppManager = ({
     paused, setPaused,
     sceneJSON, setSceneJSON,
     activeScene, setActiveScene,
+    selectedComponent, setSelectedComponent,
     events,
     sceneUtils,
     sceneRegistryUtils,
@@ -608,20 +626,6 @@ const AppManager = ({
 };
 
 AppManager.propTypes = {
-  sceneJSON: PropTypes.shape({
-    object: PropTypes.shape({
-      children: PropTypes.arrayOf(PropTypes.shape({})),
-    }),
-    transforms: PropTypes.arrayOf(PropTypes.shape({})),
-    connections: PropTypes.arrayOf(PropTypes.shape({})),
-    mediaPlayers: PropTypes.arrayOf(PropTypes.shape({})),
-    widgets: PropTypes.arrayOf(PropTypes.shape({})),
-    devices: PropTypes.arrayOf(PropTypes.shape({})),
-    generators: PropTypes.arrayOf(PropTypes.shape({})),
-    geometries: PropTypes.arrayOf(PropTypes.shape({})),
-    materials: PropTypes.arrayOf(PropTypes.shape({})),
-    peers: PropTypes.arrayOf(PropTypes.shape({})),
-  }).isRequired,
   children: PropTypes.node.isRequired,
 };
 

@@ -13,7 +13,7 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 
-import IconButtonView from '../../Buttons/IconButton/view';
+import IconButtonView from '../../IconButton/view';
 
 const useStyles = makeStyles(() => ({
   root: {

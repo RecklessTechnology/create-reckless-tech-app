@@ -18,7 +18,7 @@ import { getIconByType } from '../../../../Utils/iconLookup';
 
 import AddToSceneToolbar from './AddToSceneToolbar';
 
-import IconButtonView from '../../../../Components/Buttons/IconButton/view';
+import IconButtonView from '../../../../Components/IconButton/view';
 import TabPanel from '../../../../Components/Panels/TabPanel';
 
 const useStyles = makeStyles((theme) => ({
@@ -55,11 +55,11 @@ const AddToSceneMenu = () => {
   const {
     addThreeObj, addGenerator,
     addDevice, addTransform,
-    sceneJSON,
+    // sceneJSON,
   } = useAppContext();
 
-  const { metadata } = sceneJSON;
-  const { editorInteractive } = metadata;
+  // const { metadata } = sceneJSON;
+  // const { editorInteractive } = metadata;
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -81,7 +81,7 @@ const AddToSceneMenu = () => {
     <div>
       <IconButtonView
         {...{
-          disabled: !editorInteractive,
+          // disabled: !editorInteractive,
           label: 'Add',
           onClick: (evt) => {
             openMenu(evt);
@@ -89,6 +89,7 @@ const AddToSceneMenu = () => {
         }}
         title="Add"
         className={classes.button}
+        disabled={false}
       >
         <AddIcon fontSize="small" />
       </IconButtonView>
@@ -113,7 +114,7 @@ const AddToSceneMenu = () => {
         }}
       >
         <div className={classes.root}>
-          <AddToSceneToolbar {...{ value, onChange, closeMenu }} />
+          <AddToSceneToolbar {...{ value, handleChange: onChange, closeMenu }} />
           <TabPanel value={value} index={0}>
             <ul className={classes.itemList}>
               <ListSubheader>Import</ListSubheader>

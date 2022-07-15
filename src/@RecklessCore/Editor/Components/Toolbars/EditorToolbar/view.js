@@ -9,18 +9,26 @@ import {
   // Tooltip,
 } from '@material-ui/core';
 
-import SceneSettingsMenu from './sceneSettings';
+// import SettingsIcon from '@material-ui/icons/Settings';
+
+// import SceneSettingsMenu from './sceneSettings';
 
 import EditorCloseButton from '../../Buttons/EditorCloseButton';
-import SceneDownloadButtton from '../../Buttons/SceneDownloadButton';
 import AddToSceneMenu from '../../Menus/AddToSceneMenu';
+// import Popover from '../../../../Components/Popover';
+
+// import ButtonView from '../../../../Components/Button/view';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  editorToolbarRoot: {
     flexGrow: 1,
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     minHeight: 'auto !important',
+  },
+  editorTabRoot: {
+    padding: 0,
+    minWidth: 'auto',
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -32,6 +40,11 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   sceneTabSettings: {},
+  tabButton: {
+    border: 'none',
+    background: 'none',
+    boxShadow: 'none',
+  },
 }));
 
 const EditorToolbarView = ({
@@ -41,7 +54,7 @@ const EditorToolbarView = ({
 }) => {
   const classes = useStyles();
   return (
-    <div className={classes.root}>
+    <div className={classes.editorToolbarRoot}>
       <AppBar position="static">
         <Toolbar
           variant="dense"
@@ -53,7 +66,10 @@ const EditorToolbarView = ({
             aria-label="Scene Tabs"
             TabIndicatorProps={{ children: <span /> }}
           >
-            {sceneNames.map(({ uuid, name }) => (
+            {sceneNames.map(({
+              uuid,
+              // name
+            }) => (
               // <Tooltip
               //   title={scene.name}
               //   key={scene.uuid}
@@ -64,16 +80,39 @@ const EditorToolbarView = ({
                 value={uuid}
                 wrapped
                 classes={{
-                  root: classes.tabRoot,
+                  root: classes.editorTabRoot,
                 }}
-                label={(
-                  <span>
-                    {name}
-                  </span>
-                )}
-                icon={(
-                  <SceneSettingsMenu />
-                )}
+                // label={(
+                //   <ButtonView
+                //     className={classes.tabButton}
+                //     fullWidth
+                //     onClick={() => {
+                //       onSetActiveScene(uuid);
+                //     }}
+                //     disabled={false}
+                //     {...(activeScene === uuid) ? {
+                //       endIcon: (
+                //         <Popover
+                //           id="SceneSettingsPopup"
+                //           icon={<SettingsIcon fontSize="small" />}
+                //           label="Scene Settings"
+                //           anchorOrigin={{
+                //             vertical: 'bottom',
+                //             horizontal: 'right',
+                //           }}
+                //           transformOrigin={{
+                //             vertical: 'top',
+                //             horizontal: 'right',
+                //           }}
+                //         >
+                //           <SceneSettingsMenu />
+                //         </Popover>
+                //       ),
+                //     } : {}}
+                //   >
+                //     {name}
+                //   </ButtonView>
+                // )}
                 {...{
                   id: `${uuid}-tab`,
                   'aria-controls': `${uuid}-tabpanel`,
@@ -82,7 +121,6 @@ const EditorToolbarView = ({
               // </Tooltip>
             ))}
           </Tabs>
-          <SceneDownloadButtton />
           <div className={classes.spacer} />
           <AddToSceneMenu />
         </Toolbar>

@@ -1,11 +1,10 @@
-/* eslint-disable no-undef */
-
 import '@storybook/jest';
 
 import {
+  describe,
   render,
+  test,
 } from '@testing-library/react';
-// import userEvent from '@testing-library/user-event';
 
 import React from 'react';
 
@@ -13,12 +12,10 @@ import ThemesManager from '../../Themes/Managers/ThemesManager';
 import AvatarView from './view';
 
 describe('<AvatarView>', () => {
-  test('Content Test', () => {
-    const btntxt = 'Test Button';
-
+  test('Content Loads', () => {
     // Render component with theme
-    const { container } = render(
-      <ThemesManager theme="Dark">
+    render(
+      <ThemesManager theme="Default">
         <AvatarView {...{
           size: 'large',
           username: 'Jerknose',
@@ -27,15 +24,5 @@ describe('<AvatarView>', () => {
         />
       </ThemesManager>,
     );
-
-    // Find button
-    // const buttonEl = getByText(btntxt);
-
-    // expect(container.firstChild).toMatchInlineSnapshot(`
-    //   <h1>Hello, World!</h1>
-    // `);
-
-    // Check if button has text.
-    // expect(buttonEl).toHaveTextContent(btntxt);
   });
 });

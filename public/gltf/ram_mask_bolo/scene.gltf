@@ -1,0 +1,236 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 16582,
+      "max": [
+        0.28835898637771606,
+        -0.000881000014487654,
+        0.19922499358654022
+      ],
+      "min": [
+        -0.18179599940776825,
+        -0.3655259907245636,
+        -0.17863799631595612
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 198984,
+      "componentType": 5126,
+      "count": 16582,
+      "max": [
+        0.9999589920043945,
+        0.999052882194519,
+        0.9999669790267944
+      ],
+      "min": [
+        -0.9999946355819702,
+        -0.9999911785125732,
+        -0.9999076128005981
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 16582,
+      "max": [
+        0.9999942779541016,
+        0.9997289180755615,
+        0.9998230338096619,
+        1.0
+      ],
+      "min": [
+        -0.998619794845581,
+        -0.999786913394928,
+        -0.9998758435249329,
+        -1.0
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 16582,
+      "max": [
+        0.9985349774360657,
+        0.9918869733810425
+      ],
+      "min": [
+        0.0014649999793618917,
+        0.0014649999793618917
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 89976,
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "Cleveland Museum of Art (https://sketchfab.com/clevelandart)",
+      "license": "CC0-1.0 (http://creativecommons.org/publicdomain/zero/1.0/)",
+      "source": "https://sketchfab.com/3d-models/201656-ram-mask-bolo-edfcda0e03504bd186ad650b9ea39566",
+      "title": "2016.56 Ram Mask (Bolo)"
+    },
+    "generator": "Sketchfab-12.68.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 359904,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 132656,
+      "byteOffset": 359904,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 397968,
+      "byteOffset": 492560,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 265312,
+      "byteOffset": 890528,
+      "byteStride": 16,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 1155840,
+      "uri": "scene.bin"
+    }
+  ],
+  "images": [
+    {
+      "uri": "textures/Ram_Mask_Mat_baseColor.jpeg"
+    },
+    {
+      "uri": "textures/Ram_Mask_Mat_metallicRoughness.png"
+    },
+    {
+      "uri": "textures/Ram_Mask_Mat_normal.jpeg"
+    }
+  ],
+  "materials": [
+    {
+      "name": "Ram_Mask_Mat",
+      "normalTexture": {
+        "index": 2
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicFactor": 0.0,
+        "metallicRoughnessTexture": {
+          "index": 1
+        }
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Object_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3
+          },
+          "indices": 4,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "matrix": [
+        -2.220446049250313e-16,
+        -1.1102230246251565e-16,
+        1.0,
+        0.0,
+        1.1102230246251565e-16,
+        -1.0,
+        0.0,
+        0.0,
+        1.0,
+        -2.465190328815662e-32,
+        1.1102230246251565e-16,
+        0.0,
+        0.042987771332263947,
+        -0.17291061580181125,
+        0.12992283701896665,
+        1.0
+      ],
+      "name": "Sketchfab_model"
+    },
+    {
+      "children": [
+        2
+      ],
+      "name": "Ram Mask.obj.cleaner.materialmerger.gles"
+    },
+    {
+      "mesh": 0,
+      "name": "Object_2"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    }
+  ]
+}

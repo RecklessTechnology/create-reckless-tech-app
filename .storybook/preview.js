@@ -8,39 +8,53 @@ import {
   PRIMARY_STORY,
 } from '@storybook/addon-docs';
 
+import { withThemes } from '@react-theming/storybook-addon';
+
 import { withTests } from '@storybook/addon-jest';
 import { withDesign } from 'storybook-addon-designs'
 
+import {
+  unstable_createMuiStrictModeTheme as createMuiTheme,
+} from '@material-ui/core';
+
 import ThemesManager from '../src/@RecklessCore/Themes/Managers/ThemesManager';
+
+import lightTheme from '../src/@RecklessCore/Themes/light';
+import darkTheme from '../src/@RecklessCore/Themes/dark';
+import RetroWave from '../src/@RecklessCore/Themes/RetroWave';
+import Garden from '../src/@RecklessCore/Themes/Garden';
 
 import results from '../src/tests/jest-test-results.json';
 
-export const globalTypes = {
-  theme: {
-    name: 'Theme',
-    description: 'Global theme for components.',
-    defaultValue: 'Dark',
-    toolbar: {
-      icon: 'circlehollow',
-      items: ['Light', 'Dark', 'RetroWave', 'Garden'],
-      showName: true,
-    },
-  },
-};
+import { restoreData } from '../src/@RecklessCore/Utils/PersistantStorage';
 
-const withThemeProvider = (Story, {globals}) => {
-  const { theme } = globals;
+const providerFn = ({ theme, children }) => {
   return (
-    <ThemesManager theme={theme}><Story /></ThemesManager>
+    <ThemesManager
+      {
+        ...{
+          ...restoreData('themeSettings'),
+          theme: theme.themeName,
+        }
+      }
+    >
+      {children}
+    </ThemesManager>
   );
 };
 
 export const decorators = [
-  withThemeProvider,
+  // withThemeProvider,
   withDesign,
   withTests({
     results,
   }),
+  withThemes(null, [
+    createMuiTheme(darkTheme),
+    createMuiTheme(lightTheme),
+    createMuiTheme(RetroWave),
+    createMuiTheme(Garden),
+  ], { providerFn })
 ];
 
 export const parameters = {

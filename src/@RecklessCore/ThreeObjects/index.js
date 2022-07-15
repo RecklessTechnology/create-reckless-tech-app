@@ -173,7 +173,7 @@ const ThreeObject = ({
       );
     default:
       // eslint-disable-next-line no-console
-      console.log(`Custom Three Object Not Found. Using default ${passedProps.type}.`);
+      // console.log(`Custom Three Object Not Found. Using default ${passedProps.type}.`);
       return (
         <ThreeObjectManager key={`rt_${passedProps.uuid}`} connections={connections} {...DefaultProps} type={passedProps.type} {...passedProps}>
           {createElement(

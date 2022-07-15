@@ -5,26 +5,23 @@ import {
   memo, useRef, useEffect,
 } from 'react';
 
-import { makeStyles } from '@material-ui/styles';
-
-import {
-  Paper, Fade,
-} from '@material-ui/core';
-
+import { useMeasure, useWindowSize } from 'react-use';
 import { useSpring, animated } from 'react-spring';
 
+import { makeStyles, useTheme } from '@material-ui/styles';
+
+import {
+  Paper, Fade, Box,
+} from '@material-ui/core';
+
 import WidgetToolbar from '../Toolbars/WidgetToolbar';
-import darkTheme from '../../../Themes/dark';
+// import darkTheme from '../../../Themes/dark';
 
 const useStyles = makeStyles(() => ({
-  root: {
+  widgetRoot: {
     zIndex: 500,
     margin: 0,
     padding: 0,
-    top: 'auto',
-    right: 'auto',
-    bottom: 'auto',
-    left: 'auto',
     position: 'absolute',
   },
   paper: {
@@ -56,6 +53,10 @@ const WidgetChrome = ({
     };
   });
 
+  const theme = useTheme();
+  const [ref, { width, height }] = useMeasure();
+  const { width: winWidth, height: winHeight } = useWindowSize();
+
   const getWidth = (s) => {
     switch (s) {
       default:
@@ -86,48 +87,53 @@ const WidgetChrome = ({
     }
   };
 
-  const positionSpring = useSpring({
-    config: { friction: 10 },
-    top: (location === 0 || location === 1) ? darkTheme.spacing(4) : 'auto',
-    right: (location === 1 || location === 2) ? darkTheme.spacing(4) : 'auto',
-    bottom: (location === 2 || location === 3) ? darkTheme.spacing(4) : 'auto',
-    left: (location === 3 || location === 0) ? darkTheme.spacing(4) : 'auto',
-  });
-
-  const widgetSizeSpring = useSpring({
-    config: { friction: 10 },
+  const widgetSpring = useSpring({
+    config: { friction: 20 },
+    top: (location === 0 || location === 1) // top left or top right
+      ? theme.spacing(2)
+      : winHeight - (height + theme.spacing(2)),
+    left: (location === 0 || location === 3) // bottom left or bottom right
+      ? theme.spacing(2)
+      : winWidth - (width + theme.spacing(2)),
     width: getWidth(size),
     height: getHeight(size),
   });
 
-  const widgetWidthSpring = useSpring({
-    config: { friction: 10 },
-    width: getWidth(size),
-  });
   return (
     <Fade in={isMounted.current}>
-      <animated.div
-        style={positionSpring}
-        className={classes.root}
-      >
+      <Box p={1}>
         <animated.div
-          style={widgetSizeSpring}
+          ref={ref}
+          style={{
+            top: widgetSpring.top,
+            left: widgetSpring.left,
+          }}
+          className={classes.widgetRoot}
         >
-          <Paper className={classes.paper}>
-            { children }
-          </Paper>
+          <animated.div
+            style={{
+              width: widgetSpring.width,
+              height: widgetSpring.height,
+            }}
+          >
+            <Paper className={classes.paper}>
+              { children }
+            </Paper>
+          </animated.div>
+          <animated.div
+            style={{
+              width: widgetSpring.width,
+            }}
+          >
+            <WidgetToolbar
+              size={size}
+              handleSizeChange={changeSize}
+              location={location}
+              handleLocationChange={changeLocation}
+            />
+          </animated.div>
         </animated.div>
-        <animated.div
-          style={widgetWidthSpring}
-        >
-          <WidgetToolbar
-            size={size}
-            handleSizeChange={changeSize}
-            location={location}
-            handleLocationChange={changeLocation}
-          />
-        </animated.div>
-      </animated.div>
+      </Box>
     </Fade>
   );
 };

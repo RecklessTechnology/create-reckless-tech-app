@@ -2,37 +2,32 @@ import React from 'react';
 
 import 'typeface-roboto-material';
 
-import { ThemeProvider } from '@material-ui/styles';
-import { CssBaseline } from '@material-ui/core';
-
 import AddToSceneMenu from './index';
 
-import darkTheme from '../../../../Themes/dark';
 import AppManager from '../../../../App/Managers/AppManager';
-import ConnectionsManager from '../../../../Connections/Managers/ConnectionsManager';
-import PeersManager from '../../../../Peers/Managers/PeersManager';
+
+import LogoScene from '../../../../../scenes/LogoScene.json';
+import ThemesManager from '../../../../Themes/Managers/ThemesManager';
 
 export default {
   title: 'Components/Menus/Add to Scene',
   component: AddToSceneMenu.type,
-  argTypes: { handleClick: { action: 'clicked' } },
-  decorators: [
-    (Story) => (
-      <ThemeProvider theme={darkTheme}>
-        <CssBaseline />
-        <AppManager>
-          <PeersManager>
-            <ConnectionsManager>
-              <Story />
-            </ConnectionsManager>
-          </PeersManager>
-        </AppManager>
-      </ThemeProvider>
-    ),
-  ],
 };
 
-const Template = () => <AddToSceneMenu />;
+const Template = (props, { globals }) => {
+  const { theme } = globals;
+  return (
+    <ThemesManager theme={theme}>
+      <AppManager
+        scenes={[
+          LogoScene,
+        ]}
+      >
+        <AddToSceneMenu {...props} />
+      </AppManager>
+    </ThemesManager>
+  );
+};
 
 Template.propTypes = AddToSceneMenu.propTypes;
 

@@ -15,7 +15,7 @@ import CreateIcon from '@material-ui/icons/Create';
 import Inspector from '../Inspector';
 import Editor from '../Editor';
 
-import IconButtonView from '../Components/Buttons/IconButton/view';
+import IconButtonView from '../Components/IconButton/view';
 import WelcomeModal from '../Help/Modals/Welcome';
 
 import WidgetsProvider from '../Widgets/Providers';
@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    top: 'auto',
+    top: 0,
     bottom: (props) => (props.editorMenuOpen ? props.editorMenuHeight : 0),
     background: 'none',
     boxShadow: 'none',

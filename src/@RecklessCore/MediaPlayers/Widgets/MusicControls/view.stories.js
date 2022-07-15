@@ -1,9 +1,6 @@
 import React from 'react';
 import 'typeface-roboto-material';
 
-// Import Reckless Tech app framework and chrome.
-import CoreDecorators from '../../../../stories/CoreDecorators';
-
 // Import companion elements needed for story.
 // import MusicControlsComponent from '../../../MediaPlayers/Widgets/MusicControls';
 import WidgetManager from '../../../Widgets/Managers/WidgetManager';
@@ -19,14 +16,6 @@ import DefaultProps from './DefaultProps.json';
 export default {
   title: 'Widgets/Music Controls Widget',
   component: MusicControls.type,
-  decorators: [
-    (Story) => (
-      // Builds Reckless Tech app framework around story.
-      <CoreDecorators sceneJSON={testScene}>
-        <Story />
-      </CoreDecorators>
-    ),
-  ],
   argTypes: {
     data: { table: { disable: true }, control: { disable: true } },
   },

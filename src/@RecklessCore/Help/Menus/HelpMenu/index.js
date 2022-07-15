@@ -35,7 +35,12 @@ const HelpMenu = () => {
   const classes = useStyles();
 
   return (
-    <ListItem className={classes.root}>
+    <ListItem
+      role="tabpanel"
+      id="help-inspector-tabpanel"
+      aria-labelledby="help-inspector-tab"
+      className={classes.root}
+    >
       <List dense className={classes.listRoot}>
         <ListItem dense className={classes.listItem}>
           <Grid spacing={0} container>

@@ -8,7 +8,7 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 
 import generateRoomId from '../../../../Utils/generateRoomId';
 
-import IconButtonView from '../../../../Components/Buttons/IconButton/view';
+import IconButtonView from '../../../../Components/IconButton/view';
 
 const useStyles = makeStyles(() => ({
   iconButton: {

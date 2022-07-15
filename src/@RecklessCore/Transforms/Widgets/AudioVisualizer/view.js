@@ -10,7 +10,7 @@ import {
   Card, CardContent,
 } from '@material-ui/core';
 
-import Canvas from '../../../Components/Canvas';
+import CanvasView from '../../../Components/Canvas/view';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -88,7 +88,7 @@ const AudioVisualizerView = ({
     <Card className={classes.root}>
       <div className={classes.details}>
         <CardContent className={clsx(classes.content)} ref={parentRef}>
-          <Canvas
+          <CanvasView
             width={parentSize[0]}
             height={parentSize[1]}
             className={classes.canvasOverride}

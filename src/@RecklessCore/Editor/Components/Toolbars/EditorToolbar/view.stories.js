@@ -7,10 +7,7 @@ import EditorToolbarView from './view';
 import AppManager from '../../../../App/Managers/AppManager';
 import EditorMenuManager from '../../../Managers/EditorMenuManager';
 
-import testScene from './view.scene.json';
-
-import DefaultSceneJSON from '../../../../../scenes/AudioAnalyzerScene.json';
-import DefaultSceneJSONClient from '../../../../../scenes/LogoScene.json';
+import LogoScene from '../../../../../scenes/LogoScene.json';
 import ThemesManager from '../../../../Themes/Managers/ThemesManager';
 
 export default {
@@ -28,10 +25,8 @@ const Template = (props, { globals }) => {
     <ThemesManager theme={theme}>
       <AppManager
         scenes={[
-          DefaultSceneJSON,
-          DefaultSceneJSONClient,
+          LogoScene,
         ]}
-        sceneJSON={testScene}
       >
         <EditorMenuManager>
           <EditorToolbarView

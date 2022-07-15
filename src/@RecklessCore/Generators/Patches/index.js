@@ -10,6 +10,7 @@ import PatchRoot from '../../Components/Patches/PatchRoot';
 
 import GeneratorSettings from './Settings';
 import PropListItem from '../../Components/Patches/PropListItem';
+import useAppContext from '../../App/Contexts/useAppContext';
 
 /**
  * Patch for Controlling Generators
@@ -33,8 +34,13 @@ const Generator = ({
   looped = true,
   // eslint-disable-next-line no-unused-vars
   paused = false,
+
+  selected,
+
   data,
 }) => {
+  const { selectedComponent } = useAppContext();
+
   const { uuid: uid, label, width } = data;
 
   switch (type.toLowerCase()) {
@@ -44,7 +50,12 @@ const Generator = ({
       return null;
     case 'generator':
       return (
-        <PatchRoot {...{ width }}>
+        <PatchRoot
+          {...{
+            width,
+            selected: !!((selectedComponent === uuid || selected === true)),
+          }}
+        >
           <PatchDetails {...{ name: `${label}`, uuid: `${uid}`, type }} />
           <ShapePreview {...{ uuid: uid, propName: 'position' }} />
           <GeneratorSettings uuid={uid} />
@@ -93,6 +104,7 @@ Generator.propTypes = {
   looped: PropTypes.bool,
   // eslint-disable-next-line react/require-default-props
   paused: PropTypes.bool,
+  selected: PropTypes.bool.isRequired,
   data: PropTypes.shape({
     uuid: PropTypes.string,
     label: PropTypes.string,

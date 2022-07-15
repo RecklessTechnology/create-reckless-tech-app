@@ -6,13 +6,15 @@ import { makeStyles } from '@material-ui/core';
 
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
-import IconButtonView from '../../../../Components/Buttons/IconButton/view';
+import IconButtonView from '../../../../Components/IconButton/view';
 
 const useStyles = makeStyles(() => ({
   button: {},
 }));
 
-const InspectorCloseButtonView = ({ inspectorMenuOpen, setInspectorMenuOpen }) => {
+const InspectorCloseButtonView = ({
+  inspectorMenuOpen, setInspectorMenuOpen, fontSize, showLabel,
+}) => {
   const classes = useStyles();
   return (
     <IconButtonView
@@ -24,8 +26,9 @@ const InspectorCloseButtonView = ({ inspectorMenuOpen, setInspectorMenuOpen }) =
       }}
       className={classes.button}
       disabled={false}
+      showLabel={showLabel}
     >
-      <ChevronRightIcon fontSize="small" />
+      <ChevronRightIcon fontSize={fontSize} />
     </IconButtonView>
   );
 };
@@ -35,6 +38,8 @@ InspectorCloseButtonView.whyDidYouRender = (process.env.NODE_ENV === 'developmen
 InspectorCloseButtonView.propTypes = {
   inspectorMenuOpen: PropTypes.bool.isRequired,
   setInspectorMenuOpen: PropTypes.func.isRequired,
+  showLabel: PropTypes.bool.isRequired,
+  fontSize: PropTypes.string.isRequired,
 };
 
 export default memo(InspectorCloseButtonView);

@@ -7,6 +7,7 @@ import ReactFlow, {
 import dagre from 'dagre';
 
 import { makeStyles } from '@material-ui/styles';
+import useAppContext from '../../../App/Contexts/useAppContext';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -32,6 +33,7 @@ const NodeEditorView = ({
   showControls,
   interactive,
 }) => {
+  const { setSelectedComponent } = useAppContext();
   const dagreGraph = new dagre.graphlib.Graph();
   dagreGraph.setDefaultEdgeLabel(() => ({}));
 
@@ -84,6 +86,9 @@ const NodeEditorView = ({
   return (
     <div className={classes.root}>
       <ReactFlow
+        onPaneClick={() => {
+          setSelectedComponent(null);
+        }}
         nodesConnectable={interactive}
         nodesDraggable={interactive}
         zoomOnScroll={interactive}

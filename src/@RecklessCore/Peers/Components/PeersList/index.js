@@ -60,8 +60,6 @@ const PeersList = () => {
 
   if (connections.length === 0) { return null; }
 
-  // eslint-disable-next-line no-console
-  console.log(connections);
   return (
     <ListItem dense className={classes.listItem}>
       <Grid spacing={0} container>

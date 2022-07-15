@@ -6,7 +6,7 @@ import React, {
 
 import { makeStyles } from '@material-ui/styles';
 
-import Canvas from '../../../Components/Canvas';
+import CanvasView from '../../../Components/Canvas/view';
 
 const useStyles = makeStyles(() => ({
   canvasContainer: {
@@ -69,7 +69,7 @@ const ShapePreviewBackground = ({ shape, parentSize }) => {
   // Create local classes
   const classes = useStyles({ parentSize });
   return (
-    <Canvas
+    <CanvasView
       width={parentSize[0]}
       height={parentSize[1]}
       className={classes.canvasContainer}

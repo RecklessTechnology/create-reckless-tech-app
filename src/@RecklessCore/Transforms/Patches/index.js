@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import PatchValue from './PatchValue/index';
 import PatchToolbar from './PatchToolbar/index';
@@ -12,17 +12,27 @@ import TransformSettings from './Settings';
 
 import NativeAudioAnalyzer from './NativeAudioAnalyzer';
 import AudioMotionAnalyzer from './AudioMotionAnalyzer';
+import useAppContext from '../../App/Contexts/useAppContext';
 
-const TransformPatch = ({ data }) => {
+const TransformPatch = ({ selected, data }) => {
+  const { selectedComponent, setSelectedComponent } = useAppContext();
   const {
     uuid, label, width, type,
   } = data;
+  useEffect(() => {
+    setSelectedComponent({ uuid, label, type });
+  }, [label, selected, setSelectedComponent, type, uuid]);
   switch (type.toLowerCase()) {
     default:
       // eslint-disable-next-line no-console
       console.log(`Unknown Transform Patch ${type}`);
       return (
-        <PatchRoot {...{ width }}>
+        <PatchRoot
+          {...{
+            width,
+            selected: !!((selectedComponent === uuid || selected === true)),
+          }}
+        >
           <PatchDetails {...{ name: `${label}`, uuid: `${uuid}`, type }} />
           <TransformSettings {...{
             uuid, propName: 'operator', type: 'select', defaultVal: 'add', data: ['add', 'subtract', 'multiply', 'divide'], disableInput: true, disableOutput: true,
@@ -42,13 +52,14 @@ const TransformPatch = ({ data }) => {
         </PatchRoot>
       );
     case 'nativeaudioanalyzer':
-      return (<NativeAudioAnalyzer {...{ data }} />);
+      return (<NativeAudioAnalyzer {...{ data, selected }} />);
     case 'audiomotionanalyzer':
-      return (<AudioMotionAnalyzer {...{ data }} />);
+      return (<AudioMotionAnalyzer {...{ data, selected }} />);
   }
 };
 
 TransformPatch.propTypes = {
+  selected: PropTypes.bool.isRequired,
   data: PropTypes.shape({
     uuid: PropTypes.string,
     width: PropTypes.number,

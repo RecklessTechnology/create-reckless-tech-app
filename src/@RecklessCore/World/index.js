@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import PropTypes from 'prop-types';
 
 import React, {
@@ -64,6 +65,11 @@ const World = ({
           {(objChildren.length > 0)
             ? (
               <Canvas
+                // eslint-disable-next-line no-return-assign
+                onCreated={({ gl }) => {
+                  gl.clippingPlanes = Object.freeze([]);
+                  gl.localClippingEnabled = true;
+                }}
                 style={{ pointerEvents: 'all' }}
                 shadows
                 camera={camera}

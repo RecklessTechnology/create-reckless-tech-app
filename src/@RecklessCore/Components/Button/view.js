@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import PropTypes from 'prop-types';
 
 import React, { memo } from 'react';
@@ -7,23 +6,11 @@ import clsx from 'clsx';
 
 import { makeStyles } from '@material-ui/styles';
 
-import { Avatar, Button } from '@material-ui/core';
-import PersonIcon from '@material-ui/icons/Person';
+import { Button } from '@material-ui/core';
 
-import DefaultProps from './DefaultProps.json';
-
-export const useStyles = makeStyles((theme) => ({
-  small: {
-    width: theme.spacing(3),
-    height: theme.spacing(3),
-  },
-  medium: {
-    width: theme.spacing(5),
-    height: theme.spacing(5),
-  },
-  large: {
-    width: theme.spacing(7),
-    height: theme.spacing(7),
+export const useStyles = makeStyles(() => ({
+  button: {
+    pointerEvents: 'all',
   },
 }));
 
@@ -33,19 +20,31 @@ export const useStyles = makeStyles((theme) => ({
   printed beside the avatar or in a tooltip.
 * */
 const ButtonView = ({
+  className,
   children,
   ...props
 }) => {
   const classes = useStyles();
   return (
-    // eslint-disable-next-line no-console
-    <Button {...props}>{children}</Button>
+    <Button
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
+      className={clsx(classes.button, className)}
+    >
+      {children}
+    </Button>
   );
 };
 
 ButtonView.whyDidYouRender = (process.env.NODE_ENV === 'development');
 
 ButtonView.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  /**
+    Override default style.
+  */
+  // eslint-disable-next-line react/require-default-props
+  className: PropTypes.string.isRequired,
   /**
    * Children
    */
@@ -101,6 +100,8 @@ ButtonView.propTypes = {
 };
 
 ButtonView.defaultProps = {
+  // eslint-disable-next-line react/default-props-match-prop-types
+  className: '',
   color: 'primary',
   size: 'medium',
   variant: 'contained',

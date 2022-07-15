@@ -3,7 +3,7 @@
 		"version": 4.5,
 		"type": "Object",
 		"generator": "Object3D.toJSON",
-    "editorInteractive": false
+    "editorInteractive": true
 	},
 	"camera": {
     "position": [
@@ -187,7 +187,7 @@
 	"object": {
 		"uuid": "5FC9ACA9-2A93-474D-AA32-FACC76551914",
 		"type": "Scene",
-		"name": "Test",
+		"name": "Primitives",
 		"layers": 1,
 		"matrix": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
 		"children": [

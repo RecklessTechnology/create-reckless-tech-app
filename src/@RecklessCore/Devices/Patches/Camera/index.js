@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import PatchToolbar from '../PatchToolbar/index';
 import PatchValue from '../PatchValue/index';
@@ -10,8 +10,10 @@ import PatchDetails from '../../../Components/Patches/PatchDetails/index';
 import PatchRoot from '../../../Components/Patches/PatchRoot';
 
 import CameraSettings from './Settings';
+import useAppContext from '../../../App/Contexts/useAppContext';
 
-const CameraPatch = ({ data }) => {
+const CameraPatch = ({ selected, data }) => {
+  const { selectedComponent, setSelectedComponent } = useAppContext();
   const {
     uuid, width, label, type,
   } = data;
@@ -22,8 +24,17 @@ const CameraPatch = ({ data }) => {
     },
   ];
 
+  useEffect(() => {
+    setSelectedComponent({ uuid, label, type });
+  }, [label, selected, setSelectedComponent, type, uuid]);
+
   return (
-    <PatchRoot {...{ width }}>
+    <PatchRoot
+      {...{
+        width,
+        selected: !!((selectedComponent === uuid || selected === true)),
+      }}
+    >
       <PatchDetails {...{ name: `${label}`, uuid: `${uuid}`, type }} />
       <CameraSettings {...{ uuid }} />
       {patchProps.map((p) => (<PropListItem key={`${p.uuid}-${p.propName}-prop`} {...p}><PatchValue {...{ uuid: p.uuid, propName: p.propName }} /></PropListItem>))}
@@ -33,6 +44,7 @@ const CameraPatch = ({ data }) => {
 };
 
 CameraPatch.propTypes = {
+  selected: PropTypes.bool.isRequired,
   data: PropTypes.shape({
     uuid: PropTypes.string.isRequired,
     width: PropTypes.number.isRequired,

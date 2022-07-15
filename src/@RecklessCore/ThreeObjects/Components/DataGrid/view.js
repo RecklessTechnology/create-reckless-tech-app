@@ -1,10 +1,10 @@
 /* eslint-disable react/react-in-jsx-scope */
-import PropTypes from 'prop-types';
 import {
   memo, forwardRef,
 } from 'react';
 
 const DataGridView = (props, ref) => {
+  // eslint-disable-next-line react/prop-types
   const { nGridCols, nGridRows, cubeSideLength } = props;
   return (
     <instancedMesh
@@ -21,12 +21,6 @@ const DataGridView = (props, ref) => {
       <meshBasicMaterial attach="material" color="white" toneMapped={false} />
     </instancedMesh>
   );
-};
-
-DataGridView.propTypes = {
-  nGridCols: PropTypes.number.isRequired,
-  nGridRows: PropTypes.number.isRequired,
-  cubeSideLength: PropTypes.number.isRequired,
 };
 
 export default memo(forwardRef(DataGridView));
